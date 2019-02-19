@@ -7,9 +7,9 @@
 class Moose {
 	private:
 		vector <Chicken> stack;	//Pecking Order >:D This is actually a queue tho lol
-		vector <Chicken> hand;	
-		Coop deck;					
-		vector <Chicken> discard;	
+		vector <Chicken> hand;
+		Coop deck;
+		vector <Chicken> discard;
 		int handSize;
 		int health;
 	public:
