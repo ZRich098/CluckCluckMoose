@@ -8,12 +8,10 @@
 
 using namespace cugl;
 
-/** Create a new Coop*/
 Coop::Coop() {
 	refresh();
 }
 
-/** Fill the coop with Chickens */
 void Coop::refresh() {
 	//TODO
 	for (int c = 0; c < 5; c++) {
@@ -23,26 +21,22 @@ void Coop::refresh() {
 	}
 }
 
-/** Draw a Chicken, removing it from the Coop*/
 Chicken Coop::draw() {
-	srand(0); //Actually Seed later
+	srand(time(NULL));
 	int pos = rand() % chickens.size();
 	Chicken c = chickens.at(pos);
 	chickens.erase(chickens.begin() + pos);
 	return c;
 }
 
-/** Get the size of the Coop*/
 int Coop::getSize() {
 	return chickens.size();
 }
 
-/** Clear the coop of all Chickens*/
 void Coop::clear() {
 	chickens.clear();
 }
 
-/** Fill the coop with Chickens */
 void Coop::fill(vector <Chicken> c) {
 	//TODO just use a pointer to c instead
 	for (Chicken &ch : c) {
