@@ -1,4 +1,6 @@
 /** The header file for Chickens */
+#ifndef __CHICKEN_H__
+#define __CHICKEN_H__
 #include <cugl/cugl.h>
 
 // TODO:: Entity Component elements and specials.
@@ -70,3 +72,5 @@ class Chicken{
 		/** Set a Chicken's element to e, special to s, and damage to d */
 		void setChicken(element e, special s, int d);
 };
+
+#endif /* __CHICKEN_H__ */

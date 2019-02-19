@@ -188,6 +188,7 @@
     <ClInclude Include="..\..\source\Chicken.h" />
     <ClInclude Include="..\..\source\CluckApp.h" />
     <ClInclude Include="..\..\source\Coop.h" />
+    <ClInclude Include="..\..\source\Decks.h" />
     <ClInclude Include="..\..\source\HelloApp.h" />
     <ClInclude Include="..\..\source\Moose.h" />
     <ClInclude Include="resource.h" />

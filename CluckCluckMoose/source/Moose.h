@@ -1,4 +1,6 @@
-/** The header file for Coops*/
+/** The header file for Moose*/
+#ifndef __MOOSE_H__
+#define __MOOSE_H__
 #include <cugl/cugl.h>
 
 #include "Coop.h"
@@ -53,3 +55,5 @@ class Moose {
 		/** The moose loses $damage$ points of health*/
 		void takeDamage(int damage);
 };
+
+#endif /* __MOOSE_H__ */

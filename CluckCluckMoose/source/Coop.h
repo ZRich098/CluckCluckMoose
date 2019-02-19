@@ -1,4 +1,7 @@
 /** The header file for Coops*/
+
+#ifndef __COOP_H__
+#define __COOP_H__
 #include <cugl/cugl.h>
 
 #include "Chicken.h"
@@ -27,3 +30,5 @@ class Coop {
 		/** Add the c Chickens to the Coop */
 		void fill(vector <Chicken> c);
 };
+
+#endif /* __COOP_H__ */
