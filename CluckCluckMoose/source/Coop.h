@@ -11,8 +11,9 @@ class Coop {
 		//Constructor
 		/** Create a new Coop*/
 		Coop();
-		/** Fill the coop with Chickens */
-		void refresh();
+		/** Fill the coop with Chickens, defaulting to deckV4 */
+		void loadDeck();
+		void loadDeck(int versionNumber);
 
 		//Access
 		/** Get the size of the Coop*/

@@ -56,6 +56,7 @@ string eString(element e) {
 		case element::TieAll:
 		case element::WinAll:
 		case element::LoseAll:
+		case element::Unset:
 			return "";
 	}	
 }
@@ -92,6 +93,14 @@ string sString(special s) {
 			return "Bomb";
 		case special::Search:
 			return "Poultry Pals";
+		case special::Clash:
+			return "Angry";
+		case special::Discard:
+			return "Lich-en";
+		case special::SelfSwap:
+			return "Scientist";
+		case special::CycleAll:
+			return "Alchemist";
 	}
 }
 
@@ -125,8 +134,16 @@ string sStringLong(special s) {
 			return "Play the top chicken in your deck on top of this one";
 		case special::Bomb:
 			return "Loses to everything.  Deal 2 damage to the enemy Moose.  If negated, become a Basic Fire Chicken";
-		case special::PoultryPals:
-			return "Reveal cards from your deck until you reveal a Fire chicken.  Add that card to your hand and reshuffle the rest.  If no chicken is revealed, end this effect and reshuffle";
+		case special::Search:
+			return "Reveal cards from your deck until you reveal a Fire Chicken.  Add that Chicken to your Coop and reshuffle the rest.  If no chicken is revealed, end this effect and reshuffle";
+		case special::Clash:
+			return "Trigger a Clash";
+		case special::Discard:
+			return "Your opponent discards a Chicken";
+		case special::SelfSwap:
+			return "Swap this Chicken with the Chicken below it";
+		case special::CycleAll:
+			return "Cycle all your Chickens except this one (Fire -> Water -> Grass -> Fire)";
 	}
 }
 

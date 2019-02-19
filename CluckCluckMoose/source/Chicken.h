@@ -8,7 +8,8 @@ enum class element {
 	Grass,	//Paper
 	LoseAll, 
 	WinAll, 
-	TieAll 
+	TieAll,
+	Unset	//Not set until stack time
 };
 
 enum class special { 
@@ -26,7 +27,11 @@ enum class special {
 	Cycle, //Cycle element of chicken underneath
 	Extra, //Play top chicken on deck as well
 	Bomb, //Loses to everything but deals 2 damage
-	Search //Search for a fire chicken and draw it
+	Search, //Search for a fire chicken and draw it
+	Clash, //Immediately trigger combat
+	Discard, //Opponent Discards a card
+	SelfSwap, //Swap with Chicken immediately below
+	CycleAll //Cycle all your Chickens except this one
 }; 
 
 
