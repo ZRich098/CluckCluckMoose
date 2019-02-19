@@ -5,13 +5,26 @@
 #include <vector>
 
 #include "Moose.h"
-#include "Coop.h"
-#include "Chicken.h"
 
+using namespace cugl;
 
-using namespace std;
-
-/** Create a new Coop*/
+/** Create a new Moose*/
 Moose::Moose() {
+	health = 5;
+}
 
+
+/** Get the current health of the Moose*/
+int Moose::getHealth() {
+	return health;
+}
+
+/** Set the current health of the Moose*/
+void Moose::setHealth(int h) {
+	health = h;
+}
+
+/** The moose loses $damage$ points of health*/
+void Moose::takeDamage(int damage) {
+	health = health - damage;
 }

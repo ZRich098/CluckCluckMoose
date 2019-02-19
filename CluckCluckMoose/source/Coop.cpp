@@ -5,9 +5,8 @@
 #include <vector>
 
 #include "Coop.h"
-#include "Chicken.h"
 
-using namespace std;
+using namespace cugl;
 
 /** Create a new Coop*/
 Coop::Coop() {

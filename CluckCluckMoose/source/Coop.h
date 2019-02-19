@@ -1,6 +1,8 @@
 /** The header file for Coops*/
 #include <cugl/cugl.h>
 
+#include "Chicken.h"
+
 /** The Deck of Chickens */
 class Coop {
 	private:

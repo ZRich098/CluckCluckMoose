@@ -6,7 +6,7 @@
 
 #include "Chicken.h"
 
-using namespace std;
+using namespace cugl;
 
 /** Create a new Chicken*/
 Chicken::Chicken() {
