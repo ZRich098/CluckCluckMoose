@@ -2,28 +2,54 @@
 #include <cugl/cugl.h>
 
 // TODO:: Entity Component elements and specials.
-enum class element { None, Fire, Water, Grass };
+enum class element { 
+	Fire,	//Rock
+	Water,	//Scissors
+	Grass,	//Paper
+	LoseAll, 
+	WinAll, 
+	TieAll 
+};
 
-enum class special { None,
-					Draw, // Draw a Card
-					Thicken, //Swap with bottom chicken
-					Mirror, //Become opposing chicken
-					Null, //Nullify opposing chicken
-					Reaper, //Ties with all chickens
-					Cycle }; //Cycle chicken underneath
+enum class special { 
+	None, //No Special Ability
+	Reaper, //Ties with all chickens
+	Draw, // Draw a Card
+	Ninja, // Swap opponent top and bottom
+	Refresh, //Refresh your hand
+	Null, //Nullify opposing chicken
+	Thicken, //Drop to bottom of stack
+	Mirror, //Become opposing chicken
+	Hide, //Hide your next chicken played
+	Peek, //Peek at an opponent chicken
+	Draw2, //Draw 2 but lose to all chickens
+	Cycle, //Cycle element of chicken underneath
+	Extra, //Play top chicken on deck as well
+	Bomb, //Loses to everything but deals 2 damage
+	Search //Search for a fire chicken and draw it
+}; 
+
+
+/** String representation of the element*/
+string eString(element e);
+/** String representation of the special ability*/
+string sString(special s);
+/** Description of the special ability*/
+string sStringLong(special s);
 
 class Chicken{
 	private:
 		element e;
-		string eString(element e);
 		special s;
-		string sString(special s);
+		int damage;
 	public:
 		//Constructor
 		/** Create a new Chicken*/
 		Chicken();
 		/** Create a Chicken of element e and special ability s */
 		Chicken(element e, special s);
+		/** Create a Chicken of element e and special ability s that deals damage d */
+		Chicken(element e, special s, int d);
 
 		//Access
 		/** Returns the element of the Chicken */
@@ -34,6 +60,8 @@ class Chicken{
 		string toString();
 
 		//Modify
-		/** Set a Chicken's element to e and special to s */
+		/** Set a Chicken's element to e, special to s, and damage to 1 */
 		void setChicken(element e, special s);
+		/** Set a Chicken's element to e, special to s, and damage to d */
+		void setChicken(element e, special s, int d);
 };
