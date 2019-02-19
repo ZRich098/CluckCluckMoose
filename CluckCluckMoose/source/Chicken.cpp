@@ -36,7 +36,7 @@ string Chicken::getSpecial() {
 }
 
 /** Returns a string of the Chicken's details */
-string Chicken::getChicken() {
+string Chicken::toString() {
     if(!special.compare("None")) { //If Chicken special is none
         return "Basic " + element + " Chicken. ";
 	}

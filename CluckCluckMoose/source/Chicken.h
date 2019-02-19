@@ -16,10 +16,15 @@ class Chicken{
 		string element;
 		string special;
 	public:
+		//Constructor
 		Chicken();
 		Chicken(string e, string s);
-		void setChicken(string e, string s);
+
+		//Access
 		string getElement();
 		string getSpecial();
-		string getChicken();
+		string toString();
+
+		//Modify
+		void setChicken(string e, string s);
 };

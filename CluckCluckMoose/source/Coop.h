@@ -8,7 +8,15 @@ class Coop {
 	private:
 		vector <Chicken> chickens;
 	public:
+		//Constructor
 		Coop();
-		Chicken draw();
+		void refresh();
+
+		//Access
 		int getSize();
+
+		//Modify
+		Chicken draw();
+		void clear();
+		void fill(vector <Chicken> c);
 };
