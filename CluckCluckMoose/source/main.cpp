@@ -28,14 +28,9 @@
 //  Version: 7/1/16
 
 // Include your application class
-#include "CluckApp.h"
+#include "PDApp.h"
 
-// This keeps us from having to write cugl:: all the time
 using namespace cugl;
-
-// These really only apply if the game is windowed (not on mobile device)
-#define GAME_WIDTH 1024
-#define GAME_HEIGHT 576
 
 /**
  * The main entry point of any CUGL application.
@@ -48,31 +43,29 @@ using namespace cugl;
  */
 int main(int argc, char * argv[]) {
     // Change this to your application class
-    CluckApp app;
+    PolyApp app;
     
-    /// SET YOUR APPLICATION PROPERTIES
-    
-    // The unique application name
-    app.setName("Cluck Cluck Moose");
-    
-    // The name of your studio (for organizing save files)
+    // Set the properties of your application
+    app.setName("Poly Demo");
     app.setOrganization("GDIAC");
-
-    // Set the window properties (Only applies to OS X/Windows Desktop)
-    app.setSize(GAME_WIDTH, GAME_HEIGHT);
-    app.setFPS(60.0f);
     app.setHighDPI(true);
+#if CU_PLATFORM == CU_PLATFORM_MACOS || CU_PLATFORM == CU_PLATFORM_WINDOWS
+    app.setMultiSampled(true);
+#endif
+
+    //app.setFullscreen(true);
+    app.setSize(1024, 576);
+    app.setFPS(60.0f);
     
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
     if (!app.init()) {
         return 1;
     }
     
-    // Run the application until completion
     app.onStartup();
     while (app.step());
     app.onShutdown();
-    
+
     exit(0);    // Necessary to quit on mobile devices
     return 0;   // This line is never reached
 }

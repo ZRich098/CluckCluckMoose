@@ -1,31 +1,120 @@
 {
 	"textures": {
-		"claw": {
-			"file":     "textures/Claw.png",
-			"minfilter":"nearest",
-			"magfilter":"linear",
-			"wrapS":    "clamp",
-			"wrapT":    "clamp"
+		"earth1": {
+			"file":      "textures/earthtile1.png",
+            "wrapS":     "repeat",
+            "wrapT":     "repeat"
 		},
-		"close-normal": {
-			"file":     "textures/CloseNormal.png",
-			"minfilter":"nearest",
-			"magfilter":"linear",
-			"wrapS":    "clamp",
-			"wrapT":    "clamp"
-		},
-		"close-selected": {
-			"file":     "textures/CloseSelected.png",
-			"minfilter":"nearest",
-			"magfilter":"linear",
-			"wrapS":    "clamp",
-			"wrapT":    "clamp"
-		}
+        "earth2": {
+            "file":      "textures/earthtile2.png",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "cornell": {
+            "file":      "textures/cornell.png",
+            "minfilter": "linear",
+            "magfilter": "linear"
+        }
 	},
 	"fonts": {
-		"charlemagne": {
-			"file":     "fonts/Charlemagne.ttf",
+		"felt": {
+			"file":     "fonts/MarkerFelt.ttf",
 			"size":     64
 		}
-	}
+	},
+    "scenes" : {
+        "world": {
+            "type"      : "Node",
+            "data" : {
+                "size"   : [2048,2048],
+                "anchor" : [0.5,0.5]
+            },
+            "children":  {
+                "message" : {
+                    "type":    "Label",
+                    "comment": "This displays a line of uneditable text",
+                    "data": {
+                        "font"       : "felt",
+                        "text"       : "Pan (two fingers) to scroll.",
+                        "position"   : [1024,1024],
+                        "anchor"     : [0.5,0.5],
+                        "valign"     : "middle",
+                        "halign"     : "left"
+                    }
+                },
+                "image" : {
+                    "type":    "Polygon",
+                    "comment": "This displays an image cicumscribed in a circle of the same size",
+                    "data": {
+                        "texture"    : "cornell",
+                        "position"   : [512,1280],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80]
+                    }
+                },
+                "tiled" : {
+                    "type":    "Polygon",
+                    "comment": "This displays a tiled image in a larger circle",
+                    "data": {
+                        "texture"    : "earth1",
+                        "position"   : [1024,1280],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80]
+                    }
+                },
+                "clamped" : {
+                    "type":    "Polygon",
+                    "comment": "This displays a clamped image in a larger circle",
+                    "data": {
+                        "texture"    : "earth2",
+                        "position"   : [1563,1280],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80]
+                    }
+                },
+                "wires" : {
+                    "type":    "Wireframe",
+                    "comment": "This displays a wireframe traversal of the polygon",
+                    "data": {
+                        "position"   : [512,768],
+                        "color"      : [255,255,0,255],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80],
+                        "traversal"  : "interior"
+                    }
+                },
+                "joints" : {
+                    "type":    "Path",
+                    "comment": "This displays an extruded path with beveled joints",
+                    "data": {
+                        "texture"    : "earth1",
+                        "position"   : [1024,768],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80],
+                        "joint"      : "bevel",
+                        "closed"     : false,
+                        "stroke"     : 10
+                    }
+                },
+                "broken" : {
+                    "type":    "Path",
+                    "comment": "This displays an extruded path with no joints",
+                    "data": {
+                        "texture"    : "earth1",
+                        "position"   : [1563,768],
+                        "anchor"     : [0.5,0.5],
+                        "polygon"    : [320, 160, 298.56, 240.0, 240.0, 298.56, 160, 320, 80, 298.56,
+                                        21.44, 240, 0, 160, 21.44, 80, 80, 21.44, 160, 0, 240, 21.44, 298.56, 80],
+                        "cap"        : "round",
+                        "closed"     : false,
+                        "stroke"     : 10
+                    }
+                }            }
+        }
+    }
 }

@@ -35,13 +35,13 @@ LOCAL_SRC_FILES := \
 	$(wildcard $(CUGL_PATH)/lib/2d/physics/*.cpp) \
 	$(wildcard $(CUGL_PATH)/lib/ai/behavior/*.cpp) \
 	$(wildcard $(CUGL_PATH)/external/cJSON/*.c) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Collision/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Collision/Shapes/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Common/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Dynamics/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Dynamics/Contacts/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Dynamics/Joints/*.cpp) \
-	$(wildcard $(CUGL_PATH)/external/box2d/Box2D/Rope/*.cpp))
+	$(wildcard $(CUGL_PATH)/external/Box2D/Collision/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Collision/Shapes/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Common/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Dynamics/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Dynamics/Contacts/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Dynamics/Joints/*.cpp) \
+	$(wildcard $(CUGL_PATH)/external/Box2D/Rope/*.cpp))
 
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES
 

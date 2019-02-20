@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,5 +39,4 @@
     <resources>
         <image name="LandscapeLogo" width="480" height="320"/>
     </resources>
-    <color key="tintColor" red="0.89806735515594482" green="0.89803111553192139" blue="0.89804643392562866" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
