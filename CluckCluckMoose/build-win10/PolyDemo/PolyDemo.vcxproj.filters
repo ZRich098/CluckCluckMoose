@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\PolyDemo">
+      <UniqueIdentifier>{fe13b3eb-71d4-49ce-9e6b-81af95fe95c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chicken">
+      <UniqueIdentifier>{f57cccfd-dc78-4e20-a451-c718edbe5bba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\HelloApp.h">
@@ -22,16 +28,28 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\PDApp.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\PDGameScene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\PDInput.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\PDLoadingScene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Chicken.h">
+      <Filter>Source Files\Chicken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Coop.h">
+      <Filter>Source Files\Chicken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Decks.h">
+      <Filter>Source Files\Chicken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Moose.h">
+      <Filter>Source Files\Chicken</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,16 +57,25 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\PDApp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\PDGameScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\PDInput.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\PDLoadingScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PolyDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Chicken.cpp">
+      <Filter>Source Files\Chicken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Coop.cpp">
+      <Filter>Source Files\Chicken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Moose.cpp">
+      <Filter>Source Files\Chicken</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
