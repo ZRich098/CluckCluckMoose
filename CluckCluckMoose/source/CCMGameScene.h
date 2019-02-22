@@ -14,7 +14,7 @@
 #include <cugl/cugl.h>
 #include <unordered_map>
 
-#include "Chicken.h"
+#include "CCMInput.h"
 
 /**
  * A scene for demoing a layout manager
@@ -23,6 +23,8 @@ class GameScene : public cugl::Scene {
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
+    
+    CCMInput _input;
     
     std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
     

@@ -13,7 +13,7 @@
 using namespace cugl;
 
 /** The ID for the button listener */
-#define LISTENER_ID 5
+#define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
@@ -39,6 +39,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
     
     _assets = assets;
+    _input.init();
     auto layer = assets->get<Node>("game");
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
@@ -48,11 +49,13 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<FloatLayout> layout = std::dynamic_pointer_cast<FloatLayout>(layer->getLayout());
     
     for(auto it = kids.begin(); it != kids.end(); ++it) {
-        std::shared_ptr<Button> butt = std::dynamic_pointer_cast<Button>(*it);
-        _buttons[butt->getName()] = butt;
-        butt->setListener([=](const std::string& name, bool down) {
+        std::shared_ptr<Button> buttn = std::dynamic_pointer_cast<Button>(*it);
+        _buttons[buttn->getName()] = buttn;
+        buttn->setListener([=](const std::string& name, bool down) {
             if (down) {
-                CULog("%s\n", butt->getName().c_str());
+                buttn->setColor(GL_BLUE);
+                CULog("%s\n", buttn->getName().c_str());
+                CULog("(%f, %f)\n", _input.getCurTouch().x, _input.getCurTouch().y);
             }
         });
     }
@@ -69,6 +72,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
  */
 void GameScene::dispose() {
     _assets = nullptr;
+    _input.dispose();
     _buttons.clear();
     Scene::dispose();
 }

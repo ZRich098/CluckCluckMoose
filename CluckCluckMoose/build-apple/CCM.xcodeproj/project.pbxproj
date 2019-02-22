@@ -141,7 +141,7 @@
 		375E32DE221F42EB0010F98D /* Moose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moose.h; sourceTree = "<group>"; };
 		375E32DF221F42EB0010F98D /* Chicken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chicken.cpp; sourceTree = "<group>"; };
 		EB0FF5082016E4A700517030 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		EB0FF5FC2016EF4F00517030 /* PolyDemo (Sim).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolyDemo (Sim).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB0FF5FC2016EF4F00517030 /* CCM (Sim).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CCM (Sim).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE9B41D74952A002FE78B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EB2BE9B81D7498C9002FE78B /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		EB2BE9BA1D7498D2002FE78B /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
@@ -175,12 +175,12 @@
 		EB4266BE21F6927E00A9DE61 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		EB4266CD21F692DD00A9DE61 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		EB4EB19D1E3404F3007BCF09 /* CUGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CUGL.xcodeproj; path = "../cugl/build-apple/CUGL.xcodeproj"; sourceTree = "<group>"; };
-		EB74548C1D74D75C002FBAE6 /* PolyDemo (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolyDemo (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB74548C1D74D75C002FBAE6 /* CCM (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CCM (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7454A61D74D846002FBAE6 /* iOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iOS-Info.plist"; sourceTree = "<group>"; };
 		EB7454A71D74D846002FBAE6 /* iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = iOS.xcassets; sourceTree = "<group>"; };
 		EB7454A81D74D846002FBAE6 /* Landscape.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Landscape.storyboard; sourceTree = "<group>"; };
 		EB7454A91D74D846002FBAE6 /* Portrait.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Portrait.storyboard; sourceTree = "<group>"; };
-		EBBF18911D74904A008E2001 /* PolyDemo (Mac).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolyDemo (Mac).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBBF18911D74904A008E2001 /* CCM (Mac).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CCM (Mac).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBF189A1D74904A008E2001 /* Mac.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Mac.xcassets; sourceTree = "<group>"; };
 		EBBF189F1D74904A008E2001 /* Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mac-Info.plist"; sourceTree = "<group>"; };
 		EBC147141E27F07C005494CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -354,9 +354,9 @@
 		EBBF18921D74904A008E2001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EBBF18911D74904A008E2001 /* PolyDemo (Mac).app */,
-				EB74548C1D74D75C002FBAE6 /* PolyDemo (iOS).app */,
-				EB0FF5FC2016EF4F00517030 /* PolyDemo (Sim).app */,
+				EBBF18911D74904A008E2001 /* CCM (Mac).app */,
+				EB74548C1D74D75C002FBAE6 /* CCM (iOS).app */,
+				EB0FF5FC2016EF4F00517030 /* CCM (Sim).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -402,9 +402,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EB0FF5FB2016EF4F00517030 /* PolyDemo (Sim) */ = {
+		EB0FF5FB2016EF4F00517030 /* CCM (Sim) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EB0FF6162016EF4F00517030 /* Build configuration list for PBXNativeTarget "PolyDemo (Sim)" */;
+			buildConfigurationList = EB0FF6162016EF4F00517030 /* Build configuration list for PBXNativeTarget "CCM (Sim)" */;
 			buildPhases = (
 				EB0FF5F82016EF4F00517030 /* Sources */,
 				EB0FF5F92016EF4F00517030 /* Frameworks */,
@@ -414,14 +414,14 @@
 			);
 			dependencies = (
 			);
-			name = "PolyDemo (Sim)";
+			name = "CCM (Sim)";
 			productName = "HelloWorld (Sim)";
-			productReference = EB0FF5FC2016EF4F00517030 /* PolyDemo (Sim).app */;
+			productReference = EB0FF5FC2016EF4F00517030 /* CCM (Sim).app */;
 			productType = "com.apple.product-type.application";
 		};
-		EB74548B1D74D75C002FBAE6 /* PolyDemo (iOS) */ = {
+		EB74548B1D74D75C002FBAE6 /* CCM (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EB7454A01D74D75C002FBAE6 /* Build configuration list for PBXNativeTarget "PolyDemo (iOS)" */;
+			buildConfigurationList = EB7454A01D74D75C002FBAE6 /* Build configuration list for PBXNativeTarget "CCM (iOS)" */;
 			buildPhases = (
 				EB7454881D74D75C002FBAE6 /* Sources */,
 				EB7454891D74D75C002FBAE6 /* Frameworks */,
@@ -431,14 +431,14 @@
 			);
 			dependencies = (
 			);
-			name = "PolyDemo (iOS)";
+			name = "CCM (iOS)";
 			productName = "HelloWorld (iOS)";
-			productReference = EB74548C1D74D75C002FBAE6 /* PolyDemo (iOS).app */;
+			productReference = EB74548C1D74D75C002FBAE6 /* CCM (iOS).app */;
 			productType = "com.apple.product-type.application";
 		};
-		EBBF18901D74904A008E2001 /* PolyDemo (Mac) */ = {
+		EBBF18901D74904A008E2001 /* CCM (Mac) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBBF18A21D74904A008E2001 /* Build configuration list for PBXNativeTarget "PolyDemo (Mac)" */;
+			buildConfigurationList = EBBF18A21D74904A008E2001 /* Build configuration list for PBXNativeTarget "CCM (Mac)" */;
 			buildPhases = (
 				EBBF188D1D74904A008E2001 /* Sources */,
 				EBBF188E1D74904A008E2001 /* Frameworks */,
@@ -448,9 +448,9 @@
 			);
 			dependencies = (
 			);
-			name = "PolyDemo (Mac)";
+			name = "CCM (Mac)";
 			productName = "HelloWorld (Mac)";
-			productReference = EBBF18911D74904A008E2001 /* PolyDemo (Mac).app */;
+			productReference = EBBF18911D74904A008E2001 /* CCM (Mac).app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -477,7 +477,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EBBF188C1D74904A008E2001 /* Build configuration list for PBXProject "PolyDemo" */;
+			buildConfigurationList = EBBF188C1D74904A008E2001 /* Build configuration list for PBXProject "CCM" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -496,9 +496,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				EBBF18901D74904A008E2001 /* PolyDemo (Mac) */,
-				EB74548B1D74D75C002FBAE6 /* PolyDemo (iOS) */,
-				EB0FF5FB2016EF4F00517030 /* PolyDemo (Sim) */,
+				EBBF18901D74904A008E2001 /* CCM (Mac) */,
+				EB74548B1D74D75C002FBAE6 /* CCM (iOS) */,
+				EB0FF5FB2016EF4F00517030 /* CCM (Sim) */,
 			);
 		};
 /* End PBXProject section */
@@ -646,6 +646,7 @@
 				LIBRARY_SEARCH_PATHS = "$(STATIC_LIB)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.sim.PolyDemo;
+				PRODUCT_NAME = "CCM (Sim)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -679,6 +680,7 @@
 				LIBRARY_SEARCH_PATHS = "$(STATIC_LIB)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.sim.PolyDemo;
+				PRODUCT_NAME = "CCM (Sim)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -704,6 +706,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_NAME = "CCM (iOS)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -727,6 +730,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_NAME = "CCM (iOS)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -856,6 +860,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_NAME = "CCM (Mac)";
 			};
 			name = Debug;
 		};
@@ -869,13 +874,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_NAME = "CCM (Mac)";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EB0FF6162016EF4F00517030 /* Build configuration list for PBXNativeTarget "PolyDemo (Sim)" */ = {
+		EB0FF6162016EF4F00517030 /* Build configuration list for PBXNativeTarget "CCM (Sim)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EB0FF60F2016EF4F00517030 /* Debug */,
@@ -884,7 +890,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EB7454A01D74D75C002FBAE6 /* Build configuration list for PBXNativeTarget "PolyDemo (iOS)" */ = {
+		EB7454A01D74D75C002FBAE6 /* Build configuration list for PBXNativeTarget "CCM (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EB7454A11D74D75C002FBAE6 /* Debug */,
@@ -893,7 +899,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBBF188C1D74904A008E2001 /* Build configuration list for PBXProject "PolyDemo" */ = {
+		EBBF188C1D74904A008E2001 /* Build configuration list for PBXProject "CCM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBBF18A01D74904A008E2001 /* Debug */,
@@ -902,7 +908,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBBF18A21D74904A008E2001 /* Build configuration list for PBXNativeTarget "PolyDemo (Mac)" */ = {
+		EBBF18A21D74904A008E2001 /* Build configuration list for PBXNativeTarget "CCM (Mac)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBBF18A31D74904A008E2001 /* Debug */,

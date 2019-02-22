@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EBBF18901D74904A008E2001"
-               BuildableName = "PolyDemo (Mac).app"
-               BlueprintName = "PolyDemo (Mac)"
-               ReferencedContainer = "container:PolyDemo.xcodeproj">
+               BlueprintIdentifier = "EB0FF5FB2016EF4F00517030"
+               BuildableName = "CCM (Sim).app"
+               BlueprintName = "CCM (Sim)"
+               ReferencedContainer = "container:CCM.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBBF18901D74904A008E2001"
-            BuildableName = "PolyDemo (Mac).app"
-            BlueprintName = "PolyDemo (Mac)"
-            ReferencedContainer = "container:PolyDemo.xcodeproj">
+            BlueprintIdentifier = "EB0FF5FB2016EF4F00517030"
+            BuildableName = "CCM (Sim).app"
+            BlueprintName = "CCM (Sim)"
+            ReferencedContainer = "container:CCM.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBBF18901D74904A008E2001"
-            BuildableName = "PolyDemo (Mac).app"
-            BlueprintName = "PolyDemo (Mac)"
-            ReferencedContainer = "container:PolyDemo.xcodeproj">
+            BlueprintIdentifier = "EB0FF5FB2016EF4F00517030"
+            BuildableName = "CCM (Sim).app"
+            BlueprintName = "CCM (Sim)"
+            ReferencedContainer = "container:CCM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBBF18901D74904A008E2001"
-            BuildableName = "PolyDemo (Mac).app"
-            BlueprintName = "PolyDemo (Mac)"
-            ReferencedContainer = "container:PolyDemo.xcodeproj">
+            BlueprintIdentifier = "EB0FF5FB2016EF4F00517030"
+            BuildableName = "CCM (Sim).app"
+            BlueprintName = "CCM (Sim)"
+            ReferencedContainer = "container:CCM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
