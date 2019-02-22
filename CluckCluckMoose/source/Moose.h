@@ -17,7 +17,9 @@ class Moose {
 	public:
 		//Constructor
 		/** Create a new Moose*/
-		Moose();
+		Moose(int health = 5, int handsize = 5);
+		/** Destroys the Moose*/
+		~Moose();
 
 		//Access
 		/** Get the current pecking order of the Moose*/

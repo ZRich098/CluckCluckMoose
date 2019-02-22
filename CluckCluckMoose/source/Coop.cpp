@@ -13,8 +13,8 @@ Coop::Coop() {
 	loadDeck();
 }
 
-void Coop::loadDeck() {
-	loadDeck(4);
+Coop::~Coop() {
+	CULog("Coop Destroyed");
 }
 
 void Coop::loadDeck(int versionNumber) {
@@ -37,12 +37,20 @@ void Coop::loadDeck(int versionNumber) {
 		return;
 	}
 }
-
 Chicken Coop::draw() {
-	srand(time(NULL));
-	int pos = rand() % chickens.size();
-	Chicken c = chickens.at(pos);
-	chickens.erase(chickens.begin() + pos);
+	if (chickens.empty()) {
+		loadDeck();
+		random_shuffle(chickens.begin(), chickens.end());
+		shuffled = true;
+	}
+	if (!shuffled) {
+		random_shuffle(chickens.begin(), chickens.end());
+		shuffled = true;
+	}
+	Chicken c = chickens.back();
+	CULog("chicken %s, deck size %i", c.toString(), chickens.size());	//CULog("Chicken at %i is %s", pos, c.toString());
+	chickens.pop_back();
+	//CULog("chicken %s", c, chickens.size());	//CULog("Chicken at %i is %s", pos, c.toString());
 	return c;
 }
 

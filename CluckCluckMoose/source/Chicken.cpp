@@ -8,26 +8,14 @@
 
 using namespace cugl;
 
-Chicken::Chicken() {
-	Chicken(element::TieAll, special::None, 0);
-}
-
-Chicken::Chicken(element el, special sp) {
-	e = el;
-	s = sp;
-	damage = 1;
-}
-
 Chicken::Chicken(element el, special sp, int d) {
 	e = el;
 	s = sp;
 	damage = d;
 }
 
-void Chicken::setChicken(element el, special sp) {
-	e = el;
-	s = sp;
-	damage = 1;
+Chicken::~Chicken() {
+	CULog("Destroyed %s.", this->toString().c_str());
 }
 
 void Chicken::setChicken(element el, special sp, int d) {

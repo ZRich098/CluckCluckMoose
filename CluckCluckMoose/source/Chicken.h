@@ -50,12 +50,10 @@ class Chicken{
 		int damage;
 	public:
 		//Constructor
-		/** Create a new Chicken*/
-		Chicken();
-		/** Create a Chicken of element e and special ability s */
-		Chicken(element e, special s);
 		/** Create a Chicken of element e and special ability s that deals damage d */
-		Chicken(element e, special s, int d);
+		Chicken(element e = element::TieAll, special s = special::None, int d = 1);
+		/** Destroys the Chicken*/
+		~Chicken();
 
 		//Access
 		/** Returns the element of the Chicken */
@@ -66,10 +64,8 @@ class Chicken{
 		string toString();
 
 		//Modify
-		/** Set a Chicken's element to e, special to s, and damage to 1 */
-		void setChicken(element e, special s);
 		/** Set a Chicken's element to e, special to s, and damage to d */
-		void setChicken(element e, special s, int d);
+		void setChicken(element e, special s, int d = 1);
 };
 
 #endif /* __CHICKEN_H__ */
