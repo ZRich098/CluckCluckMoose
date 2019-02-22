@@ -8,28 +8,8 @@
 
 using namespace cugl;
 
-Chicken::Chicken(element el, special sp, int d) {
-	e = el;
-	s = sp;
-	damage = d;
-}
-
 Chicken::~Chicken() {
 	CULog("Destroyed %s.", this->toString().c_str());
-}
-
-void Chicken::setChicken(element el, special sp, int d) {
-	e = el;
-	s = sp;
-	damage = d;
-}
-
-element Chicken::getElement() {
-	return e;
-}
-
-special Chicken::getSpecial() {
-	return s;
 }
 
 string eString(element e) {
@@ -135,7 +115,7 @@ string sStringLong(special s) {
 	}
 }
 
-string Chicken::toString() {
+string Chicken::toString() const {
 	stringstream ss;
     if(s == special::None) { //If Chicken special is none
 		ss << "Basic " << eString(e) << " Chicken";
@@ -143,4 +123,36 @@ string Chicken::toString() {
 		ss << sString(s) << " " + eString(e) << " Chicken";
 	}
 	return ss.str();
+}
+
+int Chicken::compare(const Chicken& other) const {
+	if (e == element::Unset || other.e == element::Unset) {
+		CULogError("Unset element exception: %s and %s cannot be compared", toString(), other.toString());
+	}
+
+	//All ties
+	if (e == other.e || e == element::TieAll || other.e == element::TieAll) return 0;
+
+	switch (other.e) {
+		case element::WinAll:
+			return 1;
+		case element::LoseAll:
+			return -1;
+	}
+
+	switch (e) {
+		case element::WinAll:
+			return 1;
+		case element::LoseAll:
+			return -1;
+		case element::Fire:
+			return other.e == element::Grass ? 1 : -1;
+		case element::Water:
+			return other.e == element::Fire ? 1 : -1;
+		case element::Grass:
+			return other.e == element::Water ? 1 : -1;
+	}
+
+	//Never reached
+	return 0;
 }

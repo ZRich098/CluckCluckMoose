@@ -29,7 +29,7 @@
 
 // Include your application class
 #include "CCMApp.h"
-#include "Coop.h"
+#include "Chicken.h"
 
 using namespace cugl;
 
@@ -73,8 +73,9 @@ int main(int argc, char * argv[]) {
 */
 
 int main(int argc, char * argv[]) {
-	Coop c;
+	Chicken c(element::Fire, special::None);
+	CULog(c.toString().c_str());
 
-	CULog(c.draw().toString().c_str());
+
 	return 0;
 }

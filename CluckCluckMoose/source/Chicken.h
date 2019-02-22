@@ -49,23 +49,47 @@ class Chicken{
 		special s;
 		int damage;
 	public:
-		//Constructor
+		//Constructors
 		/** Create a Chicken of element e and special ability s that deals damage d */
-		Chicken(element e = element::TieAll, special s = special::None, int d = 1);
+		Chicken(element el = element::TieAll, special sp = special::None, int d = 1) {
+			e = el;
+			s = sp;
+			damage = d;
+		}
+		/** Copy Constructor*/
+		Chicken(const Chicken& c) {
+			e = c.e;
+			s = c.s;
+			damage = c.damage;
+		}
 		/** Destroys the Chicken*/
 		~Chicken();
 
 		//Access
 		/** Returns the element of the Chicken */
-		element getElement();
+		element const getElement() const { return e; };
 		/** Returns the special ability of the Chicken */
-		special getSpecial();
+		special const getSpecial() const { return s; };
 		/** Returns a string of the Chicken's details */
-		string toString();
+		string toString() const;
 
 		//Modify
+		/** Sets the element of the Chicken */
+		element setElement(element el) { e = el; };
+		/** Sets the special ability of the Chicken */
+		element setSpecial(special sp) { s = sp; };
 		/** Set a Chicken's element to e, special to s, and damage to d */
-		void setChicken(element e, special s, int d = 1);
+		void setChicken(element el, special sp, int d = 1) {
+			e = el;
+			s = sp;
+			damage = d;
+		}
+
+		/** Compares this chicken with another chicken
+			returns -1 if defeated by other chicken
+			returns 0  if ties with other chicken
+			returns 1  if defeats the other chicken*/
+		int compare(const Chicken& other) const;
 };
 
 #endif /* __CHICKEN_H__ */
