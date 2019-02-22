@@ -1,6 +1,6 @@
 //
-//  PDApp.h
-//  Poly Demo
+//  CCMApp.h
+//  CCM Demo
 //
 //  This is the root class for your game.  The file main.cpp accesses this class
 //  to run the application.  While you could put most of your game logic in
@@ -12,16 +12,16 @@
 //  Author: Walker White and Anthony Perello
 //  Version: 1/29/17
 //
-#ifndef __PD_APP_H__
-#define __PD_APP_H__
+#ifndef __CCM_APP_H__
+#define __CCM_APP_H__
 #include <cugl/cugl.h>
-#include "PDGameScene.h"
-#include "PDLoadingScene.h"
+#include "CCMGameScene.h"
+#include "CCMLoadingScene.h"
 
 /**
  * This class represents the application root for the ship demo.
  */
-class PolyApp : public cugl::Application {
+class CCMApp : public cugl::Application {
 protected:
     /** The global sprite batch for drawing (only want one of these) */
     std::shared_ptr<cugl::SpriteBatch> _batch;
@@ -48,7 +48,7 @@ public:
      * of initialization from the constructor allows main.cpp to perform
      * advanced configuration of the application before it starts.
      */
-    PolyApp() : cugl::Application(), _loaded(false) {}
+    CCMApp() : cugl::Application(), _loaded(false) {}
     
     /**
      * Disposes of this application, releasing all resources.
@@ -57,7 +57,7 @@ public:
      * It simply calls the dispose() method in Application.  There is nothing
      * special to do here.
      */
-    ~PolyApp() { }
+    ~CCMApp() { }
     
     
 #pragma mark Application State
@@ -138,4 +138,4 @@ public:
      */
     virtual void draw() override;
 };
-#endif /* __PD_APP_H__ */
+#endif /* __CCM_APP_H__ */

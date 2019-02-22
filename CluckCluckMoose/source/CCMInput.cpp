@@ -1,6 +1,6 @@
 //
-//  PDInput.cpp
-//  Poly Demo
+//  CCMInput.cpp
+//  CCM Demo
 //
 //  This input controller is primarily designed for mouse control.  On mobile
 //  you will notice that we use a two finger pan gesture to emulate this.
@@ -12,7 +12,7 @@
 //  Author: Walker White and Anthony Perello
 //  Version: 1/29/17
 //
-#include "PDInput.h"
+#include "CCMInput.h"
 
 using namespace cugl;
 
@@ -38,7 +38,7 @@ using namespace cugl;
 * This constructor does NOT do any initialzation.  It simply allocates the
 * object. This makes it safe to use this class without a pointer.
 */
-PolyInput::PolyInput() :
+CCMInput::CCMInput() :
 	_active(false),
 	_resetPressed(false),
 	_exitPressed(false),
@@ -53,7 +53,7 @@ PolyInput::PolyInput() :
 * This method will not dispose of the input controller. It can be reused
 * once it is reinitialized.
 */
-void PolyInput::dispose() {
+void CCMInput::dispose() {
 	if (_active) {
 #ifndef CU_TOUCH_SCREEN
 		Input::deactivate<Keyboard>();
@@ -79,7 +79,7 @@ void PolyInput::dispose() {
 *
 * @return true if the controller was initialized successfully
 */
-bool PolyInput::init() {
+bool CCMInput::init() {
 	bool success = true;
 
 #ifndef CU_TOUCH_SCREEN
@@ -124,7 +124,7 @@ bool PolyInput::init() {
 * the OS, we may see multiple updates of the same touch in a single animation
 * frame, so we need to accumulate all of the data together.
 */
-void PolyInput::update(float dt) {
+void CCMInput::update(float dt) {
 #ifndef CU_TOUCH_SCREEN
 	// DESKTOP CONTROLS
 	Keyboard* keys = Input::get<Keyboard>();
@@ -156,7 +156,7 @@ void PolyInput::update(float dt) {
 /**
 * Clears any buffered inputs so that we may start fresh.
 */
-void PolyInput::clear() {
+void CCMInput::clear() {
 	_resetPressed = false;
 	_exitPressed  = false;
 
@@ -175,7 +175,7 @@ void PolyInput::clear() {
 * @param event	   The associated event
 * @param focus     Whether the listener currently has focus
 */
-void PolyInput::panEndedCB(const cugl::PanEvent& event, bool focus) {
+void CCMInput::panEndedCB(const cugl::PanEvent& event, bool focus) {
   _pandelta = Vec2::ZERO;
 }
 
@@ -185,7 +185,7 @@ void PolyInput::panEndedCB(const cugl::PanEvent& event, bool focus) {
 * @param event	   The associated event
 * @param focus     Whether the listener currently has focus
 */
-void PolyInput::panMovedCB(const cugl::PanEvent& event, bool focus) {
+void CCMInput::panMovedCB(const cugl::PanEvent& event, bool focus) {
   if (event.fingers == NUM_PAN_FINGERS) {
     _pandelta = event.delta;
     _pandelta.y *= -1.0f;
@@ -202,7 +202,7 @@ void PolyInput::panMovedCB(const cugl::PanEvent& event, bool focus) {
 * @param  clicks   The number of recent clicks, including this one
 * @parm   focus	   Whether the listener currently has focus
 */
-void PolyInput::mouseDownCB(const cugl::MouseEvent& event, Uint8 clicks, bool focus) {
+void CCMInput::mouseDownCB(const cugl::MouseEvent& event, Uint8 clicks, bool focus) {
 	_currentTouch = event.position;
 	_previousTouch = event.position;
 	_mousepan = true;
@@ -215,7 +215,7 @@ void PolyInput::mouseDownCB(const cugl::MouseEvent& event, Uint8 clicks, bool fo
 * @param  clicks   The number of recent clicks, including this one
 * @parm   focus	   Whether the listener currently has focus
 */
-void PolyInput::mouseUpCB(const cugl::MouseEvent& event, Uint8 clicks, bool focus) {
+void CCMInput::mouseUpCB(const cugl::MouseEvent& event, Uint8 clicks, bool focus) {
 	_currentTouch = event.position;
 	_previousTouch = event.position;
 	_mousepan = false;
@@ -228,7 +228,7 @@ void PolyInput::mouseUpCB(const cugl::MouseEvent& event, Uint8 clicks, bool focu
 * @param  previous The previous position of the mouse
 * @parm   focus	   Whether the listener currently has focus
 */
-void PolyInput::mouseMovedCB(const cugl::MouseEvent& event, const Vec2& previous, bool focus) {
+void CCMInput::mouseMovedCB(const cugl::MouseEvent& event, const Vec2& previous, bool focus) {
 	if (_mousepan) {
 		_currentTouch = event.position;
 	}

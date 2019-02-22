@@ -1,6 +1,6 @@
 //
-//  PDInput.cpp
-//  Poly Demo
+//  CCMInput.cpp
+//  CCM Demo
 //
 //  This input controller is primarily designed for mouse control.  On mobile
 //  you will notice that we use a two finger pan gesture to emulate this.
@@ -12,12 +12,12 @@
 //  Author: Walker White and Anthony Perello
 //  Version: 1/29/17
 //
-#ifndef __PD_INPUT_H__
-#define __PD_INPUT_H__
+#ifndef __CCM_INPUT_H__
+#define __CCM_INPUT_H__
 #include <cugl/cugl.h>
 
 /**
-* This class represents player input in the poly demo.
+* This class represents player input in the CCM demo.
 *
 * This input handler uses the CUGL input API.  It uses the polling API for
 * keyboard, but the callback API for touch.  This demonstrates a mix of ways
@@ -32,7 +32,7 @@
 * until later. This is one of the main reasons we like to avoid initialization
 * in the constructor.
 */
-class PolyInput {
+class CCMInput {
 private:
 	/** Whether or not this input is active */
 	bool _active;
@@ -69,12 +69,12 @@ public:
 	* This constructor does NOT do any initialzation.  It simply allocates the
 	* object. This makes it safe to use this class without a pointer.
 	*/
-	PolyInput(); // Don't initialize.  Allow stack based
+	CCMInput(); // Don't initialize.  Allow stack based
 
   /**
    * Disposes of this input controller, releasing all listeners.
    */
-	~PolyInput() { dispose(); }
+	~CCMInput() { dispose(); }
 
 	/**
 	* Deactivates this input controller, releasing all listeners.
@@ -130,6 +130,7 @@ public:
 	* @return The input thrust
 	*/
 	const cugl::Vec2& getPanDelta() { return _pandelta; }
+    const cugl::Vec2& getCurTouch() { return _currentTouch; }
 
 	/**
 	* Returns true if the reset button was pressed.
@@ -203,4 +204,4 @@ public:
 	void    mouseMovedCB(const cugl::MouseEvent& event, const cugl::Vec2& previous, bool focus);
 };
 
-#endif /* __PD_INPUT_H__ */
+#endif /* __CCM_INPUT_H__ */

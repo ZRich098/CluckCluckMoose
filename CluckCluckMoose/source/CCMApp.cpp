@@ -1,6 +1,6 @@
 //
-//  PDApp.cpp
-//  Poly Demo
+//  CCMApp.cpp
+//  CCM Demo
 //
 //  This is the root class for your game.  The file main.cpp accesses this class
 //  to run the application.  While you could put most of your game logic in
@@ -10,7 +10,7 @@
 //  Author: Walker White and Anthony Perello
 //  Version: 1/29/17
 //
-#include "PDApp.h"
+#include "CCMApp.h"
 
 using namespace cugl;
 
@@ -28,7 +28,7 @@ using namespace cugl;
  * very last line.  This ensures that the state will transition to FOREGROUND,
  * causing the application to run.
  */
-void PolyApp::onStartup() {
+void CCMApp::onStartup() {
     _assets = AssetManager::alloc();
     _batch  = SpriteBatch::alloc();
     
@@ -64,7 +64,7 @@ void PolyApp::onStartup() {
  * very last line.  This ensures that the state will transition to NONE,
  * causing the application to be deleted.
  */
-void PolyApp::onShutdown() {
+void CCMApp::onShutdown() {
     _loading.dispose();
     _gameplay.dispose();
     _assets = nullptr;
@@ -91,7 +91,7 @@ void PolyApp::onShutdown() {
  * Otherwise, the audio thread may persist while the application is in
  * the background.
  */
-void PolyApp::onSuspend() {
+void CCMApp::onSuspend() {
 }
 
 /**
@@ -104,7 +104,7 @@ void PolyApp::onSuspend() {
  * If you are using audio, you should use this method to resume any audio
  * paused before app suspension.
  */
-void PolyApp::onResume() {
+void CCMApp::onResume() {
 }
 
 
@@ -122,7 +122,7 @@ void PolyApp::onResume() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
  */
-void PolyApp::update(float timestep) {
+void CCMApp::update(float timestep) {
     if (!_loaded && _loading.isActive()) {
         _loading.update(0.01f);
     } else if (!_loaded) {
@@ -143,7 +143,7 @@ void PolyApp::update(float timestep) {
  * When overriding this method, you do not need to call the parent method
  * at all. The default implmentation does nothing.
  */
-void PolyApp::draw() {
+void CCMApp::draw() {
     if (!_loaded) {
         _loading.render(_batch);
     } else {

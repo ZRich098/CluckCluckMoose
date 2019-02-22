@@ -1,5 +1,5 @@
 //
-//  PDLoadingScene.h
+//  CCMLoadingScene.h
 //  Poly Demo
 //
 //  This module provides a very barebones loading screen.  Most of the time you
@@ -12,8 +12,8 @@
 //  Author: Walker White
 //  Version: 1/10/17
 //
-#ifndef __PD_LOADING_SCENE_H__
-#define __PD_LOADING_SCENE_H__
+#ifndef __CCM_LOADING_SCENE_H__
+#define __CCM_LOADING_SCENE_H__
 #include <cugl/cugl.h>
 
 
@@ -105,4 +105,4 @@ public:
     bool isPending( ) const;
 };
 
-#endif /* __PD_LOADING_SCENE_H__ */
+#endif /* __CCM_LOADING_SCENE_H__ */

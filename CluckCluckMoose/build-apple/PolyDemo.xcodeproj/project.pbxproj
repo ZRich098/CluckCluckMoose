@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
+		371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
+		371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
+		371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */; };
+		371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */; };
+		371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */; };
+		371BAF87221FCC0900EBF11E /* CCMApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7F221FCC0800EBF11E /* CCMApp.cpp */; };
+		371BAF88221FCC0900EBF11E /* CCMApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7F221FCC0800EBF11E /* CCMApp.cpp */; };
+		371BAF89221FCC0900EBF11E /* CCMApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7F221FCC0800EBF11E /* CCMApp.cpp */; };
+		371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
+		371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
+		371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
+		375E32E0221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
+		375E32E1221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
+		375E32E2221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
+		375E32E3221F42EB0010F98D /* Moose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DD221F42EB0010F98D /* Moose.cpp */; };
+		375E32E4221F42EB0010F98D /* Moose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DD221F42EB0010F98D /* Moose.cpp */; };
+		375E32E5221F42EB0010F98D /* Moose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DD221F42EB0010F98D /* Moose.cpp */; };
+		375E32E6221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
+		375E32E7221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
+		375E32E8221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
 		EB0FF5092016E4A700517030 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0FF5082016E4A700517030 /* CoreFoundation.framework */; };
 		EB0FF6172016EFB200517030 /* iOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7454A71D74D846002FBAE6 /* iOS.xcassets */; };
 		EB0FF6182016EFB200517030 /* Landscape.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB7454A81D74D846002FBAE6 /* Landscape.storyboard */; };
@@ -75,18 +96,6 @@
 		EBC147151E27F07C005494CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC147141E27F07C005494CE /* AVFoundation.framework */; };
 		EBC1471A1E27F0A8005494CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC147191E27F0A8005494CE /* CoreGraphics.framework */; };
 		EBC1471C1E27F0BB005494CE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC1471B1E27F0BB005494CE /* ImageIO.framework */; };
-		EBFA52C721FA7E4C00CCC2C5 /* PDGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52BF21FA7E4C00CCC2C5 /* PDGameScene.cpp */; };
-		EBFA52C821FA7E4C00CCC2C5 /* PDInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C121FA7E4C00CCC2C5 /* PDInput.cpp */; };
-		EBFA52C921FA7E4C00CCC2C5 /* PDLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C321FA7E4C00CCC2C5 /* PDLoadingScene.cpp */; };
-		EBFA52CA21FA7E4C00CCC2C5 /* PDApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C621FA7E4C00CCC2C5 /* PDApp.cpp */; };
-		EBFA52CB21FA808A00CCC2C5 /* PDApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C621FA7E4C00CCC2C5 /* PDApp.cpp */; };
-		EBFA52CC21FA808B00CCC2C5 /* PDApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C621FA7E4C00CCC2C5 /* PDApp.cpp */; };
-		EBFA52CD21FA861600CCC2C5 /* PDLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C321FA7E4C00CCC2C5 /* PDLoadingScene.cpp */; };
-		EBFA52CE21FA861700CCC2C5 /* PDLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C321FA7E4C00CCC2C5 /* PDLoadingScene.cpp */; };
-		EBFA52CF21FA861E00CCC2C5 /* PDGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52BF21FA7E4C00CCC2C5 /* PDGameScene.cpp */; };
-		EBFA52D021FA861F00CCC2C5 /* PDGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52BF21FA7E4C00CCC2C5 /* PDGameScene.cpp */; };
-		EBFA52D121FA862200CCC2C5 /* PDInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C121FA7E4C00CCC2C5 /* PDInput.cpp */; };
-		EBFA52D221FA862300CCC2C5 /* PDInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBFA52C121FA7E4C00CCC2C5 /* PDInput.cpp */; };
 		EBFE7C051E19B496001007C2 /* json in Resources */ = {isa = PBXBuildFile; fileRef = EBFE7C041E19B496001007C2 /* json */; };
 		EBFE7C091E19B4AC001007C2 /* json in Resources */ = {isa = PBXBuildFile; fileRef = EBFE7C041E19B496001007C2 /* json */; };
 /* End PBXBuildFile section */
@@ -116,6 +125,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		371BAF76221FCC0800EBF11E /* CCMGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMGameScene.h; sourceTree = "<group>"; };
+		371BAF7A221FCC0800EBF11E /* CCMInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMInput.h; sourceTree = "<group>"; };
+		371BAF7B221FCC0800EBF11E /* CCMApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMApp.h; sourceTree = "<group>"; };
+		371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMLoadingScene.cpp; sourceTree = "<group>"; };
+		371BAF7D221FCC0800EBF11E /* CCMLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMLoadingScene.h; sourceTree = "<group>"; };
+		371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMGameScene.cpp; sourceTree = "<group>"; };
+		371BAF7F221FCC0800EBF11E /* CCMApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMApp.cpp; sourceTree = "<group>"; };
+		371BAF80221FCC0800EBF11E /* CCMInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMInput.cpp; sourceTree = "<group>"; };
+		375E32D6221F42EB0010F98D /* Decks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decks.h; sourceTree = "<group>"; };
+		375E32DA221F42EB0010F98D /* Coop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coop.cpp; sourceTree = "<group>"; };
+		375E32DB221F42EB0010F98D /* Coop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coop.h; sourceTree = "<group>"; };
+		375E32DC221F42EB0010F98D /* Chicken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chicken.h; sourceTree = "<group>"; };
+		375E32DD221F42EB0010F98D /* Moose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Moose.cpp; sourceTree = "<group>"; };
+		375E32DE221F42EB0010F98D /* Moose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moose.h; sourceTree = "<group>"; };
+		375E32DF221F42EB0010F98D /* Chicken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chicken.cpp; sourceTree = "<group>"; };
 		EB0FF5082016E4A700517030 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EB0FF5FC2016EF4F00517030 /* PolyDemo (Sim).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolyDemo (Sim).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE9B41D74952A002FE78B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -162,14 +186,6 @@
 		EBC147141E27F07C005494CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EBC147191E27F0A8005494CE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		EBC1471B1E27F0BB005494CE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		EBFA52BF21FA7E4C00CCC2C5 /* PDGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PDGameScene.cpp; sourceTree = "<group>"; };
-		EBFA52C021FA7E4C00CCC2C5 /* PDInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDInput.h; sourceTree = "<group>"; };
-		EBFA52C121FA7E4C00CCC2C5 /* PDInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PDInput.cpp; sourceTree = "<group>"; };
-		EBFA52C221FA7E4C00CCC2C5 /* PDApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDApp.h; sourceTree = "<group>"; };
-		EBFA52C321FA7E4C00CCC2C5 /* PDLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PDLoadingScene.cpp; sourceTree = "<group>"; };
-		EBFA52C421FA7E4C00CCC2C5 /* PDLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDLoadingScene.h; sourceTree = "<group>"; };
-		EBFA52C521FA7E4C00CCC2C5 /* PDGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDGameScene.h; sourceTree = "<group>"; };
-		EBFA52C621FA7E4C00CCC2C5 /* PDApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PDApp.cpp; sourceTree = "<group>"; };
 		EBFE7C041E19B496001007C2 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -362,15 +378,22 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				371BAF7F221FCC0800EBF11E /* CCMApp.cpp */,
+				371BAF7B221FCC0800EBF11E /* CCMApp.h */,
+				371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */,
+				371BAF76221FCC0800EBF11E /* CCMGameScene.h */,
+				371BAF80221FCC0800EBF11E /* CCMInput.cpp */,
+				371BAF7A221FCC0800EBF11E /* CCMInput.h */,
+				371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */,
+				371BAF7D221FCC0800EBF11E /* CCMLoadingScene.h */,
+				375E32DF221F42EB0010F98D /* Chicken.cpp */,
+				375E32DC221F42EB0010F98D /* Chicken.h */,
+				375E32DA221F42EB0010F98D /* Coop.cpp */,
+				375E32DB221F42EB0010F98D /* Coop.h */,
+				375E32D6221F42EB0010F98D /* Decks.h */,
+				375E32DD221F42EB0010F98D /* Moose.cpp */,
+				375E32DE221F42EB0010F98D /* Moose.h */,
 				EB2BE9B41D74952A002FE78B /* main.cpp */,
-				EBFA52C221FA7E4C00CCC2C5 /* PDApp.h */,
-				EBFA52C621FA7E4C00CCC2C5 /* PDApp.cpp */,
-				EBFA52C421FA7E4C00CCC2C5 /* PDLoadingScene.h */,
-				EBFA52C321FA7E4C00CCC2C5 /* PDLoadingScene.cpp */,
-				EBFA52C521FA7E4C00CCC2C5 /* PDGameScene.h */,
-				EBFA52BF21FA7E4C00CCC2C5 /* PDGameScene.cpp */,
-				EBFA52C021FA7E4C00CCC2C5 /* PDInput.h */,
-				EBFA52C121FA7E4C00CCC2C5 /* PDInput.cpp */,
 			);
 			name = Source;
 			path = ../source;
@@ -436,20 +459,21 @@
 		EBBF18891D74904A008E2001 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Game Design Initiative at Cornell";
 				TargetAttributes = {
 					EB0FF5FB2016EF4F00517030 = {
 						CreatedOnToolsVersion = 9.2;
-						DevelopmentTeam = G6P7H83FK6;
+						DevelopmentTeam = N8U2GCPMTY;
 						ProvisioningStyle = Automatic;
 					};
 					EB74548B1D74D75C002FBAE6 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = G6P7H83FK6;
+						DevelopmentTeam = N8U2GCPMTY;
 					};
 					EBBF18901D74904A008E2001 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = N8U2GCPMTY;
 					};
 				};
 			};
@@ -550,11 +574,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBFA52D021FA861F00CCC2C5 /* PDGameScene.cpp in Sources */,
+				375E32E2221F42EB0010F98D /* Coop.cpp in Sources */,
+				375E32E8221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB0FF61D2016F06000517030 /* main.cpp in Sources */,
-				EBFA52CC21FA808B00CCC2C5 /* PDApp.cpp in Sources */,
-				EBFA52CE21FA861700CCC2C5 /* PDLoadingScene.cpp in Sources */,
-				EBFA52D221FA862300CCC2C5 /* PDInput.cpp in Sources */,
+				371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */,
+				375E32E5221F42EB0010F98D /* Moose.cpp in Sources */,
+				371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
+				371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				371BAF89221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,11 +589,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBFA52CF21FA861E00CCC2C5 /* PDGameScene.cpp in Sources */,
+				375E32E1221F42EB0010F98D /* Coop.cpp in Sources */,
+				375E32E7221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB7454AE1D74D891002FBAE6 /* main.cpp in Sources */,
-				EBFA52CB21FA808A00CCC2C5 /* PDApp.cpp in Sources */,
-				EBFA52CD21FA861600CCC2C5 /* PDLoadingScene.cpp in Sources */,
-				EBFA52D121FA862200CCC2C5 /* PDInput.cpp in Sources */,
+				371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */,
+				375E32E4221F42EB0010F98D /* Moose.cpp in Sources */,
+				371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
+				371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				371BAF88221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,11 +604,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBFA52C721FA7E4C00CCC2C5 /* PDGameScene.cpp in Sources */,
-				EBFA52CA21FA7E4C00CCC2C5 /* PDApp.cpp in Sources */,
+				375E32E0221F42EB0010F98D /* Coop.cpp in Sources */,
+				375E32E6221F42EC0010F98D /* Chicken.cpp in Sources */,
+				371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */,
+				375E32E3221F42EB0010F98D /* Moose.cpp in Sources */,
 				EB2BE9B61D74952A002FE78B /* main.cpp in Sources */,
-				EBFA52C821FA7E4C00CCC2C5 /* PDInput.cpp in Sources */,
-				EBFA52C921FA7E4C00CCC2C5 /* PDLoadingScene.cpp in Sources */,
+				371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
+				371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				371BAF87221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,7 +637,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G6P7H83FK6;
+				DEVELOPMENT_TEAM = N8U2GCPMTY;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
@@ -638,7 +671,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G6P7H83FK6;
+				DEVELOPMENT_TEAM = N8U2GCPMTY;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -662,6 +695,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N8U2GCPMTY;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
@@ -669,7 +703,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.ios.PolyDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -684,6 +718,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N8U2GCPMTY;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
@@ -691,7 +726,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.ios.PolyDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -707,17 +742,27 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				CUGL_INCLUDES = "\"$(SRCROOT)/../cugl/include\"";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -756,17 +801,27 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				CUGL_INCLUDES = "\"$(SRCROOT)/../cugl/include\"";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -794,11 +849,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = N8U2GCPMTY;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Mac-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.mac.PolyDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
 			};
 			name = Debug;
 		};
@@ -806,11 +863,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Mac-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.mac.PolyDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
 			};
 			name = Release;
 		};
