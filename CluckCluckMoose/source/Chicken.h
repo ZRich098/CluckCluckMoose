@@ -35,6 +35,31 @@ enum class special {
 	CycleAll //Cycle all your Chickens except this one
 }; 
 
+enum class ChickenType {
+	//Basic Chickens
+	BasicFire,
+	BasicWater,
+	BasicGrass,
+	Reaper, //Ties with all chickens
+	BirdBrain, // Draw a Card
+	Ninja, // Swap opponent top and bottom
+	Clicken, //Refresh your hand
+	PartyFowl, //Nullify opposing chicken
+	Thicken, //Drop to bottom of stack
+	Mirror, //Become opposing chicken
+	Smoked, //Hide your next chicken played
+	Spy, //Peek at an opponent chicken
+	PartridgePilferer, //Draw 2 but lose to all chickens
+	Consigliere, //Cycle element of chicken underneath
+	WingMan, //Play top chicken on deck as well
+	Bomb, //Loses to everything but deals 2 damage
+	PoultryPals, //Search for a fire chicken and draw it
+	Angry, //Immediately trigger combat
+	Lichen, //Opponent Discards a card
+	Scientist, //Swap with Chicken immediately below
+	Alchemist //Cycle all your Chickens except this one
+};
+
 
 /** String representation of the element*/
 string eString(element e);
@@ -50,6 +75,8 @@ class Chicken{
 		int damage;
 	public:
 		//Constructors
+		/** Creates a standard chicken card of ChickenType*/
+		Chicken(ChickenType t);
 		/** Create a Chicken of element e and special ability s that deals damage d */
 		Chicken(element el = element::TieAll, special sp = special::None, int d = 1) {
 			e = el;

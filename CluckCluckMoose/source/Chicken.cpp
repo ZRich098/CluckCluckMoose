@@ -8,6 +8,116 @@
 
 using namespace cugl;
 
+Chicken::Chicken(ChickenType t) {
+	switch (t) {
+	case ChickenType::BasicFire:
+		e = element::Fire;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::BasicWater:
+		e = element::Water;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::BasicGrass:
+		e = element::Grass;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::Reaper:
+		e = element::TieAll;
+		s = special::Reaper;
+		damage = 0;
+		return;
+	case ChickenType::BirdBrain:
+		e = element::Grass;
+		s = special::Draw;
+		damage = 1;
+		return;
+	case ChickenType::Ninja:
+		e = element::Grass;
+		s = special::Ninja;
+		damage = 1;
+		return;
+	case ChickenType::Clicken:
+		e = element::Water;
+		s = special::Refresh;
+		damage = 1;
+		return;
+	case ChickenType::PartyFowl:
+		e = element::Water;
+		s = special::Null;
+		damage = 1;
+		return;
+	case ChickenType::Thicken:
+		e = element::Fire;
+		s = special::Thicken;
+		damage = 1;
+		return;
+	case ChickenType::Mirror:
+		e = element::Unset;
+		s = special::Mirror;
+		damage = 1;
+		return;
+	case ChickenType::Smoked:
+		e = element::Fire;
+		s = special::Hide;
+		damage = 1;
+		return;
+	case ChickenType::Spy:
+		e = element::Grass;
+		s = special::Peek;
+		damage = 1;
+		return;
+	case ChickenType::PartridgePilferer:
+		e = element::LoseAll;
+		s = special::Draw2;
+		damage = 1;
+		return;
+	case ChickenType::Consigliere:
+		e = element::Water;
+		s = special::Cycle;
+		damage = 1;
+		return;
+	case ChickenType::WingMan:
+		e = element::Water;
+		s = special::Extra;
+		damage = 1;
+		return;
+	case ChickenType::Bomb:
+		e = element::LoseAll;
+		s = special::Bomb;
+		damage = 2;
+		return;
+	case ChickenType::PoultryPals:
+		e = element::Fire;
+		s = special::Search;
+		damage = 1;
+		return;
+	case ChickenType::Angry:
+		e = element::Fire;
+		s = special::Clash;
+		damage = 1;
+		return;
+	case ChickenType::Lichen:
+		e = element::Grass;
+		s = special::Discard;
+		damage = 1;
+		return;
+	case ChickenType::Scientist:
+		e = element::Grass;
+		s = special::SelfSwap;
+		damage = 1;
+		return;
+	case ChickenType::Alchemist:
+		e = element::Fire;
+		s = special::CycleAll;
+		damage = 1;
+		return;
+	}
+}
+
 Chicken::~Chicken() {
 	CULog("Destroyed %s.", this->toString().c_str());
 }

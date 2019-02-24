@@ -29,7 +29,6 @@
 
 // Include your application class
 #include "CCMApp.h"
-#include "Chicken.h"
 
 using namespace cugl;
 
@@ -41,7 +40,7 @@ using namespace cugl;
  * settings.  However, never modify anything below the line marked.
  *
  * @return the exit status of the application
- *
+ */
 int main(int argc, char * argv[]) {
     // Change this to your application class
     CCMApp app;
@@ -69,13 +68,4 @@ int main(int argc, char * argv[]) {
 
     exit(0);    // Necessary to quit on mobile devices
     return 0;   // This line is never reached
-}
-*/
-
-int main(int argc, char * argv[]) {
-	Chicken c(element::Fire, special::None);
-	CULog(c.toString().c_str());
-
-
-	return 0;
 }
