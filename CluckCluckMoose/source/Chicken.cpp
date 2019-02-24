@@ -8,40 +8,118 @@
 
 using namespace cugl;
 
-Chicken::Chicken() {
-	Chicken(element::TieAll, special::None, 0);
+Chicken::Chicken(ChickenType t) {
+	switch (t) {
+	case ChickenType::BasicFire:
+		e = element::Fire;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::BasicWater:
+		e = element::Water;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::BasicGrass:
+		e = element::Grass;
+		s = special::None;
+		damage = 1;
+		return;
+	case ChickenType::Reaper:
+		e = element::TieAll;
+		s = special::Reaper;
+		damage = 0;
+		return;
+	case ChickenType::BirdBrain:
+		e = element::Grass;
+		s = special::Draw;
+		damage = 1;
+		return;
+	case ChickenType::Ninja:
+		e = element::Grass;
+		s = special::Ninja;
+		damage = 1;
+		return;
+	case ChickenType::Clicken:
+		e = element::Water;
+		s = special::Refresh;
+		damage = 1;
+		return;
+	case ChickenType::PartyFowl:
+		e = element::Water;
+		s = special::Null;
+		damage = 1;
+		return;
+	case ChickenType::Thicken:
+		e = element::Fire;
+		s = special::Thicken;
+		damage = 1;
+		return;
+	case ChickenType::Mirror:
+		e = element::Unset;
+		s = special::Mirror;
+		damage = 1;
+		return;
+	case ChickenType::Smoked:
+		e = element::Fire;
+		s = special::Hide;
+		damage = 1;
+		return;
+	case ChickenType::Spy:
+		e = element::Grass;
+		s = special::Peek;
+		damage = 1;
+		return;
+	case ChickenType::PartridgePilferer:
+		e = element::LoseAll;
+		s = special::Draw2;
+		damage = 1;
+		return;
+	case ChickenType::Consigliere:
+		e = element::Water;
+		s = special::Cycle;
+		damage = 1;
+		return;
+	case ChickenType::WingMan:
+		e = element::Water;
+		s = special::Extra;
+		damage = 1;
+		return;
+	case ChickenType::Bomb:
+		e = element::LoseAll;
+		s = special::Bomb;
+		damage = 2;
+		return;
+	case ChickenType::PoultryPals:
+		e = element::Fire;
+		s = special::Search;
+		damage = 1;
+		return;
+	case ChickenType::Angry:
+		e = element::Fire;
+		s = special::Clash;
+		damage = 1;
+		return;
+	case ChickenType::Lichen:
+		e = element::Grass;
+		s = special::Discard;
+		damage = 1;
+		return;
+	case ChickenType::Scientist:
+		e = element::Grass;
+		s = special::SelfSwap;
+		damage = 1;
+		return;
+	case ChickenType::Alchemist:
+		e = element::Fire;
+		s = special::CycleAll;
+		damage = 1;
+		return;
+	}
 }
 
-Chicken::Chicken(element el, special sp) {
-	e = el;
-	s = sp;
-	damage = 1;
-}
-
-Chicken::Chicken(element el, special sp, int d) {
-	e = el;
-	s = sp;
-	damage = d;
-}
-
-void Chicken::setChicken(element el, special sp) {
-	e = el;
-	s = sp;
-	damage = 1;
-}
-
-void Chicken::setChicken(element el, special sp, int d) {
-	e = el;
-	s = sp;
-	damage = d;
-}
-
-element Chicken::getElement() {
-	return e;
-}
-
-special Chicken::getSpecial() {
-	return s;
+Chicken::~Chicken() {
+	CULog("Destroyed %s.", this->toString().c_str());
 }
 
 string eString(element e) {
@@ -147,7 +225,7 @@ string sStringLong(special s) {
 	}
 }
 
-string Chicken::toString() {
+string Chicken::toString() const {
 	stringstream ss;
     if(s == special::None) { //If Chicken special is none
 		ss << "Basic " << eString(e) << " Chicken";
@@ -155,4 +233,36 @@ string Chicken::toString() {
 		ss << sString(s) << " " + eString(e) << " Chicken";
 	}
 	return ss.str();
+}
+
+int Chicken::compare(const Chicken& other) const {
+	if (e == element::Unset || other.e == element::Unset) {
+		CULogError("Unset element exception: %s and %s cannot be compared", toString(), other.toString());
+	}
+
+	//All ties
+	if (e == other.e || e == element::TieAll || other.e == element::TieAll) return 0;
+
+	switch (other.e) {
+		case element::WinAll:
+			return 1;
+		case element::LoseAll:
+			return -1;
+	}
+
+	switch (e) {
+		case element::WinAll:
+			return 1;
+		case element::LoseAll:
+			return -1;
+		case element::Fire:
+			return other.e == element::Grass ? 1 : -1;
+		case element::Water:
+			return other.e == element::Fire ? 1 : -1;
+		case element::Grass:
+			return other.e == element::Water ? 1 : -1;
+	}
+
+	//Never reached
+	return 0;
 }

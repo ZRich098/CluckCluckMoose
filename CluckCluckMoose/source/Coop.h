@@ -10,13 +10,15 @@
 class Coop {
 	private:
 		vector <Chicken> chickens;
+		bool shuffled;
 	public:
 		//Constructor
 		/** Create a new Coop*/
 		Coop();
 		/** Fill the coop with Chickens, defaulting to deckV4 */
-		void loadDeck();
-		void loadDeck(int versionNumber);
+		void loadDeck(int versionNumber = 4);
+		/***Destroys the Coop*/
+		~Coop();
 
 		//Access
 		/** Get the size of the Coop*/

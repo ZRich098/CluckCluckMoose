@@ -35,6 +35,31 @@ enum class special {
 	CycleAll //Cycle all your Chickens except this one
 }; 
 
+enum class ChickenType {
+	//Basic Chickens
+	BasicFire,
+	BasicWater,
+	BasicGrass,
+	Reaper, //Ties with all chickens
+	BirdBrain, // Draw a Card
+	Ninja, // Swap opponent top and bottom
+	Clicken, //Refresh your hand
+	PartyFowl, //Nullify opposing chicken
+	Thicken, //Drop to bottom of stack
+	Mirror, //Become opposing chicken
+	Smoked, //Hide your next chicken played
+	Spy, //Peek at an opponent chicken
+	PartridgePilferer, //Draw 2 but lose to all chickens
+	Consigliere, //Cycle element of chicken underneath
+	WingMan, //Play top chicken on deck as well
+	Bomb, //Loses to everything but deals 2 damage
+	PoultryPals, //Search for a fire chicken and draw it
+	Angry, //Immediately trigger combat
+	Lichen, //Opponent Discards a card
+	Scientist, //Swap with Chicken immediately below
+	Alchemist //Cycle all your Chickens except this one
+};
+
 
 /** String representation of the element*/
 string eString(element e);
@@ -49,27 +74,49 @@ class Chicken{
 		special s;
 		int damage;
 	public:
-		//Constructor
-		/** Create a new Chicken*/
-		Chicken();
-		/** Create a Chicken of element e and special ability s */
-		Chicken(element e, special s);
+		//Constructors
+		/** Creates a standard chicken card of ChickenType*/
+		Chicken(ChickenType t);
 		/** Create a Chicken of element e and special ability s that deals damage d */
-		Chicken(element e, special s, int d);
+		Chicken(element el = element::TieAll, special sp = special::None, int d = 1) {
+			e = el;
+			s = sp;
+			damage = d;
+		}
+		/** Copy Constructor*/
+		Chicken(const Chicken& c) {
+			e = c.e;
+			s = c.s;
+			damage = c.damage;
+		}
+		/** Destroys the Chicken*/
+		~Chicken();
 
 		//Access
 		/** Returns the element of the Chicken */
-		element getElement();
+		element const getElement() const { return e; };
 		/** Returns the special ability of the Chicken */
-		special getSpecial();
+		special const getSpecial() const { return s; };
 		/** Returns a string of the Chicken's details */
-		string toString();
+		string toString() const;
 
 		//Modify
-		/** Set a Chicken's element to e, special to s, and damage to 1 */
-		void setChicken(element e, special s);
+		/** Sets the element of the Chicken */
+		element setElement(element el) { e = el; };
+		/** Sets the special ability of the Chicken */
+		element setSpecial(special sp) { s = sp; };
 		/** Set a Chicken's element to e, special to s, and damage to d */
-		void setChicken(element e, special s, int d);
+		void setChicken(element el, special sp, int d = 1) {
+			e = el;
+			s = sp;
+			damage = d;
+		}
+
+		/** Compares this chicken with another chicken
+			returns -1 if defeated by other chicken
+			returns 0  if ties with other chicken
+			returns 1  if defeats the other chicken*/
+		int compare(const Chicken& other) const;
 };
 
 #endif /* __CHICKEN_H__ */
