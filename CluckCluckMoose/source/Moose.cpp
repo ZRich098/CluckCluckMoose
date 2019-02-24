@@ -8,9 +8,13 @@
 
 using namespace cugl;
 
-Moose::Moose() {
-	health = 5;
-	handSize = 5;
+Moose::Moose(int h, int hsize) {
+	health = h;
+	handSize = hsize;
+}
+
+Moose::~Moose() {
+	CULog("Moose Destroyed");
 }
 
 void Moose::addToStackFromHand(int pos) {

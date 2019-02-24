@@ -37,35 +37,23 @@
       <Filter>Source Files\Chicken</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\CCMApp.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\CCMGameScene.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\CCMInput.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\CCMLoadingScene.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Chicken.cpp">
       <Filter>Source Files\Chicken</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Coop.cpp">
-      <Filter>Source Files\Chicken</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\Moose.cpp">
-      <Filter>Source Files\Chicken</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\main.cpp">
-      <Filter>Source Files\Chicken</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\CCMGameScene.cpp">
-      <Filter>Source Files\Chicken</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\CCMInput.cpp">
+    <ClCompile Include="..\..\source\Chicken.cpp">
       <Filter>Source Files\Chicken</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
@@ -73,6 +61,18 @@
     </ClCompile>
     <ClCompile Include="..\..\source\CCMApp.cpp">
       <Filter>Source Files\Chicken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMGameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
