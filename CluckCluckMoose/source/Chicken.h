@@ -78,7 +78,7 @@ class Chicken{
 		/** Creates a standard chicken card of ChickenType*/
 		Chicken(ChickenType t);
 		/** Create a Chicken of element e and special ability s that deals damage d */
-		Chicken(element el = element::TieAll, special sp = special::None, int d = 1) {
+		Chicken(element el, special sp = special::None, int d = 1) {
 			e = el;
 			s = sp;
 			damage = d;

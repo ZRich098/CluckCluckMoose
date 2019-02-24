@@ -264,5 +264,5 @@ int Chicken::compare(const Chicken& other) const {
 	}
 
 	//Never reached
-	return 0;
+	return -2;
 }

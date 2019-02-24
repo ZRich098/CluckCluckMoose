@@ -9,7 +9,8 @@
 
 using namespace cugl;
 
-Coop::Coop() {
+Coop::Coop(int dN) {
+	deckNumber = dN;
 	loadDeck();
 }
 
@@ -17,40 +18,38 @@ Coop::~Coop() {
 	CULog("Coop Destroyed");
 }
 
-void Coop::loadDeck(int versionNumber) {
-	switch (versionNumber) {
-	case 1:
-		for (Chicken c : deckV1)
-			chickens.push_back(c);
-		return;
-	case 2:
-		for (Chicken c : deckV2)
-			chickens.push_back(c);
-		return;
-	case 3:
-		for (Chicken c : deckV3)
-			chickens.push_back(c);
-		return;
-	case 4:
-		for (Chicken c : deckV4)
-			chickens.push_back(c);
-		return;
+void Coop::loadDeck() {
+	switch (deckNumber) {
+		case 1:
+			for (ChickenType c : deckV1)
+				chickens.push_back(Chicken(c));
+			break;
+		case 2:
+			for (ChickenType c : deckV2)
+				chickens.push_back(Chicken(c));
+			break;
+		case 3:
+			for (ChickenType c : deckV3)
+				chickens.push_back(Chicken(c));
+			break;
+		case 4:
+			for (ChickenType c : deckV4) 
+				chickens.push_back(Chicken(c));
+			break;
 	}
+	shuffled = false;
 }
+
 Chicken Coop::draw() {
 	if (chickens.empty()) {
 		loadDeck();
-		random_shuffle(chickens.begin(), chickens.end());
-		shuffled = true;
 	}
 	if (!shuffled) {
 		random_shuffle(chickens.begin(), chickens.end());
 		shuffled = true;
 	}
-	Chicken c = chickens.back();
-	CULog("chicken %s, deck size %i", c.toString(), chickens.size());	//CULog("Chicken at %i is %s", pos, c.toString());
+	Chicken& c = chickens.back();
 	chickens.pop_back();
-	//CULog("chicken %s", c, chickens.size());	//CULog("Chicken at %i is %s", pos, c.toString());
 	return c;
 }
 
@@ -60,6 +59,15 @@ int Coop::getSize() {
 
 void Coop::clear() {
 	chickens.clear();
+}
+
+void Coop::shuffle() {
+	random_shuffle(chickens.begin(), chickens.end());
+	shuffled = true;
+}
+
+void Coop::add(Chicken& c) {
+	chickens.push_back(c);
 }
 
 void Coop::fill(vector <Chicken> c) {

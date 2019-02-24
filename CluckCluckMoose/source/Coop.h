@@ -9,14 +9,16 @@
 /** The Deck of Chickens */
 class Coop {
 	private:
+		int deckNumber;
 		vector <Chicken> chickens;
 		bool shuffled;
+		/** Loads all chickens in Deck deckNumber into the Coop
+			DO NOT USE IF COOP NOT EMPTY*/
+		void loadDeck();
 	public:
 		//Constructor
 		/** Create a new Coop*/
-		Coop();
-		/** Fill the coop with Chickens, defaulting to deckV4 */
-		void loadDeck(int versionNumber = 4);
+		Coop(int deckNumber = 4);
 		/***Destroys the Coop*/
 		~Coop();
 
@@ -29,6 +31,10 @@ class Coop {
 		Chicken draw();
 		/** Clear the coop of all Chickens*/
 		void clear();
+		/** Shuffles the coop so all chickens are in random order*/
+		void shuffle();
+		/** Add Chicken c to the end of Coop (c will be next chicken drawn)*/
+		void add(Chicken& c);
 		/** Add the c Chickens to the Coop */
 		void fill(vector <Chicken> c);
 };

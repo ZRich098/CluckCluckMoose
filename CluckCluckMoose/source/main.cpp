@@ -29,6 +29,7 @@
 
 // Include your application class
 #include "CCMApp.h"
+#include "Moose.h"
 
 using namespace cugl;
 
@@ -40,7 +41,7 @@ using namespace cugl;
  * settings.  However, never modify anything below the line marked.
  *
  * @return the exit status of the application
- */
+ *
 int main(int argc, char * argv[]) {
     // Change this to your application class
     CCMApp app;
@@ -68,4 +69,21 @@ int main(int argc, char * argv[]) {
 
     exit(0);    // Necessary to quit on mobile devices
     return 0;   // This line is never reached
+}
+*/
+
+int main(int argc, char * argv[]) {
+	Coop c;
+
+	CULog("start");
+	CULog("");
+
+	for (int i = 0; i < 30; i++) {
+		CULog(c.draw().toString().c_str());
+	}
+
+	CULog("");
+	CULog("end");
+
+	return 0;
 }
