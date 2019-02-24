@@ -9,7 +9,7 @@
 class Clash {
 public:
 	//Stack
-	/** Resolves the clash of the two players passed in */
+	/** Resolves The Clash of the two players passed in */
 	void resolve(Moose player1, Moose player2);
 };
 
