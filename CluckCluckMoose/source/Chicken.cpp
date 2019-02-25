@@ -125,11 +125,9 @@ Chicken::~Chicken() {
 void Chicken::cycle() {
 	if (e == element::Fire) {
 		e = element::Grass;
-	}
-	else if (e == element::Grass) {
+	} else if (e == element::Grass) {
 		e = element::Water;
-	}
-	else if (e == element::Water) {
+	} else if (e == element::Water) {
 		e = element::Fire;
 	}
 }
@@ -242,7 +240,7 @@ string Chicken::toString() const {
     if(s == special::None) { //If Chicken special is none
 		ss << "Basic " << eString(e) << " Chicken";
 	} else {
-		ss << sString(s) << " " + eString(e) << " Chicken";
+		ss << sString(s) << " " << eString(e) << " Chicken";
 	}
 	return ss.str();
 }
