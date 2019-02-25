@@ -3,9 +3,7 @@
 using namespace cugl;
 
 void Clash::resolve(Moose player1, Moose player2) {
-	bool empty1 = player1.getStack().empty();
-	bool empty2 = player2.getStack().empty();
-	while (!empty1 && !empty2)
+	while (!player1.getStack().empty() && !player2.getStack().empty())
 	{
 		int result = player1.getStack().front().compare(player2.getStack().front());
 		if (result == -1)
@@ -21,8 +19,5 @@ void Clash::resolve(Moose player1, Moose player2) {
 			player1.removeBottomFromStackToDiscard();
 			player2.removeBottomFromStackToDiscard();
 		}
-
-		empty1 = player1.getStack().empty();
-		empty2 = player2.getStack().empty();
 	}
 }
