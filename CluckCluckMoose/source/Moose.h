@@ -16,8 +16,7 @@ private:
 	vector <Chicken> discard;
 	int handSize;
 	int health;
-
-	int changePos = 0; //Used to change a chicken on the stack
+	void refillDeck();
 public:
 	//Constructor
 	/** Create a new Moose*/
@@ -36,6 +35,8 @@ public:
 	Chicken getHandAt(int pos) { return hand.at(pos); };
 	/** Get the current draw pile of the Moose*/
 	Coop getDeck() { return deck; };
+	/** Get the Chicken at position pos in the Coop of the Moose*/
+	Chicken getDeckAt(int pos) { return deck.at(pos); };
 	/** Get the current discard pile of the Moose*/
 	vector <Chicken> getDiscard() { return discard; };
 	/** Get the Chicken at position pos in the discard pile of the Moose*/
@@ -66,7 +67,7 @@ public:
 
 	//Hand
 	/** Clears the hand of all Chickens */
-	void clearHand() { hand.clear(); };
+	void clearHandToDiscard();
 	/** Refills the hand with Chickens from the Coop */
 	void refillHand();
 	/** Draws num card from the Coop and adds it to the hand 
@@ -80,7 +81,21 @@ public:
 	void takeDamage(int damage) { health -= damage; };
 
 	//Info
-	string printMoose() const;
+	/** returns a string of the relevant details about the moose
+		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
+	string mooseString() const;
+	/** returns a string of the hand of the moose
+		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
+	string handString() const;
+	/** returns a string of the discard pile of the moose
+		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
+	string discardString() const;
+	/** returns a string of the stack of the moose
+		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
+	string stackString() const;
+	/** returns a string of the deck of the moose
+		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
+	string deckString() const { return deck.coopString(); };
 };
 
 #endif /* __MOOSE_H__ */

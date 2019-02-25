@@ -43,6 +43,10 @@ void Coop::loadDeck() {
 	shuffled = false;
 }
 
+Chicken Coop::at(int pos) {
+	return chickens.at(chickens.size() - pos);
+}
+
 Chicken Coop::draw() {
 	if (!shuffled) {
 		random_shuffle(chickens.begin(), chickens.end());
@@ -67,16 +71,17 @@ void Coop::fill(const vector <Chicken> c) {
 	for (const Chicken &ch : c) {
 		chickens.push_back(ch);
 	}
+	shuffled = false;
 }
 
-string Coop::printCoop() const {
+string Coop::coopString() const {
 	stringstream ss;
 	if (!shuffled) {
 		ss << "Unshuffled\n";
 	}
 
 	for (int i = 0; i < chickens.size(); i++) {
-		ss << "Coop " << i << ": " << chickens.at(chickens.size() - i - 1).toString().c_str() << "\n";
+		ss << "Coop " << i + 1 << ": " << chickens.at(chickens.size() - i - 1).toString().c_str() << "\n";
 	}
 
 	return ss.str();

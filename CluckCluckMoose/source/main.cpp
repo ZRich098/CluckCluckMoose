@@ -73,18 +73,22 @@ int main(int argc, char * argv[]) {
 */
 
 int main(int argc, char * argv[]) {
-	CULog("start");
-	CULog("");
-
-	Moose m;
+	Moose m(5,8);
 	m.refillHand();
 
-	CULog(m.printMoose().c_str());
+	m.draw(20);
+	m.addToStackFromHand(0);
+	m.addToStackFromHand(0);
+	m.addToStackFromHand(0);
+	m.addToStackFromHand(0);
+	m.addToStackFromHand(0);
+	m.addToStackFromHand(0);
 
-	CULog(m.getDeck().draw().toString().c_str());
+	CULog(m.mooseString().c_str());
 
-	CULog("");
-	CULog("end");
+	m.refillHand();
+	CULog(m.mooseString().c_str());
+
 
 	return 0;
 }
