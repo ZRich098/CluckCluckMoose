@@ -19,7 +19,7 @@ Moose::Moose(int h, int hsize) {
 }
 
 Moose::~Moose() {
-	CULog("Moose Destroyed");
+	//CULog("Moose Destroyed");
 }
 
 

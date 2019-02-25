@@ -16,7 +16,7 @@ Coop::Coop(int dN) {
 }
 
 Coop::~Coop() {
-	CULog("Coop Destroyed");
+	//CULog("Coop Destroyed");
 }
 
 void Coop::loadDeck() {
