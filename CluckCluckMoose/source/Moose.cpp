@@ -8,13 +8,38 @@
 
 using namespace cugl;
 
+void Moose::refillDeck() {
+	deck.fill(discard);
+	discard.clear();
+}
+
 Moose::Moose(int h, int hsize) {
 	health = h;
 	handSize = hsize;
 }
 
 Moose::~Moose() {
-	CULog("Moose Destroyed");
+	//CULog("Moose Destroyed");
+}
+
+
+void Moose::changeChickenInStack(element e, special s, int d, int pos) {
+	stack.at(pos).setChicken(e, s, d);
+}
+
+void Moose::changeChickenInStackElement(element e, int pos) {
+	Chicken &c = stack.at(pos);
+	c.setChicken(e, c.getSpecial());
+}
+
+void Moose::changeChickenInStackSpecial(special s, int pos) {
+	Chicken &c = stack.at(pos);
+	c.setChicken(c.getElement(), s);
+}
+
+void Moose::changeChickenInStackDamage(int d, int pos) {
+	Chicken &c = stack.at(pos);
+	c.setChicken(c.getElement(), c.getSpecial(), d);
 }
 
 void Moose::addToStackFromHand(int pos) {
@@ -46,52 +71,66 @@ void Moose::clearStackToDiscard() {
 	stack.clear();
 }
 
-vector <Chicken> Moose::getStack() {
-	return stack;
-}
-
-vector <Chicken> Moose::getHand() {
-	return hand;
-}
-
-Coop Moose::getDeck() {
-	return deck;
-}
-
-vector <Chicken> Moose::getDiscard() {
-	return discard;
-}
-
-void Moose::clearHand() {
+void Moose::clearHandToDiscard() {
+	for (Chicken &c : hand) {
+		discard.push_back(c);
+	}
 	hand.clear();
 }
 
 void Moose::refillHand() {
 	//Draw from deck while there are still chickens in the deck and hand is not full
-	while (deck.getSize() > 0 && hand.size() < handSize) {
-		hand.push_back(deck.draw());
-	}
-
-	if (hand.size() == handSize) return;
-
-	//refill deck from discard pile if empty and hand is still not full
-	deck.fill(discard);
-	discard.clear();
-
-	//Redraw
-	while (deck.getSize() > 0 && hand.size() < handSize) {
+	while (hand.size() < handSize) {
+		//refill deck if hand not full yet but deck is empty
+		if (deck.getSize() == 0) refillDeck();
 		hand.push_back(deck.draw());
 	}
 }
 
-int Moose::getHealth() {
-	return health;
+void Moose::draw(int num) {
+	for (int i = 0; i < num; i++) {
+		//refill deck if empty
+		if (deck.getSize() == 0) refillDeck();
+		Chicken &c = deck.draw();
+		if (hand.size() < handSize - 1) {
+			hand.push_back(c);
+		} else {
+			discard.push_back(c);
+		}
+	}
 }
 
-void Moose::setHealth(int h) {
-	health = h;
+string Moose::handString() const {
+	stringstream ss;
+	for (int i = 0; i < hand.size(); i++) {
+		ss << "Hand " << i + 1 << ": " << hand.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	return ss.str();
 }
 
-void Moose::takeDamage(int damage) {
-	health = health - damage;
+string Moose::discardString() const {
+	stringstream ss;
+	for (int i = 0; i < discard.size(); i++) {
+		ss << "Discard " << i + 1 << ": " << discard.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	return ss.str();
+}
+
+string Moose::stackString() const {
+	stringstream ss;
+	for (int i = 0; i < stack.size(); i++) {
+		ss << "Stack " << i + 1 << ": " << stack.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	return ss.str();
+}
+
+string Moose::mooseString() const {
+	stringstream ss;
+	ss << "Moose Info:\n Health " << health << "\n" <<
+		handString() << stackString() << discardString() <<
+		deck.coopString();
+	return ss.str();
 }

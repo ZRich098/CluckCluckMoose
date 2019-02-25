@@ -119,7 +119,7 @@ Chicken::Chicken(ChickenType t) {
 }
 
 Chicken::~Chicken() {
-	CULog("Destroyed %s.", this->toString().c_str());
+	//CULog("Destroyed %s.", this->toString().c_str());
 }
 
 string eString(element e) {
@@ -264,5 +264,5 @@ int Chicken::compare(const Chicken& other) const {
 	}
 
 	//Never reached
-	return 0;
+	return -2;
 }
