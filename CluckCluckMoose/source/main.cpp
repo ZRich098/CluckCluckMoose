@@ -73,14 +73,15 @@ int main(int argc, char * argv[]) {
 */
 
 int main(int argc, char * argv[]) {
-	Coop c;
-
 	CULog("start");
 	CULog("");
 
-	for (int i = 0; i < 30; i++) {
-		CULog(c.draw().toString().c_str());
-	}
+	Moose m;
+	m.refillHand();
+
+	CULog(m.printMoose().c_str());
+
+	CULog(m.getDeck().draw().toString().c_str());
 
 	CULog("");
 	CULog("end");

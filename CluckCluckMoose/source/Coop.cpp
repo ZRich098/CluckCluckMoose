@@ -12,6 +12,7 @@ using namespace cugl;
 Coop::Coop(int dN) {
 	deckNumber = dN;
 	loadDeck();
+	srand(time(NULL)); //seed RNJesus
 }
 
 Coop::~Coop() {
@@ -20,6 +21,8 @@ Coop::~Coop() {
 
 void Coop::loadDeck() {
 	switch (deckNumber) {
+		case 0: //Empty Deck
+			break;
 		case 1:
 			for (ChickenType c : deckV1)
 				chickens.push_back(Chicken(c));
@@ -41,9 +44,6 @@ void Coop::loadDeck() {
 }
 
 Chicken Coop::draw() {
-	if (chickens.empty()) {
-		loadDeck();
-	}
 	if (!shuffled) {
 		random_shuffle(chickens.begin(), chickens.end());
 		shuffled = true;
@@ -53,26 +53,31 @@ Chicken Coop::draw() {
 	return c;
 }
 
-int Coop::getSize() {
-	return chickens.size();
-}
-
-void Coop::clear() {
-	chickens.clear();
-}
-
 void Coop::shuffle() {
 	random_shuffle(chickens.begin(), chickens.end());
 	shuffled = true;
 }
 
-void Coop::add(Chicken& c) {
+void Coop::add(const Chicken& c) {
 	chickens.push_back(c);
 }
 
-void Coop::fill(vector <Chicken> c) {
+void Coop::fill(const vector <Chicken> c) {
 	//TODO just use a pointer to c instead
-	for (Chicken &ch : c) {
+	for (const Chicken &ch : c) {
 		chickens.push_back(ch);
 	}
+}
+
+string Coop::printCoop() const {
+	stringstream ss;
+	if (!shuffled) {
+		ss << "Unshuffled\n";
+	}
+
+	for (int i = 0; i < chickens.size(); i++) {
+		ss << "Coop " << i << ": " << chickens.at(chickens.size() - i - 1).toString().c_str() << "\n";
+	}
+
+	return ss.str();
 }

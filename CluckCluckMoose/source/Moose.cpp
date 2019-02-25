@@ -17,6 +17,26 @@ Moose::~Moose() {
 	CULog("Moose Destroyed");
 }
 
+
+void Moose::changeChickenInStack(element e, special s, int d, int pos) {
+	stack.at(pos).setChicken(e, s, d);
+}
+
+void Moose::changeChickenInStackElement(element e, int pos) {
+	Chicken c = stack.at(pos);
+	c.setChicken(e, c.getSpecial());
+}
+
+void Moose::changeChickenInStackSpecial(special s, int pos) {
+	Chicken c = stack.at(pos);
+	c.setChicken(c.getElement(), s);
+}
+
+void Moose::changeChickenInStackDamage(int d, int pos) {
+	Chicken c = stack.at(pos);
+	c.setChicken(c.getElement(), c.getSpecial(), d);
+}
+
 void Moose::addToStackFromHand(int pos) {
 	stack.push_back(hand.at(pos));
 	hand.erase(hand.begin() + pos);
@@ -46,26 +66,6 @@ void Moose::clearStackToDiscard() {
 	stack.clear();
 }
 
-vector <Chicken> Moose::getStack() {
-	return stack;
-}
-
-vector <Chicken> Moose::getHand() {
-	return hand;
-}
-
-Coop Moose::getDeck() {
-	return deck;
-}
-
-vector <Chicken> Moose::getDiscard() {
-	return discard;
-}
-
-void Moose::clearHand() {
-	hand.clear();
-}
-
 void Moose::refillHand() {
 	//Draw from deck while there are still chickens in the deck and hand is not full
 	while (deck.getSize() > 0 && hand.size() < handSize) {
@@ -82,16 +82,36 @@ void Moose::refillHand() {
 	while (deck.getSize() > 0 && hand.size() < handSize) {
 		hand.push_back(deck.draw());
 	}
+	
 }
 
-int Moose::getHealth() {
-	return health;
+void Moose::draw(int num) {
+	for (int i = 0; i < num; i++) {
+		Chicken &c = deck.draw();
+		if (hand.size() < handSize - 1) {
+			hand.push_back(c);
+		} else {
+			discard.push_back(c);
+		}
+	}
 }
 
-void Moose::setHealth(int h) {
-	health = h;
-}
+string Moose::printMoose() const {
+	stringstream ss;
+	ss << "Moose Info:\n";
+	for (int i = 0; i < hand.size(); i++) {
+		ss << "Hand " << i << ": " << hand.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	for (int i = 0; i < stack.size(); i++) {
+		ss << "Stack " << i << ": " << stack.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	for (int i = 0; i < discard.size(); i++) {
+		ss << "Discard " << i << ": " << discard.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	ss << deck.printCoop();
 
-void Moose::takeDamage(int damage) {
-	health = health - damage;
+	return ss.str();
 }
