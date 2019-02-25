@@ -122,6 +122,18 @@ Chicken::~Chicken() {
 	//CULog("Destroyed %s.", this->toString().c_str());
 }
 
+void Chicken::cycle() {
+	if (e == element::Fire) {
+		e = element::Grass;
+	}
+	else if (e == element::Grass) {
+		e = element::Water;
+	}
+	else if (e == element::Water) {
+		e = element::Fire;
+	}
+}
+
 string eString(element e) {
 	switch (e) {
 		case element::Fire:

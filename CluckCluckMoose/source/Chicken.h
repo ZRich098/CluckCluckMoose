@@ -102,15 +102,18 @@ class Chicken{
 
 		//Modify
 		/** Sets the element of the Chicken */
-		element setElement(element el) { e = el; };
+		void setElement(element el) { e = el; };
 		/** Sets the special ability of the Chicken */
-		element setSpecial(special sp) { s = sp; };
+		void setSpecial(special sp) { s = sp; };
 		/** Set a Chicken's element to e, special to s, and damage to d */
 		void setChicken(element el, special sp, int d = 1) {
 			e = el;
 			s = sp;
 			damage = d;
 		}
+		/** Cycles the element of the Chicken
+			(fire -> grass -> water -> fire) */
+		void cycle();
 
 		/** Compares this chicken with another chicken
 			returns -1 if defeated by other chicken
