@@ -1,0 +1,279 @@
+{
+	"textures": {
+        "reds": {
+            "file":      "textures/red-small.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "fire": {
+            "file":      "textures/fire_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "water": {
+            "file":      "textures/water_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "grass": {
+            "file":      "textures/grass_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "moose": {
+            "file":      "textures/moose.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        }
+	},
+	"fonts": {
+		"felt": {
+			"file":     "fonts/MarkerFelt.ttf",
+			"size":     64
+		},
+        "sans": {
+            "file":     "fonts/Roboto-Bold.ttf",
+            "size":     64
+        }
+	},
+    "scenes": {
+        "game" : {
+            "comment"   : "A scene graph of buttons to demo a layout manager",
+            "type"      : "Node",
+            "format"    : {
+                "type"        : "Float",
+                "orientation" : "horizontal",
+                "x_alignment" : "center",
+                "y_alignment" : "bottom"
+            },
+            "children"  : {
+                "chicken1" : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "anchor"   : [0.5,0.5],
+                        "upnode"  : "up"
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"      : "PolygonNode",
+                            "data"      : {
+                                "texture"   : "fire",
+                            },
+                            "format"    : {
+                                "type"  : "Anchored"
+                            },
+                            "children"  : {
+                               
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "priority" : 0
+                    }
+                },
+                "chicken2" : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "anchor"   : [0.5,0.5],
+                        "upnode"  : "up"
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"      : "Node",
+                            "data"      : {
+                                "size"   : [100,100]
+                            },
+                            "format"    : {
+                                "type"  : "Anchored"
+                            },
+                            "children"  : {
+                                "patch" : {
+                                    "type"   : "NinePatch",
+                                    "data"   : {
+                                        "texture"  : "reds",
+                                        "interior" : [6,6,20,20]
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                },
+                                "label" : {
+                                    "type"   : "Label",
+                                    "data"   : {
+                                        "font"       : "sans",
+                                        "text"       : "2",
+                                        "foreground" : [255,255,255,255],
+                                        "halign"     : "center",
+                                        "valign"     : "middle"
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "priority" : 1
+                    }
+                },
+                "chicken3" : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "anchor"   : [0.5,0.5],
+                        "upnode"  : "up"
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"      : "Node",
+                            "data"      : {
+                                "size"   : [100,100]
+                            },
+                            "format"    : {
+                                "type"  : "Anchored"
+                            },
+                            "children"  : {
+                                "patch" : {
+                                    "type"   : "NinePatch",
+                                    "data"   : {
+                                        "texture"  : "reds",
+                                        "interior" : [6,6,20,20]
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                },
+                                "label" : {
+                                    "type"   : "Label",
+                                    "data"   : {
+                                        "font"       : "sans",
+                                        "text"       : "3",
+                                        "foreground" : [255,255,255,255],
+                                        "halign"     : "center",
+                                        "valign"     : "middle"
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "priority" : 2
+                    }
+                },
+                "chicken4" : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "anchor"   : [0.5,0.5],
+                        "upnode"  : "up"
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"      : "Node",
+                            "data"      : {
+                                "size"   : [100,100]
+                            },
+                            "format"    : {
+                                "type"  : "Anchored"
+                            },
+                            "children"  : {
+                                "patch" : {
+                                    "type"   : "NinePatch",
+                                    "data"   : {
+                                        "texture"  : "reds",
+                                        "interior" : [6,6,20,20]
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                },
+                                "label" : {
+                                    "type"   : "Label",
+                                    "data"   : {
+                                        "font"       : "sans",
+                                        "text"       : "4",
+                                        "foreground" : [255,255,255,255],
+                                        "halign"     : "center",
+                                        "valign"     : "middle"
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "priority" : 3
+                    }
+                },
+                "chicken5" : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "anchor"   : [0.5,0.5],
+                        "upnode"  : "up"
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"      : "Node",
+                            "data"      : {
+                                "size"   : [100,100]
+                            },
+                            "format"    : {
+                                "type"  : "Anchored"
+                            },
+                            "children"  : {
+                                "patch" : {
+                                    "type"   : "NinePatch",
+                                    "data"   : {
+                                        "texture"  : "reds",
+                                        "interior" : [6,6,20,20]
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                },
+                                "label" : {
+                                    "type"   : "Label",
+                                    "data"   : {
+                                        "font"       : "sans",
+                                        "text"       : "5",
+                                        "foreground" : [255,255,255,255],
+                                        "halign"     : "center",
+                                        "valign"     : "middle"
+                                    },
+                                    "layout" : {
+                                        "x_anchor" : "fill",
+                                        "y_anchor" : "fill"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "priority" : 4
+                    }
+                }
+            }
+        }
+    }
+}
