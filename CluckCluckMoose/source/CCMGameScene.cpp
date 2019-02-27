@@ -9,6 +9,7 @@
 //  Version: 1/20/18
 //
 #include "CCMGameScene.h"
+#include "Moose.h"
 
 using namespace cugl;
 
@@ -19,6 +20,22 @@ using namespace cugl;
 
 //stack size
 int stackSize;
+
+//Canvases for drawing player chickens
+std::shared_ptr<Node> chickenCanvas1;
+std::shared_ptr<Node> chickenCanvas2;
+std::shared_ptr<Node> chickenCanvas3;
+
+//Canvases for drawing opp chickens
+std::shared_ptr<Node> chickenCanvas4;
+std::shared_ptr<Node> chickenCanvas5;
+std::shared_ptr<Node> chickenCanvas6;
+
+
+//Moose Players
+Moose player;
+Moose opp;
+
 
 /**
  * Initializes the controller contents, and starts the game
@@ -54,6 +71,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	//Create a node for drawing moose
 	std::shared_ptr<Node> mooseCanvas = Node::alloc();
 	layer->addChild(mooseCanvas);
+	
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
@@ -62,6 +80,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	moose1->setPosition(0, -100);
 	moose1->flipHorizontal(false);
 	mooseCanvas->addChild(moose1);
+	
 	//Draw opponent moose
 	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
 	moose2->setScale(0.3f); // Magic number to rescale asset
@@ -71,23 +90,35 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	mooseCanvas->addChild(moose2);
 
 
-
-
-	
 	//Create a node for drawing chickens at each level of stacking
-	std::shared_ptr<Node> chickenCanvas1 = Node::alloc();
+	chickenCanvas1 = Node::alloc();
 	layer->addChild(chickenCanvas1);
-	chickenCanvas1->setPosition(-300, 0);
+	chickenCanvas1->setPosition(100, 0);
 
-	std::shared_ptr<Node> chickenCanvas2 = Node::alloc();
+	chickenCanvas2 = Node::alloc();
 	layer->addChild(chickenCanvas2);
-	chickenCanvas2->setPosition(-300, 100);
+	chickenCanvas2->setPosition(100, 100);
 
-	std::shared_ptr<Node> chickenCanvas3 = Node::alloc();
+	chickenCanvas3 = Node::alloc();
 	layer->addChild(chickenCanvas3);
-	chickenCanvas3->setPosition(-300, 200);
+	chickenCanvas3->setPosition(100, 200);
 
+	chickenCanvas4 = Node::alloc();
+	layer->addChild(chickenCanvas4);
+	chickenCanvas4->setPosition(100, 0);
+
+	chickenCanvas5 = Node::alloc();
+	layer->addChild(chickenCanvas5);
+	chickenCanvas5->setPosition(100, 100);
+
+	chickenCanvas6 = Node::alloc();
+	layer->addChild(chickenCanvas6);
+	chickenCanvas6->setPosition(100, 200);
+
+	//Initialize stack sizes
 	stackSize = 0;
+
+
 
 
 
@@ -97,61 +128,29 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
 
-	//Find and move the end turn button
-	layer->getChildByName("endTurn")->setPosition(SCENE_WIDTH / 2, 300);
+	//Initialize moose
+	player = Moose::Moose(3, 3);
+	opp = Moose::Moose(3, 3);
+	player.refillHand();
+	opp.refillHand();
 
+	//@Jon, this was for testing, please remove
+	player.addToStackFromHand(0);
+	opp.addToStackFromHand(0);
 
-    for(auto it = kids.begin(); it != kids.end(); ++it) {
-        std::shared_ptr<Button> buttn = std::dynamic_pointer_cast<Button>(*it);
-        _buttons[buttn->getName()] = buttn;
-        buttn->setListener([=](const std::string& name, bool down) {
-			if (down) {
-				std::shared_ptr<Node> workingCanvas;
-				if (stackSize == 0) {
-					workingCanvas = chickenCanvas1;
-				}
-				else if (stackSize ==1) {
-					workingCanvas = chickenCanvas2;
-				}
-				else if (stackSize == 2) {
-					workingCanvas = chickenCanvas3;
-				}
-				else {
+	GameScene::draw(assets, layer);
 
-				}
-				if (buttn->getName() == "chicken1") {
-					if (workingCanvas != nullptr) {
-						makeChicken(assets, textureF, workingCanvas, SCENE_WIDTH / 2, 300, true);
-					}
-				}
-				else if (buttn->getName() == "chicken2") {
-					if (workingCanvas != nullptr) {
-						makeChicken(assets, textureW, workingCanvas, SCENE_WIDTH / 2, 300, true);
-					}
-				}
-				else if (buttn->getName() == "chicken3") {
-					if (workingCanvas != nullptr) {
-						makeChicken(assets, textureG, workingCanvas, SCENE_WIDTH / 2, 300, true);
-					}
-				}
-				else if (buttn->getName() == "endTurn") {
-					stackSize++;
-				}
-				else {
-
-				}
-                CULog("%s\n", buttn->getName().c_str());
-                CULog("(%f, %f)\n", _input.getCurTouch().x, _input.getCurTouch().y);
-            }
-        });
-    }
+    
     
     setActive(_active);
     
     // XNA nostalgia
     Application::get()->setClearColor(Color4f::CORNFLOWER);
     return true;
+
 }
+
+
 
 void GameScene::makeChicken(const std::shared_ptr<AssetManager>& assets, std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
 	int ct = node->getChildCount();
@@ -164,6 +163,100 @@ void GameScene::makeChicken(const std::shared_ptr<AssetManager>& assets, std::sh
 	chick->setPosition(posX, posY);
 	chick->flipHorizontal(flip);
 	node->addChild(chick);
+}
+
+void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node) {
+	// Get chicken textures.
+	std::shared_ptr<Texture> textureF = assets->get<Texture>("fire");
+	std::shared_ptr<Texture> textureW = assets->get<Texture>("water");
+	std::shared_ptr<Texture> textureG = assets->get<Texture>("grass");
+
+	vector <Chicken> hand = player.getHand();
+	CULog("%d", hand.size());
+
+	for (int i = 0; i < hand.size(); i++) {
+		std::shared_ptr<Button> button;
+		std::shared_ptr<Texture> text;
+		element cel = player.getHandAt(i).getElement();
+		if (cel == (element::Fire)) {
+			text = textureF;
+		}
+		else if (cel == (element::Water)) {
+			text=textureW;
+		}
+		else {
+			text=textureG;
+		}
+		std::shared_ptr<PolygonNode> up = PolygonNode::allocWithTexture(text);
+		up->setScale(0.1, 0.1);
+		button = Button::alloc(up);
+		button->setName("chicken " + i);
+		button->setListener([=](const std::string& name, bool down) {
+			if (down) {
+				CULog("button pressed");
+				player.addToStackFromHand(i);
+				CULog("%s\n", button->getName().c_str());
+				CULog("(%f, %f)\n", _input.getCurTouch().x, _input.getCurTouch().y);
+			}
+		});
+
+		button->setAnchor(Vec2::ANCHOR_CENTER);
+		button->setPosition((i * 100) + 500 + ((i-1)*100), 50);
+
+		node->addChild(button);
+		button->activate(1);
+	}
+
+	vector <Chicken> pstack = player.getStack();
+
+	for (int i = 0; i < pstack.size(); i++) {
+		std::shared_ptr<Texture> text;
+		element cel = player.getStackAt(i).getElement();
+		if (cel == (element::Fire)) {
+			text = textureF;
+		}
+		else if (cel == (element::Water)) {
+			text = textureW;
+		}
+		else {
+			text = textureG;
+		}
+		if (i == 0) {
+			makeChicken(assets, text, chickenCanvas1, 100, 300, true);
+		}
+		else if (i == 1) {
+			makeChicken(assets, text, chickenCanvas2, 100, 300, true);
+		} else {
+			makeChicken(assets, text, chickenCanvas3, 100, 300, true);
+		}
+	}
+
+	vector <Chicken> ostack = opp.getStack();
+
+	for (int i = 0; i < ostack.size(); i++) {
+		std::shared_ptr<Texture> text;
+		element cel = opp.getStackAt(i).getElement();
+		if (cel == (element::Fire)) {
+			text = textureF;
+		}
+		else if (cel == (element::Water)) {
+			text = textureW;
+		}
+		else {
+			text = textureG;
+		}
+		if (i == 0) {
+			makeChicken(assets, text, chickenCanvas4, 750, 300, false);
+		}
+		else if (i == 1) {
+			makeChicken(assets, text, chickenCanvas5, 750, 300, false);
+		}
+		else {
+			makeChicken(assets, text, chickenCanvas6, 750, 300, false);
+		}
+	}
+
+
 }
 
 

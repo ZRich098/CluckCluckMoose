@@ -15,6 +15,7 @@
 #include <unordered_map>
 
 #include "CCMInput.h"
+#include "Moose.h"
 
 /**
  * A scene for demoing a layout manager
@@ -57,7 +58,11 @@ public:
 	*/
 	void makeChicken(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
 
-	
+	/**
+	* Draw a chicken to screen
+	*/
+	void draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node);
+
     
     /**
      * Initializes the controller contents, and starts the game
