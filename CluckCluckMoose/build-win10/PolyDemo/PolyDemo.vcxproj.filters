@@ -74,6 +74,15 @@
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Coop.cpp">
+      <Filter>Source Files\Chicken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Moose.cpp">
+      <Filter>Source Files\Chicken</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc">
