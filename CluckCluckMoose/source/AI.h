@@ -18,7 +18,7 @@ private:
 public:
 	//Constructor
 	/** Create a new AI*/
-	AI(Moose self, Moose enemy, AIType at = AIType::Dumb); //see Decks.h for deck numbers, will eventually json (hopefully)
+	AI(Moose self, Moose enemy, AIType at = AIType::Dumb);
 	/** Destroys the AI*/
 	~AI();
 
