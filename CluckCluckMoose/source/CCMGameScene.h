@@ -15,6 +15,7 @@
 #include <unordered_map>
 
 #include "CCMInput.h"
+#include "Moose.h"
 
 /**
  * A scene for demoing a layout manager
@@ -51,6 +52,17 @@ public:
      * Disposes of all (non-static) resources allocated to this mode.
      */
     virtual void dispose() override;
+
+	/**
+	* Draw a chicken to screen
+	*/
+	void makeChicken(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
+
+	/**
+	* Draw a chicken to screen
+	*/
+	void draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node);
+
     
     /**
      * Initializes the controller contents, and starts the game
@@ -76,6 +88,8 @@ public:
      * @param value whether the scene is currently active
      */
     virtual void setActive(bool value) override;
+
+	
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */
