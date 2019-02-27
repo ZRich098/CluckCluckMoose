@@ -25,6 +25,6 @@ public:
 	/** Gets the position of the next card in hand to play
 		i.e. 0 means play card at position 0 in hand */
 	int getPlay();
-}
+};
 
 #endif /* __AI_H__ */

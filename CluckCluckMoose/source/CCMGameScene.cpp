@@ -10,6 +10,7 @@
 //
 #include "CCMGameScene.h"
 #include "Moose.h"
+#include "AI.h"
 
 using namespace cugl;
 
@@ -17,12 +18,17 @@ using namespace cugl;
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
+/** length of time in milliseconds for clashes */
+#define CLASHLENGTH 400
 
 //stack size
 int stackSize;
 
 //previous hand size for tracking placing a chicken
 int prevHand;
+
+//bool to signify a clash is in progress
+bool isClashing;
 
 //Canvases for drawing player chickens
 std::shared_ptr<Node> chickenCanvas1;
@@ -44,6 +50,9 @@ std::shared_ptr<Node> buttonCanvas;
 //Moose Players
 Moose player;
 Moose opp;
+
+//AI
+AI oppAI = AI::AI(opp, player);
 
 
 /**
@@ -83,16 +92,19 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 		_buttons[butt->getName()] = butt;
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
-				CULog("%s\n", butt->getName().c_str());
-				if (butt->getName() == "chicken1") {
-					player.addToStackFromHand(0);
+				try {
+					CULog("%s\n", butt->getName().c_str());
+					if (butt->getName() == "chicken1") {
+						player.addToStackFromHand(0);
+					}
+					else if (butt->getName() == "chicken2") {
+						player.addToStackFromHand(1);
+					}
+					else if (butt->getName() == "chicken3") {
+						player.addToStackFromHand(2);
+					}
 				}
-				else if (butt->getName() == "chicken2") {
-					player.addToStackFromHand(1);
-				}
-				else if (butt->getName() == "chicken3") {
-					player.addToStackFromHand(2);
-				}
+				catch (std::out_of_range e){}
 			}
 		});
 	}
@@ -151,12 +163,10 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp = Moose::Moose(3, 3);
 	player.refillHand();
 	opp.refillHand();
-	prevHand = player.getHand().size;
+	prevHand = player.getHand().size();
 
-	player.addToStackFromHand(0);
-	opp.addToStackFromHand(0);
-
-
+	//Initialize AI
+	//oppAI = AI::AI(opp,player);
 
 	GameScene::draw(assets, layer);
 
@@ -319,13 +329,46 @@ void GameScene::dispose() {
  */
 void GameScene::update(float timestep) {
 	_input.update(timestep);
+	GameScene::draw(_assets, _assets->get<Node>("game"));
 
-	// Reset the game if necessary
-	//if (_input.didReset()) { reset(); }
+	if (prevHand > player.getHand().size()) {
+		prevHand--;
+		opp.addToStackFromHand(oppAI.getPlay());
+		stackSize++;
+		if (stackSize == 3) { // Temporary magic number for max stack size
+			isClashing = true;
+		}
+		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
+		GameScene::draw(_assets, _assets->get<Node>("game"));
+	}
 
-	if (prevHand < player.getHand().size) {
-		prevHand = player.getHand().size;
-
+	if (!player.getStack().empty() && !opp.getStack().empty() && isClashing) {
+		Sleep(CLASHLENGTH);
+		int result = player.getStack().front().compare(opp.getStack().front());
+		if (result == -1)
+		{
+			player.removeBottomFromStackToDiscard();
+		}
+		else if (result == 1)
+		{
+			opp.removeBottomFromStackToDiscard();
+		}
+		else
+		{
+			player.removeBottomFromStackToDiscard();
+			opp.removeBottomFromStackToDiscard();
+		}
+	} else if (isClashing && stackSize != 0) {
+		Sleep(CLASHLENGTH);
+		player.refillHand();
+		opp.refillHand();
+		prevHand = player.getHand().size();
+		stackSize = 0;
+	} else if (isClashing) {
+		Sleep(CLASHLENGTH);
+		player.clearStackToDiscard();
+		opp.clearStackToDiscard();
+		isClashing = false;
 	}
 }
 

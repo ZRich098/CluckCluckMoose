@@ -16,6 +16,7 @@
 
 #include "CCMInput.h"
 #include "Moose.h"
+#include "AI.h"
 
 /**
  * A scene for demoing a layout manager
@@ -103,7 +104,7 @@ public:
 	/**
 	 * Resets the status of the game so that we can play again.
 	 */
-	void reset();
+	//void reset();
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */
