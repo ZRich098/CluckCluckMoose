@@ -20,7 +20,7 @@ private:
 public:
 	//Constructor
 	/** Create a new Moose*/
-	Moose(int health = 5, int handsize = 5);
+	Moose(int health = 5, int handsize = 5, int deckNumber = 4); //see Decks.h for deck numbers, will eventually json (hopefully)
 	/** Destroys the Moose*/
 	~Moose();
 
