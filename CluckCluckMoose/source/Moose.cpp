@@ -13,9 +13,10 @@ void Moose::refillDeck() {
 	discard.clear();
 }
 
-Moose::Moose(int h, int hsize) {
+Moose::Moose(int h, int hsize, int dNum) {
 	health = h;
 	handSize = hsize;
+	deck = Coop(dNum);
 }
 
 Moose::~Moose() {
