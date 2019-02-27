@@ -89,7 +89,21 @@ public:
      */
     virtual void setActive(bool value) override;
 
-	
+#pragma mark -
+#pragma mark Gameplay Handling
+	/**
+	 * The method called to update the game mode.
+	 *
+	 * This method contains any gameplay code that is not an OpenGL call.
+	 *
+	 * @param timestep  The amount of time (in seconds) since the last frame
+	 */
+	void update(float timestep);
+
+	/**
+	 * Resets the status of the game so that we can play again.
+	 */
+	void reset();
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */

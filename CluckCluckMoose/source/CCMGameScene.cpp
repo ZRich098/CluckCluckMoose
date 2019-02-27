@@ -21,6 +21,9 @@ using namespace cugl;
 //stack size
 int stackSize;
 
+//previous hand size for tracking placing a chicken
+int prevHand;
+
 //Canvases for drawing player chickens
 std::shared_ptr<Node> chickenCanvas1;
 std::shared_ptr<Node> chickenCanvas2;
@@ -148,6 +151,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp = Moose::Moose(3, 3);
 	player.refillHand();
 	opp.refillHand();
+	prevHand = player.getHand().size;
 
 	player.addToStackFromHand(0);
 	opp.addToStackFromHand(0);
@@ -305,6 +309,26 @@ void GameScene::dispose() {
     _buttons.clear();
     Scene::dispose();
 }
+
+/**
+ * The method called to update the game mode.
+ *
+ * This method contains any gameplay code that is not an OpenGL call.
+ *
+ * @param timestep  The amount of time (in seconds) since the last frame
+ */
+void GameScene::update(float timestep) {
+	_input.update(timestep);
+
+	// Reset the game if necessary
+	//if (_input.didReset()) { reset(); }
+
+	if (prevHand < player.getHand().size) {
+		prevHand = player.getHand().size;
+
+	}
+}
+
 
 /**
  * Sets whether the scene is currently active
