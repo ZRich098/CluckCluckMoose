@@ -31,6 +31,12 @@ std::shared_ptr<Node> chickenCanvas4;
 std::shared_ptr<Node> chickenCanvas5;
 std::shared_ptr<Node> chickenCanvas6;
 
+//Canvas for moose
+std::shared_ptr<Node> mooseCanvas;
+
+//Canvas for buttons
+std::shared_ptr<Node> buttonCanvas;
+
 
 //Moose Players
 Moose player;
@@ -57,6 +63,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     } else if (!Scene::init(dimen)) {
         return false;
     }
+
+
     
     _assets = assets;
     _input.init();
@@ -67,27 +75,29 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     
     auto kids = layer->getChildren();
     std::shared_ptr<FloatLayout> layout = std::dynamic_pointer_cast<FloatLayout>(layer->getLayout());
+	for (auto it = kids.begin(); it != kids.end(); ++it) {
+		std::shared_ptr<Button> butt = std::dynamic_pointer_cast<Button>(*it);
+		_buttons[butt->getName()] = butt;
+		butt->setListener([=](const std::string& name, bool down) {
+			if (down) {
+				CULog("%s\n", butt->getName().c_str());
+				if (butt->getName() == "chicken1") {
+					player.addToStackFromHand(0);
+				}
+				else if (butt->getName() == "chicken2") {
+					player.addToStackFromHand(1);
+				}
+				else if (butt->getName() == "chicken3") {
+					player.addToStackFromHand(2);
+				}
+			}
+		});
+	}
 
 	//Create a node for drawing moose
-	std::shared_ptr<Node> mooseCanvas = Node::alloc();
+	mooseCanvas = Node::alloc();
 	layer->addChild(mooseCanvas);
 	
-	//Draw player moose
-	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
-	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
-	moose1->setScale(0.3f); // Magic number to rescale asset
-	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-	moose1->setPosition(0, -100);
-	moose1->flipHorizontal(false);
-	mooseCanvas->addChild(moose1);
-	
-	//Draw opponent moose
-	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.3f); // Magic number to rescale asset
-	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH, -100);
-	moose2->flipHorizontal(true);
-	mooseCanvas->addChild(moose2);
 
 
 	//Create a node for drawing chickens at each level of stacking
@@ -115,6 +125,11 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	layer->addChild(chickenCanvas6);
 	chickenCanvas6->setPosition(100, 200);
 
+	//Add button canvas
+	buttonCanvas = Node::alloc();
+	layer->addChild(buttonCanvas);
+	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+	
 	//Initialize stack sizes
 	stackSize = 0;
 
@@ -134,9 +149,10 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	player.refillHand();
 	opp.refillHand();
 
-	//@Jon, this was for testing, please remove
 	player.addToStackFromHand(0);
 	opp.addToStackFromHand(0);
+
+
 
 	GameScene::draw(assets, layer);
 
@@ -166,14 +182,42 @@ void GameScene::makeChicken(const std::shared_ptr<AssetManager>& assets, std::sh
 }
 
 void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node) {
+	
+	//reset drawing between frames
+	mooseCanvas->removeAllChildren();
+	chickenCanvas1->removeAllChildren();
+	chickenCanvas2->removeAllChildren();
+	chickenCanvas3->removeAllChildren();
+	chickenCanvas4->removeAllChildren();
+	chickenCanvas5->removeAllChildren();
+	chickenCanvas6->removeAllChildren();
+	buttonCanvas->removeAllChildren();
+	
+	//Draw player moose
+	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
+	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
+	moose1->setScale(0.3f); // Magic number to rescale asset
+	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+	moose1->setPosition(0, -100);
+	moose1->flipHorizontal(false);
+	mooseCanvas->addChild(moose1);
+
+	//Draw opponent moose
+	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
+	moose2->setScale(0.3f); // Magic number to rescale asset
+	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
+	moose2->setPosition(SCENE_WIDTH, -100);
+	moose2->flipHorizontal(true);
+	mooseCanvas->addChild(moose2);
+	
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = assets->get<Texture>("grass");
 
 	vector <Chicken> hand = player.getHand();
-	CULog("%d", hand.size());
 
+	
 	for (int i = 0; i < hand.size(); i++) {
 		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
@@ -187,24 +231,15 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 		else {
 			text=textureG;
 		}
-		std::shared_ptr<PolygonNode> up = PolygonNode::allocWithTexture(text);
-		up->setScale(0.1, 0.1);
-		button = Button::alloc(up);
-		button->setName("chicken " + i);
-		button->setListener([=](const std::string& name, bool down) {
-			if (down) {
-				CULog("button pressed");
-				player.addToStackFromHand(i);
-				CULog("%s\n", button->getName().c_str());
-				CULog("(%f, %f)\n", _input.getCurTouch().x, _input.getCurTouch().y);
-			}
-		});
+		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
 
-		button->setAnchor(Vec2::ANCHOR_CENTER);
-		button->setPosition((i * 100) + 500 + ((i-1)*100), 50);
+		id->setScale(0.1, 0.1);
+		
 
-		node->addChild(button);
-		button->activate(1);
+		id->setAnchor(Vec2::ANCHOR_CENTER);
+		id->setPosition(i*100 - 100, 0);
+
+		buttonCanvas->addChild(id);
 	}
 
 	vector <Chicken> pstack = player.getStack();
