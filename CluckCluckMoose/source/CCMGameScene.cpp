@@ -31,6 +31,9 @@ std::shared_ptr<Node> chickenCanvas4;
 std::shared_ptr<Node> chickenCanvas5;
 std::shared_ptr<Node> chickenCanvas6;
 
+//Canvas for moose
+std::shared_ptr<Node> mooseCanvas;
+
 
 //Moose Players
 Moose player;
@@ -69,25 +72,9 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<FloatLayout> layout = std::dynamic_pointer_cast<FloatLayout>(layer->getLayout());
 
 	//Create a node for drawing moose
-	std::shared_ptr<Node> mooseCanvas = Node::alloc();
+	mooseCanvas = Node::alloc();
 	layer->addChild(mooseCanvas);
 	
-	//Draw player moose
-	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
-	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
-	moose1->setScale(0.3f); // Magic number to rescale asset
-	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-	moose1->setPosition(0, -100);
-	moose1->flipHorizontal(false);
-	mooseCanvas->addChild(moose1);
-	
-	//Draw opponent moose
-	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.3f); // Magic number to rescale asset
-	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH, -100);
-	moose2->flipHorizontal(true);
-	mooseCanvas->addChild(moose2);
 
 
 	//Create a node for drawing chickens at each level of stacking
@@ -166,6 +153,33 @@ void GameScene::makeChicken(const std::shared_ptr<AssetManager>& assets, std::sh
 }
 
 void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node) {
+	
+	//reset drawing between frames
+	mooseCanvas->removeAllChildren();
+	chickenCanvas1->removeAllChildren();
+	chickenCanvas2->removeAllChildren();
+	chickenCanvas3->removeAllChildren();
+	chickenCanvas4->removeAllChildren();
+	chickenCanvas5->removeAllChildren();
+	chickenCanvas6->removeAllChildren();
+	
+	//Draw player moose
+	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
+	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
+	moose1->setScale(0.3f); // Magic number to rescale asset
+	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+	moose1->setPosition(0, -100);
+	moose1->flipHorizontal(false);
+	mooseCanvas->addChild(moose1);
+
+	//Draw opponent moose
+	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
+	moose2->setScale(0.3f); // Magic number to rescale asset
+	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
+	moose2->setPosition(SCENE_WIDTH, -100);
+	moose2->flipHorizontal(true);
+	mooseCanvas->addChild(moose2);
+	
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = assets->get<Texture>("water");
