@@ -48,7 +48,7 @@ void CCMApp::onStartup() {
     _loading.init(_assets);
     
     // Que up the other assets
-    _assets->loadDirectoryAsync("json/assets.json",nullptr);
+    _assets->loadDirectoryAsync("json/assets1.json",nullptr);
     
     Application::onStartup(); // YOU MUST END with call to parent
 }

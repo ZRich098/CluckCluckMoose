@@ -57,26 +57,41 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                "chicken1" : {
-                    "type"   : "Button",
-                    "data"   : {
-                        "anchor"   : [0.5,0.5],
-                        "upnode"  : "up"
+                "chicken1": {
+                    "type": "Button",
+                    "data": {
+                        "anchor": [ 0.5, 0.5 ],
+                        "upnode": "up"
                     },
-                    "children" : {
-                        "up" : {
-                            "type"      : "Node",
-                            "data"      : {
-                                "size"   : [100,100]
+                    "children": {
+                        "up": {
+                            "type": "Node",
+                            "data": {
+                                "size": [ 100, 100 ]
                             },
-                            "format"    : {
-                                "type"  : "Anchored"
+                            "format": {
+                                "type": "Anchored"
                             },
-                            "children"  : {
-                                "chick": {
-                                    "type": "PolygonNode",
+                            "children": {
+                                "patch": {
+                                    "type": "NinePatch",
                                     "data": {
-                                        "texture": "fire"
+                                        "texture": "reds",
+                                        "interior": [ 6, 6, 20, 20 ]
+                                    },
+                                    "layout": {
+                                        "x_anchor": "fill",
+                                        "y_anchor": "fill"
+                                    }
+                                },
+                                "label": {
+                                    "type": "Label",
+                                    "data": {
+                                        "font": "sans",
+                                        "text": "1",
+                                        "foreground": [ 255, 255, 255, 255 ],
+                                        "halign": "center",
+                                        "valign": "middle"
                                     },
                                     "layout": {
                                         "x_anchor": "fill",
@@ -86,8 +101,8 @@
                             }
                         }
                     },
-                    "layout" : {
-                        "priority" : 1
+                    "layout": {
+                        "priority": 0
                     }
                 },
                 "chicken2" : {
@@ -184,102 +199,6 @@
                     },
                     "layout" : {
                         "priority" : 2
-                    }
-                },
-                "chicken4" : {
-                    "type"   : "Button",
-                    "data"   : {
-                        "anchor"   : [0.5,0.5],
-                        "upnode"  : "up"
-                    },
-                    "children" : {
-                        "up" : {
-                            "type"      : "Node",
-                            "data"      : {
-                                "size"   : [100,100]
-                            },
-                            "format"    : {
-                                "type"  : "Anchored"
-                            },
-                            "children"  : {
-                                "patch" : {
-                                    "type"   : "NinePatch",
-                                    "data"   : {
-                                        "texture"  : "reds",
-                                        "interior" : [6,6,20,20]
-                                    },
-                                    "layout" : {
-                                        "x_anchor" : "fill",
-                                        "y_anchor" : "fill"
-                                    }
-                                },
-                                "label" : {
-                                    "type"   : "Label",
-                                    "data"   : {
-                                        "font"       : "sans",
-                                        "text"       : "4",
-                                        "foreground" : [255,255,255,255],
-                                        "halign"     : "center",
-                                        "valign"     : "middle"
-                                    },
-                                    "layout" : {
-                                        "x_anchor" : "fill",
-                                        "y_anchor" : "fill"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "layout" : {
-                        "priority" : 3
-                    }
-                },
-                "chicken5" : {
-                    "type"   : "Button",
-                    "data"   : {
-                        "anchor"   : [0.5,0.5],
-                        "upnode"  : "up"
-                    },
-                    "children" : {
-                        "up" : {
-                            "type"      : "Node",
-                            "data"      : {
-                                "size"   : [100,100]
-                            },
-                            "format"    : {
-                                "type"  : "Anchored"
-                            },
-                            "children"  : {
-                                "patch" : {
-                                    "type"   : "NinePatch",
-                                    "data"   : {
-                                        "texture"  : "reds",
-                                        "interior" : [6,6,20,20]
-                                    },
-                                    "layout" : {
-                                        "x_anchor" : "fill",
-                                        "y_anchor" : "fill"
-                                    }
-                                },
-                                "label" : {
-                                    "type"   : "Label",
-                                    "data"   : {
-                                        "font"       : "sans",
-                                        "text"       : "5",
-                                        "foreground" : [255,255,255,255],
-                                        "halign"     : "center",
-                                        "valign"     : "middle"
-                                    },
-                                    "layout" : {
-                                        "x_anchor" : "fill",
-                                        "y_anchor" : "fill"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "layout" : {
-                        "priority" : 4
                     }
                 }
             }
