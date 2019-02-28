@@ -1,3 +1,7 @@
+//
+//  Moose.cpp
+//
+
 #include <ctime>
 #include <string>
 #include <iostream>
@@ -7,22 +11,44 @@
 #include "Moose.h"
 
 using namespace cugl;
+using namespace std;
+
+#pragma mark -
+#pragma mark Constructors
 
 void Moose::refillDeck() {
 	deck.fill(discard);
 	discard.clear();
 }
 
-Moose::Moose(int h, int hsize, int dNum) {
-	health = h;
-	handSize = hsize;
-	deck = Coop(dNum);
+/**
+ * Initializes a new moose with the given health and hand size.
+ *
+ * @return  true if the Moose is initialized properly, false otherwise.
+ */
+bool Moose::init(int h, int hSize) {
+    health = h;
+    handSize = hSize;
+    // [Amanda] hi i didn't know what this did so i commented it out for now
+    // deck = Coop(4);
+    return true;
 }
 
-Moose::~Moose() {
-	//CULog("Moose Destroyed");
+
+/**
+ * Disposes all resources and assets of this moose
+ *
+ * Does not currently actually dispose all assets!
+ */
+void Moose::dispose() {
+    health = 0;
+    handSize = 0;
+    // deck = Coop(4);
 }
 
+
+#pragma mark -
+#pragma mark Stack
 
 void Moose::changeChickenInStack(element e, special s, int d, int pos) {
 	stack.at(pos).setChicken(e, s, d);
@@ -92,7 +118,7 @@ void Moose::draw(int num) {
 	for (int i = 0; i < num; i++) {
 		//refill deck if empty
 		if (deck.getSize() == 0) refillDeck();
-		Chicken &c = deck.draw();
+		Chicken c = deck.draw();
 		if (hand.size() < handSize - 1) {
 			hand.push_back(c);
 		} else {
