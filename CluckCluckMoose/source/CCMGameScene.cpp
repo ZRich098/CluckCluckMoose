@@ -348,7 +348,7 @@ void GameScene::update(float timestep) {
 	}
 
 	if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
-		sleep(CLASHLENGTH);
+//        sleep(CLASHLENGTH);
 		int result = player->getStack().front().compare(opp->getStack().front());
 		if (result == -1)
 		{
@@ -364,13 +364,13 @@ void GameScene::update(float timestep) {
 			opp->removeBottomFromStackToDiscard();
 		}
 	} else if (isClashing && stackSize != 0) {
-		sleep(CLASHLENGTH);
+//        sleep(CLASHLENGTH);
 		player->refillHand();
 		opp->refillHand();
 		prevHand = player->getHand().size();
 		stackSize = 0;
 	} else if (isClashing) {
-		sleep(CLASHLENGTH);
+//        sleep(CLASHLENGTH);
 		player->clearStackToDiscard();
 		opp->clearStackToDiscard();
 		isClashing = false;

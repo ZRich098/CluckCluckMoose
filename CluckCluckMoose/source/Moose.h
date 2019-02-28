@@ -50,20 +50,6 @@ public:
     void dispose();
     
     /**
-     * Initializes a new moose: health 3, handsize 3.
-     *
-     * @return  true if the obstacle is initialized properly, false otherwise.
-     */
-    virtual bool init() { return init(3, 3); }
-    
-    /**
-     * Initializes a new moose: health given, handsize 3.
-     *
-     * @return  true if the obstacle is initialized properly, false otherwise.
-     */
-    virtual bool init(int h) { return init(h, 3); }
-    
-    /**
      * Initializes a new moose: health given, handsize given.
      *
      * @return  true if the obstacle is initialized properly, false otherwise.
@@ -71,27 +57,7 @@ public:
     virtual bool init(int h, int hSize);
     
     
-#pragma mark Static Constructors
-    /**
-     * Returns a newly allocated moose with default 3, 3.
-     *
-     * @return a newly allocated moose.
-     */
-    static std::shared_ptr<Moose> alloc() {
-        std::shared_ptr<Moose> result = std::make_shared<Moose>();
-        return (result->init() ? result : nullptr);
-    }
-    
-    /**
-     * Returns a newly allocated moose with default handsize 3, health given.
-     *
-     * @return a newly allocated moose
-     */
-    static std::shared_ptr<Moose> alloc(int h) {
-        std::shared_ptr<Moose> result = std::make_shared<Moose>();
-        return (result->init(h) ? result : nullptr);
-    }
-    
+#pragma mark Static Constructors    
     /**
      * Returns a newly allocated moose with default handsize given, health given.
      *
