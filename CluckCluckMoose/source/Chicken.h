@@ -61,11 +61,11 @@ enum class ChickenType {
 };
 
 
-/** String representation of the element*/
+/** String representation of the element */
 string eString(element e);
-/** String representation of the special ability*/
+/** String representation of the special ability */
 string sString(special s);
-/** Description of the special ability*/
+/** Description of the special ability */
 string sStringLong(special s);
 
 class Chicken{
@@ -75,7 +75,7 @@ class Chicken{
 		int damage;
 	public:
 		//Constructors
-		/** Creates a standard chicken card of ChickenType*/
+		/** Creates a standard chicken card of ChickenType */
 		Chicken(ChickenType t);
 		/** Create a Chicken of element e and special ability s that deals damage d */
 		Chicken(element el, special sp = special::None, int d = 1) {
@@ -83,13 +83,13 @@ class Chicken{
 			s = sp;
 			damage = d;
 		}
-		/** Copy Constructor*/
+		/** Copy Constructor */
 		Chicken(const Chicken& c) {
 			e = c.e;
 			s = c.s;
 			damage = c.damage;
 		}
-		/** Destroys the Chicken*/
+		/** Destroys the Chicken */
 		~Chicken();
 
 		//Access
@@ -97,6 +97,8 @@ class Chicken{
 		element const getElement() const { return e; };
 		/** Returns the special ability of the Chicken */
 		special const getSpecial() const { return s; };
+		/** Returns the damage of the Chicken */
+		int const getDamage() const { return damage; };
 		/** Returns a string of the Chicken's details */
 		string toString() const;
 
@@ -105,6 +107,8 @@ class Chicken{
 		void setElement(element el) { e = el; };
 		/** Sets the special ability of the Chicken */
 		void setSpecial(special sp) { s = sp; };
+		/** Sets the damage of the Chicken */
+		void setDamage(int d) { damage = d; };
 		/** Set a Chicken's element to e, special to s, and damage to d */
 		void setChicken(element el, special sp, int d = 1) {
 			e = el;
@@ -118,7 +122,7 @@ class Chicken{
 		/** Compares this chicken with another chicken
 			returns -1 if defeated by other chicken
 			returns 0  if ties with other chicken
-			returns 1  if defeats the other chicken*/
+			returns 1  if defeats the other chicken */
 		int compare(const Chicken& other) const;
 };
 
