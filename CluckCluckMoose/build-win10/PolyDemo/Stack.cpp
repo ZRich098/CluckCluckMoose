@@ -3,7 +3,7 @@
 using namespace cugl;
 
 void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2) {
-	Chicken opposing = stack2.back();
+	Chicken &opposing = stack2.back();
 	switch (stack1.back().getSpecial()) {
 	case special::None:
 		break;
@@ -12,7 +12,7 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	case special::Draw:
 		break; // Depreciated?
 	case special::Ninja:
-		iter_swap(stack2.begin(), stack2.back());
+		iter_swap(&stack2.front(), &stack2.back());
 		break;
 	case special::Refresh:
 		break; // Depreciated?
@@ -31,11 +31,12 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 		opposing.setDamage(1);
 		break;
 	case special::Thicken:
-		stack1.insert(stack1.begin(), stack1.pop_back); // May cause issues if the resolution order is unlike how I expect
+		stack1.insert(stack1.begin(), stack1.back());
+		stack1.pop_back();
 		break;
 	case special::Mirror:
-		if (opposing.getSpecial != special::Mirror)
-			stack1.back().setChicken(opposing.getElement, opposing.getSpecial, opposing.getDamage);
+		if (opposing.getSpecial() != special::Mirror)
+			stack1.back().setChicken(opposing.getElement(), opposing.getSpecial(), opposing.getDamage());
 		else
 			stack1.back().setChicken(element::Fire, special::None);
 		break;
@@ -46,8 +47,8 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	case special::Draw2:
 		break; // Depreciated?
 	case special::Cycle:
-		if (stack1.size >= 2)
-			stack1.at(stack1.begin() + stack1.size - 2).cycle();
+		if (stack1.size() >= 2)
+			stack1.at(stack1.size() - 2).cycle();
 		break;
 	case special::Extra:
 		break; // probably not
@@ -60,7 +61,7 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	case special::Discard:
 		break; // And another one
 	case special::SelfSwap:
-		iter_swap(stack1.at(stack1.begin() + stack1.size - 2), stack1.back());
+		iter_swap(&stack1.at(stack1.size() - 2), &stack1.back());
 		break;
 	case special::CycleAll:
 		break; // Pretty sure this is gone
