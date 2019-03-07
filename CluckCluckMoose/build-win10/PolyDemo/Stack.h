@@ -6,10 +6,8 @@
 #include "Chicken.h"
 class Stack {
 	public:
-		/** Does special chicken effects of the chicken on the top of stack1 */
+		/** Does special chicken effects of the chickens on the top of both stacks */
 		void specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2);
-		/** Determines which special chicken should have its effects go first */
-		special whichSpecial(special s1, special s2);
 };
 
 #endif /* __STACK_H__ */
