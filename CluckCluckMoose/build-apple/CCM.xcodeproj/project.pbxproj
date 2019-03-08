@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370CB45F22275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
+		370CB46022275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
+		370CB46122275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
+		370CB46222275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
+		370CB46322275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
+		370CB46422275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
 		371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
 		371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
 		371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */; };
@@ -125,6 +131,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		370CB45822275E3B00D47C32 /* Clash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clash.cpp; sourceTree = "<group>"; };
+		370CB45C22275E3B00D47C32 /* Clash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clash.h; sourceTree = "<group>"; };
+		370CB45D22275E3B00D47C32 /* AI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AI.cpp; sourceTree = "<group>"; };
+		370CB45E22275E3B00D47C32 /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AI.h; sourceTree = "<group>"; };
 		371BAF76221FCC0800EBF11E /* CCMGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMGameScene.h; sourceTree = "<group>"; };
 		371BAF7A221FCC0800EBF11E /* CCMInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMInput.h; sourceTree = "<group>"; };
 		371BAF7B221FCC0800EBF11E /* CCMApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMApp.h; sourceTree = "<group>"; };
@@ -378,6 +388,10 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				370CB45D22275E3B00D47C32 /* AI.cpp */,
+				370CB45E22275E3B00D47C32 /* AI.h */,
+				370CB45822275E3B00D47C32 /* Clash.cpp */,
+				370CB45C22275E3B00D47C32 /* Clash.h */,
 				371BAF7F221FCC0800EBF11E /* CCMApp.cpp */,
 				371BAF7B221FCC0800EBF11E /* CCMApp.h */,
 				371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */,
@@ -579,8 +593,10 @@
 				EB0FF61D2016F06000517030 /* main.cpp in Sources */,
 				371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				375E32E5221F42EB0010F98D /* Moose.cpp in Sources */,
+				370CB46422275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				370CB46122275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF89221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,8 +610,10 @@
 				EB7454AE1D74D891002FBAE6 /* main.cpp in Sources */,
 				371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				375E32E4221F42EB0010F98D /* Moose.cpp in Sources */,
+				370CB46322275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				370CB46022275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF88221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -609,8 +627,10 @@
 				371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				375E32E3221F42EB0010F98D /* Moose.cpp in Sources */,
 				EB2BE9B61D74952A002FE78B /* main.cpp in Sources */,
+				370CB46222275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
+				370CB45F22275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF87221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

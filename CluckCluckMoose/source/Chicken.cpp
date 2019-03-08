@@ -7,6 +7,7 @@
 #include "Chicken.h"
 
 using namespace cugl;
+using namespace std;
 
 Chicken::Chicken(ChickenType t) {
 	switch (t) {
@@ -247,7 +248,7 @@ string Chicken::toString() const {
 
 int Chicken::compare(const Chicken& other) const {
 	if (e == element::Unset || other.e == element::Unset) {
-		CULogError("Unset element exception: %s and %s cannot be compared", toString(), other.toString());
+		CULogError("Unset element exception: %s and %s cannot be compared", toString().c_str(), other.toString().c_str());
 	}
 
 	//All ties

@@ -48,11 +48,14 @@ std::shared_ptr<Node> buttonCanvas;
 
 
 //Moose Players
-Moose player;
-Moose opp;
+//Moose player;
+std::shared_ptr<Moose> player;
+//Moose opp;
+std::shared_ptr<Moose> opp;
 
 //AI
-AI oppAI = AI::AI(opp, player);
+//AI oppAI = AI::alloc(opp, player, AIType::Dumb);
+std::shared_ptr<AI> oppAI = AI::alloc(opp, player, AIType::Dumb);
 
 
 /**
@@ -95,13 +98,13 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 				try {
 					CULog("%s\n", butt->getName().c_str());
 					if (butt->getName() == "chicken1") {
-						player.addToStackFromHand(0);
+						player->addToStackFromHand(0);
 					}
 					else if (butt->getName() == "chicken2") {
-						player.addToStackFromHand(1);
+						player->addToStackFromHand(1);
 					}
 					else if (butt->getName() == "chicken3") {
-						player.addToStackFromHand(2);
+						player->addToStackFromHand(2);
 					}
 				}
 				catch (std::out_of_range e){}
@@ -159,11 +162,13 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
 
 	//Initialize moose
-	player = Moose::Moose(3, 3);
-	opp = Moose::Moose(3, 3);
-	player.refillHand();
-	opp.refillHand();
-	prevHand = player.getHand().size();
+//    player = Moose::Moose(3, 3);
+    player = Moose::alloc(3, 3);
+//    opp = Moose::Moose(3, 3);
+    opp = Moose::alloc(3, 3);
+	player->refillHand();
+	opp->refillHand();
+	prevHand = player->getHand().size();
 
 	//Initialize AI
 	//oppAI = AI::AI(opp,player);
@@ -229,13 +234,13 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 	std::shared_ptr<Texture> textureW = assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = assets->get<Texture>("grass");
 
-	vector <Chicken> hand = player.getHand();
+	vector <Chicken> hand = player->getHand();
 
 	
 	for (int i = 0; i < hand.size(); i++) {
 		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
-		element cel = player.getHandAt(i).getElement();
+		element cel = player->getHandAt(i).getElement();
 		if (cel == (element::Fire)) {
 			text = textureF;
 		}
@@ -256,11 +261,11 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 		buttonCanvas->addChild(id);
 	}
 
-	vector <Chicken> pstack = player.getStack();
+	vector <Chicken> pstack = player->getStack();
 
 	for (int i = 0; i < pstack.size(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = player.getStackAt(i).getElement();
+		element cel = player->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {
 			text = textureF;
 		}
@@ -280,11 +285,11 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 		}
 	}
 
-	vector <Chicken> ostack = opp.getStack();
+	vector <Chicken> ostack = opp->getStack();
 
 	for (int i = 0; i < ostack.size(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = opp.getStackAt(i).getElement();
+		element cel = opp->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {
 			text = textureF;
 		}
@@ -331,9 +336,9 @@ void GameScene::update(float timestep) {
 	_input.update(timestep);
 	GameScene::draw(_assets, _assets->get<Node>("game"));
 
-	if (prevHand > player.getHand().size()) {
+	if (prevHand > player->getHand().size()) {
 		prevHand--;
-		opp.addToStackFromHand(oppAI.getPlay());
+		opp->addToStackFromHand(oppAI->getPlay());
 		stackSize++;
 		if (stackSize == 3) { // Temporary magic number for max stack size
 			isClashing = true;
@@ -342,32 +347,32 @@ void GameScene::update(float timestep) {
 		GameScene::draw(_assets, _assets->get<Node>("game"));
 	}
 
-	if (!player.getStack().empty() && !opp.getStack().empty() && isClashing) {
-		Sleep(CLASHLENGTH);
-		int result = player.getStack().front().compare(opp.getStack().front());
+	if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
+//        sleep(CLASHLENGTH);
+		int result = player->getStack().front().compare(opp->getStack().front());
 		if (result == -1)
 		{
-			player.removeBottomFromStackToDiscard();
+			player->removeBottomFromStackToDiscard();
 		}
 		else if (result == 1)
 		{
-			opp.removeBottomFromStackToDiscard();
+			opp->removeBottomFromStackToDiscard();
 		}
 		else
 		{
-			player.removeBottomFromStackToDiscard();
-			opp.removeBottomFromStackToDiscard();
+			player->removeBottomFromStackToDiscard();
+			opp->removeBottomFromStackToDiscard();
 		}
 	} else if (isClashing && stackSize != 0) {
-		Sleep(CLASHLENGTH);
-		player.refillHand();
-		opp.refillHand();
-		prevHand = player.getHand().size();
+//        sleep(CLASHLENGTH);
+		player->refillHand();
+		opp->refillHand();
+		prevHand = player->getHand().size();
 		stackSize = 0;
 	} else if (isClashing) {
-		Sleep(CLASHLENGTH);
-		player.clearStackToDiscard();
-		opp.clearStackToDiscard();
+//        sleep(CLASHLENGTH);
+		player->clearStackToDiscard();
+		opp->clearStackToDiscard();
 		isClashing = false;
 	}
 }

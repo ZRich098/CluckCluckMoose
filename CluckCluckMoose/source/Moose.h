@@ -1,14 +1,23 @@
-/** The header file for Moose*/
+//
+//  Moose.h
+//
+
 #ifndef __MOOSE_H__
 #define __MOOSE_H__
 #include <cugl/cugl.h>
 
 #include "Coop.h"
 
-/** The Moose Player */
-class Moose {
+/**
+ * This class is for the Moose.
+ */
+class Moose { 
 private:
-	//Pecking Order >:D This is actually a queue tho lol
+    /** This macro disables the copy constructor (not allowed on scene graphs) */
+//    CU_DISALLOW_COPY_AND_ASSIGN(Moose);
+
+protected:
+    //Pecking Order >:D This is actually a queue tho lol
 	//0 is bottom of stack
 	vector <Chicken> stack;	
 	vector <Chicken> hand;
@@ -17,15 +26,52 @@ private:
 	int handSize;
 	int health;
 	void refillDeck();
+    
 public:
-	//Constructor
-	/** Create a new Moose*/
-	Moose(int health = 5, int handsize = 5, int deckNumber = 4); //see Decks.h for deck numbers, will eventually json (hopefully)
-	/** Destroys the Moose*/
-	~Moose();
-
-	//Access
-	/** Get the current pecking order of the Moose*/
+   
+    
+#pragma mark Constructors
+    /**
+     * Creates a new moose.
+     *
+     * NEVER USE A CONSTRUCTOR WITH NEW. If you want to allocate a model on
+     * the heap, use one of the static constructors instead.
+     */
+    Moose(void) : handSize(3), health(3) { }
+    
+    /**
+     * Destroys this moose, releasing some! resources.
+     */
+    virtual ~Moose(void) { dispose(); }
+    
+    /**
+     * Disposes the moose
+     */
+    void dispose();
+    
+    /**
+     * Initializes a new moose: health given, handsize given.
+     *
+     * @return  true if the obstacle is initialized properly, false otherwise.
+     */
+    virtual bool init(int h, int hSize);
+    
+    
+#pragma mark Static Constructors    
+    /**
+     * Returns a newly allocated moose with default handsize given, health given.
+     *
+     * @return a newly allocated moose
+     */
+    static std::shared_ptr<Moose> alloc(int h, int hSize) {
+        std::shared_ptr<Moose> result = std::make_shared<Moose>();
+        return (result->init(h,hSize) ? result : nullptr);
+    }
+    
+#pragma mark -
+#pragma mark Accessors
+    
+    /** Get the current pecking order of the Moose*/
 	vector <Chicken> getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
 	Chicken getStackAt(int pos) { return stack.at(pos); };
@@ -44,7 +90,11 @@ public:
 	/** Get the current health of the Moose*/
 	int getHealth() { return health; };
 
-	//Stack
+    
+#pragma mark -
+#pragma mark Stack
+    
+    //Stack
 	/** Add the Chicken at position pos in the hand to the stack.  DOES remove the chicken from the hand. */
 	void addToStackFromHand(int pos);
 	/** Puts the Chicken at the top of the stack back into the hand*/
@@ -96,6 +146,7 @@ public:
 	/** returns a string of the deck of the moose
 		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
 	string deckString() const { return deck.coopString(); };
+
 };
 
 #endif /* __MOOSE_H__ */
