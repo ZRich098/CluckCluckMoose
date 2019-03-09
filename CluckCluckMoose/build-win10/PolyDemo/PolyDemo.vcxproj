@@ -197,6 +197,7 @@
     <ClInclude Include="..\..\source\HelloApp.h" />
     <ClInclude Include="..\..\source\Moose.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\AI.cpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="..\..\source\Coop.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\Moose.cpp" />
+    <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />
