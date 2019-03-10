@@ -196,6 +196,8 @@
     <ClInclude Include="..\..\source\Decks.h" />
     <ClInclude Include="..\..\source\HelloApp.h" />
     <ClInclude Include="..\..\source\Moose.h" />
+    <ClInclude Include="..\..\source\MooseFile.h" />
+    <ClInclude Include="..\..\source\SaveController.h" />
     <ClInclude Include="..\..\source\Stack.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stack.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="..\..\source\Coop.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\Moose.cpp" />
+    <ClCompile Include="..\..\source\SaveController.cpp" />
     <ClCompile Include="..\..\source\Stack.cpp" />
   </ItemGroup>
   <ItemGroup>

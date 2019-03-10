@@ -112,6 +112,104 @@ string eString(element e) {
 	}	
 }
 
+/** Get the int representation of a special (for json)*/
+int specialToInt(special s) {
+	switch (s) {
+	case special::BasicFire:
+		return 0;
+	case special::BasicGrass:
+		return 1;
+	case special::BasicWater:
+		return 2;
+	case special::Reaper:
+		return 3;
+	case special::BirdBrain:
+		return 4;
+	case special::Ninja:
+		return 5;
+	case special::Clicken:
+		return 6;
+	case special::PartyFowl:
+		return 7;
+	case special::Thicken:
+		return 8;
+	case special::Mirror:
+		return 9;
+	case special::Smoked:
+		return 10;
+	case special::Spy:
+		return 11;
+	case special::PartridgePilferer:
+		return 12;
+	case special::Consigliere:
+		return 13;
+	case special::WingMan:
+		return 14;
+	case special::Bomb:
+		return 15;
+	case special::PoultryPals:
+		return 16;
+	case special::Angry:
+		return 17;
+	case special::Lichen:
+		return 18;
+	case special::Scientist:
+		return 19;
+	case special::Alchemist:
+		return 20;
+	}
+}
+
+/** Get the special representation of a int (for json)*/
+special intToSpecial(int i)
+{
+	switch (i) {
+		case 0:
+			return special::BasicFire;
+		case 1:
+			return special::BasicGrass;
+		case 2:
+			return special::BasicWater;
+		case 3:
+			return special::Reaper;
+		case 4:
+			return special::BirdBrain;
+		case 5:
+			return special::Ninja;
+		case 6:
+			return special::Clicken;
+		case 7:
+			return special::PartyFowl;
+		case 8:
+			return special::Thicken;
+		case 9:
+			return special::Mirror;
+		case 10:
+			return special::Smoked;
+		case 11:
+			return special::Spy;
+		case 12:
+			return special::PartridgePilferer;
+		case 13:
+			return special::Consigliere;
+		case 14:
+			return special::WingMan;
+		case 15:
+			return special::Bomb;
+		case 16:
+			return special::PoultryPals;
+		case 17:
+			return special::Angry;
+		case 18:
+			return special::Lichen;
+		case 19:
+			return special::Scientist;
+		case 20:
+			return special::Alchemist;
+	}
+}
+
+
 string sString(special s) {
 	switch (s) {
 		case special::BasicFire:

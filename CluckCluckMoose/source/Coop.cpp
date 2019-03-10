@@ -67,9 +67,15 @@ void Coop::add(const Chicken& c) {
 }
 
 void Coop::fill(const vector <Chicken> c) {
-	//TODO just use a pointer to c instead
 	for (const Chicken &ch : c) {
 		chickens.push_back(ch);
+	}
+	shuffled = false;
+}
+
+void Coop::fill(const vector <int> cArray) {
+	for (int i : cArray) {
+		chickens.push_back(Chicken(intToSpecial(i)));
 	}
 	shuffled = false;
 }

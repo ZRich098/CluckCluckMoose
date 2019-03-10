@@ -44,6 +44,8 @@ class Coop {
 		void add(const Chicken& c);
 		/** Add the c Chickens to the Coop */
 		void fill(const vector <Chicken> c);
+		/** Add the c Chickens to the Coop */
+		void fill(const vector <int> cArray);
 
 		//Info
 		/** Prints the contents of the coop in draw order (next to draw is first card printed, etc.)

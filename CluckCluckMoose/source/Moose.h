@@ -55,6 +55,11 @@ public:
      * @return  true if the obstacle is initialized properly, false otherwise.
      */
     virtual bool init(int h, int hSize);
+
+	/**
+	 * Initializes the moose with json style arguments
+	 */
+	void jsonInit(int health, vector<int> hand, vector<int> stack, vector<int> coop, vector<int> discard, string costume);
     
     
 #pragma mark Static Constructors    
