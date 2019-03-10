@@ -35,6 +35,9 @@ int clashCD;
 //bool to signify a clash is in progress
 bool isClashing;
 
+//bool to signify a clash preview is in progress
+bool isPreviewing;
+
 //Canvases for drawing player chickens
 std::shared_ptr<Node> chickenCanvas1;
 std::shared_ptr<Node> chickenCanvas2;
@@ -162,7 +165,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	//Initialize clash cooldown
 	clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
 
-
+	
 
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
@@ -353,6 +356,11 @@ void GameScene::update(float timestep) {
 		}
 		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
 		GameScene::draw(_assets, _assets->get<Node>("game"));
+	}
+
+	if (false) { //replace with if Preview button is pressed
+		isPreviewing = true;
+		//must also disable playing cards until isPreviewing is false
 	}
 
 	if (clashCD == 0) {
