@@ -272,9 +272,9 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 		buttonCanvas->addChild(id);
 	}
 
-	vector <Chicken> pstack = player->getStack();
+	Stack pstack = player->getStack();
 
-	for (int i = 0; i < pstack.size(); i++) {
+	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		element cel = player->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {
@@ -296,9 +296,9 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 		}
 	}
 
-	vector <Chicken> ostack = opp->getStack();
+	Stack ostack = opp->getStack();
 
-	for (int i = 0; i < ostack.size(); i++) {
+	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		element cel = opp->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {

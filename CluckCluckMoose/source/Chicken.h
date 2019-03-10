@@ -13,6 +13,8 @@ enum class element {
 	Unset	//Not set until stack time
 };
 
+/** Depreciated
+
 enum class special { 
 	None, //No Special Ability
 	Reaper, //Ties with all chickens
@@ -33,9 +35,9 @@ enum class special {
 	Discard, //Opponent Discards a card
 	SelfSwap, //Swap with Chicken immediately below
 	CycleAll //Cycle all your Chickens except this one
-}; 
+}; */
 
-enum class ChickenType {
+enum class special {
 	//Basic Chickens
 	BasicFire,
 	BasicWater,
@@ -75,10 +77,10 @@ class Chicken{
 		int damage;
 	public:
 		//Constructors
-		/** Creates a standard chicken card of ChickenType */
-		Chicken(ChickenType t);
+		/** Creates a standard chicken card of special s */
+		Chicken(special s);
 		/** Create a Chicken of element e and special ability s that deals damage d */
-		Chicken(element el, special sp = special::None, int d = 1) {
+		Chicken(element el, special sp, int d = 1) {
 			e = el;
 			s = sp;
 			damage = d;
