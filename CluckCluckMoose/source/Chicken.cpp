@@ -9,112 +9,74 @@
 using namespace cugl;
 using namespace std;
 
-Chicken::Chicken(ChickenType t) {
-	switch (t) {
-	case ChickenType::BasicFire:
+Chicken::Chicken(special sp) {
+	s = sp;
+	damage = 1;
+	switch (s) {
+	case special::BasicFire:
 		e = element::Fire;
-		s = special::None;
-		damage = 1;
 		return;
-	case ChickenType::BasicWater:
+	case special::BasicWater:
 		e = element::Water;
-		s = special::None;
-		damage = 1;
 		return;
-	case ChickenType::BasicGrass:
+	case special::BasicGrass:
 		e = element::Grass;
-		s = special::None;
-		damage = 1;
 		return;
-	case ChickenType::Reaper:
+	case special::Reaper:
 		e = element::TieAll;
-		s = special::Reaper;
 		damage = 0;
 		return;
-	case ChickenType::BirdBrain:
+	case special::BirdBrain:
 		e = element::Grass;
-		s = special::Draw;
-		damage = 1;
 		return;
-	case ChickenType::Ninja:
+	case special::Ninja:
 		e = element::Grass;
-		s = special::Ninja;
-		damage = 1;
 		return;
-	case ChickenType::Clicken:
+	case special::Clicken:
 		e = element::Water;
-		s = special::Refresh;
-		damage = 1;
 		return;
-	case ChickenType::PartyFowl:
+	case special::PartyFowl:
 		e = element::Water;
-		s = special::Null;
-		damage = 1;
 		return;
-	case ChickenType::Thicken:
+	case special::Thicken:
 		e = element::Fire;
-		s = special::Thicken;
-		damage = 1;
 		return;
-	case ChickenType::Mirror:
+	case special::Mirror:
 		e = element::Unset;
-		s = special::Mirror;
-		damage = 1;
 		return;
-	case ChickenType::Smoked:
+	case special::Smoked:
 		e = element::Fire;
-		s = special::Hide;
-		damage = 1;
 		return;
-	case ChickenType::Spy:
+	case special::Spy:
 		e = element::Grass;
-		s = special::Peek;
-		damage = 1;
 		return;
-	case ChickenType::PartridgePilferer:
+	case special::PartridgePilferer:
 		e = element::LoseAll;
-		s = special::Draw2;
-		damage = 1;
 		return;
-	case ChickenType::Consigliere:
+	case special::Consigliere:
 		e = element::Water;
-		s = special::Cycle;
-		damage = 1;
 		return;
-	case ChickenType::WingMan:
+	case special::WingMan:
 		e = element::Water;
-		s = special::Extra;
-		damage = 1;
 		return;
-	case ChickenType::Bomb:
+	case special::Bomb:
 		e = element::LoseAll;
-		s = special::Bomb;
 		damage = 2;
 		return;
-	case ChickenType::PoultryPals:
+	case special::PoultryPals:
 		e = element::Fire;
-		s = special::Search;
-		damage = 1;
 		return;
-	case ChickenType::Angry:
+	case special::Angry:
 		e = element::Fire;
-		s = special::Clash;
-		damage = 1;
 		return;
-	case ChickenType::Lichen:
+	case special::Lichen:
 		e = element::Grass;
-		s = special::Discard;
-		damage = 1;
 		return;
-	case ChickenType::Scientist:
+	case special::Scientist:
 		e = element::Grass;
-		s = special::SelfSwap;
-		damage = 1;
 		return;
-	case ChickenType::Alchemist:
+	case special::Alchemist:
 		e = element::Fire;
-		s = special::CycleAll;
-		damage = 1;
 		return;
 	}
 }
@@ -152,93 +114,97 @@ string eString(element e) {
 
 string sString(special s) {
 	switch (s) {
-		case special::None:
+		case special::BasicFire:
+		case special::BasicGrass:
+		case special::BasicWater:
 			return "None";
 		case special::Reaper:
 			return "Reaper";
-		case special::Draw:
+		case special::BirdBrain:
 			return "Bird Brain";
 		case special::Ninja:
 			return "Ninja";
-		case special::Refresh:
+		case special::Clicken:
 			return "Clicken";
-		case special::Null:
+		case special::PartyFowl:
 			return "Party Fowl";
 		case special::Thicken:
 			return "Thicken";
 		case special::Mirror:
 			return "Mirror";
-		case special::Hide:
+		case special::Smoked:
 			return "Smoked";
-		case special::Peek:
+		case special::Spy:
 			return "Spy";
-		case special::Draw2:
+		case special::PartridgePilferer:
 			return "Partridge Pilferer";
-		case special::Cycle:
+		case special::Consigliere:
 			return "Consigliere";
-		case special::Extra:
+		case special::WingMan:
 			return "Wing Man";
 		case special::Bomb:
 			return "Bomb";
-		case special::Search:
+		case special::PoultryPals:
 			return "Poultry Pals";
-		case special::Clash:
+		case special::Angry:
 			return "Angry";
-		case special::Discard:
+		case special::Lichen:
 			return "Lich-en";
-		case special::SelfSwap:
+		case special::Scientist:
 			return "Scientist";
-		case special::CycleAll:
+		case special::Alchemist:
 			return "Alchemist";
 	}
 }
 
 string sStringLong(special s) {
 	switch (s) {
-		case special::None:
+		case special::BasicFire:
+		case special::BasicGrass:
+		case special::BasicWater:
 			return "Basic Chicken";
 		case special::Reaper:
 			return "Wins against any chicken, remove from the pecking order after combat. Does not deal damage. If negated, become a Basic Water Chicken";
-		case special::Draw:
-			return "Draw a Chicken"; //Do we want to use "hatch?"
+		case special::BirdBrain:
+			return "Draw a Chicken"; 
 		case special::Ninja:
 			return "Swap your opponentfs bottommost and topmost Chicken";
-		case special::Refresh:
+		case special::Clicken:
 			return "Discard your hand and draw that many Chickens";
-		case special::Null:
+		case special::PartyFowl:
 			return "Negate the effects of the Chicken played against it";
 		case special::Thicken:
 			return "Move this Chicken to the bottom of the pecking order and move all Chickens you own up one space";
 		case special::Mirror:
 			return "Copy the ability and type of the Chicken played against this Chicken.  If the opposing Chicken is a Mirror Chicken or Party Fowl, become a Basic Fire Chicken";
-		case special::Hide:
+		case special::Smoked:
 			return "Do not reveal your next played Chicken until clash time";
-		case special::Peek:
+		case special::Spy:
 			return "Look at 1 card in your opponentfs hand";
-		case special::Draw2: //Is this worth playing?
+		case special::PartridgePilferer: //Is this worth playing?
 			return "Draw two cards. Loses to all other chickens.  If negated, become a Basic Grass Chicken";
-		case special::Cycle:
+		case special::Consigliere:
 			return "Change the type of the Chicken below this one (Fire -> Water -> Grass -> Fire)";
-		case special::Extra: //This seems too good to be true
+		case special::WingMan: //This seems too good to be true
 			return "Play the top chicken in your deck on top of this one";
 		case special::Bomb:
 			return "Loses to everything.  Deal 2 damage to the enemy Moose.  If negated, become a Basic Fire Chicken";
-		case special::Search:
+		case special::PoultryPals:
 			return "Reveal cards from your deck until you reveal a Fire Chicken.  Add that Chicken to your Coop and reshuffle the rest.  If no chicken is revealed, end this effect and reshuffle";
-		case special::Clash:
+		case special::Angry:
 			return "Trigger a Clash";
-		case special::Discard:
+		case special::Lichen:
 			return "Your opponent discards a Chicken";
-		case special::SelfSwap:
+		case special::Scientist:
 			return "Swap this Chicken with the Chicken below it";
-		case special::CycleAll:
+		case special::Alchemist:
 			return "Cycle all your Chickens except this one (Fire -> Water -> Grass -> Fire)";
 	}
 }
 
 string Chicken::toString() const {
 	stringstream ss;
-    if(s == special::None) { //If Chicken special is none
+    if(s == special::BasicFire || s == special::BasicWater || s == special::BasicGrass) { //If Chicken special is none
 		ss << "Basic " << eString(e) << " Chicken";
 	} else {
 		ss << sString(s) << " " << eString(e) << " Chicken";

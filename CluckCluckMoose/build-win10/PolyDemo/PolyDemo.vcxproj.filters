@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Chicken">
+    <Filter Include="Source Files\GameStructures">
       <UniqueIdentifier>{f57cccfd-dc78-4e20-a451-c718edbe5bba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,16 +25,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\Chicken.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\Coop.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\Decks.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\Moose.h">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\CCMApp.h">
       <Filter>Source Files</Filter>
@@ -57,19 +57,19 @@
     <ClInclude Include="Stack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Stack.h">
+      <Filter>Source Files\GameStructures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Chicken.cpp">
       <Filter>Source Files\Chicken</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Chicken.cpp">
-      <Filter>Source Files\Chicken</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\CCMApp.cpp">
-      <Filter>Source Files\Chicken</Filter>
+      <Filter>Source Files\GameStructures</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\CCMApp.cpp">
       <Filter>Source Files</Filter>
@@ -83,23 +83,26 @@
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Coop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\Moose.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\Clash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\AI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Stack.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\Stack.cpp">
+      <Filter>Source Files\GameStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Moose.cpp">
+      <Filter>Source Files\GameStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Coop.cpp">
+      <Filter>Source Files\GameStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Clash.cpp">
+      <Filter>Source Files\GameStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Chicken.cpp">
+      <Filter>Source Files\GameStructures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
