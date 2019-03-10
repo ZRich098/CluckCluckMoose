@@ -366,7 +366,7 @@ void GameScene::update(float timestep) {
 	if (clashCD == 0) {
 		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
 			//        sleep(CLASHLENGTH);
-			int result = player->getStack().front().compare(opp->getStack().front());
+			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
 			if (result == -1)
 			{
 				CULog("opp win");
