@@ -171,8 +171,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	//Initialize clash cooldown
 	clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
 
-	
-
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
