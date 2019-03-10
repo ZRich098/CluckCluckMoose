@@ -103,6 +103,8 @@ public:
 	void removeBottomFromStackToDiscard();
 	/** Puts all Chickens in the stack into the discard pile */
 	void clearStackToDiscard();
+	/** Sets the stack to be the equal to Stack s */
+	void setStack(Stack s);
 
 	//Hand
 	/** Clears the hand of all Chickens */

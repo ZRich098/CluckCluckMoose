@@ -35,6 +35,9 @@ int clashCD;
 //bool to signify a clash is in progress
 bool isClashing;
 
+//bool to signify a clash preview is in progress
+bool isPreviewing;
+
 //Canvases for drawing player chickens
 std::shared_ptr<Node> chickenCanvas1;
 std::shared_ptr<Node> chickenCanvas2;
@@ -57,6 +60,12 @@ std::shared_ptr<Node> buttonCanvas;
 std::shared_ptr<Moose> player;
 //Moose opp;
 std::shared_ptr<Moose> opp;
+
+//Preview Stacks
+//Player Stack
+Stack playerPreviewStack;
+//Opponent Stack
+Stack oppPreviewStack;
 
 //AI
 //AI oppAI = AI::alloc(opp, player, AIType::Dumb);
@@ -161,8 +170,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 	//Initialize clash cooldown
 	clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
-
-
 
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
@@ -341,7 +348,9 @@ void GameScene::dispose() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
-	_input.update(timestep);
+	if (!isClashing) {
+		_input.update(timestep);
+	}
 	GameScene::draw(_assets, _assets->get<Node>("game"));
 
 	if (prevHand > player->getHand().size()) {
@@ -353,6 +362,14 @@ void GameScene::update(float timestep) {
 		}
 		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
 		GameScene::draw(_assets, _assets->get<Node>("game"));
+	}
+
+	if (false) { //replace with if Preview button is pressed
+		isPreviewing = true;
+
+		playerPreviewStack = player->getStack();
+		oppPreviewStack = opp->getStack();
+		isClashing = true;
 	}
 
 	if (clashCD == 0) {
@@ -375,6 +392,12 @@ void GameScene::update(float timestep) {
 				player->removeBottomFromStackToDiscard();
 				opp->removeBottomFromStackToDiscard();
 			}
+		}
+		else if (isClashing && isPreviewing && stackSize != 0) {
+			player->setStack(playerPreviewStack);
+			opp->setStack(oppPreviewStack);
+			isPreviewing = false;
+			isClashing = false;
 		}
 		else if (isClashing && stackSize != 0) {
 			//        sleep(CLASHLENGTH);
