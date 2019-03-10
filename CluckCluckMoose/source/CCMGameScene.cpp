@@ -61,6 +61,12 @@ std::shared_ptr<Moose> player;
 //Moose opp;
 std::shared_ptr<Moose> opp;
 
+//Preview Stacks
+//Player Stack
+Stack playerPreviewStack;
+//Opponent Stack
+Stack oppPreviewStack;
+
 //AI
 //AI oppAI = AI::alloc(opp, player, AIType::Dumb);
 std::shared_ptr<AI> oppAI = AI::alloc(opp, player, AIType::Dumb);
@@ -344,7 +350,9 @@ void GameScene::dispose() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
-	_input.update(timestep);
+	if (!isClashing) {
+		_input.update(timestep);
+	}
 	GameScene::draw(_assets, _assets->get<Node>("game"));
 
 	if (prevHand > player->getHand().size()) {
@@ -360,7 +368,10 @@ void GameScene::update(float timestep) {
 
 	if (false) { //replace with if Preview button is pressed
 		isPreviewing = true;
-		//must also disable playing cards until isPreviewing is false
+
+		playerPreviewStack = player->getStack();
+		oppPreviewStack = opp->getStack();
+		isClashing = true;
 	}
 
 	if (clashCD == 0) {
@@ -383,6 +394,12 @@ void GameScene::update(float timestep) {
 				player->removeBottomFromStackToDiscard();
 				opp->removeBottomFromStackToDiscard();
 			}
+		}
+		else if (isClashing && isPreviewing && stackSize != 0) {
+			player->setStack(playerPreviewStack);
+			opp->setStack(oppPreviewStack);
+			isPreviewing = false;
+			isClashing = false;
 		}
 		else if (isClashing && stackSize != 0) {
 			//        sleep(CLASHLENGTH);
