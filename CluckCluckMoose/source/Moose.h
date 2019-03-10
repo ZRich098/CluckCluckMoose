@@ -7,6 +7,7 @@
 #include <cugl/cugl.h>
 
 #include "Coop.h"
+#include "Stack.h"
 
 /**
  * This class is for the Moose.
@@ -18,8 +19,7 @@ private:
 
 protected:
     //Pecking Order >:D This is actually a queue tho lol
-	//0 is bottom of stack
-	vector <Chicken> stack;	
+	Stack stack;	
 	vector <Chicken> hand;
 	Coop deck;
 	vector <Chicken> discard;
@@ -72,7 +72,7 @@ public:
 #pragma mark Accessors
     
     /** Get the current pecking order of the Moose*/
-	vector <Chicken> getStack() { return stack; };
+	Stack getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
 	Chicken getStackAt(int pos) { return stack.at(pos); };
 	/** Get the current hand of the Moose*/
@@ -99,21 +99,10 @@ public:
 	void addToStackFromHand(int pos);
 	/** Puts the Chicken at the top of the stack back into the hand*/
 	void removeTopFromStackToHand();
-	/** Puts all Chickens in the stack back into the hand*/
-	void removeAllFromStackToHand();
 	/** Puts the Chicken at the bottom of the stack into the discard pile */
 	void removeBottomFromStackToDiscard();
 	/** Puts all Chickens in the stack into the discard pile */
 	void clearStackToDiscard();
-
-	/**Sets the Chicken at position pos in stack to element e, special s, and damage d */
-	void changeChickenInStack(element e, special s, int d = 1, int pos = 0);
-	/**Sets the Chicken at position pos in stack to element e */
-	void changeChickenInStackElement(element e, int pos = 0);
-	/**Sets the Chicken at position pos in stack to special s */
-	void changeChickenInStackSpecial(special s, int pos = 0);
-	/**Sets the Chicken at position pos in stack to damage d */
-	void changeChickenInStackDamage(int d, int pos = 0);
 
 	//Hand
 	/** Clears the hand of all Chickens */
@@ -142,7 +131,7 @@ public:
 	string discardString() const;
 	/** returns a string of the stack of the moose
 		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
-	string stackString() const;
+	string stackString() const { return stack.stackString(); };
 	/** returns a string of the deck of the moose
 		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
 	string deckString() const { return deck.coopString(); };
