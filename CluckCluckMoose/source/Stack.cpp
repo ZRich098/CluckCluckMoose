@@ -71,12 +71,21 @@ void Stack::specialChickenEffect(Stack &opp) {
 	special s2 = opp.getTop().getSpecial();
 
 
-	CULog(stackString().c_str());
+	CULog("\n%s",stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		Chicken &target = getTop();
-		s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
+		//CULog("resolving Party");
+		Chicken target = getTop();
+		//s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
+		if (s1 == special::PartyFowl && s2 != special::PartyFowl) {
+			//CULog("Setting opp as target");
+			target = opp.getTop();
+		}
+		else if (s1 != special::PartyFowl && s2 == special::PartyFowl) {
+			//CULog("Setting player as target");
+			target = getTop();
+		}
 		switch (target.getSpecial()) {
 		case special::Reaper:
 			target.setChicken(element::Water,special::BasicWater);
@@ -87,8 +96,25 @@ void Stack::specialChickenEffect(Stack &opp) {
 		case special::Bomb:
 			target.setChicken(element::Fire,special::BasicFire);
 			break;
+		case special::Ninja:
+			target.setChicken(element::Fire, special::BasicFire);
+			break;
+		case special::PartyFowl:
+			break;
+		case special::Spy:
+			target.setChicken(element::Fire, special::BasicFire);
+			break;
+		case special::Thicken:
+			target.setChicken(element::Grass, special::BasicGrass);
+			break;
+		case special::Consigliere:
+			target.setChicken(element::Water, special::BasicWater);
+			break;
+		default:
+			//CULog("reached default");
+			break;
 		}
-		return;
+		//return;
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
@@ -96,10 +122,12 @@ void Stack::specialChickenEffect(Stack &opp) {
 		opp.getTop().setChicken(element::Fire,special::BasicFire);
 	}
 	else if (s1 == special::Mirror) {
+		//CULog("player mirror");
 		s1 = s2;
 		getTop().setChicken(opp.getTop().getElement(),opp.getTop().getSpecial(),opp.getTop().getDamage());
 	}
 	else if (s2 == special::Mirror) {
+		//CULog("opp mirror");
 		s2 = s1;
 		opp.getTop().setChicken(getTop().getElement(), getTop().getSpecial(), getTop().getDamage());
 	}
@@ -138,8 +166,14 @@ void Stack::specialChickenEffect(Stack &opp) {
 	else if (s2 == special::Ninja)
 		swap(0, getSize() - 1);
 
+	if (s1 == special::Spy) {
+		//draw is a Moose function and therefore cannot be called here
+	}
+	if (s2 == special::Spy) {
+		//see above
+	}
 
-	CULog(stackString().c_str());
+	CULog("\n%s",stackString().c_str());
 }
 
 string Stack::stackString() const {

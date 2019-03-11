@@ -227,49 +227,51 @@ void SceneBuilder1::buildGameScene() {
 		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
 		special cel = playerGlobe->getHandAt(i).getSpecial();
-		if (cel == (special::BasicFire)) {
+		switch (cel) {
+		case special::BasicFire:
 			text = textureF;
-		}
-		else if (cel == (special::BasicWater)) {
+			break;
+		case special::BasicWater:
 			text = textureW;
-		}
-		else if (cel == (special::BasicGrass)) {
+			break;
+		case special::BasicGrass:
 			text = textureG;
-		}
-		else if (cel == (special::Reaper)) {
+			break;
+		case special::Reaper:
 			text = textureReaper;
-		}
-		else if (cel == (special::Bomb)) {
+			break;
+		case special::Bomb:
 			text = textureBomb;
-		}
-		else if (cel == (special::Mirror)) {
+			break;
+		case special::Mirror:
 			text = textureMirror;
-		}
-		else if (cel == (special::Ninja)) {
+			break;
+		case special::Ninja:
 			text = textureNinja;
-		}
-		else if (cel == (special::PartyFowl)) {
+			break;
+		case special::PartyFowl:
 			text = textureParty;
-		}
-		else if (cel == (special::Spy)) {
+			break;
+		case special::Spy:
 			text = textureSpy;
-		}
-		else if (cel == (special::Thicken)) {
+			break;
+		case special::Thicken:
 			text = textureThick;
-		}
-		else if (cel == (special::Consigliere)) {
+			break;
+		case special::Consigliere:
 			text = textureWitch;
-		}
-		else {
-			element el = playerGlobe->getHandAt(i).getElement();
-			if (el == element::Fire) {
+			break;
+		default:
+			switch (playerGlobe->getHandAt(i).getElement()) {
+			case element::Fire:
 				text = textureF;
-			}
-			else if (el == element::Water) {
+				break;
+			case element::Water:
 				text = textureW;
-			}
-			else {
+				break;
+			case element::Grass:
 				text = textureG;
+				break;
 			}
 		}
 		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
@@ -306,49 +308,51 @@ void SceneBuilder1::buildGameScene() {
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		special cel = playerGlobe->getStackAt(i).getSpecial();
-		if (cel == (special::BasicFire)) {
+		switch (cel) {
+		case special::BasicFire:
 			text = textureF;
-		}
-		else if (cel == (special::BasicWater)) {
+			break;
+		case special::BasicWater:
 			text = textureW;
-		}
-		else if (cel == (special::BasicGrass)) {
+			break;
+		case special::BasicGrass:
 			text = textureG;
-		}
-		else if (cel == (special::Reaper)) {
+			break;
+		case special::Reaper:
 			text = textureReaper;
-		}
-		else if (cel == (special::Bomb)) {
+			break;
+		case special::Bomb:
 			text = textureBomb;
-		}
-		else if (cel == (special::Mirror)) {
+			break;
+		case special::Mirror:
 			text = textureMirror;
-		}
-		else if (cel == (special::Ninja)) {
+			break;
+		case special::Ninja:
 			text = textureNinja;
-		}
-		else if (cel == (special::PartyFowl)) {
+			break;
+		case special::PartyFowl:
 			text = textureParty;
-		}
-		else if (cel == (special::Spy)) {
+			break;
+		case special::Spy:
 			text = textureSpy;
-		}
-		else if (cel == (special::Thicken)) {
+			break;
+		case special::Thicken:
 			text = textureThick;
-		}
-		else if (cel == (special::Consigliere)) {
+			break;
+		case special::Consigliere:
 			text = textureWitch;
-		}
-		else {
-			element el = playerGlobe->getStackAt(i).getElement();
-			if (el == element::Fire) {
+			break;
+		default:
+			switch (playerGlobe->getStackAt(i).getElement()) {
+			case element::Fire:
 				text = textureF;
-			}
-			else if (el == element::Water) {
+				break;
+			case element::Water:
 				text = textureW;
-			}
-			else {
+				break;
+			case element::Grass:
 				text = textureG;
+				break;
 			}
 		}
 		if (i == 0) {
@@ -373,49 +377,51 @@ void SceneBuilder1::buildGameScene() {
 	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		special cel = oppGlobe->getStackAt(i).getSpecial();
-		if (cel == (special::BasicFire)) {
+		switch (cel) {
+		case special::BasicFire:
 			text = textureF;
-		}
-		else if (cel == (special::BasicWater)) {
+			break;
+		case special::BasicWater:
 			text = textureW;
-		}
-		else if (cel == (special::BasicGrass)) {
+			break;
+		case special::BasicGrass:
 			text = textureG;
-		}
-		else if (cel == (special::Reaper)) {
+			break;
+		case special::Reaper:
 			text = textureReaper;
-		}
-		else if (cel == (special::Bomb)) {
+			break;
+		case special::Bomb:
 			text = textureBomb;
-		}
-		else if (cel == (special::Mirror)) {
+			break;
+		case special::Mirror:
 			text = textureMirror;
-		}
-		else if (cel == (special::Ninja)) {
+			break;
+		case special::Ninja:
 			text = textureNinja;
-		}
-		else if (cel == (special::PartyFowl)) {
+			break;
+		case special::PartyFowl:
 			text = textureParty;
-		}
-		else if (cel == (special::Spy)) {
+			break;
+		case special::Spy:
 			text = textureSpy;
-		}
-		else if (cel == (special::Thicken)) {
+			break;
+		case special::Thicken:
 			text = textureThick;
-		}
-		else if (cel == (special::Consigliere)) {
+			break;
+		case special::Consigliere:
 			text = textureWitch;
-		}
-		else {
-			element el = oppGlobe->getStackAt(i).getElement();
-			if (el == element::Fire) {
+			break;
+		default:
+			switch (oppGlobe->getHandAt(i).getElement()) {
+			case element::Fire:
 				text = textureF;
-			}
-			else if (el == element::Water) {
+				break;
+			case element::Water:
 				text = textureW;
-			}
-			else {
+				break;
+			case element::Grass:
 				text = textureG;
+				break;
 			}
 		}
 		if (i == 0) {
