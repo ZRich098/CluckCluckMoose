@@ -89,10 +89,19 @@ void Chicken::cycle() {
 	//CULog("%s", toString().c_str());
 	if (e == element::Fire) {
 		e = element::Grass;
+		if (s == special::BasicFire) {
+			s = special::BasicGrass;
+		}
 	} else if (e == element::Grass) {
 		e = element::Water;
+		if (s == special::BasicGrass) {
+			s = special::BasicWater;
+		}
 	} else if (e == element::Water) {
 		e = element::Fire;
+		if (s == special::BasicWater) {
+			s = special::BasicFire;
+		}
 	}
 	switch (e) {
 	case element::Fire:
