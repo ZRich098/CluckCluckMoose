@@ -28,6 +28,55 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+	"bomb": {
+            "file": "textures/bomb_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"mirror": {
+            "file": "textures/mirror_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"ninja": {
+            "file": "textures/ninja_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"party": {
+            "file": "textures/party_fowl.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"spy": {
+            "file": "textures/spy_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"thicken": {
+            "file": "textures/thicken.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"witchen": {
+            "file": "textures/witchen_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "moose": {
             "file":      "textures/moose.png",
             "minfilter": "linear",
