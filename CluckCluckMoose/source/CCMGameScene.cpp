@@ -23,7 +23,7 @@ using namespace cugl;
 /** length of time in milliseconds for clashes */
 #define CLASHLENGTH 400
 /** maximum size of chicken stack */
-#define MAXSTACKSIZE 3
+#define MAXSTACKSIZE 5
 
 //stack size
 int stackSize;
