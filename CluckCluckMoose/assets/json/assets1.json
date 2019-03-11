@@ -1,41 +1,55 @@
 {
-	"textures": {
+    "textures": {
         "reds": {
-            "file":      "textures/red-small.png",
+            "file": "textures/red-small.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "fire": {
-            "file":      "textures/fire_chick.png",
+            "file": "textures/fire_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "water": {
-            "file":      "textures/water_chick.png",
+            "file": "textures/water_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "grass": {
-            "file":      "textures/grass_chick.png",
+            "file": "textures/grass_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "moose": {
-            "file":      "textures/moose.png",
+            "file": "textures/moose.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "farmfg": {
+            "file": "textures/fg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "farmbg": {
+            "file": "textures/bg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         }
-	},
+    },
 	"fonts": {
 		"felt": {
 			"file":     "fonts/MarkerFelt.ttf",

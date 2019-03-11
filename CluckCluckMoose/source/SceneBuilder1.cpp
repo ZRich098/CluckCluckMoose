@@ -73,53 +73,61 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer->doLayout(); // This rearranges the children to fit the screen
 	root->addChild(layer);
 
+	//Create background node
+	backCanvas = Node::alloc();
+	layer->addChild(backCanvas);
+
 
 	//Create a node for drawing moose
 	mooseCanvas = Node::alloc();
 	layer->addChild(mooseCanvas);
+
+	//Create foreground node
+	frontCanvas = Node::alloc();
+	layer->addChild(frontCanvas);
 
 
 
 	//Create a node for drawing chickens at each level of stacking
 	chickenCanvas1 = Node::alloc();
 	layer->addChild(chickenCanvas1);
-	chickenCanvas1->setPosition(100, 0);
+	chickenCanvas1->setPosition(100, 250);
 
 	chickenCanvas2 = Node::alloc();
 	layer->addChild(chickenCanvas2);
-	chickenCanvas2->setPosition(100, 150);
+	chickenCanvas2->setPosition(100, 400);
 
 	chickenCanvas3 = Node::alloc();
 	layer->addChild(chickenCanvas3);
-	chickenCanvas3->setPosition(100, 300);
+	chickenCanvas3->setPosition(100, 550);
 
 	chickenCanvas4 = Node::alloc();
 	layer->addChild(chickenCanvas4);
-	chickenCanvas4->setPosition(100, 0);
+	chickenCanvas4->setPosition(100, 250);
 
 	chickenCanvas5 = Node::alloc();
 	layer->addChild(chickenCanvas5);
-	chickenCanvas5->setPosition(100, 150);
+	chickenCanvas5->setPosition(100, 400);
 
 	chickenCanvas6 = Node::alloc();
 	layer->addChild(chickenCanvas6);
-	chickenCanvas6->setPosition(100, 300);
+	chickenCanvas6->setPosition(100, 550);
 
 	chickenCanvas7 = Node::alloc();
 	layer->addChild(chickenCanvas7);
-	chickenCanvas7->setPosition(100, 450);
+	chickenCanvas7->setPosition(100, 700);
 
 	chickenCanvas8 = Node::alloc();
 	layer->addChild(chickenCanvas8);
-	chickenCanvas8->setPosition(100, 600);
+	chickenCanvas8->setPosition(100, 850);
 
 	chickenCanvas9 = Node::alloc();
 	layer->addChild(chickenCanvas9);
-	chickenCanvas9->setPosition(100, 450);
+	chickenCanvas9->setPosition(100, 700);
 
 	chickenCanvas10 = Node::alloc();
 	layer->addChild(chickenCanvas10);
-	chickenCanvas10->setPosition(100, 600);
+	chickenCanvas10->setPosition(100, 850);
 
 
 	//Add button canvas
@@ -127,7 +135,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
 	
-
 
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
@@ -155,7 +162,9 @@ void SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_p
 void SceneBuilder1::buildGameScene() {
 
 	//reset drawing between frames
+	backCanvas->removeAllChildren();
 	mooseCanvas->removeAllChildren();
+	frontCanvas->removeAllChildren();
 	chickenCanvas1->removeAllChildren();
 	chickenCanvas2->removeAllChildren();
 	chickenCanvas3->removeAllChildren();
@@ -168,12 +177,20 @@ void SceneBuilder1::buildGameScene() {
 	chickenCanvas10->removeAllChildren();
 	buttonCanvas->removeAllChildren();
 
+	//Draw background
+	std::shared_ptr<Texture> texturebg = _assets->get<Texture>("farmbg");
+	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
+	background->setScale(1.0f); // Magic number to rescale asset
+	background->setAnchor(Vec2::ANCHOR_CENTER);
+	background->setPosition(SCENE_WIDTH/2, 512);
+	backCanvas->addChild(background);
+	
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
 	moose1->setScale(0.4f); // Magic number to rescale asset
 	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-	moose1->setPosition(-100, 0);
+	moose1->setPosition(-100, 250);
 	moose1->flipHorizontal(false);
 	mooseCanvas->addChild(moose1);
 
@@ -181,9 +198,17 @@ void SceneBuilder1::buildGameScene() {
 	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
 	moose2->setScale(0.4f); // Magic number to rescale asset
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH + 100, 0);
+	moose2->setPosition(SCENE_WIDTH + 100, 250);
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChild(moose2);
+
+	//Draw foreground
+	std::shared_ptr<Texture> texturefg = _assets->get<Texture>("farmfg");
+	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
+	foreground->setScale(1.0f); // Magic number to rescale asset
+	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
+	foreground->setPosition(SCENE_WIDTH/2, 0);
+	frontCanvas->addChild(foreground);
 
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
@@ -259,8 +284,14 @@ void SceneBuilder1::buildGameScene() {
 		else if (i == 1) {
 			buildChicken(text, chickenCanvas2, 100, 525, true);
 		}
-		else {
+		else if (i == 2){
 			buildChicken(text, chickenCanvas3, 100, 525, true);
+		}
+		else if (i == 3) {
+			buildChicken(text, chickenCanvas7, 100, 525, true);
+		}
+		else {
+			buildChicken(text, chickenCanvas8, 100, 525, true);
 		}
 	}
 
@@ -284,8 +315,16 @@ void SceneBuilder1::buildGameScene() {
 		else if (i == 1) {
 			buildChicken(text, chickenCanvas5, 750, 525, false);
 		}
-		else {
+		else if (i == 2) {
 			buildChicken(text, chickenCanvas6, 750, 525, false);
+		}
+		else if (i == 3) {
+			buildChicken(text, chickenCanvas9, 750, 525, false);
+
+		}
+		else {
+			buildChicken(text, chickenCanvas10, 750, 525, false);
+
 		}
 	}
 }
