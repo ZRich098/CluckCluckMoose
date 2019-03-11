@@ -81,6 +81,8 @@ void CCMInput::dispose() {
 */
 bool CCMInput::init() {
 	bool success = true;
+	_down = false;
+	_prevDown = false;
 
 #ifndef CU_TOUCH_SCREEN
 	success = Input::activate<Keyboard>();
@@ -206,6 +208,8 @@ void CCMInput::mouseDownCB(const cugl::MouseEvent& event, Uint8 clicks, bool foc
 	_currentTouch = event.position;
 	_previousTouch = event.position;
 	_mousepan = true;
+	_down = true;
+	
 }
 
 /**
@@ -219,6 +223,8 @@ void CCMInput::mouseUpCB(const cugl::MouseEvent& event, Uint8 clicks, bool focus
 	_currentTouch = event.position;
 	_previousTouch = event.position;
 	_mousepan = false;
+	_down = false;
+	
 }
 
 /**
@@ -233,3 +239,12 @@ void CCMInput::mouseMovedCB(const cugl::MouseEvent& event, const Vec2& previous,
 		_currentTouch = event.position;
 	}
 }
+
+bool CCMInput::getDown() {
+	return _down;
+}
+
+bool CCMInput::getPrevDown() {
+	return _prevDown;
+}
+
