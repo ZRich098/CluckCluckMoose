@@ -131,6 +131,9 @@
       <AdditionalDependencies>CUGL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -196,6 +199,7 @@
     <ClInclude Include="..\..\source\Decks.h" />
     <ClInclude Include="..\..\source\HelloApp.h" />
     <ClInclude Include="..\..\source\Moose.h" />
+    <ClInclude Include="..\..\source\SceneBuilder1.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stack.h" />
   </ItemGroup>
@@ -210,6 +214,7 @@
     <ClCompile Include="..\..\source\Coop.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\Moose.cpp" />
+    <ClCompile Include="..\..\source\SceneBuilder1.cpp" />
     <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
