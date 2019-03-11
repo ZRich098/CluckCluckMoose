@@ -15,7 +15,6 @@ std::shared_ptr<cugl::AssetManager> _assets;
 Vec2 inputTrack;
 
 
-
 /** The ID for the button listener */
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
@@ -56,8 +55,6 @@ std::shared_ptr<Moose> playerGlobe;
 std::shared_ptr<Moose> oppGlobe;
 
 
-
-
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
 
 	playerGlobe = player;
@@ -77,7 +74,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
 
-
 	//Create a node for drawing moose
 	mooseCanvas = Node::alloc();
 	layer->addChild(mooseCanvas);
@@ -85,8 +81,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Create foreground node
 	frontCanvas = Node::alloc();
 	layer->addChild(frontCanvas);
-
-
 
 	//Create a node for drawing chickens at each level of stacking
 	chickenCanvas1 = Node::alloc();
@@ -129,21 +123,24 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer->addChild(chickenCanvas10);
 	chickenCanvas10->setPosition(100, 850);
 
-
 	//Add button canvas
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
-	
 
 	// Get chicken textures.
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
+	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
+	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
+	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
+	std::shared_ptr<Texture> textureParty = _assets->get<Texture>("party");
+	std::shared_ptr<Texture> textureSpy = _assets->get<Texture>("spy");
+	std::shared_ptr<Texture> textureThick = _assets->get<Texture>("thicken");
+	std::shared_ptr<Texture> textureWitch = _assets->get<Texture>("witchen");
 
 	return true;
-
-
 }
 
 void SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
@@ -214,22 +211,61 @@ void SceneBuilder1::buildGameScene() {
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
+	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
+	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
+	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
+	std::shared_ptr<Texture> textureParty = _assets->get<Texture>("party");
+	std::shared_ptr<Texture> textureSpy = _assets->get<Texture>("spy");
+	std::shared_ptr<Texture> textureThick = _assets->get<Texture>("thicken");
+	std::shared_ptr<Texture> textureWitch = _assets->get<Texture>("witchen");
 
 	vector <Chicken> hand = playerGlobe->getHand();
-
 
 	for (int i = 0; i < hand.size(); i++) {
 		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
-		element cel = playerGlobe->getHandAt(i).getElement();
-		if (cel == (element::Fire)) {
+		special cel = playerGlobe->getHandAt(i).getSpecial();
+		if (cel == (special::BasicFire)) {
 			text = textureF;
 		}
-		else if (cel == (element::Water)) {
+		else if (cel == (special::BasicWater)) {
 			text = textureW;
 		}
-		else {
+		else if (cel == (special::BasicGrass)) {
 			text = textureG;
+		}
+		else if (cel == (special::Bomb)) {
+			text = textureBomb;
+		}
+		else if (cel == (special::Mirror)) {
+			text = textureMirror;
+		}
+		else if (cel == (special::Ninja)) {
+			text = textureNinja;
+		}
+		else if (cel == (special::PartyFowl)) {
+			text = textureParty;
+		}
+		else if (cel == (special::Spy)) {
+			text = textureSpy;
+		}
+		else if (cel == (special::Thicken)) {
+			text = textureThick;
+		}
+		else if (cel == (special::Consigliere)) {
+			text = textureWitch;
+		}
+		else {
+			element el = playerGlobe->getHandAt(i).getElement();
+			if (el == element::Fire) {
+				text = textureF;
+			}
+			else if (el == element::Water) {
+				text = textureW;
+			}
+			else {
+				text = textureG;
+			}
 		}
 		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
 		id->setAnchor(Vec2::ANCHOR_CENTER);
@@ -239,9 +275,6 @@ void SceneBuilder1::buildGameScene() {
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
 		butt->setScale(0.9, 0.9);
 
-		
-
-
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
 		if (i < 3) {
 			butt->setPosition(i * 200 - 200, 50);
@@ -250,7 +283,7 @@ void SceneBuilder1::buildGameScene() {
 			butt->setPosition((i-3) * 200 - 200, -100);
 		}
 		if (_input.isActive()) {
-			CULog("active");
+			//CULog("active");
 		}
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
@@ -260,23 +293,54 @@ void SceneBuilder1::buildGameScene() {
 
 		buttonCanvas->addChild(butt);
 		butt->activate(0);
-
-
 	}
 
 	Stack pstack = playerGlobe->getStack();
 
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = playerGlobe->getStackAt(i).getElement();
-		if (cel == (element::Fire)) {
+		special cel = playerGlobe->getStackAt(i).getSpecial();
+		if (cel == (special::BasicFire)) {
 			text = textureF;
 		}
-		else if (cel == (element::Water)) {
+		else if (cel == (special::BasicWater)) {
 			text = textureW;
 		}
-		else {
+		else if (cel == (special::BasicGrass)) {
 			text = textureG;
+		}
+		else if (cel == (special::Bomb)) {
+			text = textureBomb;
+		}
+		else if (cel == (special::Mirror)) {
+			text = textureMirror;
+		}
+		else if (cel == (special::Ninja)) {
+			text = textureNinja;
+		}
+		else if (cel == (special::PartyFowl)) {
+			text = textureParty;
+		}
+		else if (cel == (special::Spy)) {
+			text = textureSpy;
+		}
+		else if (cel == (special::Thicken)) {
+			text = textureThick;
+		}
+		else if (cel == (special::Consigliere)) {
+			text = textureWitch;
+		}
+		else {
+			element el = playerGlobe->getStackAt(i).getElement();
+			if (el == element::Fire) {
+				text = textureF;
+			}
+			else if (el == element::Water) {
+				text = textureW;
+			}
+			else {
+				text = textureG;
+			}
 		}
 		if (i == 0) {
 			buildChicken(text, chickenCanvas1, 100, 525, true);
@@ -299,15 +363,48 @@ void SceneBuilder1::buildGameScene() {
 
 	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = oppGlobe->getStackAt(i).getElement();
-		if (cel == (element::Fire)) {
+		special cel = oppGlobe->getStackAt(i).getSpecial();
+		if (cel == (special::BasicFire)) {
 			text = textureF;
 		}
-		else if (cel == (element::Water)) {
+		else if (cel == (special::BasicWater)) {
 			text = textureW;
 		}
-		else {
+		else if (cel == (special::BasicGrass)) {
 			text = textureG;
+		}
+		else if (cel == (special::Bomb)) {
+			text = textureBomb;
+		}
+		else if (cel == (special::Mirror)) {
+			text = textureMirror;
+		}
+		else if (cel == (special::Ninja)) {
+			text = textureNinja;
+		}
+		else if (cel == (special::PartyFowl)) {
+			text = textureParty;
+		}
+		else if (cel == (special::Spy)) {
+			text = textureSpy;
+		}
+		else if (cel == (special::Thicken)) {
+			text = textureThick;
+		}
+		else if (cel == (special::Consigliere)) {
+			text = textureWitch;
+		}
+		else {
+			element el = oppGlobe->getStackAt(i).getElement();
+			if (el == element::Fire) {
+				text = textureF;
+			}
+			else if (el == element::Water) {
+				text = textureW;
+			}
+			else {
+				text = textureG;
+			}
 		}
 		if (i == 0) {
 			buildChicken(text, chickenCanvas4, 750, 525, false);
@@ -331,7 +428,6 @@ void SceneBuilder1::buildGameScene() {
 
 void SceneBuilder1::updateInput(float timestep) {
 	_input.update(timestep);
-	
 }
 
 //Dispose of the scene builder
