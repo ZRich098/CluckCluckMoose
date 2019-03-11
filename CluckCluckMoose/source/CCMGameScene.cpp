@@ -171,51 +171,55 @@ void GameScene::update(float timestep) {
 		isClashing = true;
 	}
 
-	if (clashCD == 0) {
-		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
-			//        sleep(CLASHLENGTH);
-			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
-			if (result == -1)
-			{
-				CULog("opp win");
-				player->removeBottomFromStackToDiscard();
+	if (isClashing) {
+		if (clashCD == 0) {
+			if (!player->getStack().empty() && !opp->getStack().empty()) {
+				//        sleep(CLASHLENGTH);
+				int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
+				if (result == -1)
+				{
+					CULog("opp win");
+					player->removeBottomFromStackToDiscard();
+				}
+				else if (result == 1)
+				{
+					CULog("player win");
+					opp->removeBottomFromStackToDiscard();
+				}
+				else
+				{
+					CULog("tie");
+					player->removeBottomFromStackToDiscard();
+					opp->removeBottomFromStackToDiscard();
+				}
 			}
-			else if (result == 1)
-			{
-				CULog("player win");
-				opp->removeBottomFromStackToDiscard();
+			else if (isPreviewing && stackSize != 0) {
+				player->setStack(playerPreviewStack);
+				opp->setStack(oppPreviewStack);
+				isPreviewing = false;
+				isClashing = false;
 			}
-			else
-			{
-				CULog("tie");
-				player->removeBottomFromStackToDiscard();
-				opp->removeBottomFromStackToDiscard();
-			}
-		}
-		else if (isClashing && isPreviewing && stackSize != 0) {
-			player->setStack(playerPreviewStack);
-			opp->setStack(oppPreviewStack);
-			isPreviewing = false;
-			isClashing = false;
-		}
-		else if (isClashing && stackSize != 0) {
-			//        sleep(CLASHLENGTH);
-			player->refillHand();
-			opp->refillHand();
-			prevHand = player->getHand().size();
-			stackSize = 0;
+			else if (stackSize != 0) {
+				//        sleep(CLASHLENGTH);
+				player->refillHand();
+				opp->refillHand();
+				prevHand = player->getHand().size();
+				stackSize = 0;
 
-			player->clearStackToDiscard();
-			opp->clearStackToDiscard();
-			isClashing = false;
+				player->clearStackToDiscard();
+				opp->clearStackToDiscard();
+				isClashing = false;
+				clashCD = (int)(CLASHLENGTH / MAXSTACKSIZE);
+			}
+		}
+		if (clashCD > 0) {
+			clashCD--;
+		}
+		else {
+			clashCD = (int)(CLASHLENGTH / MAXSTACKSIZE);
 		}
 	}
-	if (clashCD > 0) {
-		clashCD--;
-	}
-	else {
-		clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
-	}
+	
 	sb->buildGameScene();
 }
 

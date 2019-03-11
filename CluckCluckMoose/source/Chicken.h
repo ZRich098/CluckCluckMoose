@@ -118,6 +118,7 @@ class Chicken{
 		void setDamage(int d) { damage = d; };
 		/** Set a Chicken's element to e, special to s, and damage to d */
 		void setChicken(element el, special sp, int d = 1) {
+			//CULog("setting chicken");
 			e = el;
 			s = sp;
 			damage = d;
