@@ -63,7 +63,7 @@ class Stack {
 		
 		//Special
 		/** Does special chicken effects of the chickens on the top of both stacks */
-		void Stack::specialChickenEffect(Stack opp);
+		void specialChickenEffect(Stack opp);
 
 		//Info
 		/** Returns whether the stack is empty*/
