@@ -31,6 +31,10 @@ class Stack {
 		Chicken getBottom();
 		/** Returns the chicken at the top of the stack */
 		Chicken getTop();
+		/** Returns the chicken at a specific index of the stack */
+		Chicken getAt(int index);
+		/** Returns the height/size of the stack */
+		int Stack::getHeight();
 
 
 
@@ -43,6 +47,10 @@ class Stack {
 		/** Removes the chicken at the top of the stack
 			Returns the chicken removed (with the original element)*/
 		Chicken removeTop();
+		/**Swaps two Chickens at the positions given in the stack */
+		void Stack::swap(int pos1, int pos2);
+		/** Inserts a chicken anywhere in the stack */
+		void Stack::insert(int pos, const Chicken &c);
 
 
 		/** Clear the stack of all Chickens*/
@@ -57,9 +65,10 @@ class Stack {
 		void changeChickenInStackSpecial(special s, int pos = 0);
 		/**Sets the Chicken at position pos in stack to damage d */
 		void changeChickenInStackDamage(int d, int pos = 0);
-
+		
+		//Special
 		/** Does special chicken effects of the chickens on the top of both stacks */
-		void specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2);
+		void Stack::specialChickenEffect(Stack opp);
 
 		//Info
 		/** Returns whether the stack is empty*/

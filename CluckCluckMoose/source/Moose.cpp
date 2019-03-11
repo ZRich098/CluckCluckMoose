@@ -72,7 +72,7 @@ void Moose::clearStackToDiscard() {
 
 void Moose::setStack(Stack s) {
 	stack.clear();
-	while (!s.empty) {
+	while (!s.empty()) {
 		stack.add(s.getBottom());
 		s.removeBottom();
 	}

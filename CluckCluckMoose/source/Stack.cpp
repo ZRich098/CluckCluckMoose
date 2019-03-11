@@ -25,6 +25,14 @@ Chicken Stack::getTop() {
 	return chickens.back();
 }
 
+Chicken Stack::getAt(int index) {
+	return chickens.at(index);
+}
+
+int Stack::getHeight() {
+	return chickens.size();
+}
+
 Chicken Stack::removeBottom() {
 	special s = chickens.front().getSpecial();
 	chickens.erase(chickens.begin());
@@ -35,6 +43,14 @@ Chicken Stack::removeTop() {
 	special s = chickens.back().getSpecial();
 	chickens.erase(chickens.begin());
 	return Chicken(s);
+}
+
+void Stack::swap(int pos1, int pos2) {
+	iter_swap(&chickens.at(pos1), &chickens.at(pos2));
+}
+
+void Stack::insert(int pos, const Chicken &c) {
+	chickens.insert(chickens.begin(), c)
 }
 
 void Stack::changeChickenInStack(element e, special s, int d, int pos) {
@@ -57,16 +73,15 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 }
 
 
-
-void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2) {
-	special s1 = stack1.back().getSpecial();
-	special s2 = stack2.back().getSpecial();
+void Stack::specialChickenEffect(Stack opp) {
+	special s1 = this->getTop().getSpecial();
+	special s2 = opp.getTop().getSpecial();
 
 	// Reaper, Bomb, and None are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		Chicken target = stack2.back();
-		s1 == special::PartyFowl ? target = stack2.back() : target = stack1.back();
+		Chicken &target = this->getTop();
+		s1 == special::PartyFowl ? target = opp.getTop() : target = this->getTop();
 		switch (target.getSpecial()) {
 		case special::Reaper:
 			target.setElement(element::Water);
@@ -83,37 +98,37 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		stack1.back().setElement(element::Fire);
-		stack2.back().setElement(element::Fire);
+		this->getTop().setElement(element::Fire);
+		opp.getTop().setElement(element::Fire);
 	}
 	else if (s1 == special::Mirror) {
 		s1 = s2;
-		stack1.back().setDamage(stack2.back().getDamage());
+		this->getTop().setDamage(opp.getTop().getDamage());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
-		stack2.back().setDamage(stack1.back().getDamage());
+		opp.getTop().setDamage(this->getTop().getDamage());
 	}
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && stack1.size() >= 2)
-		stack1.at(stack1.size() - 2).cycle();
-	if (s2 == special::Consigliere && stack2.size() >= 2)
-		stack2.at(stack2.size() - 2).cycle();
+	if (s1 == special::Consigliere && this->getHeight() >= 2)
+		this->getAt(this->getHeight() - 2).cycle();
+	if (s2 == special::Consigliere && opp.getHeight() >= 2)
+		opp.getAt(opp.getHeight() - 2).cycle();
 
-	if (s1 == special::Scientist && stack1.size() >= 2)
-		iter_swap(&stack1.at(stack1.size() - 2), &stack1.back());
-	if (s2 == special::Scientist && stack2.size() >= 2)
-		iter_swap(&stack2.at(stack2.size() - 2), &stack2.back());
+	if (s1 == special::Scientist && this->getHeight() >= 2)
+		this->swap(this->getHeight() - 2, this->getHeight() - 1);
+	if (s2 == special::Scientist && opp.getHeight() >= 2)
+		opp.swap(opp.getHeight() - 2, opp.getHeight() - 1);
 
 	if (s1 == special::Thicken) {
-		stack1.insert(stack1.begin(), stack1.back());
-		stack1.pop_back();
+		this->insert(0, this->getTop());
+		this->removeTop();
 	}
 	if (s2 == special::Thicken) {
-		stack2.insert(stack2.begin(), stack2.back());
-		stack2.pop_back();
+		opp.insert(0, opp.getTop());
+		opp.removeTop();
 	}
 
 	//TODO special::Hide
@@ -121,13 +136,13 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	//potentially TODO special::Extra
 
 	if (s1 == special::Ninja && s2 == special::Ninja) {
-		iter_swap(&stack1.front(), &stack1.back());
-		iter_swap(&stack2.front(), &stack2.back());
+		this->swap(0, this->getHeight() - 1);
+		opp.swap(0, opp.getHeight() - 1);
 	}
 	else if (s1 == special::Ninja)
-		iter_swap(&stack2.front(), &stack2.back());
+		opp.swap(0, opp.getHeight() - 1);
 	else if (s2 == special::Ninja)
-		iter_swap(&stack1.front(), &stack1.back());
+		this->swap(0, this->getHeight() - 1);
 }
 
 string Stack::stackString() const {
