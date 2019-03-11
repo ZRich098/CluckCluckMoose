@@ -23,14 +23,14 @@ class Stack {
 		const int getSize() const { return chickens.size(); };
 		/** Returns the chicken at position pos, where 0 is next to be drawn
 			If deck is shuffled, chicken will change position */
-		Chicken *at(int pos) { return &chickens.at(pos); };
+		Chicken at(int pos) { return chickens.at(pos); };
 		/** Gets the order the chickens were played on this stack
 			Does not get cleared until clear() is called*/
 		vector <special> getPlayOrder() { return play_order; };
 		/** Returns a pointer to the chicken at the bottom of the stack */
-		Chicken *getBottom();
+		Chicken &getBottom();
 		/** Returns a pointer to the chicken at the top of the stack */
-		Chicken *getTop();
+		Chicken &getTop();
 
 
 		//Modify
