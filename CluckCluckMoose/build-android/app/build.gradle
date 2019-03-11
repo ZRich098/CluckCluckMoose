@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "edu.cornell.gdiac.polydemo"
+        applicationId "com.wingingitstudios.ccm"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

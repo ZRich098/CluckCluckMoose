@@ -2,6 +2,6 @@
 <resources>
 <style name="CUGLTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen" />
 <style name="CUGLTheme.Launcher">
-    <item name="android:windowBackground">@drawable/splashlandscape</item>
+    <item name="android:windowBackground">@drawable/splashportrait</item>
 </style>
 </resources>
