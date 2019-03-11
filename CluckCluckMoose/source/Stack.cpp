@@ -22,7 +22,7 @@ Chicken *Stack::getBottom() {
 }
 
 Chicken *Stack::getTop() {
-	CULog("Pointer of chicken: %p", &chickens.back());
+	//CULog("Pointer of chicken: %p", &chickens.back());
 	return &chickens.back();
 }
 
@@ -67,14 +67,14 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 
 
 void Stack::specialChickenEffect(Stack opp) {
-	special s1 = this->getTop()->getSpecial();
+	special s1 = getTop()->getSpecial();
 	special s2 = opp.getTop()->getSpecial();
 
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		Chicken *target = this->getTop();
-		s1 == special::PartyFowl ? target = opp.getTop() : target = this->getTop();
+		Chicken *target = getTop();
+		s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
 		switch (target->getSpecial()) {
 		case special::Reaper:
 			target->setElement(element::Water);
@@ -91,35 +91,35 @@ void Stack::specialChickenEffect(Stack opp) {
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		this->getTop()->setElement(element::Fire);
+		getTop()->setElement(element::Fire);
 		opp.getTop()->setElement(element::Fire);
 	}
 	else if (s1 == special::Mirror) {
 		s1 = s2;
-		this->getTop()->setDamage(opp.getTop()->getDamage());
-		this->getTop()->setElement(opp.getTop()->getElement());
+		getTop()->setDamage(opp.getTop()->getDamage());
+		getTop()->setElement(opp.getTop()->getElement());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
-		opp.getTop()->setDamage(this->getTop()->getDamage());
+		opp.getTop()->setDamage(getTop()->getDamage());
 		opp.getTop()->setElement(opp.getTop()->getElement());
 	}
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && this->getSize() >= 2)
-		this->at(this->getSize() - 2)->cycle();
+	if (s1 == special::Consigliere && getSize() >= 2)
+		at(getSize() - 2)->cycle();
 	if (s2 == special::Consigliere && opp.getSize() >= 2)
 		opp.at(opp.getSize() - 2)->cycle();
 
-	if (s1 == special::Scientist && this->getSize() >= 2)
-		this->swap(this->getSize() - 2, this->getSize() - 1);
+	if (s1 == special::Scientist && getSize() >= 2)
+		swap(getSize() - 2, getSize() - 1);
 	if (s2 == special::Scientist && opp.getSize() >= 2)
 		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
 
 	if (s1 == special::Thicken) {
-		this->insert(0, *this->getTop());
-		this->removeTop();
+		insert(0, *getTop());
+		removeTop();
 	}
 	if (s2 == special::Thicken) {
 		opp.insert(0, *opp.getTop());
@@ -131,13 +131,13 @@ void Stack::specialChickenEffect(Stack opp) {
 	//potentially TODO special::Extra
 
 	if (s1 == special::Ninja && s2 == special::Ninja) {
-		this->swap(0, this->getSize() - 1);
+		swap(0, getSize() - 1);
 		opp.swap(0, opp.getSize() - 1);
 	}
 	else if (s1 == special::Ninja)
 		opp.swap(0, opp.getSize() - 1);
 	else if (s2 == special::Ninja)
-		this->swap(0, this->getSize() - 1);
+		swap(0, getSize() - 1);
 }
 
 string Stack::stackString() const {

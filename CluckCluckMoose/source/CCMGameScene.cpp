@@ -155,9 +155,12 @@ void GameScene::update(float timestep) {
 		prevHand--;
 		//player->addToStackFromHand( The index of the chicken played ) if input works
 		opp->addToStackFromHand(oppAI->getPlay());
-		Chicken *test = player->getStack().getTop();
-		CULog("%p",test); // REMOVE THIS
-		test->cycle();
+		//Chicken *test = player->getStack().getTop();
+		//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
+		//CULog("PLAY %s", test->toString().c_str());
+		//CULog("%p",test);
+		//test->cycle();
+		//player->getStack().changeChickenInStackElement(element::Fire, player->getStack().getSize() - 1);
 		//player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
 		stackSize++;
 		if (stackSize == MAXSTACKSIZE) {
