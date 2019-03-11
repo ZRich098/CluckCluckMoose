@@ -93,6 +93,7 @@ void Chicken::cycle() {
 	} else if (e == element::Water) {
 		e = element::Fire;
 	}
+	CULog("%p", this);
 }
 
 string eString(element e) {

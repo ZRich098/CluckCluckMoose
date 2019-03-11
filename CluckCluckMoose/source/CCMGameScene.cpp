@@ -281,7 +281,7 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = player->getStackAt(i).getElement();
+		element cel = player->getStackAt(i)->getElement();
 		if (cel == (element::Fire)) {
 			text = textureF;
 		}
@@ -305,7 +305,7 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
 
 	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		element cel = opp->getStackAt(i).getElement();
+		element cel = opp->getStackAt(i)->getElement();
 		if (cel == (element::Fire)) {
 			text = textureF;
 		}
@@ -358,7 +358,9 @@ void GameScene::update(float timestep) {
 		prevHand--;
 		//player->addToStackFromHand( The index of the chicken played ) if input works
 		opp->addToStackFromHand(oppAI->getPlay());
-		player->getStack().getTop().setElement(element::Fire); // REMOVE THIS
+		Chicken *test = player->getStack().getTop();
+		CULog("%p",test); // REMOVE THIS
+		test->cycle();
 		//player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
 		stackSize++;
 		if (stackSize == MAXSTACKSIZE) {
@@ -379,7 +381,7 @@ void GameScene::update(float timestep) {
 	if (clashCD == 0) {
 		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
 			//        sleep(CLASHLENGTH);
-			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
+			int result = player->getStack().getBottom()->compare(*opp->getStack().getBottom());
 			if (result == -1)
 			{
 				CULog("opp win");

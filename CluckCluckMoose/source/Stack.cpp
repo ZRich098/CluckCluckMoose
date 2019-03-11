@@ -17,12 +17,13 @@ void Stack::add(const Chicken &c) {
 	chickens.push_back(c);
 }
 
-Chicken Stack::getBottom() {
-	return chickens.front();
+Chicken *Stack::getBottom() {
+	return &chickens.front();
 }
 
-Chicken Stack::getTop() {
-	return chickens.back();
+Chicken *Stack::getTop() {
+	CULog("Pointer of chicken: %p", &chickens.back());
+	return &chickens.back();
 }
 
 Chicken Stack::removeBottom() {
@@ -66,50 +67,50 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 
 
 void Stack::specialChickenEffect(Stack opp) {
-	special s1 = this->getTop().getSpecial();
-	special s2 = opp.getTop().getSpecial();
+	special s1 = this->getTop()->getSpecial();
+	special s2 = opp.getTop()->getSpecial();
 
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		Chicken &target = this->getTop();
+		Chicken *target = this->getTop();
 		s1 == special::PartyFowl ? target = opp.getTop() : target = this->getTop();
-		switch (target.getSpecial()) {
+		switch (target->getSpecial()) {
 		case special::Reaper:
-			target.setElement(element::Water);
+			target->setElement(element::Water);
 			break;
 		case special::Mirror:
-			target.setElement(element::Fire);
+			target->setElement(element::Fire);
 			break;
 		case special::Bomb:
-			target.setElement(element::Fire);
+			target->setElement(element::Fire);
 			break;
 		}
-		target.setDamage(1);
+		target->setDamage(1);
 		return;
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		this->getTop().setElement(element::Fire);
-		opp.getTop().setElement(element::Fire);
+		this->getTop()->setElement(element::Fire);
+		opp.getTop()->setElement(element::Fire);
 	}
 	else if (s1 == special::Mirror) {
 		s1 = s2;
-		this->getTop().setDamage(opp.getTop().getDamage());
-		this->getTop().setElement(opp.getTop().getElement());
+		this->getTop()->setDamage(opp.getTop()->getDamage());
+		this->getTop()->setElement(opp.getTop()->getElement());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
-		opp.getTop().setDamage(this->getTop().getDamage());
-		opp.getTop().setElement(opp.getTop().getElement());
+		opp.getTop()->setDamage(this->getTop()->getDamage());
+		opp.getTop()->setElement(opp.getTop()->getElement());
 	}
 
 	//potentially TODO special::Peek
 
 	if (s1 == special::Consigliere && this->getSize() >= 2)
-		this->at(this->getSize() - 2).cycle();
+		this->at(this->getSize() - 2)->cycle();
 	if (s2 == special::Consigliere && opp.getSize() >= 2)
-		opp.at(opp.getSize() - 2).cycle();
+		opp.at(opp.getSize() - 2)->cycle();
 
 	if (s1 == special::Scientist && this->getSize() >= 2)
 		this->swap(this->getSize() - 2, this->getSize() - 1);
@@ -117,11 +118,11 @@ void Stack::specialChickenEffect(Stack opp) {
 		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
 
 	if (s1 == special::Thicken) {
-		this->insert(0, this->getTop());
+		this->insert(0, *this->getTop());
 		this->removeTop();
 	}
 	if (s2 == special::Thicken) {
-		opp.insert(0, opp.getTop());
+		opp.insert(0, *opp.getTop());
 		opp.removeTop();
 	}
 
