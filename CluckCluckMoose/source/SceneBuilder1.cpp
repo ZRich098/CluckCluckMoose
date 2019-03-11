@@ -293,7 +293,7 @@ void SceneBuilder1::buildGameScene() {
 		buttonCanvas->addChild(butt);
 		//i+2 to ensure keys are unique
 		butt->activate(i+2);
-		CULog("Button %d made", i);
+		//CULog("Button %d made", i);
 	}
 
 	Stack pstack = playerGlobe->getStack();

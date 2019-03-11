@@ -79,32 +79,29 @@ void Stack::specialChickenEffect(Stack opp) {
 		s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
 		switch (target.getSpecial()) {
 		case special::Reaper:
-			target.setElement(element::Water);
+			target.setChicken(element::Water,special::BasicWater);
 			break;
 		case special::Mirror:
-			target.setElement(element::Fire);
+			target.setChicken(element::Fire,special::BasicFire);
 			break;
 		case special::Bomb:
-			target.setElement(element::Fire);
+			target.setChicken(element::Fire,special::BasicFire);
 			break;
 		}
-		target.setDamage(1);
 		return;
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		getTop().setElement(element::Fire);
-		opp.getTop().setElement(element::Fire);
+		getTop().setChicken(element::Fire,special::BasicFire);
+		opp.getTop().setChicken(element::Fire,special::BasicFire);
 	}
 	else if (s1 == special::Mirror) {
 		s1 = s2;
-		getTop().setDamage(opp.getTop().getDamage());
-		getTop().setElement(opp.getTop().getElement());
+		getTop().setChicken(opp.getTop().getElement(),opp.getTop().getSpecial(),opp.getTop().getDamage());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
-		opp.getTop().setDamage(getTop().getDamage());
-		opp.getTop().setElement(opp.getTop().getElement());
+		opp.getTop().setChicken(getTop().getElement(), getTop().getSpecial(), getTop().getDamage());
 	}
 
 	//potentially TODO special::Peek
