@@ -1,41 +1,104 @@
 {
-	"textures": {
+    "textures": {
         "reds": {
-            "file":      "textures/red-small.png",
+            "file": "textures/red-small.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "fire": {
-            "file":      "textures/fire_chick.png",
+            "file": "textures/fire_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "water": {
-            "file":      "textures/water_chick.png",
+            "file": "textures/water_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "grass": {
-            "file":      "textures/grass_chick.png",
+            "file": "textures/grass_chick.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"bomb": {
+            "file": "textures/bomb_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"mirror": {
+            "file": "textures/mirror_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"ninja": {
+            "file": "textures/ninja_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"party": {
+            "file": "textures/party_fowl.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"spy": {
+            "file": "textures/spy_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"thicken": {
+            "file": "textures/thicken.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+	"witchen": {
+            "file": "textures/witchen.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         },
         "moose": {
-            "file":      "textures/moose.png",
+            "file": "textures/moose.png",
             "minfilter": "linear",
             "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "farmfg": {
+            "file": "textures/fg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "farmbg": {
+            "file": "textures/bg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         }
-	},
+    },
 	"fonts": {
 		"felt": {
 			"file":     "fonts/MarkerFelt.ttf",
