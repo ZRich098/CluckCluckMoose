@@ -89,10 +89,19 @@ void Chicken::cycle() {
 	//CULog("%s", toString().c_str());
 	if (e == element::Fire) {
 		e = element::Grass;
+		if (s == special::BasicFire) {
+			s = special::BasicGrass;
+		}
 	} else if (e == element::Grass) {
 		e = element::Water;
+		if (s == special::BasicGrass) {
+			s = special::BasicWater;
+		}
 	} else if (e == element::Water) {
 		e = element::Fire;
+		if (s == special::BasicWater) {
+			s = special::BasicFire;
+		}
 	}
 	switch (e) {
 	case element::Fire:
@@ -332,8 +341,10 @@ string Chicken::toString() const {
 }
 
 int Chicken::compare(const Chicken& other) const {
+	CULog("%s clashing with %s", toString().c_str(), other.toString().c_str());
 	if (e == element::Unset || other.e == element::Unset) {
 		CULogError("Unset element exception: %s and %s cannot be compared", toString().c_str(), other.toString().c_str());
+		return 0;
 	}
 
 	//All ties

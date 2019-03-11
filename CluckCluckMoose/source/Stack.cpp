@@ -34,7 +34,7 @@ Chicken Stack::removeBottom() {
 
 Chicken Stack::removeTop() {
 	special s = chickens.back().getSpecial();
-	chickens.erase(chickens.begin());
+	chickens.erase(chickens.end()-1);
 	return Chicken(s);
 }
 

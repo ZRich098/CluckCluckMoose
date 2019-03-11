@@ -148,9 +148,6 @@ void GameScene::update(float timestep) {
 	sb->updateInput(timestep);
 	sb->buildGameScene();
 
-
-	
-
 	if (prevHand > player->getHand().size()) { // Replace with if chicken is dragged to play area
 		prevHand--;
 		//player->addToStackFromHand( The index of the chicken played ) if input works
