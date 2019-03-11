@@ -66,7 +66,7 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 }
 
 
-void Stack::specialChickenEffect(Stack opp) {
+void Stack::specialChickenEffect(Stack &opp) {
 	special s1 = getTop().getSpecial();
 	special s2 = opp.getTop().getSpecial();
 
