@@ -60,8 +60,13 @@
     <ClInclude Include="Stack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
+    <ClInclude Include="..\..\source\SceneBuilder1.h">
+      <Filter>Source Files</Filter>
+
     <ClInclude Include="..\..\source\Stack.h">
       <Filter>Source Files\GameStructures</Filter>
+
     </ClInclude>
     <ClInclude Include="..\..\source\SaveController.h">
       <Filter>Source Files\Saving</Filter>
@@ -110,11 +115,11 @@
     <ClCompile Include="..\..\source\Chicken.cpp">
       <Filter>Source Files\GameStructures</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Chicken.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\SaveController.cpp">
       <Filter>Source Files\Saving</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\SceneBuilder1.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

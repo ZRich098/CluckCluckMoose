@@ -9,10 +9,12 @@
 //  Version: 1/20/18
 //
 #include "CCMGameScene.h"
+#include "SceneBuilder1.h"
 #include "Moose.h"
 #include "AI.h"
 
 using namespace cugl;
+
 
 /** The ID for the button listener */
 #define LISTENER_ID 2
@@ -20,6 +22,8 @@ using namespace cugl;
 #define SCENE_WIDTH 1024
 /** length of time in milliseconds for clashes */
 #define CLASHLENGTH 400
+/** maximum size of chicken stack */
+#define MAXSTACKSIZE 3
 
 //stack size
 int stackSize;
@@ -27,35 +31,39 @@ int stackSize;
 //previous hand size for tracking placing a chicken
 int prevHand;
 
+//number of frames in between clashes
+int clashCD;
+
 //bool to signify a clash is in progress
 bool isClashing;
 
-//Canvases for drawing player chickens
-std::shared_ptr<Node> chickenCanvas1;
-std::shared_ptr<Node> chickenCanvas2;
-std::shared_ptr<Node> chickenCanvas3;
 
-//Canvases for drawing opp chickens
-std::shared_ptr<Node> chickenCanvas4;
-std::shared_ptr<Node> chickenCanvas5;
-std::shared_ptr<Node> chickenCanvas6;
-
-//Canvas for moose
-std::shared_ptr<Node> mooseCanvas;
-
-//Canvas for buttons
-std::shared_ptr<Node> buttonCanvas;
+//bool to signify a clash preview is in progress
+bool isPreviewing;
 
 
-//Moose Players
-//Moose player;
+
+//SceneBuilder
+std::shared_ptr<SceneBuilder1> sb;
+
+//Root node for scene builder
+std::shared_ptr<Node> root;
+
+//Player moose
 std::shared_ptr<Moose> player;
-//Moose opp;
 std::shared_ptr<Moose> opp;
+
+std::shared_ptr<AI> oppAI;
+//Preview Stacks
+//Player Stack
+Stack playerPreviewStack;
+//Opponent Stack
+Stack oppPreviewStack;
+
 
 //AI
 //AI oppAI = AI::alloc(opp, player, AIType::Dumb);
-std::shared_ptr<AI> oppAI = AI::alloc(opp, player, AIType::Dumb);
+
 
 
 /**
@@ -80,100 +88,40 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 
 
-    
-    _assets = assets;
-    _input.init();
-    auto layer = assets->get<Node>("game");
-    layer->setContentSize(dimen);
-    layer->doLayout(); // This rearranges the children to fit the screen
-    addChild(layer);
-    
-    auto kids = layer->getChildren();
-    std::shared_ptr<FloatLayout> layout = std::dynamic_pointer_cast<FloatLayout>(layer->getLayout());
-	for (auto it = kids.begin(); it != kids.end(); ++it) {
-		std::shared_ptr<Button> butt = std::dynamic_pointer_cast<Button>(*it);
-		_buttons[butt->getName()] = butt;
-		butt->setListener([=](const std::string& name, bool down) {
-			if (down) {
-				try {
-					CULog("%s\n", butt->getName().c_str());
-					if (butt->getName() == "chicken1") {
-						player->addToStackFromHand(0);
-					}
-					else if (butt->getName() == "chicken2") {
-						player->addToStackFromHand(1);
-					}
-					else if (butt->getName() == "chicken3") {
-						player->addToStackFromHand(2);
-					}
-				}
-				catch (std::out_of_range e){}
-			}
-		});
-	}
 
-	//Create a node for drawing moose
-	mooseCanvas = Node::alloc();
-	layer->addChild(mooseCanvas);
+	//Root node the drawer can build off of
+	root = Node::alloc();
+	addChild(root);
+
 	
 
 
-	//Create a node for drawing chickens at each level of stacking
-	chickenCanvas1 = Node::alloc();
-	layer->addChild(chickenCanvas1);
-	chickenCanvas1->setPosition(100, 0);
-
-	chickenCanvas2 = Node::alloc();
-	layer->addChild(chickenCanvas2);
-	chickenCanvas2->setPosition(100, 100);
-
-	chickenCanvas3 = Node::alloc();
-	layer->addChild(chickenCanvas3);
-	chickenCanvas3->setPosition(100, 200);
-
-	chickenCanvas4 = Node::alloc();
-	layer->addChild(chickenCanvas4);
-	chickenCanvas4->setPosition(100, 0);
-
-	chickenCanvas5 = Node::alloc();
-	layer->addChild(chickenCanvas5);
-	chickenCanvas5->setPosition(100, 100);
-
-	chickenCanvas6 = Node::alloc();
-	layer->addChild(chickenCanvas6);
-	chickenCanvas6->setPosition(100, 200);
-
-	//Add button canvas
-	buttonCanvas = Node::alloc();
-	layer->addChild(buttonCanvas);
-	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+    
+   
 	
 	//Initialize stack sizes
 	stackSize = 0;
 
+	//Initialize clash cooldown
+	clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
 
-
-
-
-
-	// Get chicken textures.
-	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
-	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
-	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
 
 	//Initialize moose
 //    player = Moose::Moose(3, 3);
-    player = Moose::alloc(3, 3);
+    player = Moose::alloc(5, 5);
 //    opp = Moose::Moose(3, 3);
-    opp = Moose::alloc(3, 3);
+    opp = Moose::alloc(5, 5);
 	player->refillHand();
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
+	oppAI = AI::alloc(opp, player, AIType::Dumb);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+
 	//Initialize AI
 	//oppAI = AI::AI(opp,player);
 
-	GameScene::draw(assets, layer);
+	//Draw
 
     
     
@@ -187,131 +135,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 
 
-void GameScene::makeChicken(const std::shared_ptr<AssetManager>& assets, std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
-	int ct = node->getChildCount();
-	if (ct > 0) {
-		node->removeAllChildren();
-	}
-	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
-	chick->setScale(0.2f); // Magic number to rescale asset
-	chick->setAnchor(Vec2::ANCHOR_CENTER);
-	chick->setPosition(posX, posY);
-	chick->flipHorizontal(flip);
-	node->addChild(chick);
-}
-
-void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::Node> node) {
-	
-	//reset drawing between frames
-	mooseCanvas->removeAllChildren();
-	chickenCanvas1->removeAllChildren();
-	chickenCanvas2->removeAllChildren();
-	chickenCanvas3->removeAllChildren();
-	chickenCanvas4->removeAllChildren();
-	chickenCanvas5->removeAllChildren();
-	chickenCanvas6->removeAllChildren();
-	buttonCanvas->removeAllChildren();
-	
-	//Draw player moose
-	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
-	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
-	moose1->setScale(0.3f); // Magic number to rescale asset
-	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-	moose1->setPosition(0, -100);
-	moose1->flipHorizontal(false);
-	mooseCanvas->addChild(moose1);
-
-	//Draw opponent moose
-	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.3f); // Magic number to rescale asset
-	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH, -100);
-	moose2->flipHorizontal(true);
-	mooseCanvas->addChild(moose2);
-	
-	// Get chicken textures.
-	std::shared_ptr<Texture> textureF = assets->get<Texture>("fire");
-	std::shared_ptr<Texture> textureW = assets->get<Texture>("water");
-	std::shared_ptr<Texture> textureG = assets->get<Texture>("grass");
-
-	vector <Chicken> hand = player->getHand();
-
-	
-	for (int i = 0; i < hand.size(); i++) {
-		std::shared_ptr<Button> button;
-		std::shared_ptr<Texture> text;
-		element cel = player->getHandAt(i).getElement();
-		if (cel == (element::Fire)) {
-			text = textureF;
-		}
-		else if (cel == (element::Water)) {
-			text=textureW;
-		}
-		else {
-			text=textureG;
-		}
-		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
-
-		id->setScale(0.1, 0.1);
-		
-
-		id->setAnchor(Vec2::ANCHOR_CENTER);
-		id->setPosition(i*100 - 100, 0);
-
-		buttonCanvas->addChild(id);
-	}
-
-	Stack pstack = player->getStack();
-
-	for (int i = 0; i < pstack.getSize(); i++) {
-		std::shared_ptr<Texture> text;
-		element cel = player->getStackAt(i).getElement();
-		if (cel == (element::Fire)) {
-			text = textureF;
-		}
-		else if (cel == (element::Water)) {
-			text = textureW;
-		}
-		else {
-			text = textureG;
-		}
-		if (i == 0) {
-			makeChicken(assets, text, chickenCanvas1, 100, 300, true);
-		}
-		else if (i == 1) {
-			makeChicken(assets, text, chickenCanvas2, 100, 300, true);
-		} else {
-			makeChicken(assets, text, chickenCanvas3, 100, 300, true);
-		}
-	}
-
-	Stack ostack = opp->getStack();
-
-	for (int i = 0; i < ostack.getSize(); i++) {
-		std::shared_ptr<Texture> text;
-		element cel = opp->getStackAt(i).getElement();
-		if (cel == (element::Fire)) {
-			text = textureF;
-		}
-		else if (cel == (element::Water)) {
-			text = textureW;
-		}
-		else {
-			text = textureG;
-		}
-		if (i == 0) {
-			makeChicken(assets, text, chickenCanvas4, 750, 300, false);
-		}
-		else if (i == 1) {
-			makeChicken(assets, text, chickenCanvas5, 750, 300, false);
-		}
-		else {
-			makeChicken(assets, text, chickenCanvas6, 750, 300, false);
-		}
-	}
 
 
-}
 
 
 
@@ -320,8 +145,6 @@ void GameScene::draw(const std::shared_ptr<cugl::AssetManager>& assets, std::sha
  */
 void GameScene::dispose() {
     _assets = nullptr;
-    _input.dispose();
-    _buttons.clear();
     Scene::dispose();
 }
 
@@ -333,48 +156,78 @@ void GameScene::dispose() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
-	_input.update(timestep);
-	GameScene::draw(_assets, _assets->get<Node>("game"));
+
+	sb->updateInput(timestep);
+	sb->buildGameScene();
+
+
+	
 
 	if (prevHand > player->getHand().size()) {
 		prevHand--;
 		opp->addToStackFromHand(oppAI->getPlay());
 		stackSize++;
-		if (stackSize == 3) { // Temporary magic number for max stack size
+		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;
 		}
 		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
-		GameScene::draw(_assets, _assets->get<Node>("game"));
+		sb->buildGameScene();
 	}
 
-	if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
-//        sleep(CLASHLENGTH);
-		int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
-		if (result == -1)
-		{
-			player->removeBottomFromStackToDiscard();
-		}
-		else if (result == 1)
-		{
-			opp->removeBottomFromStackToDiscard();
-		}
-		else
-		{
-			player->removeBottomFromStackToDiscard();
-			opp->removeBottomFromStackToDiscard();
-		}
-	} else if (isClashing && stackSize != 0) {
-//        sleep(CLASHLENGTH);
-		player->refillHand();
-		opp->refillHand();
-		prevHand = player->getHand().size();
-		stackSize = 0;
-	} else if (isClashing) {
-//        sleep(CLASHLENGTH);
-		player->clearStackToDiscard();
-		opp->clearStackToDiscard();
-		isClashing = false;
+	if (false) { //replace with if Preview button is pressed
+		isPreviewing = true;
+
+		playerPreviewStack = player->getStack();
+		oppPreviewStack = opp->getStack();
+		isClashing = true;
 	}
+
+	if (clashCD == 0) {
+		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
+			//        sleep(CLASHLENGTH);
+			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
+			if (result == -1)
+			{
+				CULog("opp win");
+				player->removeBottomFromStackToDiscard();
+			}
+			else if (result == 1)
+			{
+				CULog("player win");
+				opp->removeBottomFromStackToDiscard();
+			}
+			else
+			{
+				CULog("tie");
+				player->removeBottomFromStackToDiscard();
+				opp->removeBottomFromStackToDiscard();
+			}
+		}
+		else if (isClashing && isPreviewing && stackSize != 0) {
+			player->setStack(playerPreviewStack);
+			opp->setStack(oppPreviewStack);
+			isPreviewing = false;
+			isClashing = false;
+		}
+		else if (isClashing && stackSize != 0) {
+			//        sleep(CLASHLENGTH);
+			player->refillHand();
+			opp->refillHand();
+			prevHand = player->getHand().size();
+			stackSize = 0;
+
+			player->clearStackToDiscard();
+			opp->clearStackToDiscard();
+			isClashing = false;
+		}
+	}
+	if (clashCD > 0) {
+		clashCD--;
+	}
+	else {
+		clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
+	}
+	sb->buildGameScene();
 }
 
 
@@ -386,11 +239,11 @@ void GameScene::update(float timestep) {
 void GameScene::setActive(bool value) {
     _active = value;
     int pos = LISTENER_ID;
-    for(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
+    /* For(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
         if (value && !it->second->isActive()) {
             it->second->activate(pos++);
         } else {
             it->second->deactivate();
         }
-    }
+    } */
 }

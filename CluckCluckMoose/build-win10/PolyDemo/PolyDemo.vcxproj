@@ -131,6 +131,9 @@
       <AdditionalDependencies>CUGL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -198,7 +201,9 @@
     <ClInclude Include="..\..\source\Moose.h" />
     <ClInclude Include="..\..\source\MooseFile.h" />
     <ClInclude Include="..\..\source\SaveController.h" />
+    <ClInclude Include="..\..\source\SceneBuilder1.h" />
     <ClInclude Include="..\..\source\Stack.h" />
+
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stack.h" />
   </ItemGroup>
@@ -214,7 +219,9 @@
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\Moose.cpp" />
     <ClCompile Include="..\..\source\SaveController.cpp" />
+    <ClCompile Include="..\..\source\SceneBuilder1.cpp" />
     <ClCompile Include="..\..\source\Stack.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />

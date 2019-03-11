@@ -92,6 +92,14 @@ void Moose::clearStackToDiscard() {
 	stack.clear();
 }
 
+void Moose::setStack(Stack s) {
+	stack.clear();
+	while ((s.getSize() > 0)) {
+		stack.add(s.getBottom());
+		s.removeBottom();
+	}
+}
+
 void Moose::clearHandToDiscard() {
 	for (Chicken &c : hand) {
 		discard.push_back(c);
