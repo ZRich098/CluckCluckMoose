@@ -50,52 +50,32 @@ void Moose::dispose() {
 #pragma mark -
 #pragma mark Stack
 
-void Moose::changeChickenInStack(element e, special s, int d, int pos) {
-	stack.at(pos).setChicken(e, s, d);
-}
-
-void Moose::changeChickenInStackElement(element e, int pos) {
-	Chicken &c = stack.at(pos);
-	c.setChicken(e, c.getSpecial());
-}
-
-void Moose::changeChickenInStackSpecial(special s, int pos) {
-	Chicken &c = stack.at(pos);
-	c.setChicken(c.getElement(), s);
-}
-
-void Moose::changeChickenInStackDamage(int d, int pos) {
-	Chicken &c = stack.at(pos);
-	c.setChicken(c.getElement(), c.getSpecial(), d);
-}
-
 void Moose::addToStackFromHand(int pos) {
-	stack.push_back(hand.at(pos));
+	stack.add(hand.at(pos));
 	hand.erase(hand.begin() + pos);
 }
 
 void Moose::removeTopFromStackToHand() {
-	hand.push_back(stack.back());
-	stack.pop_back();	
-}
-
-void Moose::removeAllFromStackToHand() {
-	for (Chicken &c : stack) {
-		hand.push_back(c);
-	}
-	stack.clear();
+	hand.push_back(stack.removeTop());
 }
 
 void Moose::removeBottomFromStackToDiscard() {
-	discard.push_back(stack.front());
-	stack.erase(stack.begin());
+	discard.push_back(stack.removeBottom());
 }
 
 void Moose::clearStackToDiscard() {
-	for (Chicken &c : stack) {
-		discard.push_back(c);
+	while(stack.getSize() > 0){
+		discard.push_back(stack.removeBottom());
 	}
 	stack.clear();
+}
+
+void Moose::setStack(Stack s) {
+	stack.clear();
+	while (!s.empty) {
+		stack.add(s.getBottom());
+		s.removeBottom();
+	}
 }
 
 void Moose::clearHandToDiscard() {
@@ -140,15 +120,6 @@ string Moose::discardString() const {
 	stringstream ss;
 	for (int i = 0; i < discard.size(); i++) {
 		ss << "Discard " << i + 1 << ": " << discard.at(i).toString().c_str() << "\n";
-	}
-	ss << "\n";
-	return ss.str();
-}
-
-string Moose::stackString() const {
-	stringstream ss;
-	for (int i = 0; i < stack.size(); i++) {
-		ss << "Stack " << i + 1 << ": " << stack.at(i).toString().c_str() << "\n";
 	}
 	ss << "\n";
 	return ss.str();

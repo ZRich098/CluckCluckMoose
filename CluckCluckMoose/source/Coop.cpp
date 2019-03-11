@@ -24,19 +24,19 @@ void Coop::loadDeck() {
 		case 0: //Empty Deck
 			break;
 		case 1:
-			for (ChickenType c : deckV1)
+			for (special c : deckV1)
 				chickens.push_back(Chicken(c));
 			break;
 		case 2:
-			for (ChickenType c : deckV2)
+			for (special c : deckV2)
 				chickens.push_back(Chicken(c));
 			break;
 		case 3:
-			for (ChickenType c : deckV3)
+			for (special c : deckV3)
 				chickens.push_back(Chicken(c));
 			break;
 		case 4:
-			for (ChickenType c : deckV4) 
+			for (special c : deckV4)
 				chickens.push_back(Chicken(c));
 			break;
 	}

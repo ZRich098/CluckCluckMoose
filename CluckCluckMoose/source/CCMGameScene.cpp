@@ -22,6 +22,8 @@ using namespace cugl;
 #define SCENE_WIDTH 1024
 /** length of time in milliseconds for clashes */
 #define CLASHLENGTH 400
+/** maximum size of chicken stack */
+#define MAXSTACKSIZE 3
 
 //stack size
 int stackSize;
@@ -29,21 +31,30 @@ int stackSize;
 //previous hand size for tracking placing a chicken
 int prevHand;
 
+//number of frames in between clashes
+int clashCD;
+
 //bool to signify a clash is in progress
 bool isClashing;
 
 
-//Moose Players
-//Moose player;
-std::shared_ptr<Moose> player;
-//Moose opp;
-std::shared_ptr<Moose> opp;
+//bool to signify a clash preview is in progress
+bool isPreviewing;
+
+
 
 //SceneBuilder
 std::shared_ptr<SceneBuilder1> sb;
 
 //Root node for scene builder
 std::shared_ptr<Node> root;
+
+//Preview Stacks
+//Player Stack
+Stack playerPreviewStack;
+//Opponent Stack
+Stack oppPreviewStack;
+
 
 //AI
 //AI oppAI = AI::alloc(opp, player, AIType::Dumb);
@@ -72,9 +83,11 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 
 
+
 	//Root node the drawer can build off of
 	root = Node::alloc();
 	addChild(root);
+
 	
 
 
@@ -84,10 +97,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	//Initialize stack sizes
 	stackSize = 0;
 
-
-
-
-
+	//Initialize clash cooldown
+	clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
 
 
 	//Initialize moose
@@ -122,6 +133,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 
 
+
 /**
  * Disposes of all (non-static) resources allocated to this mode.
  */
@@ -138,47 +150,80 @@ void GameScene::dispose() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
+
 	sb->updateInput(timestep);
 	sb->buildGameScene();
+
+	if (!isClashing) {
+		_input.update(timestep);
+	}
+	
+
 	if (prevHand > player->getHand().size()) {
 		prevHand--;
 		opp->addToStackFromHand(oppAI->getPlay());
 		stackSize++;
-		if (stackSize == 3) { // Temporary magic number for max stack size
+		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;
 		}
 		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
 		sb->buildGameScene();
 	}
 
-	if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
-//        sleep(CLASHLENGTH);
-		int result = player->getStack().front().compare(opp->getStack().front());
-		if (result == -1)
-		{
-			player->removeBottomFromStackToDiscard();
-		}
-		else if (result == 1)
-		{
-			opp->removeBottomFromStackToDiscard();
-		}
-		else
-		{
-			player->removeBottomFromStackToDiscard();
-			opp->removeBottomFromStackToDiscard();
-		}
-	} else if (isClashing && stackSize != 0) {
-//        sleep(CLASHLENGTH);
-		player->refillHand();
-		opp->refillHand();
-		prevHand = player->getHand().size();
-		stackSize = 0;
-	} else if (isClashing) {
-//        sleep(CLASHLENGTH);
-		player->clearStackToDiscard();
-		opp->clearStackToDiscard();
-		isClashing = false;
+	if (false) { //replace with if Preview button is pressed
+		isPreviewing = true;
+
+		playerPreviewStack = player->getStack();
+		oppPreviewStack = opp->getStack();
+		isClashing = true;
 	}
+
+	if (clashCD == 0) {
+		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
+			//        sleep(CLASHLENGTH);
+			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
+			if (result == -1)
+			{
+				CULog("opp win");
+				player->removeBottomFromStackToDiscard();
+			}
+			else if (result == 1)
+			{
+				CULog("player win");
+				opp->removeBottomFromStackToDiscard();
+			}
+			else
+			{
+				CULog("tie");
+				player->removeBottomFromStackToDiscard();
+				opp->removeBottomFromStackToDiscard();
+			}
+		}
+		else if (isClashing && isPreviewing && stackSize != 0) {
+			player->setStack(playerPreviewStack);
+			opp->setStack(oppPreviewStack);
+			isPreviewing = false;
+			isClashing = false;
+		}
+		else if (isClashing && stackSize != 0) {
+			//        sleep(CLASHLENGTH);
+			player->refillHand();
+			opp->refillHand();
+			prevHand = player->getHand().size();
+			stackSize = 0;
+
+			player->clearStackToDiscard();
+			opp->clearStackToDiscard();
+			isClashing = false;
+		}
+	}
+	if (clashCD > 0) {
+		clashCD--;
+	}
+	else {
+		clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
+	}
+	GameScene::draw(_assets, _assets->get<Node>("game"));
 }
 
 
