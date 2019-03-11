@@ -293,14 +293,14 @@ void SceneBuilder1::buildGameScene() {
 		buttonCanvas->addChild(butt);
 		//i+2 to ensure keys are unique
 		butt->activate(i+2);
-		CULog("Button %d made", i);
+		//CULog("Button %d made", i);
 	}
 
 	Stack pstack = playerGlobe->getStack();
 
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		special cel = playerGlobe->getStackAt(i)->getSpecial();
+		special cel = playerGlobe->getStackAt(i).getSpecial();
 		if (cel == (special::BasicFire)) {
 			text = textureF;
 		}
@@ -332,7 +332,7 @@ void SceneBuilder1::buildGameScene() {
 			text = textureWitch;
 		}
 		else {
-			element el = playerGlobe->getStackAt(i)->getElement();
+			element el = playerGlobe->getStackAt(i).getElement();
 			if (el == element::Fire) {
 				text = textureF;
 			}
@@ -364,7 +364,7 @@ void SceneBuilder1::buildGameScene() {
 
 	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
-		special cel = oppGlobe->getStackAt(i)->getSpecial();
+		special cel = oppGlobe->getStackAt(i).getSpecial();
 		if (cel == (special::BasicFire)) {
 			text = textureF;
 		}
@@ -396,7 +396,7 @@ void SceneBuilder1::buildGameScene() {
 			text = textureWitch;
 		}
 		else {
-			element el = oppGlobe->getStackAt(i)->getElement();
+			element el = oppGlobe->getStackAt(i).getElement();
 			if (el == element::Fire) {
 				text = textureF;
 			}
