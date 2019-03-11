@@ -30,7 +30,7 @@ Chicken::Chicken(special sp) {
 		e = element::Grass;
 		return;
 	case special::Ninja:
-		e = element::Grass;
+		e = element::Fire;
 		return;
 	case special::Clicken:
 		e = element::Water;
@@ -39,7 +39,7 @@ Chicken::Chicken(special sp) {
 		e = element::Water;
 		return;
 	case special::Thicken:
-		e = element::Fire;
+		e = element::Grass;
 		return;
 	case special::Mirror:
 		e = element::Unset;
@@ -48,7 +48,7 @@ Chicken::Chicken(special sp) {
 		e = element::Fire;
 		return;
 	case special::Spy:
-		e = element::Grass;
+		e = element::Fire;
 		return;
 	case special::PartridgePilferer:
 		e = element::LoseAll;
