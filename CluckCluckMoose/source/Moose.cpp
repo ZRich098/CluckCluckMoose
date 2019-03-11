@@ -35,6 +35,28 @@ bool Moose::init(int h, int hSize) {
 }
 
 
+void Moose::jsonInit(int h, vector<int> handArray, vector<int> stackArray, vector<int> coopArray, vector<int> discardArray, string cost) {
+	health = h;
+	for (int i : handArray) {
+		hand.push_back(Chicken(intToSpecial(i)));
+	}
+
+	for (int i : stackArray) {
+		stack.add(Chicken(intToSpecial(i)));
+	}
+
+	deck.clear();
+	deck.fill(coopArray);
+
+	for (int i : discardArray) {
+		discard.push_back(Chicken(intToSpecial(i)));
+	}
+
+	//not yet supported
+	//costume = cost;
+}
+
+
 /**
  * Disposes all resources and assets of this moose
  *
@@ -72,7 +94,7 @@ void Moose::clearStackToDiscard() {
 
 void Moose::setStack(Stack s) {
 	stack.clear();
-	while (!s.empty()) {
+	while ((s.getSize() > 0)) {
 		stack.add(s.getBottom());
 		s.removeBottom();
 	}

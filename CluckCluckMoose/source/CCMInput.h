@@ -47,6 +47,12 @@ private:
 	/** The current touch location for the current gesture */
 	cugl::Vec2 _currentTouch;
 
+	//Whether a finger or mouse is down
+	bool _down;
+
+	//Whether a finger or mouse was down
+	bool _prevDown;
+
 
 protected:
 	// INPUT RESULTS
@@ -100,6 +106,12 @@ public:
 	* @return true if the input handler is currently active
 	*/
 	bool isActive( ) const { return _active; }
+
+	//Returns whether a finger is down
+	bool getDown();
+
+	//Returns whether a finger was previously down
+	bool getPrevDown();
 
 	/**
 	* Processes the currently cached inputs.
