@@ -43,9 +43,9 @@ class Stack {
 			Returns the chicken removed (with the original element)*/
 		Chicken removeTop();
 		/**Swaps two Chickens at the positions given in the stack */
-		void Stack::swap(int pos1, int pos2);
+		void swap(int pos1, int pos2);
 		/** Inserts a chicken anywhere in the stack */
-		void Stack::insert(int pos, const Chicken &c);
+		void insert(int pos, const Chicken &c);
 
 
 		/** Clear the stack of all Chickens*/
