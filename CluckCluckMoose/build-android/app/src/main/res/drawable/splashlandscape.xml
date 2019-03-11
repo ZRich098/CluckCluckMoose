@@ -4,7 +4,7 @@
   <!-- Your product logo -->
   <item>
     <bitmap
-      android:src="@mipmap/landscape"
+      android:src="@mipmap/portrait"
       android:gravity="center"/>
   </item>
 </layer-list>
