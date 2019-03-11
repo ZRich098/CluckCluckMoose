@@ -28,6 +28,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "reaper": {
+            "file": "textures/reaper_chick.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
 	"bomb": {
             "file": "textures/bomb_chick.png",
             "minfilter": "linear",

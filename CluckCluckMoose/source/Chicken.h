@@ -77,10 +77,11 @@ special intToSpecial(int i);
 
 class Chicken{
 	private:
+		
+	public:
 		element e;
 		special s;
 		int damage;
-	public:
 		//Constructors
 		/** Creates a standard chicken card of special s */
 		Chicken(special s);

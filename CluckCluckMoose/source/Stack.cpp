@@ -34,7 +34,7 @@ Chicken Stack::removeBottom() {
 
 Chicken Stack::removeTop() {
 	special s = chickens.back().getSpecial();
-	chickens.erase(chickens.begin());
+	chickens.erase(chickens.end()-1);
 	return Chicken(s);
 }
 
@@ -91,18 +91,37 @@ void Stack::specialChickenEffect(Stack opp) {
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		getTop()->setElement(element::Fire);
-		opp.getTop()->setElement(element::Fire);
+		CULog("mirror tie");
+		//getTop()->setSpecial(special::BasicFire);
+		//getTop()->setElement(element::Fire);
+		changeChickenInStack(element::Fire, special::BasicFire, 1, chickens.size() - 1);
+		//removeTop();
+		//add(Chicken(special::BasicFire));
+		//opp.getTop()->setSpecial(special::BasicFire);
+		//opp.getTop()->setElement(element::Fire);
+		changeChickenInStack(element::Fire, special::BasicFire, 1, opp.getSize() - 1);
+		//opp.removeTop();
+		//opp.add(Chicken(special::BasicFire));
 	}
 	else if (s1 == special::Mirror) {
-		s1 = s2;
-		getTop()->setDamage(opp.getTop()->getDamage());
-		getTop()->setElement(opp.getTop()->getElement());
+		CULog("setting player mirror");
+		//s1 = s2;
+		//getTop()->setSpecial(opp.getTop()->getSpecial());
+		//getTop()->setDamage(opp.getTop()->getDamage());
+		//getTop()->setElement(opp.getTop()->getElement());
+		changeChickenInStack(opp.getTop()->getElement(), opp.getTop()->getSpecial(), opp.getTop()->getDamage(), chickens.size() - 1);
+		//removeTop();
+		//add(Chicken(opp.getTop()->getSpecial()));
 	}
 	else if (s2 == special::Mirror) {
-		s2 = s1;
-		opp.getTop()->setDamage(getTop()->getDamage());
-		opp.getTop()->setElement(opp.getTop()->getElement());
+		CULog("setting opp mirror");
+		//s2 = s1;
+		//opp.getTop()->setSpecial(getTop()->getSpecial());
+		//opp.getTop()->setDamage(getTop()->getDamage());
+		//opp.getTop()->setElement(opp.getTop()->getElement());
+		opp.changeChickenInStack(getTop()->getElement(), getTop()->getSpecial(), getTop()->getDamage(), opp.getSize() - 1);
+		//opp.removeTop();
+		//opp.add(Chicken(getTop()->getSpecial()));
 	}
 
 	//potentially TODO special::Peek

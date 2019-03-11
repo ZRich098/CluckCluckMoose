@@ -132,6 +132,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
+	std::shared_ptr<Texture> textureReaper = _assets->get<Texture>("reaper");
 	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
 	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
 	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
@@ -211,6 +212,7 @@ void SceneBuilder1::buildGameScene() {
 	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
 	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
 	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
+	std::shared_ptr<Texture> textureReaper = _assets->get<Texture>("reaper");
 	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
 	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
 	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
@@ -233,6 +235,9 @@ void SceneBuilder1::buildGameScene() {
 		}
 		else if (cel == (special::BasicGrass)) {
 			text = textureG;
+		}
+		else if (cel == (special::Reaper)) {
+			text = textureReaper;
 		}
 		else if (cel == (special::Bomb)) {
 			text = textureBomb;
@@ -309,6 +314,9 @@ void SceneBuilder1::buildGameScene() {
 		else if (cel == (special::BasicGrass)) {
 			text = textureG;
 		}
+		else if (cel == (special::Reaper)) {
+			text = textureReaper;
+		}
 		else if (cel == (special::Bomb)) {
 			text = textureBomb;
 		}
@@ -372,6 +380,9 @@ void SceneBuilder1::buildGameScene() {
 		}
 		else if (cel == (special::BasicGrass)) {
 			text = textureG;
+		}
+		else if (cel == (special::Reaper)) {
+			text = textureReaper;
 		}
 		else if (cel == (special::Bomb)) {
 			text = textureBomb;
