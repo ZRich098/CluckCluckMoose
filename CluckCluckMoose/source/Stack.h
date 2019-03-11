@@ -23,15 +23,14 @@ class Stack {
 		const int getSize() const { return chickens.size(); };
 		/** Returns the chicken at position pos, where 0 is next to be drawn
 			If deck is shuffled, chicken will change position */
-		Chicken at(int pos) { return chickens.at(pos); };
+		Chicken *at(int pos) { return &chickens.at(pos); };
 		/** Gets the order the chickens were played on this stack
 			Does not get cleared until clear() is called*/
 		vector <special> getPlayOrder() { return play_order; };
-		/** Returns the chicken at the bottom of the stack */
-		Chicken getBottom();
-		/** Returns the chicken at the top of the stack */
-		Chicken getTop();
-
+		/** Returns a pointer to the chicken at the bottom of the stack */
+		Chicken *getBottom();
+		/** Returns a pointer to the chicken at the top of the stack */
+		Chicken *getTop();
 
 
 		//Modify
@@ -43,6 +42,10 @@ class Stack {
 		/** Removes the chicken at the top of the stack
 			Returns the chicken removed (with the original element)*/
 		Chicken removeTop();
+		/**Swaps two Chickens at the positions given in the stack */
+		void Stack::swap(int pos1, int pos2);
+		/** Inserts a chicken anywhere in the stack */
+		void Stack::insert(int pos, const Chicken &c);
 
 
 		/** Clear the stack of all Chickens*/
@@ -57,9 +60,10 @@ class Stack {
 		void changeChickenInStackSpecial(special s, int pos = 0);
 		/**Sets the Chicken at position pos in stack to damage d */
 		void changeChickenInStackDamage(int d, int pos = 0);
-
+		
+		//Special
 		/** Does special chicken effects of the chickens on the top of both stacks */
-		void specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2);
+		void Stack::specialChickenEffect(Stack opp);
 
 		//Info
 		/** Returns whether the stack is empty*/

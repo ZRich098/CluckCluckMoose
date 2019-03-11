@@ -88,17 +88,11 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 
 
-
 	//Root node the drawer can build off of
 	root = Node::alloc();
 	addChild(root);
-
-	
-
-
-    
-   
-	
+  
+  
 	//Initialize stack sizes
 	stackSize = 0;
 
@@ -134,12 +128,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 }
 
 
-
-
-
-
-
-
 /**
  * Disposes of all (non-static) resources allocated to this mode.
  */
@@ -163,9 +151,17 @@ void GameScene::update(float timestep) {
 
 	
 
-	if (prevHand > player->getHand().size()) {
+	if (prevHand > player->getHand().size()) { // Replace with if chicken is dragged to play area
 		prevHand--;
+		//player->addToStackFromHand( The index of the chicken played ) if input works
 		opp->addToStackFromHand(oppAI->getPlay());
+		//Chicken *test = player->getStack().getTop();
+		//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
+		//CULog("PLAY %s", test->toString().c_str());
+		//CULog("%p",test);
+		//test->cycle();
+		//player->getStack().changeChickenInStackElement(element::Fire, player->getStack().getSize() - 1);
+		//player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
 		stackSize++;
 		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;
@@ -185,7 +181,7 @@ void GameScene::update(float timestep) {
 	if (clashCD == 0) {
 		if (!player->getStack().empty() && !opp->getStack().empty() && isClashing) {
 			//        sleep(CLASHLENGTH);
-			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
+			int result = player->getStack().getBottom()->compare(*opp->getStack().getBottom());
 			if (result == -1)
 			{
 				CULog("opp win");

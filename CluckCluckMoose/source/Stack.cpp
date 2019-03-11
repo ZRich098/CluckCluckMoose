@@ -17,12 +17,13 @@ void Stack::add(const Chicken &c) {
 	chickens.push_back(c);
 }
 
-Chicken Stack::getBottom() {
-	return chickens.front();
+Chicken *Stack::getBottom() {
+	return &chickens.front();
 }
 
-Chicken Stack::getTop() {
-	return chickens.back();
+Chicken *Stack::getTop() {
+	//CULog("Pointer of chicken: %p", &chickens.back());
+	return &chickens.back();
 }
 
 Chicken Stack::removeBottom() {
@@ -35,6 +36,14 @@ Chicken Stack::removeTop() {
 	special s = chickens.back().getSpecial();
 	chickens.erase(chickens.begin());
 	return Chicken(s);
+}
+
+void Stack::swap(int pos1, int pos2) {
+	iter_swap(&chickens.at(pos1), &chickens.at(pos2));
+}
+
+void Stack::insert(int pos, const Chicken &c) {
+	chickens.insert(chickens.begin(), c);
 }
 
 void Stack::changeChickenInStack(element e, special s, int d, int pos) {
@@ -57,63 +66,64 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 }
 
 
+void Stack::specialChickenEffect(Stack opp) {
+	special s1 = getTop()->getSpecial();
+	special s2 = opp.getTop()->getSpecial();
 
-void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack2) {
-	special s1 = stack1.back().getSpecial();
-	special s2 = stack2.back().getSpecial();
-
-	// Reaper, Bomb, and None are all represented by element and damage and do not need special effects
+	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		Chicken target = stack2.back();
-		s1 == special::PartyFowl ? target = stack2.back() : target = stack1.back();
-		switch (target.getSpecial()) {
+		Chicken *target = getTop();
+		s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
+		switch (target->getSpecial()) {
 		case special::Reaper:
-			target.setElement(element::Water);
+			target->setElement(element::Water);
 			break;
 		case special::Mirror:
-			target.setElement(element::Fire);
+			target->setElement(element::Fire);
 			break;
 		case special::Bomb:
-			target.setElement(element::Fire);
+			target->setElement(element::Fire);
 			break;
 		}
-		target.setDamage(1);
+		target->setDamage(1);
 		return;
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		stack1.back().setElement(element::Fire);
-		stack2.back().setElement(element::Fire);
+		getTop()->setElement(element::Fire);
+		opp.getTop()->setElement(element::Fire);
 	}
 	else if (s1 == special::Mirror) {
 		s1 = s2;
-		stack1.back().setDamage(stack2.back().getDamage());
+		getTop()->setDamage(opp.getTop()->getDamage());
+		getTop()->setElement(opp.getTop()->getElement());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
-		stack2.back().setDamage(stack1.back().getDamage());
+		opp.getTop()->setDamage(getTop()->getDamage());
+		opp.getTop()->setElement(opp.getTop()->getElement());
 	}
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && stack1.size() >= 2)
-		stack1.at(stack1.size() - 2).cycle();
-	if (s2 == special::Consigliere && stack2.size() >= 2)
-		stack2.at(stack2.size() - 2).cycle();
+	if (s1 == special::Consigliere && getSize() >= 2)
+		at(getSize() - 2)->cycle();
+	if (s2 == special::Consigliere && opp.getSize() >= 2)
+		opp.at(opp.getSize() - 2)->cycle();
 
-	if (s1 == special::Scientist && stack1.size() >= 2)
-		iter_swap(&stack1.at(stack1.size() - 2), &stack1.back());
-	if (s2 == special::Scientist && stack2.size() >= 2)
-		iter_swap(&stack2.at(stack2.size() - 2), &stack2.back());
+	if (s1 == special::Scientist && getSize() >= 2)
+		swap(getSize() - 2, getSize() - 1);
+	if (s2 == special::Scientist && opp.getSize() >= 2)
+		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
 
 	if (s1 == special::Thicken) {
-		stack1.insert(stack1.begin(), stack1.back());
-		stack1.pop_back();
+		insert(0, *getTop());
+		removeTop();
 	}
 	if (s2 == special::Thicken) {
-		stack2.insert(stack2.begin(), stack2.back());
-		stack2.pop_back();
+		opp.insert(0, *opp.getTop());
+		opp.removeTop();
 	}
 
 	//TODO special::Hide
@@ -121,13 +131,13 @@ void Stack::specialChickenEffect(vector <Chicken> stack1, vector <Chicken> stack
 	//potentially TODO special::Extra
 
 	if (s1 == special::Ninja && s2 == special::Ninja) {
-		iter_swap(&stack1.front(), &stack1.back());
-		iter_swap(&stack2.front(), &stack2.back());
+		swap(0, getSize() - 1);
+		opp.swap(0, opp.getSize() - 1);
 	}
 	else if (s1 == special::Ninja)
-		iter_swap(&stack2.front(), &stack2.back());
+		opp.swap(0, opp.getSize() - 1);
 	else if (s2 == special::Ninja)
-		iter_swap(&stack1.front(), &stack1.back());
+		swap(0, getSize() - 1);
 }
 
 string Stack::stackString() const {

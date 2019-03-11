@@ -86,12 +86,33 @@ Chicken::~Chicken() {
 }
 
 void Chicken::cycle() {
+	//CULog("%s", toString().c_str());
 	if (e == element::Fire) {
 		e = element::Grass;
 	} else if (e == element::Grass) {
 		e = element::Water;
 	} else if (e == element::Water) {
 		e = element::Fire;
+	}
+	switch (e) {
+	case element::Fire:
+		//CULog("Fire");
+		break;
+	case element::Water:
+		//CULog("Water");
+		break;
+	case element::Grass:
+		//CULog("Grass");
+		break;
+	case element::LoseAll:
+	case element::WinAll:
+	case element::TieAll:
+	case element::Unset:
+		//CULog("Other");
+		break;
+	default:
+		//CULog("????");
+		break;
 	}
 }
 
