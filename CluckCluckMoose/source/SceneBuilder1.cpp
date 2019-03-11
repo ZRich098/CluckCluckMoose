@@ -239,9 +239,9 @@ void SceneBuilder1::buildGameScene() {
 
 	}
 
-	vector <Chicken> pstack = playerGlobe->getStack();
+	Stack pstack = playerGlobe->getStack();
 
-	for (int i = 0; i < pstack.size(); i++) {
+	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		element cel = playerGlobe->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {
@@ -264,9 +264,9 @@ void SceneBuilder1::buildGameScene() {
 		}
 	}
 
-	vector <Chicken> ostack = oppGlobe->getStack();
+	Stack ostack = oppGlobe->getStack();
 
-	for (int i = 0; i < ostack.size(); i++) {
+	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		element cel = oppGlobe->getStackAt(i).getElement();
 		if (cel == (element::Fire)) {

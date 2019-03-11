@@ -49,6 +49,11 @@ std::shared_ptr<SceneBuilder1> sb;
 //Root node for scene builder
 std::shared_ptr<Node> root;
 
+//Player moose
+std::shared_ptr<Moose> player;
+std::shared_ptr<Moose> opp;
+
+std::shared_ptr<AI> oppAI;
 //Preview Stacks
 //Player Stack
 Stack playerPreviewStack;
@@ -58,7 +63,7 @@ Stack oppPreviewStack;
 
 //AI
 //AI oppAI = AI::alloc(opp, player, AIType::Dumb);
-std::shared_ptr<AI> oppAI = AI::alloc(opp, player, AIType::Dumb);
+
 
 
 /**
@@ -110,6 +115,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
+	oppAI = AI::alloc(opp, player, AIType::Dumb);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	//Initialize AI
@@ -154,9 +160,7 @@ void GameScene::update(float timestep) {
 	sb->updateInput(timestep);
 	sb->buildGameScene();
 
-	if (!isClashing) {
-		_input.update(timestep);
-	}
+
 	
 
 	if (prevHand > player->getHand().size()) {
@@ -223,7 +227,7 @@ void GameScene::update(float timestep) {
 	else {
 		clashCD = (int) (CLASHLENGTH / MAXSTACKSIZE);
 	}
-	GameScene::draw(_assets, _assets->get<Node>("game"));
+	sb->buildGameScene();
 }
 
 
