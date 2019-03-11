@@ -111,6 +111,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 			if (down) {
 				try {
 					//CULog("%s\n", butt->getName().c_str());
+					CULog("OPP %s\n", opp->getHandAt(0).toString().c_str());
 					if (butt->getName() == "chicken1") {
 						CULog("%s\n", player->getHandAt(0).toString().c_str());
 						player->addToStackFromHand(0);
@@ -353,9 +354,11 @@ void GameScene::update(float timestep) {
 	}
 	GameScene::draw(_assets, _assets->get<Node>("game"));
 
-	if (prevHand > player->getHand().size()) {
+	if (prevHand > player->getHand().size()) { // Replace with if chicken is dragged to play area
 		prevHand--;
+		//player->addToStackFromHand( The index of the chicken played ) if input works
 		opp->addToStackFromHand(oppAI->getPlay());
+		player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
 		stackSize++;
 		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;

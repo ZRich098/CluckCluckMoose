@@ -50,7 +50,7 @@ void Stack::swap(int pos1, int pos2) {
 }
 
 void Stack::insert(int pos, const Chicken &c) {
-	chickens.insert(chickens.begin(), c)
+	chickens.insert(chickens.begin(), c);
 }
 
 void Stack::changeChickenInStack(element e, special s, int d, int pos) {
@@ -77,7 +77,7 @@ void Stack::specialChickenEffect(Stack opp) {
 	special s1 = this->getTop().getSpecial();
 	special s2 = opp.getTop().getSpecial();
 
-	// Reaper, Bomb, and None are all represented by element and damage and do not need special effects
+	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
 		Chicken &target = this->getTop();
@@ -104,10 +104,12 @@ void Stack::specialChickenEffect(Stack opp) {
 	else if (s1 == special::Mirror) {
 		s1 = s2;
 		this->getTop().setDamage(opp.getTop().getDamage());
+		this->getTop().setElement(opp.getTop().getElement());
 	}
 	else if (s2 == special::Mirror) {
 		s2 = s1;
 		opp.getTop().setDamage(this->getTop().getDamage());
+		opp.getTop().setElement(opp.getTop().getElement());
 	}
 
 	//potentially TODO special::Peek
