@@ -341,9 +341,9 @@ int Chicken::compare(const Chicken& other) const {
 
 	switch (other.e) {
 		case element::WinAll:
-			return 1;
-		case element::LoseAll:
 			return -1;
+		case element::LoseAll:
+			return 1;
 	}
 
 	switch (e) {
