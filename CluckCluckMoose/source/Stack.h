@@ -31,11 +31,6 @@ class Stack {
 		Chicken getBottom();
 		/** Returns the chicken at the top of the stack */
 		Chicken getTop();
-		/** Returns the chicken at a specific index of the stack */
-		Chicken getAt(int index);
-		/** Returns the height/size of the stack */
-		int Stack::getHeight();
-
 
 
 		//Modify

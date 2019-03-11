@@ -358,7 +358,8 @@ void GameScene::update(float timestep) {
 		prevHand--;
 		//player->addToStackFromHand( The index of the chicken played ) if input works
 		opp->addToStackFromHand(oppAI->getPlay());
-		player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
+		player->getStack().getTop().setElement(element::Fire); // REMOVE THIS
+		//player->getStack().specialChickenEffect(opp->getStack()); // Resolves the special chicken effects
 		stackSize++;
 		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;

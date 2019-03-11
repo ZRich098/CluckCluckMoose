@@ -25,14 +25,6 @@ Chicken Stack::getTop() {
 	return chickens.back();
 }
 
-Chicken Stack::getAt(int index) {
-	return chickens.at(index);
-}
-
-int Stack::getHeight() {
-	return chickens.size();
-}
-
 Chicken Stack::removeBottom() {
 	special s = chickens.front().getSpecial();
 	chickens.erase(chickens.begin());
@@ -114,15 +106,15 @@ void Stack::specialChickenEffect(Stack opp) {
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && this->getHeight() >= 2)
-		this->getAt(this->getHeight() - 2).cycle();
-	if (s2 == special::Consigliere && opp.getHeight() >= 2)
-		opp.getAt(opp.getHeight() - 2).cycle();
+	if (s1 == special::Consigliere && this->getSize() >= 2)
+		this->at(this->getSize() - 2).cycle();
+	if (s2 == special::Consigliere && opp.getSize() >= 2)
+		opp.at(opp.getSize() - 2).cycle();
 
-	if (s1 == special::Scientist && this->getHeight() >= 2)
-		this->swap(this->getHeight() - 2, this->getHeight() - 1);
-	if (s2 == special::Scientist && opp.getHeight() >= 2)
-		opp.swap(opp.getHeight() - 2, opp.getHeight() - 1);
+	if (s1 == special::Scientist && this->getSize() >= 2)
+		this->swap(this->getSize() - 2, this->getSize() - 1);
+	if (s2 == special::Scientist && opp.getSize() >= 2)
+		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
 
 	if (s1 == special::Thicken) {
 		this->insert(0, this->getTop());
@@ -138,13 +130,13 @@ void Stack::specialChickenEffect(Stack opp) {
 	//potentially TODO special::Extra
 
 	if (s1 == special::Ninja && s2 == special::Ninja) {
-		this->swap(0, this->getHeight() - 1);
-		opp.swap(0, opp.getHeight() - 1);
+		this->swap(0, this->getSize() - 1);
+		opp.swap(0, opp.getSize() - 1);
 	}
 	else if (s1 == special::Ninja)
-		opp.swap(0, opp.getHeight() - 1);
+		opp.swap(0, opp.getSize() - 1);
 	else if (s2 == special::Ninja)
-		this->swap(0, this->getHeight() - 1);
+		this->swap(0, this->getSize() - 1);
 }
 
 string Stack::stackString() const {
