@@ -70,6 +70,8 @@ void Stack::specialChickenEffect(Stack opp) {
 	special s1 = getTop().getSpecial();
 	special s2 = opp.getTop().getSpecial();
 
+
+	CULog(stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
@@ -138,12 +140,15 @@ void Stack::specialChickenEffect(Stack opp) {
 		opp.swap(0, opp.getSize() - 1);
 	else if (s2 == special::Ninja)
 		swap(0, getSize() - 1);
+
+
+	CULog(stackString().c_str());
 }
 
 string Stack::stackString() const {
 	stringstream ss;
 	for (int i = 0; i < chickens.size(); i++) {
-		ss << "Stack " << i + 1 << ": " << chickens.at(chickens.size() - i - 1).toString().c_str() << "\n";
+		ss << "Stack " << i + 1 << ": " << chickens.at(i).toString().c_str() << "\n";
 	}
 
 	return ss.str();

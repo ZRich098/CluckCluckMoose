@@ -269,11 +269,10 @@ void SceneBuilder1::buildGameScene() {
 		}
 		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
 		id->setAnchor(Vec2::ANCHOR_CENTER);
-		id->setScale(0.2, 0.2);
 		id->flipHorizontal(true);
 		std::shared_ptr<Button> butt = Button::alloc(id);
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
-		butt->setScale(0.9, 0.9);
+		butt->setScale(0.2, 0.2);
 
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
 		if (i < 3) {
@@ -292,7 +291,9 @@ void SceneBuilder1::buildGameScene() {
 		});
 
 		buttonCanvas->addChild(butt);
-		butt->activate(0);
+		//i+2 to ensure keys are unique
+		butt->activate(i+2);
+		CULog("Button %d made", i);
 	}
 
 	Stack pstack = playerGlobe->getStack();

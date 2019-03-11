@@ -77,7 +77,7 @@ public:
 #pragma mark Accessors
     
     /** Get the current pecking order of the Moose*/
-	Stack getStack() { return stack; };
+	Stack& getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
 	Chicken getStackAt(int pos) { return stack.at(pos); };
 	/** Get the current hand of the Moose*/
