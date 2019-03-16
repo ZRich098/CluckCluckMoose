@@ -69,7 +69,9 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 void Stack::specialChickenEffect(Stack &opp) {
 	special s1 = getTop().getSpecial();
 	special s2 = opp.getTop().getSpecial();
-
+	tuple<special, special, bool> make_tuple(s1, s2, true);
+	//boolean to tell if a special chicken effect went before this one
+	bool first = false;
 
 	CULog("\n%s",stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects

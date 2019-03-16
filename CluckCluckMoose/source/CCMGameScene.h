@@ -98,6 +98,13 @@ public:
 	 * Resets the status of the game so that we can play again.
 	 */
 	//void reset();
+
+#pragma mark -
+#pragma mark Special Handling
+
+	//Special
+	/** Does special chicken effects of the chickens on the top of both stacks. */
+	void GameScene::specialChickenEffect(Stack &player, Stack &opp);
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */

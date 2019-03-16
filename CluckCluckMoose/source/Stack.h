@@ -62,7 +62,8 @@ public:
 	void changeChickenInStackDamage(int d, int pos = 0);
 
 	//Special
-	/** Does special chicken effects of the chickens on the top of both stacks */
+	/** Does special chicken effects of the chickens on the top of both stacks.
+		Returns a value for the cooldown depending on how long a special takes to execute. */
 	void specialChickenEffect(Stack &opp);
 
 	//Info
