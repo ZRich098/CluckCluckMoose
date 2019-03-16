@@ -146,7 +146,6 @@ void GameScene::dispose() {
 void GameScene::update(float timestep) {
 
 	sb->updateInput(timestep);
-	sb->buildGameScene();
 
 	if (prevHand > player->getHand().size()) { // Replace with if chicken is dragged to play area
 		prevHand--;
@@ -159,8 +158,6 @@ void GameScene::update(float timestep) {
 		if (stackSize == MAXSTACKSIZE) {
 			isClashing = true;
 		}
-		// Called a second time since opponents last chicken is not shown before a clash for whatever reason
-		sb->buildGameScene();
 	}
 
 	if (false) { //replace with if Preview button is pressed
@@ -205,6 +202,9 @@ void GameScene::update(float timestep) {
 				opp->refillHand();
 				prevHand = player->getHand().size();
 				stackSize = 0;
+
+				//player->takeDamage(opp->getStack().getSize());
+				//opp->takeDamage(player->getStack().getSize());
 
 				player->clearStackToDiscard();
 				opp->clearStackToDiscard();
