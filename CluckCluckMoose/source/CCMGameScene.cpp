@@ -170,7 +170,7 @@ void GameScene::update(float timestep) {
 		}
 		if (skipState != 3)
 			specialChickenEffect(player->getStack(),opp->getStack()); // Resolves the special chicken effects
-		else {
+		if (skipState == 3) {
 			prevHand--;
 			stackSize++;
 			skipState = -1; // Returns the state machine to the entry state
