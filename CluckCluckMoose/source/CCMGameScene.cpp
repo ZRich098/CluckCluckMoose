@@ -256,7 +256,7 @@ void GameScene::setActive(bool value) {
 
 void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
 	//lambda function, make cooldown an argument if/when it becomes necessary
-	auto setSkip = [](auto v) { cooldown = SPECIALLENGTH; return (skipState == 0 ? skipState = v : skipState = 3); };
+	auto setSkip = [](bool v) { cooldown = SPECIALLENGTH; return (skipState == 0 ? skipState = v : skipState = 3); };
 
 	// Note that this method of skipping WILL cause issues in the event
 	// that there is a special chicken that occurs after a ninja chicken
