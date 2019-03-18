@@ -68,8 +68,8 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 	c.setChicken(c.getElement(), c.getSpecial(), d);
 }
 
-Note to Dylan : look at the spec for specialChickenEffects and make sure the 'addToStackFromHand' method does states similarly to how gamescene does. 
-	Also, Hand and coop arent included in stack.h so Im not sure how that will work
+/* Note to Dylan : look at the spec for specialChickenEffects and make sure the 'addToStackFromHand' method does states similarly to how gamescene does. 
+	Also, Hand and coop arent included in stack.h so Im not sure how that will work */
 
 tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 	int cooldown;
@@ -232,4 +232,29 @@ string Stack::stackString() const {
 	}
 
 	return ss.str();
+}
+
+void Stack::compare(Stack &opp) {
+	if (!empty() && !opp.empty()) {
+		int result = getBottom().compare(opp.getBottom());
+		if (result == -1)
+		{
+			CULog("opp win");
+			removeBottom();
+		}
+		else if (result == 1)
+		{
+			CULog("player win");
+			opp.removeBottom();
+		}
+		else
+		{
+			CULog("tie");
+			removeBottom();
+			opp.removeBottom();
+		}
+	}
+	else {
+		CULog("compare called on empty stacks");
+	}
 }

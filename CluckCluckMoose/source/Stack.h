@@ -74,6 +74,9 @@ public:
 	/** Prints the contents of the stack in order of bottom to top */
 	string stackString() const;
 
+	//Gameplay
+	/** Compares this Stack with another Stack and runs a clash between them once. */
+	void compare(Stack &opp);
 };
 
 #endif /* __STACK_H__ */
