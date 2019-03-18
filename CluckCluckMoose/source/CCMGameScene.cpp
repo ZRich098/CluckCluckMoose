@@ -24,8 +24,6 @@ using namespace cugl;
 #define CLASHLENGTH 50
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
-/** default special feedback length */
-#define SPECIALLENGTH 0
 
 //stack size
 int stackSize;
@@ -169,7 +167,8 @@ void GameScene::update(float timestep) {
 			skipState = 0; // Gets the state machine out of the entry state
 		}
 		if (skipState != 3)
-			specialChickenEffect(player->getStack(),opp->getStack()); // Resolves the special chicken effects
+			// Resolves the special chicken effects
+			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 		if (skipState == 3) {
 			prevHand--;
 			stackSize++;
@@ -256,7 +255,7 @@ void GameScene::setActive(bool value) {
 
 void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
 	//lambda function, make cooldown an argument if/when it becomes necessary
-	auto setSkip = [](bool v) { cooldown = SPECIALLENGTH; return (skipState == 0 ? skipState = v : skipState = 3); };
+	auto setSkip = [](int v) { cooldown = 0; return (skipState == 0 ? skipState = v : skipState = 3); };
 
 	// Note that this method of skipping WILL cause issues in the event
 	// that there is a special chicken that occurs after a ninja chicken

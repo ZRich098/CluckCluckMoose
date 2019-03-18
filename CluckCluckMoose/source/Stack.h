@@ -62,8 +62,11 @@ public:
 	void changeChickenInStackDamage(int d, int pos = 0);
 
 	//Special
-	/** Does special chicken effects of the chickens on the top of both stacks */
-	void specialChickenEffect(Stack &opp);
+	/** Does special chicken effects of the chickens on the top of both stacks.
+		Arguments: the opponent stack(both stacks must not be empty) and a state in the interval [0,2]
+			where 0 = no skip, 1 = skip player, and 2 = skip opponent.
+		Returns: a tuple of the skipState and the length in frames of a special chicken's effect. */
+	tuple<int,int> specialChickenEffect(Stack &opp, int skipState = 0);
 
 	//Info
 	/** Returns whether the stack is empty*/

@@ -4,6 +4,9 @@
 
 using namespace cugl;
 
+/** default special feedback length */
+#define SPECIALLENGTH 0
+
 Stack::Stack() {
 
 }
@@ -65,13 +68,32 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 	c.setChicken(c.getElement(), c.getSpecial(), d);
 }
 
+Note to Dylan : look at the spec for specialChickenEffects and make sure the 'addToStackFromHand' method does states similarly to how gamescene does. 
+	Also, Hand and coop arent included in stack.h so Im not sure how that will work
 
-void Stack::specialChickenEffect(Stack &opp) {
-	special s1 = getTop().getSpecial();
-	special s2 = opp.getTop().getSpecial();
+tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
+	int cooldown;
 
+	// lambda function, make cooldown an argument if/when it becomes necessary
+	// tuple is same as return value of method
+	auto setSkip = [](int state, int v) { return make_tuple((state == 0 ? v : 3), SPECIALLENGTH); };
 
-	CULog("\n%s",stackString().c_str());
+	// Note that this method of skipping WILL cause issues in the event
+	// that there is a special chicken that occurs after a ninja chicken
+	special s1 = special::BasicFire;
+	special s2 = special::BasicFire;
+	if (skipState == 0) {
+		s1 = getTop().getSpecial();
+		s2 = opp.getTop().getSpecial();
+	}
+	else if (skipState == 1) {
+		s2 = opp.getTop().getSpecial();
+	}
+	else if (skipState == 2) {
+		s1 = getTop().getSpecial();
+	}
+
+	CULog("\n%s", stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
@@ -88,13 +110,13 @@ void Stack::specialChickenEffect(Stack &opp) {
 		}
 		switch (target.getSpecial()) {
 		case special::Reaper:
-			target.setChicken(element::Water,special::BasicWater);
+			target.setChicken(element::Water, special::BasicWater);
 			break;
 		case special::Mirror:
-			target.setChicken(element::Fire,special::BasicFire);
+			target.setChicken(element::Fire, special::BasicFire);
 			break;
 		case special::Bomb:
-			target.setChicken(element::Fire,special::BasicFire);
+			target.setChicken(element::Fire, special::BasicFire);
 			break;
 		case special::Ninja:
 			target.setChicken(element::Fire, special::BasicFire);
@@ -114,66 +136,93 @@ void Stack::specialChickenEffect(Stack &opp) {
 			//CULog("reached default");
 			break;
 		}
-		//return;
+
+		return setSkip(skipState, 3);
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		getTop().setChicken(element::Fire,special::BasicFire);
-		opp.getTop().setChicken(element::Fire,special::BasicFire);
+		getTop().setChicken(element::Fire, special::BasicFire);
+		opp.getTop().setChicken(element::Fire, special::BasicFire);
+		return setSkip(skipState, 3);
 	}
 	else if (s1 == special::Mirror) {
 		//CULog("player mirror");
 		s1 = s2;
-		getTop().setChicken(opp.getTop().getElement(),opp.getTop().getSpecial(),opp.getTop().getDamage());
+		getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
+		return setSkip(skipState, 3);
 	}
 	else if (s2 == special::Mirror) {
 		//CULog("opp mirror");
 		s2 = s1;
 		opp.getTop().setChicken(getTop().getElement(), getTop().getSpecial(), getTop().getDamage());
+		return setSkip(skipState, 0);
 	}
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && getSize() >= 2)
+	if (s1 == special::Consigliere && getSize() >= 2) {
 		at(getSize() - 2).cycle();
-	if (s2 == special::Consigliere && opp.getSize() >= 2)
+		return setSkip(skipState, 1);
+	}
+	if (s2 == special::Consigliere && opp.getSize() >= 2) {
 		opp.at(opp.getSize() - 2).cycle();
+		setSkip(skipState,2);
+		return setSkip(skipState, 2);
+	}
 
-	if (s1 == special::Scientist && getSize() >= 2)
+	if (s1 == special::Scientist && getSize() >= 2) {
 		swap(getSize() - 2, getSize() - 1);
-	if (s2 == special::Scientist && opp.getSize() >= 2)
+		setSkip(skipState,1);
+		return setSkip(skipState, 1);
+	}
+	if (s2 == special::Scientist && opp.getSize() >= 2) {
 		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
+		return setSkip(skipState, 2);
+	}
 
 	if (s1 == special::Thicken) {
 		insert(0, getTop());
 		removeTop();
+		setSkip(skipState,1);
+		return setSkip(skipState, 1);
 	}
 	if (s2 == special::Thicken) {
 		opp.insert(0, opp.getTop());
 		opp.removeTop();
+		return setSkip(skipState, 2);
 	}
 
 	//TODO special::Hide
 
 	//potentially TODO special::Extra
 
-	if (s1 == special::Ninja && s2 == special::Ninja) {
-		swap(0, getSize() - 1);
-		opp.swap(0, opp.getSize() - 1);
-	}
-	else if (s1 == special::Ninja)
-		opp.swap(0, opp.getSize() - 1);
-	else if (s2 == special::Ninja)
-		swap(0, getSize() - 1);
-
 	if (s1 == special::Spy) {
-		//draw is a Moose function and therefore cannot be called here
+		//Can be made from here
 	}
 	if (s2 == special::Spy) {
 		//see above
 	}
 
-	CULog("\n%s",stackString().c_str());
+	if (s1 == special::Ninja && s2 == special::Ninja) {
+		swap(0, getSize() - 1);
+		opp.swap(0, opp.getSize() - 1);
+		return setSkip(skipState, 3);
+	}
+	else if (s1 == special::Ninja) {
+		opp.swap(0, opp.getSize() - 1);
+		setSkip(skipState,3);
+		return setSkip(skipState, 3);
+	}
+	else if (s2 == special::Ninja) {
+		swap(0, getSize() - 1);
+		setSkip(skipState,3);
+		return setSkip(skipState, 3);
+	}
+
+	CULog("\n%s", stackString().c_str());
+
+	// Exits state machine if no special chicken is found
+	return make_tuple(3, 0);
 }
 
 string Stack::stackString() const {
