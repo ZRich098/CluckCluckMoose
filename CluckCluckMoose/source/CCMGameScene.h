@@ -104,7 +104,7 @@ public:
 
 	//Special
 	/** Does special chicken effects of the chickens on the top of both stacks. */
-	void specialChickenEffect(Stack &player, Stack &opp);
+	//void specialChickenEffect(Stack &player, Stack &opp);
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */

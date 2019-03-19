@@ -24,14 +24,18 @@ using namespace cugl;
 #define CLASHLENGTH 50
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
-/** default special feedback length */
-#define SPECIALLENGTH 0
 
 //stack size
 int stackSize;
 
 //previous hand size for tracking placing a chicken
 int prevHand;
+
+//vector tracking the order in which the player played Chickens
+vector<Chicken> playerPlayOrder;
+
+//vector tracking the order in which the opponent played Chickens
+vector<Chicken> oppPlayOrder;
 
 //number of frames in between clashes
 int cooldown;
@@ -160,16 +164,21 @@ void GameScene::update(float timestep) {
 
 	sb->updateInput(timestep);
 
-	if (prevHand > player->getHand().size()) { // Replace with if chicken is dragged to play area
+	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == -1) {
 			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
+
+			playerPlayOrder.push_back(player->getStack().getTop());
+			oppPlayOrder.push_back(opp->getStack().getTop());
+
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 			//CULog("PLAY %s", test.toString().c_str());
 			skipState = 0; // Gets the state machine out of the entry state
 		}
 		if (skipState != 3)
-			specialChickenEffect(player->getStack(),opp->getStack()); // Resolves the special chicken effects
+			// Resolves the special chicken effects
+			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 		if (skipState == 3) {
 			prevHand--;
 			stackSize++;
@@ -189,23 +198,7 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			int result = player->getStack().getBottom().compare(opp->getStack().getBottom());
-			if (result == -1)
-			{
-				CULog("opp win");
-				player->removeBottomFromStackToDiscard();
-			}
-			else if (result == 1)
-			{
-				CULog("player win");
-				opp->removeBottomFromStackToDiscard();
-			}
-			else
-			{
-				CULog("tie");
-				player->removeBottomFromStackToDiscard();
-				opp->removeBottomFromStackToDiscard();
-			}
+			player->getStack().compare(opp->getStack());
 			cooldown = CLASHLENGTH;
 		}
 		else if (isPreviewing) {
@@ -216,6 +209,17 @@ void GameScene::update(float timestep) {
 			cooldown = CLASHLENGTH;
 		}
 		else {
+			while (playerPlayOrder.size() > 0) {
+				player->getDiscard().push_back(playerPlayOrder.front());
+				playerPlayOrder.erase(playerPlayOrder.begin());
+			}
+			playerPlayOrder.clear();
+			while (oppPlayOrder.size() > 0) {
+				opp->getDiscard().push_back(oppPlayOrder.front());
+				oppPlayOrder.erase(oppPlayOrder.begin());
+			}
+			oppPlayOrder.clear();
+
 			player->refillHand();
 			opp->refillHand();
 			prevHand = player->getHand().size();
@@ -224,8 +228,8 @@ void GameScene::update(float timestep) {
 			//player->takeDamage(opp->getStack().getSize());
 			//opp->takeDamage(player->getStack().getSize());
 
-			player->clearStackToDiscard();
-			opp->clearStackToDiscard();
+			player->getStack().clear();
+			opp->getStack().clear();
 			isClashing = false;
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
@@ -254,9 +258,9 @@ void GameScene::setActive(bool value) {
     } */
 }
 
-void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
+/* void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
 	//lambda function, make cooldown an argument if/when it becomes necessary
-	auto setSkip = [](bool v) { cooldown = SPECIALLENGTH; return (skipState == 0 ? skipState = v : skipState = 3); };
+	auto setSkip = [](int v) { cooldown = 0; return (skipState == 0 ? skipState = v : skipState = 3); };
 
 	// Note that this method of skipping WILL cause issues in the event
 	// that there is a special chicken that occurs after a ninja chicken
@@ -413,4 +417,4 @@ void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
 	skipState = 3;
 
 	CULog("\n%s", player.stackString().c_str());
-}
+} */
