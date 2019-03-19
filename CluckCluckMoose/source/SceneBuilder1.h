@@ -20,6 +20,8 @@ protected:
 	std::shared_ptr<cugl::Node> selectedChicken;
 
 public:
+	bool previewSet;
+
 #pragma mark -
 #pragma mark Constructors
 

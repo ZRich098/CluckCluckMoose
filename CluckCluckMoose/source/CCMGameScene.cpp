@@ -187,7 +187,7 @@ void GameScene::update(float timestep) {
 		CULog("SKIP: %d",skipState);
 	}
 
-	if (false) { //replace with if Preview button is pressed
+	if (sb->previewSet && !isPreviewing) { //replace with if Preview button is pressed
 		isPreviewing = true;
 
 		playerPreviewStack = player->getStack();
@@ -202,11 +202,21 @@ void GameScene::update(float timestep) {
 			cooldown = CLASHLENGTH;
 		}
 		else if (isPreviewing) {
-			player->setStack(playerPreviewStack);
-			opp->setStack(oppPreviewStack);
+			//player->setStack(playerPreviewStack);
+			//opp->setStack(oppPreviewStack);
+			player->getStack().clear();
+			opp->getStack().clear();
+			for (int i = 0; i < playerPreviewStack.getSize(); i++) {
+				player->getStack().add(playerPreviewStack.at(i));
+			}
+			for (int i = 0; i < oppPreviewStack.getSize(); i++) {
+				opp->getStack().add(oppPreviewStack.at(i));
+			}
 			isPreviewing = false;
 			isClashing = false;
 			cooldown = CLASHLENGTH;
+
+			sb->previewSet = false;
 		}
 		else {
 			while (playerPlayOrder.size() > 0) {

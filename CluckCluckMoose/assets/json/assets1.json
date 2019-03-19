@@ -84,6 +84,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+	"preview": {
+            "file": "textures/btn_fight_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "moose": {
             "file": "textures/moose.png",
             "minfilter": "linear",
