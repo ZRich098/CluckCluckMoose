@@ -481,3 +481,7 @@ void SceneBuilder1::dispose() {
 	_input.dispose();
 	//_buttons.clear();
 }
+
+void SceneBuilder1::setPreview(bool preview) {
+	previewSet = preview;
+}

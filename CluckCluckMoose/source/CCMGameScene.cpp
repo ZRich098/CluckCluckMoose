@@ -187,7 +187,7 @@ void GameScene::update(float timestep) {
 		CULog("SKIP: %d",skipState);
 	}
 
-	if (sb->previewSet && !isPreviewing) { //replace with if Preview button is pressed
+	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed
 		isPreviewing = true;
 
 		playerPreviewStack = player->getStack();
@@ -216,7 +216,7 @@ void GameScene::update(float timestep) {
 			isClashing = false;
 			cooldown = CLASHLENGTH;
 
-			sb->previewSet = false;
+			sb->setPreview(false);
 		}
 		else {
 			while (playerPlayOrder.size() > 0) {
