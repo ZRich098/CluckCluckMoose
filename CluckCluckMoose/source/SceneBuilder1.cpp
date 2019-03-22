@@ -468,7 +468,7 @@ void SceneBuilder1::buildGameScene() {
 
 	buttonCanvas->addChild(butt);
 	//i+2 to ensure keys are unique
-	butt->activate(hand.size()+2);
+	butt->activate(99);
 }
 
 void SceneBuilder1::updateInput(float timestep) {
