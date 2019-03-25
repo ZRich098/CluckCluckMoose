@@ -21,9 +21,14 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 /** length of time in frames for a clash between chickens */
-#define CLASHLENGTH 50
+#define CLASHLENGTH 5//0
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
+
+/** Values representing the relevant states for special chicken effect */
+#define ENTRY -1
+#define NONE 0
+#define EXIT 3
 
 //stack size
 int stackSize;
@@ -107,7 +112,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	stackSize = 0;
 
 	//Initialize skip state
-	skipState = -1;
+	skipState = ENTRY;
 
 	//Initialize cooldown
 	//cooldown = (int)(CLASHLENGTH / MAXSTACKSIZE);
@@ -122,7 +127,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Expert);
+	oppAI = AI::alloc(opp, player, AIType::Smart);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	//Initialize AI
@@ -165,7 +170,7 @@ void GameScene::update(float timestep) {
 	sb->updateInput(timestep);
 
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
-		if (skipState == -1) {
+		if (skipState == ENTRY) {
 			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
 
@@ -174,17 +179,17 @@ void GameScene::update(float timestep) {
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 			//CULog("PLAY %s", test.toString().c_str());
-			skipState = 0; // Gets the state machine out of the entry state
+			skipState = NONE; // Gets the state machine out of the entry state
 		}
-		if (skipState != 3)
+		if (skipState != EXIT)
 			// Resolves the special chicken effects
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
-		if (skipState == 3) {
+		if (skipState == EXIT) {
 			prevHand--;
 			stackSize++;
-			skipState = -1; // Returns the state machine to the entry state
+			skipState = ENTRY; // Returns the state machine to the entry state
 		}
-		CULog("SKIP: %d",skipState);
+		//CULog("SKIP: %d",skipState);
 	}
 
 	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed

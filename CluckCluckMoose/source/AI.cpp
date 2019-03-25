@@ -68,8 +68,6 @@ void AI::dispose() {
 int AI::defeatOpponentBottom(Chicken &c) {
 	if (oppStackProcessed.empty()) return 0;
 
-	CULog("OppStackProBottom:, %s", oppStackProcessed.getBottom().toString().c_str());
-
 	int result = c.compare(oppStackProcessed.getBottom());
 	if (result == 1) //if beats opponent chicken
 		return 3;
@@ -92,12 +90,12 @@ int AI::typeBonus(Chicken &c) {
 }
 
 int stackOrderingBonus(Chicken &c1, Chicken &c2) {
-	if (c2.getElement() == element::LoseAll) return -1000;
+	if (c2.getElement() == element::LoseAll) return -1000; //don't make plays so that bomb chicken isn't on top
 	int result = c1.compare(c2);
 	if (result == 1) //if beats
 		return 1;
 	else if (result == 0) //if ties
-		return -1;
+		return -2;
 	else //if loses
 		return 2;
 }
@@ -158,7 +156,7 @@ int AI::smartPlay() {
 	while (it != stackHashMap.end()) {
 		Stack curStack = it->second;
 
-		int score = processStackDamage(curStack.substack(oppStack.getSize()),oppStack) * 5; //5 cards on stack
+		int score = processStackDamage(curStack.substack(oppStack.getSize()), Stack(oppStack)) * 3;
 
 		for (int i = 1; i < curStack.getSize(); i++) {
 			score += stackOrderingBonus(curStack.at(i), curStack.at(i - 1));
@@ -181,19 +179,22 @@ int AI::smartPlay() {
 	return 0;
 }
 
-void addOppPermutationsToMap(map<int, Stack> &stackHashMap, vector <Chicken> hand, Stack currentStack) {
+void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Stack currentStack) {
 	if (hand.empty()) {
-		stackHashMap.insert({ stackHash(currentStack), currentStack });
+		int orderScore = 0;
+		for (int i = 1; i < currentStack.getSize(); i++) {
+			orderScore += stackOrderingBonus(currentStack.at(i), currentStack.at(i - 1));
+		}
+		if (orderScore > 4) oppMap.insert({ stackHash(currentStack), currentStack });
 	}
 	for (int i = 0; i < hand.size(); i++) {
-		CULog("hand size %i", hand.size());
 		Stack newStack = Stack(currentStack);
 		vector <Chicken> newHand = vector <Chicken>(hand);
 
 		newStack.add(hand.at(i));
 		newHand.erase(newHand.begin() + i);
 
-		addOppPermutationsToMap(stackHashMap, newHand, newStack);
+		addOppPermutationsToMap(oppMap, newHand, newStack);
 	}
 }
 
@@ -231,13 +232,13 @@ int AI::expertPlay() {
 			oppScore += processStackDamage(curStack, oit->second);
 			oit++;
 		}
-		oppScore *= 5; //5 cards on stack
+		oppScore *= 3; //5 cards on stack
 
 		int orderScore = 0;
 		for (int i = 1; i < curStack.getSize(); i++) {
 			orderScore += stackOrderingBonus(curStack.at(i), curStack.at(i - 1));
 		}
-		orderScore *= oppStackHashMap.size();
+		orderScore *= oppStackHashMap.size() * 3/5;
 		
 		int score = oppScore + orderScore;
 

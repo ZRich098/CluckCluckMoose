@@ -106,7 +106,7 @@ vector<int> Moose::getChickenElementDistribution() {
 #pragma mark Stack
 
 void Moose::addToStackFromHand(int pos) {
-	CULog("playing %s", hand.at(pos).toString().c_str());
+	//CULog("playing %s", hand.at(pos).toString().c_str());
 	stack.add(hand.at(pos));
 	hand.erase(hand.begin() + pos);
 }
