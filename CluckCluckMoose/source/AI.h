@@ -8,6 +8,11 @@
 #include "Moose.h"
 #include <map>
 
+int processStackDamage(Stack &you, Stack &opp);
+int stackOrderingBonus(Chicken &c1, Chicken &c2);
+int stackHash(Stack s);
+void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Stack currentStack);
+
 enum class AIType {
 	Dumb, //Only plays 1st card
 	Basic, //Plays non-trivially
