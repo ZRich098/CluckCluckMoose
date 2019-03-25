@@ -7,6 +7,12 @@ using namespace cugl;
 /** default special feedback length */
 #define SPECIALLENGTH 0
 
+/** values representing the states in special chicken effect, except the entry state which is handled in gamescene */
+#define NONE 0
+#define PLAYER 1
+#define OPP 2
+#define EXIT 3
+
 Stack::Stack() {
 
 }
@@ -76,7 +82,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 
 	// lambda function, make cooldown an argument if/when it becomes necessary
 	// tuple is same as return value of method
-	auto setSkip = [](int state, int v) { return make_tuple((state == 0 ? v : 3), SPECIALLENGTH); };
+	auto setSkip = [](int state, int v) { return make_tuple((state == NONE ? v : EXIT), SPECIALLENGTH); };
 
 	// Note that this method of skipping WILL cause issues in the event
 	// that there is a special chicken that occurs after a ninja chicken
@@ -137,59 +143,56 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 			break;
 		}
 
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
 		getTop().setChicken(element::Fire, special::BasicFire);
 		opp.getTop().setChicken(element::Fire, special::BasicFire);
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 	else if (s1 == special::Mirror) {
 		//CULog("player mirror");
 		s1 = s2;
 		getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 	else if (s2 == special::Mirror) {
 		//CULog("opp mirror");
 		s2 = s1;
 		opp.getTop().setChicken(getTop().getElement(), getTop().getSpecial(), getTop().getDamage());
-		return setSkip(skipState, 0);
+		return setSkip(skipState, NONE);
 	}
 
 	//potentially TODO special::Peek
 
 	if (s1 == special::Consigliere && getSize() >= 2) {
 		at(getSize() - 2).cycle();
-		return setSkip(skipState, 1);
+		return setSkip(skipState, PLAYER);
 	}
 	if (s2 == special::Consigliere && opp.getSize() >= 2) {
 		opp.at(opp.getSize() - 2).cycle();
-		setSkip(skipState,2);
-		return setSkip(skipState, 2);
+		return setSkip(skipState, OPP);
 	}
 
 	if (s1 == special::Scientist && getSize() >= 2) {
 		swap(getSize() - 2, getSize() - 1);
-		setSkip(skipState,1);
-		return setSkip(skipState, 1);
+		return setSkip(skipState, PLAYER);
 	}
 	if (s2 == special::Scientist && opp.getSize() >= 2) {
 		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
-		return setSkip(skipState, 2);
+		return setSkip(skipState, OPP);
 	}
 
 	if (s1 == special::Thicken) {
 		insert(0, getTop());
 		removeTop();
-		setSkip(skipState,1);
-		return setSkip(skipState, 1);
+		return setSkip(skipState, PLAYER);
 	}
 	if (s2 == special::Thicken) {
 		opp.insert(0, opp.getTop());
 		opp.removeTop();
-		return setSkip(skipState, 2);
+		return setSkip(skipState, OPP);
 	}
 
 	//TODO special::Hide
@@ -206,17 +209,15 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 	if (s1 == special::Ninja && s2 == special::Ninja) {
 		swap(0, getSize() - 1);
 		opp.swap(0, opp.getSize() - 1);
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 	else if (s1 == special::Ninja) {
 		opp.swap(0, opp.getSize() - 1);
-		setSkip(skipState,3);
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 	else if (s2 == special::Ninja) {
 		swap(0, getSize() - 1);
-		setSkip(skipState,3);
-		return setSkip(skipState, 3);
+		return setSkip(skipState, EXIT);
 	}
 
 	CULog("\n%s", stackString().c_str());
