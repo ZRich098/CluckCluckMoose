@@ -70,6 +70,9 @@ string sString(special s);
 /** Description of the special ability */
 string sStringLong(special s);
 
+/** Get the int representation of a element*/
+int elementToInt(element e);
+
 /** Get the int representation of a special (for json)*/
 int specialToInt(special s);
 /** Get the special representation of a int (for json)*/

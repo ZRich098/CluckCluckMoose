@@ -15,8 +15,16 @@ public:
 	//Constructor
 	/** Create a new Stack*/
 	Stack();
+	/** Copy Constructor */
+	Stack(const Stack& s) {
+		play_order = s.play_order;
+		chickens = s.chickens;
+	}
 	/***Destroys the Stack*/
 	~Stack();
+
+	/** Creates a substack of chickens, starting from the bottom, with a size of size.*/
+	Stack substack(int size);
 
 	//Access
 	/** Get the size of the Coop*/
@@ -31,6 +39,9 @@ public:
 	Chicken &getBottom();
 	/** Returns the chicken at the top of the stack */
 	Chicken &getTop();
+
+	/** Returns the total damage from all the chickens in this stack*/
+	int const getDamage();
 
 
 	//Modify
@@ -67,6 +78,8 @@ public:
 			where 0 = no skip, 1 = skip player, and 2 = skip opponent.
 		Returns: a tuple of the skipState and the length in frames of a special chicken's effect. */
 	tuple<int,int> specialChickenEffect(Stack &opp, int skipState = 0);
+	/** Does special chicken effect on single stack (ignore opponent) for AI*/
+	void specialChickenEffect();
 
 	//Info
 	/** Returns whether the stack is empty*/
@@ -77,6 +90,10 @@ public:
 	//Gameplay
 	/** Compares this Stack with another Stack and runs a clash between them once. */
 	void compare(Stack &opp);
+
+	/** int of a stack, used for AI only*/
+	int value;
+
 };
 
 #endif /* __STACK_H__ */

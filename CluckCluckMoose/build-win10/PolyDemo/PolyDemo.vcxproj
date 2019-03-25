@@ -203,9 +203,7 @@
     <ClInclude Include="..\..\source\SaveController.h" />
     <ClInclude Include="..\..\source\SceneBuilder1.h" />
     <ClInclude Include="..\..\source\Stack.h" />
-
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\AI.cpp" />
@@ -221,7 +219,6 @@
     <ClCompile Include="..\..\source\SaveController.cpp" />
     <ClCompile Include="..\..\source\SceneBuilder1.cpp" />
     <ClCompile Include="..\..\source\Stack.cpp" />
-
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />

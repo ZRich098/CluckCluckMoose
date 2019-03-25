@@ -69,11 +69,44 @@ void Moose::dispose() {
 }
 
 
+vector<int> Moose::getChickenElementDistribution() {
+	int fire = 0;
+	int water = 0;
+	int grass = 0;
+	int other = 0;
+
+	for (Chicken c : hand) {
+		switch (c.getElement()) {
+		case element::Fire:
+			fire += 1;
+			break;
+		case element::Water:
+			water += 1;
+			break;
+		case element::Grass:
+			grass += 1;
+			break;
+		default:
+			other += 1;
+			break;
+		}
+	}
+
+	vector<int> res;
+	res.push_back(fire);
+	res.push_back(water);
+	res.push_back(grass);
+	res.push_back(other);
+
+	return res;
+}
+
+
 #pragma mark -
 #pragma mark Stack
 
 void Moose::addToStackFromHand(int pos) {
-	CULog("playing %s", hand.at(pos).toString().c_str());
+	//CULog("playing %s", hand.at(pos).toString().c_str());
 	stack.add(hand.at(pos));
 	hand.erase(hand.begin() + pos);
 }
