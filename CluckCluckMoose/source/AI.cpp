@@ -155,8 +155,9 @@ int AI::smartPlay() {
 	Stack bestStack = it->second;
 	while (it != stackHashMap.end()) {
 		Stack curStack = it->second;
+		Stack oppCurStack = Stack(oppStack);
 
-		int score = processStackDamage(curStack.substack(oppStack.getSize()), Stack(oppStack)) * (oppStack.getSize() + 1) * 2; //Weighted by amount of chickens already on stack
+		int score = processStackDamage(curStack.substack(oppStack.getSize()), oppCurStack) * (oppStack.getSize() + 1) * 2; //Weighted by amount of chickens already on stack
 
 		for (int i = 1; i < curStack.getSize(); i++) {
 			score += stackOrderingBonus(curStack.at(i), curStack.at(i - 1));
