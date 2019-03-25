@@ -96,6 +96,9 @@ public:
 	/** Get the current health of the Moose*/
 	int getHealth() { return health; };
 
+	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
+	vector<int> getChickenElementDistribution();
+
     
 #pragma mark -
 #pragma mark Stack

@@ -121,7 +121,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Dumb);
+	oppAI = AI::alloc(opp, player, AIType::Smart);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	//Initialize AI
@@ -180,7 +180,7 @@ void GameScene::update(float timestep) {
 			stackSize++;
 			skipState = ENTRY; // Returns the state machine to the entry state
 		}
-		CULog("SKIP: %d",skipState);
+		//CULog("SKIP: %d",skipState);
 	}
 
 	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed

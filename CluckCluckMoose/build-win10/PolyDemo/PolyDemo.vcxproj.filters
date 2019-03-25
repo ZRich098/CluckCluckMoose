@@ -2,40 +2,83 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\source\AI.cpp" />
-    <ClCompile Include="..\..\source\CCMApp.cpp" />
-    <ClCompile Include="..\..\source\CCMGameScene.cpp" />
-    <ClCompile Include="..\..\source\CCMInput.cpp" />
-    <ClCompile Include="..\..\source\CCMLoadingScene.cpp" />
-    <ClCompile Include="..\..\source\Chicken.cpp" />
-    <ClCompile Include="..\..\source\Coop.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
-    <ClCompile Include="..\..\source\Moose.cpp" />
     <ClCompile Include="..\..\source\SaveController.cpp" />
     <ClCompile Include="..\..\source\SceneBuilder1.cpp" />
-    <ClCompile Include="..\..\source\Stack.cpp" />
+    <ClCompile Include="..\..\source\Chicken.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Coop.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Moose.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Stack.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMApp.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMGameScene.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMInput.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\AI.h" />
-    <ClInclude Include="..\..\source\CCMApp.h" />
-    <ClInclude Include="..\..\source\CCMGameScene.h" />
-    <ClInclude Include="..\..\source\CCMInput.h" />
-    <ClInclude Include="..\..\source\CCMLoadingScene.h" />
-    <ClInclude Include="..\..\source\Chicken.h" />
-    <ClInclude Include="..\..\source\Coop.h" />
-    <ClInclude Include="..\..\source\Decks.h" />
     <ClInclude Include="..\..\source\HelloApp.h" />
-    <ClInclude Include="..\..\source\Moose.h" />
-    <ClInclude Include="..\..\source\MooseFile.h" />
     <ClInclude Include="..\..\source\SaveController.h" />
     <ClInclude Include="..\..\source\SceneBuilder1.h" />
-    <ClInclude Include="..\..\source\Stack.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Stack.h" />
+    <ClInclude Include="..\..\source\Chicken.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Coop.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Decks.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Moose.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Stack.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\CCMApp.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\CCMGameScene.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\CCMInput.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\CCMLoadingScene.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\MooseFile.h">
+      <Filter>App</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f53bbead-4e93-4bce-a45c-6c86ef7c0298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{ea1093e0-4d74-4011-9f73-a7744a084b2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
