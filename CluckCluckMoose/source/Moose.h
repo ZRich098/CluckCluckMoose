@@ -81,6 +81,10 @@ public:
 	Stack& getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
 	Chicken getStackAt(int pos) { return stack.at(pos); };
+	/** Get the order that chickens have been played in*/
+	vector <Chicken> getOrder() { return playOrder; };
+	/** Get the Chicken at position pos in the play order*/
+	Chicken getOrderAt(int pos) { return playOrder.at(pos); };
 	/** Get the current hand of the Moose*/
 	vector <Chicken> getHand() { return hand; };
 	/** Get the Chicken at position pos in the hand of the Moose*/

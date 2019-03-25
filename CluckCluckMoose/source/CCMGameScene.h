@@ -103,6 +103,8 @@ public:
 #pragma mark Special Handling
 
 	//Special
+	/** Does some effect on the player's or opponent's hand based on the last played chicken*/
+	void handEffect();
 	/** Does special chicken effects of the chickens on the top of both stacks. */
 	//void specialChickenEffect(Stack &player, Stack &opp);
 };

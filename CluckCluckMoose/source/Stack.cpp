@@ -119,44 +119,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
 		//CULog("resolving Party");
-		Chicken target = getTop();
-		//s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
-		if (s1 == special::PartyFowl && s2 != special::PartyFowl) {
-			//CULog("Setting opp as target");
-			target = opp.getTop();
-		}
-		else if (s1 != special::PartyFowl && s2 == special::PartyFowl) {
-			//CULog("Setting player as target");
-			target = getTop();
-		}
-		switch (target.getSpecial()) {
-		case special::Reaper:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		case special::Mirror:
-			target.setChicken(element::Grass, special::BasicFire);
-			break;
-		case special::Bomb:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Ninja:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::PartyFowl:
-			break;
-		case special::Spy:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Thicken:
-			target.setChicken(element::Grass, special::BasicGrass);
-			break;
-		case special::Consigliere:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		default:
-			//CULog("reached default");
-			break;
-		}
+		s1 == special::PartyFowl ? partyHelper(opp.getTop()) : partyHelper(getTop());
 
 		return setSkip(skipState, EXIT);
 	}
@@ -264,6 +227,37 @@ void Stack::specialChickenEffect() {
 		removeTop();
 	}
 
+}
+
+void Stack::partyHelper(Chicken& target) {
+	switch (target.getSpecial()) {
+	case special::Reaper:
+		target.setChicken(element::Water, special::BasicWater);
+		break;
+	case special::Mirror:
+		target.setChicken(element::Grass, special::BasicGrass);
+		break;
+	case special::Bomb:
+		target.setChicken(element::Fire, special::BasicFire);
+		break;
+	case special::Ninja:
+		target.setChicken(element::Fire, special::BasicFire);
+		break;
+	case special::PartyFowl:
+		break;
+	case special::Spy:
+		target.setChicken(element::Fire, special::BasicFire);
+		break;
+	case special::Thicken:
+		target.setChicken(element::Grass, special::BasicGrass);
+		break;
+	case special::Consigliere:
+		target.setChicken(element::Water, special::BasicWater);
+		break;
+	default:
+		//CULog("reached default");
+		break;
+	}
 }
 
 string Stack::stackString() const {

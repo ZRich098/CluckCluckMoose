@@ -176,6 +176,8 @@ void GameScene::update(float timestep) {
 			// Resolves the special chicken effects
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 		if (skipState == EXIT) {
+			// Resolves special chickens that affect the hands
+			handEffect();
 			prevHand--;
 			stackSize++;
 			skipState = ENTRY; // Returns the state machine to the entry state
@@ -258,4 +260,25 @@ void GameScene::setActive(bool value) {
             it->second->deactivate();
         }
     } */
+}
+
+void GameScene::handEffect() {
+	special pLast = player->getOrder().back().getSpecial();
+	special oLast = opp->getOrder().back().getSpecial();
+
+	if (pLast == special::PartyFowl || oLast == special::PartyFowl)
+		return;
+
+	if (pLast == special::Mirror)
+		pLast = oLast;
+	if (oLast == special::Mirror)
+		oLast = pLast;
+
+	if (pLast == special::Spy) {
+		player->draw();
+		//please for the love of god fix this later
+		prevHand++;
+	}
+	if (oLast == special::Spy)
+		opp->draw();
 }

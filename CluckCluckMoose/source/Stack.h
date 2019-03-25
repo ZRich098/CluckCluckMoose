@@ -11,6 +11,10 @@ private:
 	/** List of current Chickens on stack in order of bottom to top
 		chickens can have elements modified*/
 	vector <Chicken> chickens;
+
+	/** Nullifies a chicken */
+	void partyHelper(Chicken& target);
+
 public:
 	//Constructor
 	/** Create a new Stack*/
