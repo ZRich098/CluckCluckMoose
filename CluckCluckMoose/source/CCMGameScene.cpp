@@ -21,7 +21,7 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 /** length of time in frames for a clash between chickens */
-#define CLASHLENGTH 5//0
+#define CLASHLENGTH 50
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
