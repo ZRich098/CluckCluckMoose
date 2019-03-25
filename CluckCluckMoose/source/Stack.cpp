@@ -245,6 +245,10 @@ void Stack::specialChickenEffect() {
 	special s1 = getTop().getSpecial();
 
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
+	
+	if (s1 == special::Mirror) { //Mirror is considered TieAll for single stack
+		getTop().setElement(element::TieAll);
+	}
 
 	if (s1 == special::Consigliere && getSize() >= 2) {
 		at(getSize() - 2).cycle();
