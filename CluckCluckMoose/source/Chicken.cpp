@@ -324,7 +324,7 @@ string sStringLong(special s) {
 		case special::Thicken:
 			return "Move this Chicken to the bottom of the pecking order and move all Chickens you own up one space";
 		case special::Mirror:
-			return "Copy the ability and type of the Chicken played against this Chicken.  If the opposing Chicken is a Mirror Chicken or Party Fowl, become a Basic Fire Chicken";
+			return "Copy the ability and type of the Chicken played against this Chicken.  If the opposing Chicken is a Mirror Chicken or Party Fowl, become a Basic Grass Chicken";
 		case special::Smoked:
 			return "Do not reveal your next played Chicken until clash time";
 		case special::Spy:

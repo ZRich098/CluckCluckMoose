@@ -134,7 +134,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 			target.setChicken(element::Water, special::BasicWater);
 			break;
 		case special::Mirror:
-			target.setChicken(element::Fire, special::BasicFire);
+			target.setChicken(element::Grass, special::BasicFire);
 			break;
 		case special::Bomb:
 			target.setChicken(element::Fire, special::BasicFire);
@@ -162,15 +162,15 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
-		getTop().setChicken(element::Fire, special::BasicFire);
-		opp.getTop().setChicken(element::Fire, special::BasicFire);
+		getTop().setChicken(element::Grass, special::BasicGrass);
+		opp.getTop().setChicken(element::Grass, special::BasicGrass);
 		return setSkip(skipState, EXIT);
 	}
 	else if (s1 == special::Mirror) {
 		//CULog("player mirror");
 		s1 = s2;
 		getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
-		return setSkip(skipState, EXIT);
+		return setSkip(skipState, NONE);
 	}
 	else if (s2 == special::Mirror) {
 		//CULog("opp mirror");

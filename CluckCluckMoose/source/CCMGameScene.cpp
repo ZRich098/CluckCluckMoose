@@ -215,10 +215,15 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-			player->discardCards();
-			opp->discardCards();
+
+			player->clearHandToDiscard();
+			opp->clearHandToDiscard();
+			// refills before discarding to prevent specials being obtained twice in a row
 			player->refillHand();
 			opp->refillHand();
+			player->discardStack();
+			opp->discardStack();
+
 			prevHand = player->getHand().size();
 			stackSize = 0;
 
@@ -254,164 +259,3 @@ void GameScene::setActive(bool value) {
         }
     } */
 }
-
-/* void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
-	//lambda function, make cooldown an argument if/when it becomes necessary
-	auto setSkip = [](int v) { cooldown = 0; return (skipState == 0 ? skipState = v : skipState = 3); };
-
-	// Note that this method of skipping WILL cause issues in the event
-	// that there is a special chicken that occurs after a ninja chicken
-	special s1 = special::BasicFire;
-	special s2 = special::BasicFire;
-	if (skipState == 0) {
-		s1 = player.getTop().getSpecial();
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 1) {
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 2) {
-		s1 = player.getTop().getSpecial();
-	}
-	else // This should never be reached, but will catch it if necessary
-		return;
-
-	CULog("\n%s", player.stackString().c_str());
-	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
-
-	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		//CULog("resolving Party");
-		Chicken target = player.getTop();
-		//s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
-		if (s1 == special::PartyFowl && s2 != special::PartyFowl) {
-			//CULog("Setting opp as target");
-			target = opp.getTop();
-		}
-		else if (s1 != special::PartyFowl && s2 == special::PartyFowl) {
-			//CULog("Setting player as target");
-			target = player.getTop();
-		}
-		switch (target.getSpecial()) {
-		case special::Reaper:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		case special::Mirror:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Bomb:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Ninja:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::PartyFowl:
-			break;
-		case special::Spy:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Thicken:
-			target.setChicken(element::Grass, special::BasicGrass);
-			break;
-		case special::Consigliere:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		default:
-			//CULog("reached default");
-			break;
-		}
-
-		setSkip(3);
-		return;
-	}
-
-	if (s1 == special::Mirror && s2 == special::Mirror) {
-		player.getTop().setChicken(element::Fire, special::BasicFire);
-		opp.getTop().setChicken(element::Fire, special::BasicFire);
-		setSkip(3);
-		return;
-	}
-	else if (s1 == special::Mirror) {
-		//CULog("player mirror");
-		s1 = s2;
-		player.getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
-		setSkip(0);
-		return;
-	}
-	else if (s2 == special::Mirror) {
-		//CULog("opp mirror");
-		s2 = s1;
-		opp.getTop().setChicken(player.getTop().getElement(), player.getTop().getSpecial(), player.getTop().getDamage());
-		setSkip(0);
-		return;
-	}
-
-	//potentially TODO special::Peek
-
-	if (s1 == special::Consigliere && player.getSize() >= 2) {
-		player.at(player.getSize() - 2).cycle();
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Consigliere && opp.getSize() >= 2) {
-		opp.at(opp.getSize() - 2).cycle();
-		setSkip(2);
-		return;
-	}
-
-	if (s1 == special::Scientist && player.getSize() >= 2) {
-		player.swap(player.getSize() - 2, player.getSize() - 1);
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Scientist && opp.getSize() >= 2) {
-		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
-		setSkip(2);
-		return;
-	}
-
-	if (s1 == special::Thicken) {
-		player.insert(0, player.getTop());
-		player.removeTop();
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Thicken) {
-		opp.insert(0, opp.getTop());
-		opp.removeTop();
-		setSkip(2);
-		return;
-	}
-
-	//TODO special::Hide
-
-	//potentially TODO special::Extra
-
-	if (s1 == special::Spy) {
-		//Can be made from here
-	}
-	if (s2 == special::Spy) {
-		//see above
-	}
-
-	if (s1 == special::Ninja && s2 == special::Ninja) {
-		player.swap(0, player.getSize() - 1);
-		opp.swap(0, opp.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-	else if (s1 == special::Ninja) {
-		opp.swap(0, opp.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-	else if (s2 == special::Ninja) {
-		player.swap(0, player.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-
-	// Exits state machine if no special chicken is found
-	skipState = 3;
-
-	CULog("\n%s", player.stackString().c_str());
-} */

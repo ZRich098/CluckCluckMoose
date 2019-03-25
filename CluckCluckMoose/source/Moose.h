@@ -108,10 +108,10 @@ public:
 	void addToStackFromHand(int pos);
 	/** Puts the Chicken at the top of the stack back into the hand*/
 	void removeTopFromStackToHand();
-	/** Puts the Chicken at the bottom of the stack into the discard pile */
-	void discardCards();
+	/** Discards the chickens that were played in a round */
+	void discardStack();
 	/** Puts all Chickens in the stack into the discard pile */
-	void clearStackToDiscard();
+	//void clearStackToDiscard();
 	/** Sets the stack to be the equal to Stack s */
 	void setStack(Stack s);
 
