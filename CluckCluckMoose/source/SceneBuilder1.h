@@ -19,6 +19,8 @@ protected:
 
 	std::shared_ptr<cugl::Node> selectedChicken;
 
+	bool previewSet;
+
 public:
 #pragma mark -
 #pragma mark Constructors
@@ -78,6 +80,16 @@ public:
 	//Update input
 	void updateInput(float timestep);
 
+
+#pragma mark -
+#pragma mark Accessors
+	//gets if preview button has been pressed
+	bool getPreview() { return previewSet; }
+
+#pragma mark -
+#pragma mark Setters
+	//sets previewSet to the given value
+	void setPreview(bool preview);
 };
 
 
