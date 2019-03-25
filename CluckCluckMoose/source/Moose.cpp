@@ -167,6 +167,8 @@ void Moose::refillHand() {
 		hand.push_back(Chicken(element::Grass, special::BasicGrass));
 		hand.push_back(Chicken(element::Water, special::BasicWater));
 	}
+	random_shuffle(hand.begin(),hand.end());
+	hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
 	while (hand.size() < handSize) {
 		//refill deck if hand not full yet but deck is empty
 		//if (deck.getSize() == 0) refillDeck();

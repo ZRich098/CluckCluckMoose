@@ -114,9 +114,9 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 	//Initialize moose
 //    player = Moose::Moose(3, 3);
-    player = Moose::alloc(5, 5);
+    player = Moose::alloc(5, 6);
 //    opp = Moose::Moose(3, 3);
-    opp = Moose::alloc(5, 5);
+    opp = Moose::alloc(5, 6);
 	player->refillHand();
 	opp->refillHand();
 	prevHand = player->getHand().size();
