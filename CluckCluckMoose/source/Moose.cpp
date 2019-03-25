@@ -109,14 +109,26 @@ void Moose::addToStackFromHand(int pos) {
 	//CULog("playing %s", hand.at(pos).toString().c_str());
 	stack.add(hand.at(pos));
 	hand.erase(hand.begin() + pos);
+	playOrder.push_back(getStack().getTop());
 }
 
 void Moose::removeTopFromStackToHand() {
 	hand.push_back(stack.removeTop());
 }
 
-void Moose::removeBottomFromStackToDiscard() {
-	discard.push_back(stack.removeBottom());
+void Moose::discardCards() {
+	while (playOrder.size() > 0) {
+		switch (playOrder.front().getSpecial()) {
+			case special::BasicFire:
+			case special::BasicGrass:
+			case special::BasicWater:
+				break;
+			default:
+				discard.push_back(playOrder.front());
+		}
+		playOrder.erase(playOrder.begin());
+	}
+	playOrder.clear();
 }
 
 void Moose::clearStackToDiscard() {
@@ -143,6 +155,11 @@ void Moose::clearHandToDiscard() {
 
 void Moose::refillHand() {
 	//Draw from deck while there are still chickens in the deck and hand is not full
+	if (hand.size() == 0) {
+		hand.push_back(Chicken(element::Fire, special::BasicFire));
+		hand.push_back(Chicken(element::Water, special::BasicWater));
+		hand.push_back(Chicken(element::Grass, special::BasicGrass));
+	}
 	while (hand.size() < handSize) {
 		//refill deck if hand not full yet but deck is empty
 		if (deck.getSize() == 0) refillDeck();

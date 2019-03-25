@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\source\Chicken.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Clash.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\Coop.cpp">
       <Filter>Models</Filter>
     </ClCompile>
@@ -40,9 +37,6 @@
     <ClInclude Include="..\..\source\SceneBuilder1.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\source\Chicken.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\Clash.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\Coop.h">

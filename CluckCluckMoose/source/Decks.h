@@ -88,8 +88,8 @@ special deckV3[18] = {
 	special::Spy
 };
 
-special deckV4[30] = {
-	special::BasicFire,
+special deckV4[8] = {
+	/*special::BasicFire,
 	special::BasicFire,
 	special::BasicFire,
 	special::BasicFire,
@@ -103,7 +103,7 @@ special deckV4[30] = {
 	special::BasicGrass,
 	special::BasicGrass,
 	special::BasicGrass,
-	special::BasicGrass,
+	special::BasicGrass,*/
 
 	special::Consigliere,
 	//special::WingMan,

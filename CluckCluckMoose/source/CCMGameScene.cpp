@@ -36,12 +36,6 @@ int stackSize;
 //previous hand size for tracking placing a chicken
 int prevHand;
 
-//vector tracking the order in which the player played Chickens
-vector<Chicken> playerPlayOrder;
-
-//vector tracking the order in which the opponent played Chickens
-vector<Chicken> oppPlayOrder;
-
 //number of frames in between clashes
 int cooldown;
 
@@ -174,9 +168,6 @@ void GameScene::update(float timestep) {
 			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
 
-			playerPlayOrder.push_back(player->getStack().getTop());
-			oppPlayOrder.push_back(opp->getStack().getTop());
-
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 			//CULog("PLAY %s", test.toString().c_str());
 			skipState = NONE; // Gets the state machine out of the entry state
@@ -224,17 +215,8 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-			while (playerPlayOrder.size() > 0) {
-				player->getDiscard().push_back(playerPlayOrder.front());
-				playerPlayOrder.erase(playerPlayOrder.begin());
-			}
-			playerPlayOrder.clear();
-			while (oppPlayOrder.size() > 0) {
-				opp->getDiscard().push_back(oppPlayOrder.front());
-				oppPlayOrder.erase(oppPlayOrder.begin());
-			}
-			oppPlayOrder.clear();
-
+			player->discardCards();
+			opp->discardCards();
 			player->refillHand();
 			opp->refillHand();
 			prevHand = player->getHand().size();
