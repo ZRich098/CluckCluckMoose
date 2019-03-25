@@ -234,7 +234,7 @@ void GameScene::update(float timestep) {
 		cooldown = CLASHLENGTH*1.5;
 	}
 	
-	sb->buildGameScene();
+	sb->updateGameScene();
 }
 
 
