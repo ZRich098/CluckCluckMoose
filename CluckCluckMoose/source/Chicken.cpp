@@ -256,6 +256,8 @@ special intToSpecial(int i)
 			return special::Scientist;
 		case 20:
 			return special::Alchemist;
+        default:
+            return special::BasicFire;
 	}
 }
 

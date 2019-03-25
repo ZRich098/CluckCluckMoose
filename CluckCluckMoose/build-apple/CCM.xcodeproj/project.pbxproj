@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		370CB45F22275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
-		370CB46022275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
-		370CB46122275E3B00D47C32 /* Clash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45822275E3B00D47C32 /* Clash.cpp */; };
 		370CB46222275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
 		370CB46322275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
 		370CB46422275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
@@ -25,6 +22,15 @@
 		371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
 		371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
 		371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
+		375831A72249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
+		375831A82249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
+		375831A92249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
+		375831AA2249420400413F43 /* SceneBuilder1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A22249420100413F43 /* SceneBuilder1.cpp */; };
+		375831AB2249420400413F43 /* SceneBuilder1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A22249420100413F43 /* SceneBuilder1.cpp */; };
+		375831AC2249420400413F43 /* SceneBuilder1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A22249420100413F43 /* SceneBuilder1.cpp */; };
+		375831AD2249420400413F43 /* SaveController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A42249420100413F43 /* SaveController.cpp */; };
+		375831AE2249420400413F43 /* SaveController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A42249420100413F43 /* SaveController.cpp */; };
+		375831AF2249420400413F43 /* SaveController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375831A42249420100413F43 /* SaveController.cpp */; };
 		375E32E0221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
 		375E32E1221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
 		375E32E2221F42EB0010F98D /* Coop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DA221F42EB0010F98D /* Coop.cpp */; };
@@ -131,8 +137,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		370CB45822275E3B00D47C32 /* Clash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clash.cpp; sourceTree = "<group>"; };
-		370CB45C22275E3B00D47C32 /* Clash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clash.h; sourceTree = "<group>"; };
 		370CB45D22275E3B00D47C32 /* AI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AI.cpp; sourceTree = "<group>"; };
 		370CB45E22275E3B00D47C32 /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AI.h; sourceTree = "<group>"; };
 		371BAF76221FCC0800EBF11E /* CCMGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMGameScene.h; sourceTree = "<group>"; };
@@ -143,6 +147,13 @@
 		371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMGameScene.cpp; sourceTree = "<group>"; };
 		371BAF7F221FCC0800EBF11E /* CCMApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMApp.cpp; sourceTree = "<group>"; };
 		371BAF80221FCC0800EBF11E /* CCMInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMInput.cpp; sourceTree = "<group>"; };
+		3758319D2249420100413F43 /* Stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stack.cpp; sourceTree = "<group>"; };
+		375831A12249420100413F43 /* SceneBuilder1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneBuilder1.h; sourceTree = "<group>"; };
+		375831A22249420100413F43 /* SceneBuilder1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneBuilder1.cpp; sourceTree = "<group>"; };
+		375831A32249420100413F43 /* MooseFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MooseFile.h; sourceTree = "<group>"; };
+		375831A42249420100413F43 /* SaveController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SaveController.cpp; sourceTree = "<group>"; };
+		375831A52249420200413F43 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		375831A62249420400413F43 /* SaveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveController.h; sourceTree = "<group>"; };
 		375E32D6221F42EB0010F98D /* Decks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decks.h; sourceTree = "<group>"; };
 		375E32DA221F42EB0010F98D /* Coop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coop.cpp; sourceTree = "<group>"; };
 		375E32DB221F42EB0010F98D /* Coop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coop.h; sourceTree = "<group>"; };
@@ -388,10 +399,15 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				375831A32249420100413F43 /* MooseFile.h */,
+				375831A42249420100413F43 /* SaveController.cpp */,
+				375831A62249420400413F43 /* SaveController.h */,
+				375831A22249420100413F43 /* SceneBuilder1.cpp */,
+				375831A12249420100413F43 /* SceneBuilder1.h */,
+				3758319D2249420100413F43 /* Stack.cpp */,
+				375831A52249420200413F43 /* Stack.h */,
 				370CB45D22275E3B00D47C32 /* AI.cpp */,
 				370CB45E22275E3B00D47C32 /* AI.h */,
-				370CB45822275E3B00D47C32 /* Clash.cpp */,
-				370CB45C22275E3B00D47C32 /* Clash.h */,
 				371BAF7F221FCC0800EBF11E /* CCMApp.cpp */,
 				371BAF7B221FCC0800EBF11E /* CCMApp.h */,
 				371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */,
@@ -588,6 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375831AC2249420400413F43 /* SceneBuilder1.cpp in Sources */,
 				375E32E2221F42EB0010F98D /* Coop.cpp in Sources */,
 				375E32E8221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB0FF61D2016F06000517030 /* main.cpp in Sources */,
@@ -596,8 +613,9 @@
 				370CB46422275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
-				370CB46122275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF89221FCC0900EBF11E /* CCMApp.cpp in Sources */,
+				375831A92249420400413F43 /* Stack.cpp in Sources */,
+				375831AF2249420400413F43 /* SaveController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375831AB2249420400413F43 /* SceneBuilder1.cpp in Sources */,
 				375E32E1221F42EB0010F98D /* Coop.cpp in Sources */,
 				375E32E7221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB7454AE1D74D891002FBAE6 /* main.cpp in Sources */,
@@ -613,8 +632,9 @@
 				370CB46322275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
-				370CB46022275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF88221FCC0900EBF11E /* CCMApp.cpp in Sources */,
+				375831A82249420400413F43 /* Stack.cpp in Sources */,
+				375831AE2249420400413F43 /* SaveController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375831AA2249420400413F43 /* SceneBuilder1.cpp in Sources */,
 				375E32E0221F42EB0010F98D /* Coop.cpp in Sources */,
 				375E32E6221F42EC0010F98D /* Chicken.cpp in Sources */,
 				371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */,
@@ -630,8 +651,9 @@
 				370CB46222275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
-				370CB45F22275E3B00D47C32 /* Clash.cpp in Sources */,
 				371BAF87221FCC0900EBF11E /* CCMApp.cpp in Sources */,
+				375831A72249420400413F43 /* Stack.cpp in Sources */,
+				375831AD2249420400413F43 /* SaveController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
