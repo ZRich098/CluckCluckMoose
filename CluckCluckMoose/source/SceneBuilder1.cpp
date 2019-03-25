@@ -386,6 +386,7 @@ void SceneBuilder1::updateGameScene() {
 		std::shared_ptr<Node> upchld = buttons[i]->getChild(0);
 		
 		std::shared_ptr<PolygonNode> newUp = PolygonNode::allocWithTexture(text);
+		newUp->flipHorizontal(true);
 		buttons[i]->swapChild(upchld, newUp, false);
 		
 	}
