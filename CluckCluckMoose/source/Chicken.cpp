@@ -142,6 +142,26 @@ string eString(element e) {
 	}	
 }
 
+int elementToInt(element e) {
+	switch (e) {
+	case element::Fire:
+		return 1;
+	case element::Water:
+		return 2;
+	case element::Grass:
+		return 3;
+	case element::TieAll:
+		return 4;
+	case element::WinAll:
+		return 5;
+	case element::LoseAll:
+		return 6;
+	case element::Unset:
+		return 7;
+	}
+}
+
+
 /** Get the int representation of a special (for json)*/
 int specialToInt(special s) {
 	switch (s) {
@@ -341,7 +361,7 @@ string Chicken::toString() const {
 }
 
 int Chicken::compare(const Chicken& other) const {
-	CULog("%s clashing with %s", toString().c_str(), other.toString().c_str());
+	//CULog("%s clashing with %s", toString().c_str(), other.toString().c_str());
 	if (e == element::Unset || other.e == element::Unset) {
 		CULogError("Unset element exception: %s and %s cannot be compared", toString().c_str(), other.toString().c_str());
 		return 0;

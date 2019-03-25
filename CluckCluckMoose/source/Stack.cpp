@@ -15,6 +15,12 @@ Stack::~Stack() {
 	//CULog("Stack Destroyed");
 }
 
+Stack Stack::substack(int size) {
+	Stack s = Stack();
+	s.chickens = vector<Chicken>(chickens.cbegin(), chickens.cbegin() + size);
+	return s;
+}
+
 void Stack::add(const Chicken &c) {
 	play_order.push_back(c.getSpecial());
 	chickens.push_back(c);
@@ -29,11 +35,20 @@ Chicken &Stack::getTop() {
 	return chickens.back();
 }
 
+int const Stack::getDamage() {
+	int total = 0;
+	for (Chicken c : chickens) {
+		total += c.getDamage();
+	}
+	return total;
+}
+
 Chicken Stack::removeBottom() {
 	special s = chickens.front().getSpecial();
 	chickens.erase(chickens.begin());
 	return Chicken(s);
 }
+
 
 Chicken Stack::removeTop() {
 	special s = chickens.back().getSpecial();
@@ -93,7 +108,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 		s1 = getTop().getSpecial();
 	}
 
-	CULog("\n%s", stackString().c_str());
+	//CULog("\n%s", stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
 
 	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
@@ -219,10 +234,31 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 		return setSkip(skipState, 3);
 	}
 
-	CULog("\n%s", stackString().c_str());
+	//CULog("\n%s", stackString().c_str());
 
 	// Exits state machine if no special chicken is found
 	return make_tuple(3, 0);
+}
+
+
+void Stack::specialChickenEffect() {
+	special s1 = getTop().getSpecial();
+
+	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
+
+	if (s1 == special::Consigliere && getSize() >= 2) {
+		at(getSize() - 2).cycle();
+	}
+
+	if (s1 == special::Scientist && getSize() >= 2) {
+		swap(getSize() - 2, getSize() - 1);
+	}
+
+	if (s1 == special::Thicken) {
+		insert(0, getTop());
+		removeTop();
+	}
+
 }
 
 string Stack::stackString() const {
@@ -239,22 +275,22 @@ void Stack::compare(Stack &opp) {
 		int result = getBottom().compare(opp.getBottom());
 		if (result == -1)
 		{
-			CULog("opp win");
+			//CULog("opp win");
 			removeBottom();
 		}
 		else if (result == 1)
 		{
-			CULog("player win");
+			//CULog("player win");
 			opp.removeBottom();
 		}
 		else
 		{
-			CULog("tie");
+			//CULog("tie");
 			removeBottom();
 			opp.removeBottom();
 		}
 	}
 	else {
-		CULog("compare called on empty stacks");
+		//CULog("compare called on empty stacks");
 	}
 }
