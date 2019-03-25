@@ -23,6 +23,7 @@ protected:
 	vector <Chicken> hand;
 	Coop deck;
 	vector <Chicken> discard;
+	vector<Chicken> playOrder;
 	int handSize;
 	int health;
 	void refillDeck();
@@ -105,7 +106,7 @@ public:
 	/** Puts the Chicken at the top of the stack back into the hand*/
 	void removeTopFromStackToHand();
 	/** Puts the Chicken at the bottom of the stack into the discard pile */
-	void removeBottomFromStackToDiscard();
+	void discardCards();
 	/** Puts all Chickens in the stack into the discard pile */
 	void clearStackToDiscard();
 	/** Sets the stack to be the equal to Stack s */
