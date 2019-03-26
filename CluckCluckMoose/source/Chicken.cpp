@@ -53,7 +53,7 @@ Chicken::Chicken(special sp) {
 	case special::PartridgePilferer:
 		e = element::LoseAll;
 		return;
-	case special::Consigliere:
+	case special::Witchen:
 		e = element::Water;
 		return;
 	case special::WingMan:
@@ -88,40 +88,20 @@ Chicken::~Chicken() {
 void Chicken::cycle() {
 	//CULog("%s", toString().c_str());
 	if (e == element::Fire) {
-		e = element::Grass;
-		if (s == special::BasicFire) {
-			s = special::BasicGrass;
-		}
-	} else if (e == element::Grass) {
 		e = element::Water;
-		if (s == special::BasicGrass) {
+		if (s == special::BasicFire) {
 			s = special::BasicWater;
 		}
-	} else if (e == element::Water) {
+	} else if (e == element::Grass) {
 		e = element::Fire;
-		if (s == special::BasicWater) {
+		if (s == special::BasicGrass) {
 			s = special::BasicFire;
 		}
-	}
-	switch (e) {
-	case element::Fire:
-		//CULog("Fire");
-		break;
-	case element::Water:
-		//CULog("Water");
-		break;
-	case element::Grass:
-		//CULog("Grass");
-		break;
-	case element::LoseAll:
-	case element::WinAll:
-	case element::TieAll:
-	case element::Unset:
-		//CULog("Other");
-		break;
-	default:
-		//CULog("????");
-		break;
+	} else if (e == element::Water) {
+		e = element::Grass;
+		if (s == special::BasicWater) {
+			s = special::BasicGrass;
+		}
 	}
 }
 
@@ -191,7 +171,7 @@ int specialToInt(special s) {
 		return 11;
 	case special::PartridgePilferer:
 		return 12;
-	case special::Consigliere:
+	case special::Witchen:
 		return 13;
 	case special::WingMan:
 		return 14;
@@ -241,7 +221,7 @@ special intToSpecial(int i)
 		case 12:
 			return special::PartridgePilferer;
 		case 13:
-			return special::Consigliere;
+			return special::Witchen;
 		case 14:
 			return special::WingMan;
 		case 15:
@@ -286,8 +266,8 @@ string sString(special s) {
 			return "Spy";
 		case special::PartridgePilferer:
 			return "Partridge Pilferer";
-		case special::Consigliere:
-			return "Consigliere";
+		case special::Witchen:
+			return "Witchen";
 		case special::WingMan:
 			return "Wing Man";
 		case special::Bomb:
@@ -328,10 +308,10 @@ string sStringLong(special s) {
 		case special::Smoked:
 			return "Do not reveal your next played Chicken until clash time";
 		case special::Spy:
-			return "Look at 1 card in your opponentfs hand";
+			return "Draw a card";
 		case special::PartridgePilferer: //Is this worth playing?
 			return "Draw two cards. Loses to all other chickens.  If negated, become a Basic Grass Chicken";
-		case special::Consigliere:
+		case special::Witchen:
 			return "Change the type of the Chicken below this one (Fire -> Water -> Grass -> Fire)";
 		case special::WingMan: //This seems too good to be true
 			return "Play the top chicken in your deck on top of this one";

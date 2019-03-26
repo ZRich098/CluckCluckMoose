@@ -144,11 +144,11 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 
 	//potentially TODO special::Peek
 
-	if (s1 == special::Consigliere && getSize() >= 2) {
+	if (s1 == special::Witchen && getSize() >= 2) {
 		at(getSize() - 2).cycle();
 		return setSkip(skipState, PLAYER);
 	}
-	if (s2 == special::Consigliere && opp.getSize() >= 2) {
+	if (s2 == special::Witchen && opp.getSize() >= 2) {
 		opp.at(opp.getSize() - 2).cycle();
 		return setSkip(skipState, OPP);
 	}
@@ -214,7 +214,7 @@ void Stack::specialChickenEffect() {
 		getTop().setElement(element::TieAll);
 	}
 
-	if (s1 == special::Consigliere && getSize() >= 2) {
+	if (s1 == special::Witchen && getSize() >= 2) {
 		at(getSize() - 2).cycle();
 	}
 
@@ -251,7 +251,7 @@ void Stack::partyHelper(Chicken& target) {
 	case special::Thicken:
 		target.setChicken(element::Grass, special::BasicGrass);
 		break;
-	case special::Consigliere:
+	case special::Witchen:
 		target.setChicken(element::Water, special::BasicWater);
 		break;
 	default:
