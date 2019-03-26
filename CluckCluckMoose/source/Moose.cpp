@@ -184,7 +184,7 @@ void Moose::draw(int num) {
 		//refill deck if empty
 		if (deck.getSize() == 0) refillDeck();
 		Chicken c = deck.draw();
-		if (hand.size() < handSize - 1) {
+		if (hand.size() < handSize) {
 			hand.push_back(c);
 		} else {
 			discard.push_back(c);
