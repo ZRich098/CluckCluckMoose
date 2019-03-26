@@ -366,7 +366,7 @@ void SceneBuilder1::updateGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:
@@ -436,7 +436,7 @@ void SceneBuilder1::updateGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:
@@ -503,7 +503,7 @@ void SceneBuilder1::updateGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:

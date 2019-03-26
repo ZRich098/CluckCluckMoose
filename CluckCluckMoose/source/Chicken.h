@@ -50,9 +50,9 @@ enum class special {
 	Thicken, //Drop to bottom of stack
 	Mirror, //Become opposing chicken
 	Smoked, //Hide your next chicken played
-	Spy, //Peek at an opponent chicken
+	Spy, //Draw a card
 	PartridgePilferer, //Draw 2 but lose to all chickens
-	Consigliere, //Cycle element of chicken underneath
+	Witchen, //Cycle element of chicken underneath
 	WingMan, //Play top chicken on deck as well
 	Bomb, //Loses to everything but deals 2 damage
 	PoultryPals, //Search for a fire chicken and draw it
