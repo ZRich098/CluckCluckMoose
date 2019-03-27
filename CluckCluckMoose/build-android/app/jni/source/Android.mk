@@ -17,7 +17,7 @@ LOCAL_C_INCLUDES := $(CUGL_PATH)/include
 LOCAL_SRC_FILES := \
 	$(subst $(LOCAL_PATH)/,, $(CUGL_PATH)/build-android/SDL_android_main.c) \
 	$(subst $(LOCAL_PATH)/,, $(wildcard $(PROJ_PATH)/source/*.cpp))
-	
+	# maybe call ANativeApp_OnCreate here??
 	
 
 # Line the libraries	
@@ -27,6 +27,7 @@ LOCAL_SHARED_LIBRARIES += SDL2_image
 LOCAL_SHARED_LIBRARIES += SDL2_ttf
 LOCAL_SHARED_LIBRARIES += SDL2_codec
 LOCAL_STATIC_LIBRARIES := CUGL
+LOCAL_STATIC_LIBRARIES += GPG
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -lGLESv3 -llog
 
