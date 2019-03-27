@@ -66,6 +66,9 @@ std::shared_ptr<Node> buttonCanvas;
 std::shared_ptr<Moose> playerGlobe;
 std::shared_ptr<Moose> oppGlobe;
 
+//Drag Transform Node
+std::shared_ptr<Node> transformDrag;
+
 //Preview tracking
 bool previewSet;
 
@@ -87,23 +90,23 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer->doLayout(); // This rearranges the children to fit the screen
 	root->addChild(layer);
 
+	//Init transform node
+	transformDrag = Node::alloc();
+	transformDrag->setPosition(0, 0);
+	root->addChild(transformDrag);
+
 	//Create background node
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
-
-	//Create a node for drawing moose
-	mooseCanvas = Node::alloc();
-	layer->addChild(mooseCanvas);
 
 	//Create foreground node
 	frontCanvas = Node::alloc();
 	layer->addChild(frontCanvas);
 
+	
 
-	//Add button canvas
-	buttonCanvas = Node::alloc();
-	layer->addChild(buttonCanvas);
-	//buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+
+	
 
 	// Get chicken textures.
 	textureF = _assets->get<Texture>("fire");
@@ -121,18 +124,87 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 	//reset drawing between frames
 	backCanvas->removeAllChildren();
-	mooseCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
-	buttonCanvas->removeAllChildren();
 
 	//Draw background
 	std::shared_ptr<Texture> texturebg = _assets->get<Texture>("farmbg");
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-	background->setScale(1.2f); // Magic number to rescale asset
+	background->setScale(1.2f, 1.4f); // Magic number to rescale asset
 	background->setAnchor(Vec2::ANCHOR_CENTER);
 	background->setPosition(SCENE_WIDTH/2, 512);
 	backCanvas->addChild(background);
 	
+	//Init stack nodes
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+
+		if (i == 0) {
+			poly = buildChicken(text, layer, 150, 950, true);
+		}
+		else if (i == 1) {
+			poly = buildChicken(text, layer, 150, 1045, true);
+		}
+		else if (i == 2) {
+			poly = buildChicken(text, layer, 150, 1140, true);
+		}
+		else if (i == 3) {
+			poly = buildChicken(text, layer, 150, 1235, true);
+		}
+		else {
+			poly = buildChicken(text, layer, 150, 1330, true);
+		}
+		pstackNodes.push_back(poly);
+		texturesPStack.push_back(text);
+	}
+
+
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+
+		if (i == 0) {
+			poly = buildChicken(text, layer, 900, 950, false);
+		}
+		else if (i == 1) {
+			poly = buildChicken(text, layer, 900, 1045, false);
+		}
+		else if (i == 2) {
+			poly = buildChicken(text, layer, 900, 1140, false);
+		}
+		else if (i == 3) {
+			poly = buildChicken(text, layer, 900, 1235, false);
+
+		}
+		else {
+			poly = buildChicken(text, layer, 900, 1330, false);
+
+		}
+
+		ostackNodes.push_back(poly);
+		texturesOStack.push_back(text);
+	}
+
+	
+	
+	//Create a node for drawing moose
+	mooseCanvas = Node::alloc();
+	layer->addChild(mooseCanvas);
+
+	//Add button canvas
+	buttonCanvas = Node::alloc();
+	layer->addChild(buttonCanvas);
+	//buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+
+	buttonCanvas->removeAllChildren();
+
+	
+
+	mooseCanvas->removeAllChildren();
+	
+
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
@@ -182,14 +254,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		id->flipHorizontal(true);
 		std::shared_ptr<Button> butt = Button::alloc(id);
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
-		butt->setScale(0.5, 0.5);
+		butt->setScale(0.6);
 
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
 		if (i < 3) {
-			butt->setPosition((i-1)*200 + 500, 250);
+			butt->setPosition((i-1)*250 + 500, 250);
 		}
 		else {
-			butt->setPosition((i - 4) * 200 + 500, 100);
+			butt->setPosition((i - 4) * 250 + 500, 100);
 		}
 		if (_input.isActive()) {
 			//CULog("active");
@@ -206,10 +278,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 					playerGlobe->addToStackFromHand(i);
 				}
 				if (i < 3) {
-					butt->setPosition(Vec2((i - 1) * 200 + 500, 250));
+					butt->setPosition(Vec2((i - 1) * 250 + 500, 250));
 				}
 				else {
-					butt->setPosition(Vec2((i - 4) * 200 + 500, 100));
+					butt->setPosition(Vec2((i - 4) * 250 + 500, 100));
 				}
 			}
 		});
@@ -222,58 +294,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		texturesHand.push_back(text);
 	}
 
-	//Init stack nodes
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
-		
-		if (i == 0) {
-			poly = buildChicken(text, layer, 150, 975, true);
-		}
-		else if (i == 1) {
-			poly = buildChicken(text, layer, 150, 1085, true);
-		}
-		else if (i == 2) {
-			poly = buildChicken(text, layer, 150, 1195, true);
-		}
-		else if (i == 3) {
-			poly = buildChicken(text, layer, 150, 1305, true);
-		}
-		else {
-			poly = buildChicken(text, layer, 150, 1415, true);
-		}
-		pstackNodes.push_back(poly);
-		texturesPStack.push_back(text);
-	}
-
-
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
-
-		if (i == 0) {
-			poly = buildChicken(text, layer, 900, 975, false);
-		}
-		else if (i == 1) {
-			poly = buildChicken(text, layer, 900, 1085, false);
-		}
-		else if (i == 2) {
-			poly = buildChicken(text, layer, 900, 1195, false);
-		}
-		else if (i == 3) {
-			poly = buildChicken(text, layer, 900, 1305, false);
-
-		}
-		else {
-			poly = buildChicken(text, layer, 900, 1415, false);
-
-		}
-		
-		ostackNodes.push_back(poly);
-		texturesOStack.push_back(text);
-	}
+	
 
 	//Init the clash preview button
 
@@ -303,7 +324,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
 	
 	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
-	chick->setScale(0.8f); // Magic number to rescale asset
+	chick->setScale(0.6f); // Magic number to rescale asset
 	chick->setAnchor(Vec2::ANCHOR_CENTER);
 	chick->setPosition(posX, posY);
 	chick->flipHorizontal(flip);
@@ -322,7 +343,7 @@ void SceneBuilder1::updateGameScene() {
 			buttons[i]->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
-				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()));
+				buttons[i]->setPosition(transformDrag->screenToNodeCoords(_input.getCurTouch()));
 			}
 		}
 		else {
