@@ -36,16 +36,17 @@ void AI::setup() {
 			distribution = enemy->getChickenElementDistribution();
 		case AIType::Smart:
 		case AIType::Basic:
-			stack = Stack(player->getStack());
-			hand = player->getHand();
 			oppStack = Stack(enemy->getStack());
 			oppHandSize = enemy->getHand().size();
 
-			stackProcessed = Stack(stack);
-			oppStackProcessed = Stack(oppStack);
+			stackProcessed = Stack(player->getStack());
+			oppStackProcessed = Stack(enemy->getStack());
 			while (!stackProcessed.empty() && !oppStackProcessed.empty()) {
 				stackProcessed.compare(oppStackProcessed);
 			}
+		case AIType::Intro:
+			hand = player->getHand();
+			stack = Stack(player->getStack());
 		case AIType::Dumb:
 			break;
 		default:
@@ -63,6 +64,22 @@ void AI::dispose() {
 	player = nullptr;
 	enemy = nullptr;
 	//typ = AIType::Dumb; // default to Dumb because it won't take a nullptr
+}
+
+int AI::introPlay() {
+	if (stack.getSize() == 0) {
+		return rand() % hand.size();
+	}
+	special lastPlay = stack.getTop().getSpecial();
+	vector <int> possPlays;
+
+	for (int i = 0; i < hand.size(); i++) {
+		if (hand.at(i).getSpecial() != lastPlay) possPlays.push_back(i);
+	}
+
+	if (possPlays.size() == 0) return 0;
+
+	return possPlays.at(rand() % possPlays.size());
 }
 
 int AI::defeatOpponentBottom(Chicken &c) {
@@ -270,6 +287,8 @@ int AI::getPlay() {
 	switch (type) {
 		case AIType::Dumb:
 			return 0;
+		case AIType::Intro:
+			return introPlay();
 		case AIType::Basic:
 			return basicPlay();
 		case AIType::Smart:

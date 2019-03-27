@@ -15,6 +15,7 @@ void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Sta
 
 enum class AIType {
 	Dumb, //Only plays 1st card
+	Intro, //Plays random card, but different special
 	Basic, //Plays non-trivially
     Smart, // Randomly chooses between decent moves
 	Expert //Hits up that minimax tree
@@ -50,6 +51,7 @@ private:
 	int typeBonus(Chicken &c);
 	int defeatOpponentBottom(Chicken &c);
 
+	int introPlay();
 	int basicPlay();
 	int smartPlay();
 	int expertPlay();

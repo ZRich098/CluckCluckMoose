@@ -121,7 +121,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Smart);
+	oppAI = AI::alloc(opp, player, AIType::Intro);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	//Initialize AI
