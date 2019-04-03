@@ -25,17 +25,16 @@ using namespace cugl;
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
+/** Values representing the relevant states for special chicken effect */
+#define ENTRY -1
+#define NONE 0
+#define EXIT 3
+
 //stack size
 int stackSize;
 
 //previous hand size for tracking placing a chicken
 int prevHand;
-
-//vector tracking the order in which the player played Chickens
-vector<Chicken> playerPlayOrder;
-
-//vector tracking the order in which the opponent played Chickens
-vector<Chicken> oppPlayOrder;
 
 //number of frames in between clashes
 int cooldown;
@@ -107,7 +106,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	stackSize = 0;
 
 	//Initialize skip state
-	skipState = -1;
+	skipState = ENTRY;
 
 	//Initialize cooldown
 	//cooldown = (int)(CLASHLENGTH / MAXSTACKSIZE);
@@ -115,14 +114,14 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 	//Initialize moose
 //    player = Moose::Moose(3, 3);
-    player = Moose::alloc(5, 5);
+    player = Moose::alloc(5, 6);
 //    opp = Moose::Moose(3, 3);
-    opp = Moose::alloc(5, 5);
+    opp = Moose::alloc(5, 6);
 	player->refillHand();
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Dumb);
+	oppAI = AI::alloc(opp, player, AIType::Intro);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	//Initialize AI
@@ -165,26 +164,25 @@ void GameScene::update(float timestep) {
 	sb->updateInput(timestep);
 
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
-		if (skipState == -1) {
+		if (skipState == ENTRY) {
 			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
 
-			playerPlayOrder.push_back(player->getStack().getTop());
-			oppPlayOrder.push_back(opp->getStack().getTop());
-
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 			//CULog("PLAY %s", test.toString().c_str());
-			skipState = 0; // Gets the state machine out of the entry state
+			skipState = NONE; // Gets the state machine out of the entry state
 		}
-		if (skipState != 3)
+		if (skipState != EXIT)
 			// Resolves the special chicken effects
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
-		if (skipState == 3) {
+		if (skipState == EXIT) {
+			// Resolves special chickens that affect the hands
+			handEffect();
 			prevHand--;
 			stackSize++;
-			skipState = -1; // Returns the state machine to the entry state
+			skipState = ENTRY; // Returns the state machine to the entry state
 		}
-		CULog("SKIP: %d",skipState);
+		//CULog("SKIP: %d",skipState);
 	}
 
 	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed
@@ -219,19 +217,15 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-			while (playerPlayOrder.size() > 0) {
-				player->getDiscard().push_back(playerPlayOrder.front());
-				playerPlayOrder.erase(playerPlayOrder.begin());
-			}
-			playerPlayOrder.clear();
-			while (oppPlayOrder.size() > 0) {
-				opp->getDiscard().push_back(oppPlayOrder.front());
-				oppPlayOrder.erase(oppPlayOrder.begin());
-			}
-			oppPlayOrder.clear();
 
+			player->clearHandToDiscard();
+			opp->clearHandToDiscard();
+			// refills before discarding to prevent specials being obtained twice in a row
 			player->refillHand();
 			opp->refillHand();
+			player->discardStack();
+			opp->discardStack();
+
 			prevHand = player->getHand().size();
 			stackSize = 0;
 
@@ -247,7 +241,7 @@ void GameScene::update(float timestep) {
 		cooldown = CLASHLENGTH*1.5;
 	}
 	
-	sb->buildGameScene();
+	sb->updateGameScene();
 }
 
 
@@ -268,163 +262,23 @@ void GameScene::setActive(bool value) {
     } */
 }
 
-/* void GameScene::specialChickenEffect(Stack &player, Stack &opp) {
-	//lambda function, make cooldown an argument if/when it becomes necessary
-	auto setSkip = [](int v) { cooldown = 0; return (skipState == 0 ? skipState = v : skipState = 3); };
+void GameScene::handEffect() {
+	special pLast = player->getOrder().back().getSpecial();
+	special oLast = opp->getOrder().back().getSpecial();
 
-	// Note that this method of skipping WILL cause issues in the event
-	// that there is a special chicken that occurs after a ninja chicken
-	special s1 = special::BasicFire;
-	special s2 = special::BasicFire;
-	if (skipState == 0) {
-		s1 = player.getTop().getSpecial();
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 1) {
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 2) {
-		s1 = player.getTop().getSpecial();
-	}
-	else // This should never be reached, but will catch it if necessary
+	if (pLast == special::PartyFowl || oLast == special::PartyFowl)
 		return;
 
-	CULog("\n%s", player.stackString().c_str());
-	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
+	if (pLast == special::Mirror)
+		pLast = oLast;
+	if (oLast == special::Mirror)
+		oLast = pLast;
 
-	if (s1 == special::PartyFowl || s2 == special::PartyFowl) {
-		//CULog("resolving Party");
-		Chicken target = player.getTop();
-		//s1 == special::PartyFowl ? target = opp.getTop() : target = getTop();
-		if (s1 == special::PartyFowl && s2 != special::PartyFowl) {
-			//CULog("Setting opp as target");
-			target = opp.getTop();
-		}
-		else if (s1 != special::PartyFowl && s2 == special::PartyFowl) {
-			//CULog("Setting player as target");
-			target = player.getTop();
-		}
-		switch (target.getSpecial()) {
-		case special::Reaper:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		case special::Mirror:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Bomb:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Ninja:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::PartyFowl:
-			break;
-		case special::Spy:
-			target.setChicken(element::Fire, special::BasicFire);
-			break;
-		case special::Thicken:
-			target.setChicken(element::Grass, special::BasicGrass);
-			break;
-		case special::Consigliere:
-			target.setChicken(element::Water, special::BasicWater);
-			break;
-		default:
-			//CULog("reached default");
-			break;
-		}
-
-		setSkip(3);
-		return;
+	if (pLast == special::Spy) {
+		player->draw();
+		//please for the love of god fix this later
+		prevHand++;
 	}
-
-	if (s1 == special::Mirror && s2 == special::Mirror) {
-		player.getTop().setChicken(element::Fire, special::BasicFire);
-		opp.getTop().setChicken(element::Fire, special::BasicFire);
-		setSkip(3);
-		return;
-	}
-	else if (s1 == special::Mirror) {
-		//CULog("player mirror");
-		s1 = s2;
-		player.getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
-		setSkip(0);
-		return;
-	}
-	else if (s2 == special::Mirror) {
-		//CULog("opp mirror");
-		s2 = s1;
-		opp.getTop().setChicken(player.getTop().getElement(), player.getTop().getSpecial(), player.getTop().getDamage());
-		setSkip(0);
-		return;
-	}
-
-	//potentially TODO special::Peek
-
-	if (s1 == special::Consigliere && player.getSize() >= 2) {
-		player.at(player.getSize() - 2).cycle();
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Consigliere && opp.getSize() >= 2) {
-		opp.at(opp.getSize() - 2).cycle();
-		setSkip(2);
-		return;
-	}
-
-	if (s1 == special::Scientist && player.getSize() >= 2) {
-		player.swap(player.getSize() - 2, player.getSize() - 1);
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Scientist && opp.getSize() >= 2) {
-		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
-		setSkip(2);
-		return;
-	}
-
-	if (s1 == special::Thicken) {
-		player.insert(0, player.getTop());
-		player.removeTop();
-		setSkip(1);
-		return;
-	}
-	if (s2 == special::Thicken) {
-		opp.insert(0, opp.getTop());
-		opp.removeTop();
-		setSkip(2);
-		return;
-	}
-
-	//TODO special::Hide
-
-	//potentially TODO special::Extra
-
-	if (s1 == special::Spy) {
-		//Can be made from here
-	}
-	if (s2 == special::Spy) {
-		//see above
-	}
-
-	if (s1 == special::Ninja && s2 == special::Ninja) {
-		player.swap(0, player.getSize() - 1);
-		opp.swap(0, opp.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-	else if (s1 == special::Ninja) {
-		opp.swap(0, opp.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-	else if (s2 == special::Ninja) {
-		player.swap(0, player.getSize() - 1);
-		setSkip(3);
-		return;
-	}
-
-	// Exits state machine if no special chicken is found
-	skipState = 3;
-
-	CULog("\n%s", player.stackString().c_str());
-} */
+	if (oLast == special::Spy)
+		opp->draw();
+}

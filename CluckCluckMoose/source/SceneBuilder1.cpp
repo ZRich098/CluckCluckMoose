@@ -6,13 +6,26 @@
 
 using namespace cugl;
 
-std::shared_ptr<cugl::AssetManager> _assets;
-//std::unordered_map<std::string, std::shared_ptr<cugl::Button>> _buttons;
+std::shared_ptr<AssetManager> _assets;
 
-//CCMInput _input;
+//Button list for player hand
+std::vector<std::shared_ptr<Button>> buttons;
 
-//Track input
-Vec2 inputTrack;
+//Texture list for determining which textures need to be replaced in the hand
+std::vector<std::shared_ptr<Texture>> texturesHand;
+
+//List of player stack nodes
+std::vector<std::shared_ptr<PolygonNode>> pstackNodes;
+//Texture list for determining which textures need to be replaced in the player stack
+std::vector<std::shared_ptr<Texture>> texturesPStack;
+
+//List of opponent stack nodes
+std::vector<std::shared_ptr<PolygonNode>> ostackNodes;
+//Texture list for determining which textures need to be replaced in the opponent stack
+std::vector<std::shared_ptr<Texture>> texturesOStack;
+
+//Track held chicken
+std::shared_ptr<Button> heldButton;
 
 
 /** The ID for the button listener */
@@ -20,23 +33,22 @@ Vec2 inputTrack;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
+//Textures
+std::shared_ptr<Texture> textureF;
+std::shared_ptr<Texture> textureW;
+std::shared_ptr<Texture> textureG;
+std::shared_ptr<Texture> textureReaper;
+std::shared_ptr<Texture> textureBomb;
+std::shared_ptr<Texture> textureMirror;
+std::shared_ptr<Texture> textureNinja;
+std::shared_ptr<Texture> textureParty;
+std::shared_ptr<Texture> textureSpy;
+std::shared_ptr<Texture> textureThick;
+std::shared_ptr<Texture> textureWitch;
+
 
 //Main canvas to draw stuff to
 std::shared_ptr<Node> layer;
-
-//Canvases for drawing player chickens
-std::shared_ptr<Node> chickenCanvas1;
-std::shared_ptr<Node> chickenCanvas2;
-std::shared_ptr<Node> chickenCanvas3;
-std::shared_ptr<Node> chickenCanvas7;
-std::shared_ptr<Node> chickenCanvas8;
-
-//Canvases for drawing opp chickens
-std::shared_ptr<Node> chickenCanvas4;
-std::shared_ptr<Node> chickenCanvas5;
-std::shared_ptr<Node> chickenCanvas6;
-std::shared_ptr<Node> chickenCanvas9;
-std::shared_ptr<Node> chickenCanvas10;
 
 //Canvas for background
 std::shared_ptr<Node> backCanvas;
@@ -60,10 +72,12 @@ bool previewSet;
 
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
 
+	root->removeAllChildren();
+
 	playerGlobe = player;
 	oppGlobe = opp;
 
-	inputTrack = Vec2();
+	heldButton = nullptr;
 
 	_assets = assets;
 	_input.init();
@@ -85,101 +99,30 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	frontCanvas = Node::alloc();
 	layer->addChild(frontCanvas);
 
-	//Create a node for drawing chickens at each level of stacking
-	chickenCanvas1 = Node::alloc();
-	layer->addChild(chickenCanvas1);
-	chickenCanvas1->setPosition(50, 400);
-
-	chickenCanvas2 = Node::alloc();
-	layer->addChild(chickenCanvas2);
-	chickenCanvas2->setPosition(50, 510);
-
-	chickenCanvas3 = Node::alloc();
-	layer->addChild(chickenCanvas3);
-	chickenCanvas3->setPosition(50, 620);
-
-	chickenCanvas4 = Node::alloc();
-	layer->addChild(chickenCanvas4);
-	chickenCanvas4->setPosition(150, 400);
-
-	chickenCanvas5 = Node::alloc();
-	layer->addChild(chickenCanvas5);
-	chickenCanvas5->setPosition(150, 510);
-
-	chickenCanvas6 = Node::alloc();
-	layer->addChild(chickenCanvas6);
-	chickenCanvas6->setPosition(150, 620);
-
-	chickenCanvas7 = Node::alloc();
-	layer->addChild(chickenCanvas7);
-	chickenCanvas7->setPosition(50, 730);
-
-	chickenCanvas8 = Node::alloc();
-	layer->addChild(chickenCanvas8);
-	chickenCanvas8->setPosition(50, 840);
-
-	chickenCanvas9 = Node::alloc();
-	layer->addChild(chickenCanvas9);
-	chickenCanvas9->setPosition(150, 730);
-
-	chickenCanvas10 = Node::alloc();
-	layer->addChild(chickenCanvas10);
-	chickenCanvas10->setPosition(150, 840);
 
 	//Add button canvas
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
-	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+	//buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
 
 	// Get chicken textures.
-	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
-	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
-	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
-	std::shared_ptr<Texture> textureReaper = _assets->get<Texture>("reaper");
-	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
-	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
-	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
-	std::shared_ptr<Texture> textureParty = _assets->get<Texture>("party");
-	std::shared_ptr<Texture> textureSpy = _assets->get<Texture>("spy");
-	std::shared_ptr<Texture> textureThick = _assets->get<Texture>("thicken");
-	std::shared_ptr<Texture> textureWitch = _assets->get<Texture>("witchen");
+	textureF = _assets->get<Texture>("fire");
+	textureW = _assets->get<Texture>("water");
+	textureG = _assets->get<Texture>("grass");
+	textureReaper = _assets->get<Texture>("reaper");
+	textureBomb = _assets->get<Texture>("bomb");
+	textureMirror = _assets->get<Texture>("mirror");
+	textureNinja = _assets->get<Texture>("ninja");
+	textureParty = _assets->get<Texture>("party");
+	textureSpy = _assets->get<Texture>("spy");
+	textureThick = _assets->get<Texture>("thicken");
+	textureWitch = _assets->get<Texture>("witchen");
 
-	// Get button textures.
-	std::shared_ptr<Texture> textureFight = _assets->get<Texture>("preview");
-	previewSet = false;
-
-	return true;
-}
-
-void SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
-	int ct = node->getChildCount();
-	if (ct > 0) {
-		node->removeAllChildren();
-	}
-	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
-	chick->setScale(0.8f); // Magic number to rescale asset
-	chick->setAnchor(Vec2::ANCHOR_CENTER);
-	chick->setPosition(posX, posY);
-	chick->flipHorizontal(flip);
-	node->addChild(chick);
-}
-
-void SceneBuilder1::buildGameScene() {
 
 	//reset drawing between frames
 	backCanvas->removeAllChildren();
 	mooseCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
-	chickenCanvas1->removeAllChildren();
-	chickenCanvas2->removeAllChildren();
-	chickenCanvas3->removeAllChildren();
-	chickenCanvas4->removeAllChildren();
-	chickenCanvas5->removeAllChildren();
-	chickenCanvas6->removeAllChildren();
-	chickenCanvas7->removeAllChildren();
-	chickenCanvas8->removeAllChildren();
-	chickenCanvas9->removeAllChildren();
-	chickenCanvas10->removeAllChildren();
 	buttonCanvas->removeAllChildren();
 
 	//Draw background
@@ -228,10 +171,168 @@ void SceneBuilder1::buildGameScene() {
 	std::shared_ptr<Texture> textureThick = _assets->get<Texture>("thicken");
 	std::shared_ptr<Texture> textureWitch = _assets->get<Texture>("witchen");
 
+	//Init appropriately sized buttons
+	for (int i = 0; i < 6; i++) {
+		std::shared_ptr<Button> button;
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		
+		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
+		id->setAnchor(Vec2::ANCHOR_CENTER);
+		id->flipHorizontal(true);
+		std::shared_ptr<Button> butt = Button::alloc(id);
+		butt->setAnchor(Vec2::ANCHOR_CENTER);
+		butt->setScale(0.5, 0.5);
+
+		butt->setAnchor(Vec2::ANCHOR_CENTER);
+		if (i < 3) {
+			butt->setPosition((i-1)*200 + 500, 250);
+		}
+		else {
+			butt->setPosition((i - 4) * 200 + 500, 100);
+		}
+		if (_input.isActive()) {
+			//CULog("active");
+		}
+		butt->setListener([=](const std::string& name, bool down) {
+			if (down) {
+				
+				heldButton = butt;
+			
+			}
+			if (!down) {
+				heldButton = nullptr;
+				if (butt->getPositionX() < 200 && butt->getPositionY() > 100) {
+					playerGlobe->addToStackFromHand(i);
+				}
+				if (i < 3) {
+					butt->setPosition(Vec2((i - 1) * 200 + 500, 250));
+				}
+				else {
+					butt->setPosition(Vec2((i - 4) * 200 + 500, 100));
+				}
+			}
+		});
+
+		buttonCanvas->addChild(butt);
+		//i+2 to ensure keys are unique
+		butt->activate(i + 2);
+		//CULog("Button %d made", i);
+		buttons.push_back(butt);
+		texturesHand.push_back(text);
+	}
+
+	//Init stack nodes
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+		
+		if (i == 0) {
+			poly = buildChicken(text, layer, 150, 975, true);
+		}
+		else if (i == 1) {
+			poly = buildChicken(text, layer, 150, 1085, true);
+		}
+		else if (i == 2) {
+			poly = buildChicken(text, layer, 150, 1195, true);
+		}
+		else if (i == 3) {
+			poly = buildChicken(text, layer, 150, 1305, true);
+		}
+		else {
+			poly = buildChicken(text, layer, 150, 1415, true);
+		}
+		pstackNodes.push_back(poly);
+		texturesPStack.push_back(text);
+	}
+
+
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+
+		if (i == 0) {
+			poly = buildChicken(text, layer, 900, 975, false);
+		}
+		else if (i == 1) {
+			poly = buildChicken(text, layer, 900, 1085, false);
+		}
+		else if (i == 2) {
+			poly = buildChicken(text, layer, 900, 1195, false);
+		}
+		else if (i == 3) {
+			poly = buildChicken(text, layer, 900, 1305, false);
+
+		}
+		else {
+			poly = buildChicken(text, layer, 900, 1415, false);
+
+		}
+		
+		ostackNodes.push_back(poly);
+		texturesOStack.push_back(text);
+	}
+
+	//Init the clash preview button
+
+	std::shared_ptr<Texture> textureFight = _assets->get<Texture>("preview");
+
+	std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(textureFight);
+	id->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> butt = Button::alloc(id);
+	butt->setAnchor(Vec2::ANCHOR_CENTER);
+	butt->setScale(0.5, 0.5);
+
+	butt->setAnchor(Vec2::ANCHOR_CENTER);
+	butt->setPosition(500, 800);
+	butt->setListener([=](const std::string& name, bool down) {
+		if (down) {
+			previewSet = true;
+		}
+	});
+
+	buttonCanvas->addChild(butt);
+	//ensure keys are unique
+	butt->activate(99);
+
+	return true;
+}
+
+std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
+	
+	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
+	chick->setScale(0.8f); // Magic number to rescale asset
+	chick->setAnchor(Vec2::ANCHOR_CENTER);
+	chick->setPosition(posX, posY);
+	chick->flipHorizontal(flip);
+	node->addChild(chick);
+
+	return chick;
+}
+
+void SceneBuilder1::updateGameScene() {
+
+	
 	vector <Chicken> hand = playerGlobe->getHand();
 
+	for (int i = 0; i < 6; i++) {
+		if (i < hand.size()) {
+			buttons[i]->setVisible(true);
+			buttons[i]->activate(i + 2);
+			if (buttons[i] == heldButton) {
+				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()));
+			}
+		}
+		else {
+			buttons[i]->setVisible(false);
+			buttons[i]->deactivate();
+		}
+	}
+
+
 	for (int i = 0; i < hand.size(); i++) {
-		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
 		special cel = playerGlobe->getHandAt(i).getSpecial();
 		switch (cel) {
@@ -265,7 +366,7 @@ void SceneBuilder1::buildGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:
@@ -281,36 +382,25 @@ void SceneBuilder1::buildGameScene() {
 				break;
 			}
 		}
-		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
-		id->setAnchor(Vec2::ANCHOR_CENTER);
-		id->flipHorizontal(true);
-		std::shared_ptr<Button> butt = Button::alloc(id);
-		butt->setAnchor(Vec2::ANCHOR_CENTER);
-		butt->setScale(0.5, 0.5);
 
-		butt->setAnchor(Vec2::ANCHOR_CENTER);
-		if (i < 3) {
-			butt->setPosition(i * 200 - 200, 150);
-		}
-		else {
-			butt->setPosition((i-3) * 200 - 200, 0);
-		}
-		if (_input.isActive()) {
-			//CULog("active");
-		}
-		butt->setListener([=](const std::string& name, bool down) {
-			if (down) {
-				playerGlobe->addToStackFromHand(i);
-			}
-		});
-
-		buttonCanvas->addChild(butt);
-		//i+2 to ensure keys are unique
-		butt->activate(i+2);
-		//CULog("Button %d made", i);
+		std::shared_ptr<Node> upchld = buttons[i]->getChild(0);
+		
+		std::shared_ptr<PolygonNode> newUp = PolygonNode::allocWithTexture(text);
+		newUp->flipHorizontal(true);
+		buttons[i]->swapChild(upchld, newUp, false);
+		
 	}
 
 	Stack pstack = playerGlobe->getStack();
+
+	for (int i = 0; i < 5; i++) {
+		if (i < pstack.getSize()) {
+			pstackNodes[i]->setVisible(true);
+		}
+		else {
+			pstackNodes[i]->setVisible(false);
+		}
+	}
 
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
@@ -346,7 +436,7 @@ void SceneBuilder1::buildGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:
@@ -362,24 +452,22 @@ void SceneBuilder1::buildGameScene() {
 				break;
 			}
 		}
-		if (i == 0) {
-			buildChicken(text, chickenCanvas1, 100, 575, true);
-		}
-		else if (i == 1) {
-			buildChicken(text, chickenCanvas2, 100, 575, true);
-		}
-		else if (i == 2){
-			buildChicken(text, chickenCanvas3, 100, 575, true);
-		}
-		else if (i == 3) {
-			buildChicken(text, chickenCanvas7, 100, 575, true);
-		}
-		else {
-			buildChicken(text, chickenCanvas8, 100, 575, true);
+		if (texturesPStack[i] != text) {
+			pstackNodes[i]->setTexture(text);
+			texturesPStack[i] = text;
 		}
 	}
 
 	Stack ostack = oppGlobe->getStack();
+
+	for (int i = 0; i < 5; i++) {
+		if (i < ostack.getSize()) {
+			ostackNodes[i]->setVisible(true);
+		}
+		else {
+			ostackNodes[i]->setVisible(false);
+		}
+	}
 
 	for (int i = 0; i < ostack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
@@ -415,11 +503,11 @@ void SceneBuilder1::buildGameScene() {
 		case special::Thicken:
 			text = textureThick;
 			break;
-		case special::Consigliere:
+		case special::Witchen:
 			text = textureWitch;
 			break;
 		default:
-			switch (oppGlobe->getHandAt(i).getElement()) {
+			switch (oppGlobe->getStackAt(i).getElement()) {
 			case element::Fire:
 				text = textureF;
 				break;
@@ -431,44 +519,12 @@ void SceneBuilder1::buildGameScene() {
 				break;
 			}
 		}
-		if (i == 0) {
-			buildChicken(text, chickenCanvas4, 750, 575, false);
-		}
-		else if (i == 1) {
-			buildChicken(text, chickenCanvas5, 750, 575, false);
-		}
-		else if (i == 2) {
-			buildChicken(text, chickenCanvas6, 750, 575, false);
-		}
-		else if (i == 3) {
-			buildChicken(text, chickenCanvas9, 750, 575, false);
-
-		}
-		else {
-			buildChicken(text, chickenCanvas10, 750, 575, false);
-
+		if (texturesOStack[i] != text) {
+			ostackNodes[i]->setTexture(text);
+			texturesOStack[i] = text;
 		}
 	}
 
-	std::shared_ptr<Texture> textureFight = _assets->get<Texture>("preview");
-
-	std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(textureFight);
-	id->setAnchor(Vec2::ANCHOR_CENTER);
-	std::shared_ptr<Button> butt = Button::alloc(id);
-	butt->setAnchor(Vec2::ANCHOR_CENTER);
-	butt->setScale(0.5, 0.5);
-
-	butt->setAnchor(Vec2::ANCHOR_CENTER);
-	butt->setPosition(0, 600);
-	butt->setListener([=](const std::string& name, bool down) {
-		if (down) {
-			previewSet = true;
-		}
-	});
-
-	buttonCanvas->addChild(butt);
-	//i+2 to ensure keys are unique
-	butt->activate(99);
 }
 
 void SceneBuilder1::updateInput(float timestep) {
