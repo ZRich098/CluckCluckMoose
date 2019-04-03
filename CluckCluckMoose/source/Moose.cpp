@@ -45,8 +45,6 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 		playOrder.push_back(Chicken(intToSpecial(i)));
 	}
 
-	//@TODO play through playOrder to init Stack
-
 	deck.clear();
 	deck.fill(coopArray);
 
