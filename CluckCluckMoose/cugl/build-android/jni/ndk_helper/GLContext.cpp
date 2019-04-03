@@ -50,12 +50,12 @@ void GLContext::InitGLES() {
   //Initialize OpenGL ES 3 if available
   //
   const char *versionStr = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-  if (strstr(versionStr, "OpenGL ES 3.") && gl3stubInit()) {
-    es3_supported_ = true;
-    gl_version_ = 3.0f;
-  } else {
+//  if (strstr(versionStr, "OpenGL ES 3.") && gl3stubInit()) {
+//    es3_supported_ = true;
+//    gl_version_ = 3.0f;
+//  } else {
     gl_version_ = 2.0f;
-  }
+//  }
 
   gles_initialized_ = true;
 }

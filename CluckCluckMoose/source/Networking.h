@@ -123,8 +123,8 @@ private:
 //    // Renderer of a teapot
 //    TeapotRenderer renderer_;
 
-//    // GLContext instance
-//    ndk_helper::GLContext *gl_context_;
+    // GLContext instance
+    ndk_helper::GLContext *gl_context_;
 
     bool initialized_resources_;
     bool has_focus_;
