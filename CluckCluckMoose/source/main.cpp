@@ -29,6 +29,7 @@
 
 // Include your application class
 #include "CCMApp.h"
+#include "Networking.h"
 
 using namespace cugl;
 
@@ -54,7 +55,6 @@ int main(int argc, char * argv[]) {
 #endif
 
     //app.setFullscreen(true);
-//    app.setSize(576, 1024);
     app.setSize(288, 512);
     app.setFPS(60.0f);
     
@@ -69,4 +69,8 @@ int main(int argc, char * argv[]) {
 
     exit(0);    // Necessary to quit on mobile devices
     return 0;   // This line is never reached
+}
+
+void android_main(android_app* app){
+    CULog("android_main\n");
 }

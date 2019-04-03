@@ -1,0 +1,18 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+PRIVATE_APP_STL := $(APP_STL)
+PRIVATE_APP_STL := $(PRIVATE_APP_STL:_shared=)
+PRIVATE_APP_STL := $(PRIVATE_APP_STL:_static=)
+
+LOCAL_MODULE := JuiHelper
+LOCAL_SRC_FILES := libs/$(TARGET_ARCH_ABI)/libjuihelper.a
+LOCAL_STATIC_LIBRARIES := $(APP_STL)
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/src/main/cpp
+LOCAL_EXPORT_LDLIBS := -lz -latomic -llog
+
+LOCAL_CFLAGS := -std=c++11
+
+include $(PREBUILT_STATIC_LIBRARY)
