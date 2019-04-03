@@ -92,6 +92,8 @@ void CCMApp::onShutdown() {
  * the background.
  */
 void CCMApp::onSuspend() {
+	//save player's game state
+	//save current level state, if applicable
 }
 
 /**
@@ -105,6 +107,10 @@ void CCMApp::onSuspend() {
  * paused before app suspension.
  */
 void CCMApp::onResume() {
+	//load player's game state
+	//JsonLoader::alloc();
+	//JsonLoader::read();
+	//load last level state, if applicable
 }
 
 

@@ -23,6 +23,7 @@ protected:
 	vector <Chicken> hand;
 	Coop deck;
 	vector <Chicken> discard;
+	vector <Chicken> playOrder;
 	int handSize;
 	int health;
 	void refillDeck();
@@ -59,7 +60,7 @@ public:
 	/**
 	 * Initializes the moose with json style arguments
 	 */
-	void jsonInit(int health, vector<int> hand, vector<int> stack, vector<int> coop, vector<int> discard, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, vector<int> discard, string costume);
     
     
 #pragma mark Static Constructors    
@@ -84,6 +85,10 @@ public:
 	vector <Chicken> getHand() { return hand; };
 	/** Get the Chicken at position pos in the hand of the Moose*/
 	Chicken getHandAt(int pos) { return hand.at(pos); };
+	/** Get the current play order of the Moose */
+	vector <Chicken> getPlayOrder() { return playOrder; };
+	/** Get the Chicken at position pos in the play order of the Moose */
+	Chicken getPlayOrderAt(int pos) { return playOrder.at(pos); };
 	/** Get the current draw pile of the Moose*/
 	Coop getDeck() { return deck; };
 	/** Get the Chicken at position pos in the Coop of the Moose*/
@@ -133,6 +138,9 @@ public:
 	/** returns a string of the hand of the moose
 		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
 	string handString() const;
+	/** return a string of the play order of the moose
+		CAREFUL vector are 0 indexed but info printed is 1 indexed*/
+	string playOrderString() const;
 	/** returns a string of the discard pile of the moose
 		CAREFUL vectors are 0 indexed but info printed is 1 indexed*/
 	string discardString() const;
