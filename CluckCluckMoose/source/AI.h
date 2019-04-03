@@ -6,10 +6,19 @@
 #define __AI_H__
 
 #include "Moose.h"
+#include <map>
+
+int processStackDamage(Stack &you, Stack &opp);
+int stackOrderingBonus(Chicken &c1, Chicken &c2);
+int stackHash(Stack s);
+void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Stack currentStack);
 
 enum class AIType {
-    Dumb,
-    Smart
+	Dumb, //Only plays 1st card
+	Intro, //Plays random card, but different special
+	Basic, //Plays non-trivially
+    Smart, // Randomly chooses between decent moves
+	Expert //Hits up that minimax tree
 };
 
 
@@ -22,11 +31,35 @@ private:
     /** This macro disables the copy constructor (not allowed on scene graphs) */
 //    CU_DISALLOW_COPY_AND_ASSIGN(AI);
 
+	AIType type;
+
+	//Self
+	Stack stack;
+	Stack stackProcessed;
+	vector <Chicken> hand;
+
+	//Opponent
+	Stack oppStack;
+	Stack oppStackProcessed;
+	int oppHandSize;
+	vector <int> distribution; //opponent elemental chicken distribution
+
+	//Setup Play
+	void setup();
+	void addPermutationsToMap(map<int, Stack> &stackValueMap, vector <int> pos, Stack currentStack);
+
+	int typeBonus(Chicken &c);
+	int defeatOpponentBottom(Chicken &c);
+
+	int introPlay();
+	int basicPlay();
+	int smartPlay();
+	int expertPlay();
+
 protected:
-    std::shared_ptr<Moose> player; //renamed bc 'self' was registering as keyword
+	std::shared_ptr<Moose> player; //renamed bc 'self' was registering as keyword
 	std::shared_ptr<Moose> enemy;
-	AIType typ;
-    
+
 public:
     
 #pragma mark Constructors

@@ -81,6 +81,10 @@ public:
 	Stack& getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
 	Chicken getStackAt(int pos) { return stack.at(pos); };
+	/** Get the order that chickens have been played in*/
+	vector <Chicken> getOrder() { return playOrder; };
+	/** Get the Chicken at position pos in the play order*/
+	Chicken getOrderAt(int pos) { return playOrder.at(pos); };
 	/** Get the current hand of the Moose*/
 	vector <Chicken> getHand() { return hand; };
 	/** Get the Chicken at position pos in the hand of the Moose*/
@@ -100,6 +104,9 @@ public:
 	/** Get the current health of the Moose*/
 	int getHealth() { return health; };
 
+	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
+	vector<int> getChickenElementDistribution();
+
     
 #pragma mark -
 #pragma mark Stack
@@ -109,10 +116,10 @@ public:
 	void addToStackFromHand(int pos);
 	/** Puts the Chicken at the top of the stack back into the hand*/
 	void removeTopFromStackToHand();
-	/** Puts the Chicken at the bottom of the stack into the discard pile */
-	void removeBottomFromStackToDiscard();
+	/** Discards the chickens that were played in a round */
+	void discardStack();
 	/** Puts all Chickens in the stack into the discard pile */
-	void clearStackToDiscard();
+	//void clearStackToDiscard();
 	/** Sets the stack to be the equal to Stack s */
 	void setStack(Stack s);
 

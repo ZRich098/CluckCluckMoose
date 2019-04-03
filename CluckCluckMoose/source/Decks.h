@@ -41,8 +41,8 @@ special deckV2[28] = { //actually 30 but 1 deprecated chicken type
 	special::BasicGrass,
 	special::BasicGrass,
 
-	special::Consigliere,
-	special::Consigliere,
+	special::Witchen,
+	special::Witchen,
 	//2 fusion chicken
 	special::Ninja,
 	special::Ninja,
@@ -84,12 +84,12 @@ special deckV3[18] = {
 	special::Reaper,
 	//special::BirdBrain,
 	special::Bomb,
-	special::Consigliere,
+	special::Witchen,
 	special::Spy
 };
 
-special deckV4[30] = {
-	special::BasicFire,
+special deckV4[8] = {
+	/*special::BasicFire,
 	special::BasicFire,
 	special::BasicFire,
 	special::BasicFire,
@@ -103,9 +103,9 @@ special deckV4[30] = {
 	special::BasicGrass,
 	special::BasicGrass,
 	special::BasicGrass,
-	special::BasicGrass,
+	special::BasicGrass,*/
 
-	special::Consigliere,
+	special::Witchen,
 	//special::WingMan,
 	special::Ninja,
 	special::Bomb,

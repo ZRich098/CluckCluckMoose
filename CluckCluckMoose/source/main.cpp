@@ -54,7 +54,8 @@ int main(int argc, char * argv[]) {
 #endif
 
     //app.setFullscreen(true);
-    app.setSize(576, 1024);
+//    app.setSize(576, 1024);
+    app.setSize(288, 512);
     app.setFPS(60.0f);
     
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
