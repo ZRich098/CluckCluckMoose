@@ -209,7 +209,7 @@ static void* android_app_entry(void* param) {
     struct android_app* android_app = (struct android_app*)param;
 
     android_app->config = AConfiguration_new();
-    AConfiguration_fromAssetManager(android_app->config, android_app->activity->assetManager);
+//    AConfiguration_fromAssetManager(android_app->config, android_app->activity->assetManager);
 
     print_cur_config(android_app);
 
@@ -227,10 +227,12 @@ static void* android_app_entry(void* param) {
 
     pthread_mutex_lock(&android_app->mutex);
     android_app->running = 1;
-    pthread_cond_broadcast(&android_app->cond);
-    pthread_mutex_unlock(&android_app->mutex);
+//    pthread_cond_broadcast(&android_app->cond);
+//    pthread_mutex_unlock(&android_app->mutex);
 
     android_main(android_app);
+    pthread_cond_broadcast(&android_app->cond);
+    pthread_mutex_unlock(&android_app->mutex);
 
     android_app_destroy(android_app);
     return NULL;
@@ -424,19 +426,19 @@ JNIEXPORT
 void ANativeActivity_onCreate(ANativeActivity* activity, void* savedState,
                               size_t savedStateSize) {
     LOGV("Creating: %p\n", activity);
-    activity->callbacks->onDestroy = onDestroy;
-    activity->callbacks->onStart = onStart;
-    activity->callbacks->onResume = onResume;
-    activity->callbacks->onSaveInstanceState = onSaveInstanceState;
-    activity->callbacks->onPause = onPause;
-    activity->callbacks->onStop = onStop;
-    activity->callbacks->onConfigurationChanged = onConfigurationChanged;
-    activity->callbacks->onLowMemory = onLowMemory;
-    activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
-    activity->callbacks->onNativeWindowCreated = onNativeWindowCreated;
-    activity->callbacks->onNativeWindowDestroyed = onNativeWindowDestroyed;
-    activity->callbacks->onInputQueueCreated = onInputQueueCreated;
-    activity->callbacks->onInputQueueDestroyed = onInputQueueDestroyed;
+//    activity->callbacks->onDestroy = onDestroy;
+//    activity->callbacks->onStart = onStart;
+//    activity->callbacks->onResume = onResume;
+//    activity->callbacks->onSaveInstanceState = onSaveInstanceState;
+//    activity->callbacks->onPause = onPause;
+//    activity->callbacks->onStop = onStop;
+//    activity->callbacks->onConfigurationChanged = onConfigurationChanged;
+//    activity->callbacks->onLowMemory = onLowMemory;
+//    activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
+//    activity->callbacks->onNativeWindowCreated = onNativeWindowCreated;
+//    activity->callbacks->onNativeWindowDestroyed = onNativeWindowDestroyed;
+//    activity->callbacks->onInputQueueCreated = onInputQueueCreated;
+//    activity->callbacks->onInputQueueDestroyed = onInputQueueDestroyed;
 
     activity->instance = android_app_create(activity, savedState, savedStateSize);
 }

@@ -30,6 +30,8 @@
 // Include your application class
 #include "CCMApp.h"
 #include "Networking.h"
+#include "android_native_app_glue.h"
+#include "JNIHelper.h"
 
 using namespace cugl;
 
@@ -308,6 +310,8 @@ void Engine::UpdateFPS(float fFPS) {
 int main(int argc, char * argv[]) {
     // Change this to your application class
     CCMApp app;
+    android_app *state;
+    ANativeActivity *activity_;
     
     // Set the properties of your application
     app.setName("Cluck Cluck Moose");
@@ -320,6 +324,9 @@ int main(int argc, char * argv[]) {
     //app.setFullscreen(true);
     app.setSize(288, 512);
     app.setFPS(60.0f);
+
+//    ndk_helper::JNIHelper::Init(activity_, "com/sample/helper/NDKHelper");
+    ANativeActivity_onCreate(activity_, NULL, state->savedStateSize);
     
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
     if (!app.init()) {
@@ -338,9 +345,8 @@ void android_main(android_app *state) {
     CULog("ANDROID MAIN PLS\n");
     g_engine.SetState(state);
 
-    // Init helper functions
-    ndk_helper::JNIHelper::Init(state->activity, HELPER_CLASS_NAME,
-                                HELPER_CLASS_SONAME);
+//    // Init helper functions
+//    ndk_helper::JNIHelper::Init(state->activity, HELPER_CLASS_NAME, HELPER_CLASS_SONAME);
 
     // Init play game services
     g_engine.InitGooglePlayGameServices();

@@ -39,7 +39,8 @@ void Engine::InitGooglePlayGameServices() {
         return;
     }
 
-    gpg::AndroidInitialization::android_main(app_);
+//    gpg::AndroidInitialization::android_main(app_);
+    gpg::AndroidInitialization::ANativeActivity_onCreate(app_, app_->savedState, state->savedStateSize);
 
     // Game Services have not been initialized, create a new Game Services.
     gpg::AndroidPlatformConfiguration platform_configuration;
