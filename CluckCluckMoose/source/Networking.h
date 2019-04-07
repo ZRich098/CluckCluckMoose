@@ -39,6 +39,7 @@ class Engine : public gpg::IRealTimeEventListener {
 public:
     // GPG-related methods
     void InitGooglePlayGameServices();
+//    void Engine::InitGooglePlayGameServices(ANativeActivity * activity);
     void InviteFriend();
     void ShowRoomInbox();
 

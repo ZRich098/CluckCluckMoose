@@ -36,6 +36,7 @@
 using namespace cugl;
 
 Engine g_engine;
+ANativeActivity *activity_;
 
 
 /*
@@ -311,7 +312,7 @@ int main(int argc, char * argv[]) {
     // Change this to your application class
     CCMApp app;
     android_app *state;
-    ANativeActivity *activity_;
+
     
     // Set the properties of your application
     app.setName("Cluck Cluck Moose");
@@ -343,7 +344,7 @@ int main(int argc, char * argv[]) {
 
 void android_main(android_app *state) {
     CULog("ANDROID MAIN PLS\n");
-    g_engine.SetState(state);
+//    g_engine.SetState(state);
 
 //    // Init helper functions
 //    ndk_helper::JNIHelper::Init(state->activity, HELPER_CLASS_NAME, HELPER_CLASS_SONAME);

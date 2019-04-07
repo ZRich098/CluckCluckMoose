@@ -34,13 +34,14 @@
  * In the build, it's setting several callbacks such as auth status changes,
  * receiving invitations etc.
  */
+//void Engine::InitGooglePlayGameServices(ANativeActivity * activity) {
 void Engine::InitGooglePlayGameServices() {
     if (service_ != nullptr) {
         return;
     }
 
-//    gpg::AndroidInitialization::android_main(app_);
-    gpg::AndroidInitialization::ANativeActivity_onCreate(app_, app_->savedState, state->savedStateSize);
+    gpg::AndroidInitialization::android_main(app_);
+//    gpg::AndroidInitialization::ANativeActivity_onCreate(activity, app_->savedState, app_->savedStateSize);
 
     // Game Services have not been initialized, create a new Game Services.
     gpg::AndroidPlatformConfiguration platform_configuration;
