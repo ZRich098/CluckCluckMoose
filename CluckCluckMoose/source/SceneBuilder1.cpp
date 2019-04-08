@@ -44,6 +44,9 @@ std::shared_ptr<Button> heldButton;
 #define BUTTON_X_OFFSET 0
 #define BUTTON_Y_SPACING 100
 #define BUTTON_Y_OFFSET -75
+#define STACK_X_OFFSET 75
+#define STACK_Y_OFFSET 625
+#define STACK_Y_SPACING 75
 
 //Textures
 std::shared_ptr<Texture> textureF;
@@ -94,6 +97,19 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	_assets = assets;
 	_input.init();
 
+	// Get chicken textures.
+	textureF = _assets->get<Texture>("fire");
+	textureW = _assets->get<Texture>("water");
+	textureG = _assets->get<Texture>("grass");
+	textureReaper = _assets->get<Texture>("reaper");
+	textureBomb = _assets->get<Texture>("bomb");
+	textureMirror = _assets->get<Texture>("mirror");
+	textureNinja = _assets->get<Texture>("ninja");
+	textureParty = _assets->get<Texture>("party");
+	textureSpy = _assets->get<Texture>("spy");
+	textureThick = _assets->get<Texture>("thicken");
+	textureWitch = _assets->get<Texture>("witchen");
+
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
 	layer->doLayout(); // This rearranges the children to fit the screen
@@ -102,6 +118,28 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Create background node
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
+
+	//Init stack nodes
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+		poly = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
+
+		pstackNodes.push_back(poly);
+		texturesPStack.push_back(text);
+	}
+
+
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
+
+		ostackNodes.push_back(poly);
+		texturesOStack.push_back(text);
+	}
 
 	//Create a node for drawing moose
 	mooseCanvas = Node::alloc();
@@ -117,18 +155,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
 
-	// Get chicken textures.
-	textureF = _assets->get<Texture>("fire");
-	textureW = _assets->get<Texture>("water");
-	textureG = _assets->get<Texture>("grass");
-	textureReaper = _assets->get<Texture>("reaper");
-	textureBomb = _assets->get<Texture>("bomb");
-	textureMirror = _assets->get<Texture>("mirror");
-	textureNinja = _assets->get<Texture>("ninja");
-	textureParty = _assets->get<Texture>("party");
-	textureSpy = _assets->get<Texture>("spy");
-	textureThick = _assets->get<Texture>("thicken");
-	textureWitch = _assets->get<Texture>("witchen");
+	
+
+	
 
 
 	//reset drawing between frames
@@ -144,6 +173,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	background->setAnchor(Vec2::ANCHOR_CENTER);
 	background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
 	backCanvas->addChild(background);
+
+	
 	
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
@@ -170,18 +201,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	foreground->setPosition(SCENE_WIDTH/2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
 
-	// Get chicken textures.
-	std::shared_ptr<Texture> textureF = _assets->get<Texture>("fire");
-	std::shared_ptr<Texture> textureW = _assets->get<Texture>("water");
-	std::shared_ptr<Texture> textureG = _assets->get<Texture>("grass");
-	std::shared_ptr<Texture> textureReaper = _assets->get<Texture>("reaper");
-	std::shared_ptr<Texture> textureBomb = _assets->get<Texture>("bomb");
-	std::shared_ptr<Texture> textureMirror = _assets->get<Texture>("mirror");
-	std::shared_ptr<Texture> textureNinja = _assets->get<Texture>("ninja");
-	std::shared_ptr<Texture> textureParty = _assets->get<Texture>("party");
-	std::shared_ptr<Texture> textureSpy = _assets->get<Texture>("spy");
-	std::shared_ptr<Texture> textureThick = _assets->get<Texture>("thicken");
-	std::shared_ptr<Texture> textureWitch = _assets->get<Texture>("witchen");
+	
 
 	//Init appropriately sized buttons
 	for (int i = 0; i < 6; i++) {
@@ -234,58 +254,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		texturesHand.push_back(text);
 	}
 
-	//Init stack nodes
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
-		
-		if (i == 0) {
-			poly = buildChicken(text, layer, 150, 975, true);
-		}
-		else if (i == 1) {
-			poly = buildChicken(text, layer, 150, 1085, true);
-		}
-		else if (i == 2) {
-			poly = buildChicken(text, layer, 150, 1195, true);
-		}
-		else if (i == 3) {
-			poly = buildChicken(text, layer, 150, 1305, true);
-		}
-		else {
-			poly = buildChicken(text, layer, 150, 1415, true);
-		}
-		pstackNodes.push_back(poly);
-		texturesPStack.push_back(text);
-	}
-
-
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
-
-		if (i == 0) {
-			poly = buildChicken(text, layer, 900, 975, false);
-		}
-		else if (i == 1) {
-			poly = buildChicken(text, layer, 900, 1085, false);
-		}
-		else if (i == 2) {
-			poly = buildChicken(text, layer, 900, 1195, false);
-		}
-		else if (i == 3) {
-			poly = buildChicken(text, layer, 900, 1305, false);
-
-		}
-		else {
-			poly = buildChicken(text, layer, 900, 1415, false);
-
-		}
-		
-		ostackNodes.push_back(poly);
-		texturesOStack.push_back(text);
-	}
+	
 
 	//Init the clash preview button
 
@@ -315,7 +284,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
 	
 	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
-	chick->setScale(0.8f); // Magic number to rescale asset
+	chick->setScale(STACK_SCALE); // Magic number to rescale asset
 	chick->setAnchor(Vec2::ANCHOR_CENTER);
 	chick->setPosition(posX, posY);
 	chick->flipHorizontal(flip);
