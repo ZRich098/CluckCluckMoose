@@ -37,8 +37,13 @@ std::shared_ptr<Button> heldButton;
 //Drawing constants
 #define MOOSE_HEIGHT 350
 #define FORE_HEIGHT 200
-#define CHICK_SCALE 0.2f
 #define MOOSE_X_OFFSET 50
+#define HAND_SCALE 0.5f
+#define STACK_SCALE 0.5f
+#define BUTTON_X_SPACING 175
+#define BUTTON_X_OFFSET 0
+#define BUTTON_Y_SPACING 100
+#define BUTTON_Y_OFFSET -75
 
 //Textures
 std::shared_ptr<Texture> textureF;
@@ -110,7 +115,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Add button canvas
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
-	//buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
 
 	// Get chicken textures.
 	textureF = _assets->get<Texture>("fire");
@@ -189,14 +194,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		id->flipHorizontal(true);
 		std::shared_ptr<Button> butt = Button::alloc(id);
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
-		butt->setScale(0.5, 0.5);
+		butt->setScale(HAND_SCALE, HAND_SCALE);
 
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
 		if (i < 3) {
-			butt->setPosition((i-1)*200 + 500, 250);
+			butt->setPosition((i-1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
 		}
 		else {
-			butt->setPosition((i - 4) * 200 + 500, 100);
+			butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
 		}
 		if (_input.isActive()) {
 			//CULog("active");
@@ -213,10 +218,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 					playerGlobe->addToStackFromHand(i);
 				}
 				if (i < 3) {
-					butt->setPosition(Vec2((i - 1) * 200 + 500, 250));
+					butt->setPosition((i - 1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
 				}
 				else {
-					butt->setPosition(Vec2((i - 4) * 200 + 500, 100));
+					butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
 				}
 			}
 		});
@@ -329,7 +334,8 @@ void SceneBuilder1::updateGameScene() {
 			buttons[i]->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
-				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()));
+				
+				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH/2, 150));
 			}
 		}
 		else {
