@@ -19,7 +19,8 @@ using namespace cugl;
 /** The ID for the button listener */
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
-#define SCENE_WIDTH 1024
+#define SCENE_WIDTH 576
+#define SCENE_HEIGHT 1024
 /** length of time in frames for a clash between chickens */
 #define CLASHLENGTH 50
 /** maximum size of chicken stack */
@@ -88,7 +89,7 @@ Stack oppPreviewStack;
  */
 bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     // Initialize the scene to a locked width
-    Size dimen = Application::get()->getDisplaySize();
+    Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     if (assets == nullptr) {
         return false;
@@ -281,4 +282,17 @@ void GameScene::handEffect() {
 	}
 	if (oLast == special::Spy)
 		opp->draw();
+}
+
+Size GameScene::computeActiveSize() const {
+	Size dimen = Application::get()->getDisplaySize();
+	float ratio1 = dimen.width / dimen.height;
+	float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+	if (ratio1 < ratio2) {
+		dimen *= SCENE_WIDTH / dimen.width;
+	}
+	else {
+		dimen *= SCENE_HEIGHT / dimen.height;
+	}
+	return dimen;
 }
