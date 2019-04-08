@@ -264,10 +264,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	id->setAnchor(Vec2::ANCHOR_CENTER);
 	std::shared_ptr<Button> butt = Button::alloc(id);
 	butt->setAnchor(Vec2::ANCHOR_CENTER);
-	butt->setScale(0.5, 0.5);
+	butt->setScale(0.4, 0.4);
 
 	butt->setAnchor(Vec2::ANCHOR_CENTER);
-	butt->setPosition(500, 800);
+	butt->setPosition(0, SCENE_HEIGHT/3);
 	butt->setListener([=](const std::string& name, bool down) {
 		if (down) {
 			previewSet = true;
