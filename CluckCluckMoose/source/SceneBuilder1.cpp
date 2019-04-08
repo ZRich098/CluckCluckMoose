@@ -31,7 +31,14 @@ std::shared_ptr<Button> heldButton;
 /** The ID for the button listener */
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
-#define SCENE_WIDTH 1024
+#define SCENE_WIDTH 576
+#define SCENE_HEIGHT 1024
+
+//Drawing constants
+#define MOOSE_HEIGHT 350
+#define FORE_HEIGHT 200
+#define CHICK_SCALE 0.2f
+#define MOOSE_X_OFFSET 50
 
 //Textures
 std::shared_ptr<Texture> textureF;
@@ -128,34 +135,34 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Draw background
 	std::shared_ptr<Texture> texturebg = _assets->get<Texture>("farmbg");
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-	background->setScale(1.2f); // Magic number to rescale asset
+	background->setScale(0.7f); // Magic number to rescale asset
 	background->setAnchor(Vec2::ANCHOR_CENTER);
-	background->setPosition(SCENE_WIDTH/2, 512);
+	background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
 	backCanvas->addChild(background);
 	
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
-	moose1->setScale(0.3f); // Magic number to rescale asset
+	moose1->setScale(0.2f); // Magic number to rescale asset
 	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-	moose1->setPosition(-75, 550);
+	moose1->setPosition(-MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose1->flipHorizontal(false);
 	mooseCanvas->addChild(moose1);
 
 	//Draw opponent moose
 	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.3f); // Magic number to rescale asset
+	moose2->setScale(0.2f); // Magic number to rescale asset
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH + 75, 550);
+	moose2->setPosition(SCENE_WIDTH + MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChild(moose2);
 
 	//Draw foreground
 	std::shared_ptr<Texture> texturefg = _assets->get<Texture>("farmfg");
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
-	foreground->setScale(1.0f); // Magic number to rescale asset
+	foreground->setScale(0.7f); // Magic number to rescale asset
 	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
-	foreground->setPosition(SCENE_WIDTH/2, 300);
+	foreground->setPosition(SCENE_WIDTH/2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
 
 	// Get chicken textures.
