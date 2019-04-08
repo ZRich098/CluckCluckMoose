@@ -234,7 +234,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 			}
 			if (!down) {
 				heldButton = nullptr;
-				if (butt->getPositionX() < 200 && butt->getPositionY() > 100) {
+				if (butt->getPositionX() < MOOSE_X_OFFSET/2 && butt->getPositionY() > MOOSE_HEIGHT) {
 					playerGlobe->addToStackFromHand(i);
 				}
 				if (i < 3) {
