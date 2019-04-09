@@ -17,9 +17,10 @@
 #include <cugl/cugl.h>
 #include "CCMGameScene.h"
 #include "CCMLoadingScene.h"
+#include "SaveController.h"
 
 /**
- * This class represents the application root for the ship demo.
+ * This class represents the application root.
  */
 class CCMApp : public cugl::Application {
 protected:

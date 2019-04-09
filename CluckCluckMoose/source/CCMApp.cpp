@@ -94,6 +94,7 @@ void CCMApp::onShutdown() {
 void CCMApp::onSuspend() {
 	//save player's game state
 	//save current level state, if applicable
+	//SaveController::saveLevel(GameScene::getPlayer(),getOpp());
 }
 
 /**
