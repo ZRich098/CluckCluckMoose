@@ -168,6 +168,41 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "healthBar": {
+            "file": "textures/base_healthTIme_noHearts.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pHeart": {
+            "file": "textures/heart_player.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "oHeart": {
+            "file": "textures/heart_opponent_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pBlock": {
+            "file": "textures/block_playerHealth.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "oBlock": {
+            "file": "textures/block_opponentHealth_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "moose": {
             "file": "textures/moose.png",
             "minfilter": "linear",

@@ -36,8 +36,8 @@ std::shared_ptr<Button> heldButton;
 #define SCENE_HEIGHT 1024
 
 //Drawing constants
-#define MOOSE_HEIGHT 350
-#define FORE_HEIGHT 200
+#define MOOSE_HEIGHT 275
+#define FORE_HEIGHT 125
 #define MOOSE_X_OFFSET 50
 #define HAND_SCALE 0.5f
 #define STACK_SCALE 0.5f
@@ -46,11 +46,15 @@ std::shared_ptr<Button> heldButton;
 #define BUTTON_Y_SPACING 100
 #define BUTTON_Y_OFFSET -75
 #define STACK_X_OFFSET 75
-#define STACK_Y_OFFSET 625
+#define STACK_Y_OFFSET 550
 #define STACK_Y_SPACING 75
 #define INFO_X_OFFSET 7
 #define INFO_Y_OFFSET 100
 #define INFO_SCALE 0.5
+#define HEALTH_BAR_Y_OFFSET 925
+#define HEALTH_BLOCK_SPACING 24
+#define HEART_X_OFFSET 225
+#define BAR_DISTANCE 165
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -78,6 +82,14 @@ std::shared_ptr<Texture> infoSpy;
 std::shared_ptr<Texture> infoThick;
 std::shared_ptr<Texture> infoWitch;
 
+//Health textures
+std::shared_ptr<Texture> bar;
+std::shared_ptr<Texture> pHeart;
+std::shared_ptr<Texture> oHeart;
+std::shared_ptr<Texture> pBlock;
+std::shared_ptr<Texture> oBlock;
+
+
 
 //Main canvas to draw stuff to
 std::shared_ptr<Node> layer;
@@ -99,6 +111,9 @@ std::shared_ptr<Node> buttonCanvas;
 
 //Canvas for clash button
 std::shared_ptr<Node> clashButtonCanvas;
+
+//Canvas for health bar
+std::shared_ptr<Node> healthCanvas;
 
 //Players
 std::shared_ptr<Moose> playerGlobe;
@@ -145,6 +160,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	infoSpy = _assets->get<Texture>("spyInfo");
 	infoThick = _assets->get<Texture>("thickInfo");
 	infoWitch = _assets->get<Texture>("witchInfo");
+
+	//Get health textures
+	bar = _assets->get<Texture>("healthBar");
+	pHeart = _assets->get<Texture>("pHeart");
+	oHeart = _assets->get<Texture>("oHeart");
+	pBlock = _assets->get<Texture>("pBlock");
+	oBlock = _assets->get<Texture>("oBlock");
+
 
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
@@ -198,6 +221,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+
+	//Add health canvas
+	healthCanvas = Node::alloc();
+	layer->addChild(healthCanvas);
 
 	
 
@@ -329,6 +356,39 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//ensure keys are unique
 	butt->activate(99);
 
+	//Draw initial health
+	//Bar
+	std::shared_ptr<PolygonNode> hBar = PolygonNode::allocWithTexture(bar);
+	hBar->setAnchor(Vec2::ANCHOR_CENTER);
+	hBar->setScale(0.7);
+	hBar->setPosition(SCENE_WIDTH / 2, HEALTH_BAR_Y_OFFSET);
+	healthCanvas->addChild(hBar);
+	//Hearts
+	std::shared_ptr<PolygonNode> playerH = PolygonNode::allocWithTexture(pHeart);
+	playerH->setAnchor(Vec2::ANCHOR_CENTER);
+	playerH->setScale(1.0);
+	playerH->setPosition(SCENE_WIDTH / 2 - HEART_X_OFFSET, HEALTH_BAR_Y_OFFSET);
+	healthCanvas->addChild(playerH);
+	std::shared_ptr<PolygonNode> oppH = PolygonNode::allocWithTexture(oHeart);
+	oppH->setAnchor(Vec2::ANCHOR_CENTER);
+	oppH->setScale(1.0);
+	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, HEALTH_BAR_Y_OFFSET);
+	healthCanvas->addChild(oppH);
+	//Blocks
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
+		playerB->setAnchor(Vec2::ANCHOR_CENTER);
+		playerB->setScale(0.8);
+		playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), HEALTH_BAR_Y_OFFSET);
+		healthCanvas->addChild(playerB);
+	}
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(oBlock);
+		oppB->setAnchor(Vec2::ANCHOR_CENTER);
+		oppB->setScale(0.8);
+		oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), HEALTH_BAR_Y_OFFSET);
+		healthCanvas->addChild(oppB);
+	}
 	return true;
 }
 
@@ -619,6 +679,24 @@ void SceneBuilder1::updateGameScene() {
 	}
 	else {
 		infoCanvas->setVisible(true);
+	}
+
+	//Update the health bar
+	for (int i = 5; i < 1; i--) {
+		int inc = 0;
+		if (playerGlobe->getHealth() < i) {
+			std::shared_ptr<Node> child = healthCanvas->getChild(inc + 2);
+			child->setVisible(false);
+			inc++;
+		}
+	}
+	for (int i = 5; i < 1; i--) {
+		int inc = 0;
+		if (oppGlobe->getHealth() < i) {
+			std::shared_ptr<Node> child = healthCanvas->getChild(inc + 7);
+			child->setVisible(false);
+			inc++;
+		}
 	}
 
 }
