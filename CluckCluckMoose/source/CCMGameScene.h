@@ -74,6 +74,14 @@ public:
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
+
+	/**
+	 * Returns the active screen size of this scene.
+	 *
+	 * This method is for graceful handling of different aspect
+	 * ratios
+	 */
+	cugl::Size computeActiveSize() const;
     
     /**
      * Sets whether the scene is currently active
