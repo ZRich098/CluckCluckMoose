@@ -28,6 +28,7 @@ std::vector<std::shared_ptr<Texture>> texturesOStack;
 std::shared_ptr<Button> heldButton;
 
 
+
 /** The ID for the button listener */
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
@@ -47,8 +48,11 @@ std::shared_ptr<Button> heldButton;
 #define STACK_X_OFFSET 75
 #define STACK_Y_OFFSET 625
 #define STACK_Y_SPACING 75
+#define INFO_X_OFFSET 7
+#define INFO_Y_OFFSET 100
+#define INFO_SCALE 0.5
 
-//Textures
+//Chicken Textures
 std::shared_ptr<Texture> textureF;
 std::shared_ptr<Texture> textureW;
 std::shared_ptr<Texture> textureG;
@@ -60,6 +64,19 @@ std::shared_ptr<Texture> textureParty;
 std::shared_ptr<Texture> textureSpy;
 std::shared_ptr<Texture> textureThick;
 std::shared_ptr<Texture> textureWitch;
+
+//Info Textures
+std::shared_ptr<Texture> infoF;
+std::shared_ptr<Texture> infoW;
+std::shared_ptr<Texture> infoG;
+std::shared_ptr<Texture> infoReaper;
+std::shared_ptr<Texture> infoBomb;
+std::shared_ptr<Texture> infoMirror;
+std::shared_ptr<Texture> infoNinja;
+std::shared_ptr<Texture> infoParty;
+std::shared_ptr<Texture> infoSpy;
+std::shared_ptr<Texture> infoThick;
+std::shared_ptr<Texture> infoWitch;
 
 
 //Main canvas to draw stuff to
@@ -74,8 +91,14 @@ std::shared_ptr<Node> mooseCanvas;
 //Canvas for foreground
 std::shared_ptr<Node> frontCanvas;
 
+//Canvas for info cards
+std::shared_ptr<Node> infoCanvas;
+
 //Canvas for buttons
 std::shared_ptr<Node> buttonCanvas;
+
+//Canvas for clash button
+std::shared_ptr<Node> clashButtonCanvas;
 
 //Players
 std::shared_ptr<Moose> playerGlobe;
@@ -109,6 +132,19 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	textureSpy = _assets->get<Texture>("spy");
 	textureThick = _assets->get<Texture>("thicken");
 	textureWitch = _assets->get<Texture>("witchen");
+
+	//Get info textures
+	infoF = _assets->get<Texture>("fireInfo");
+	infoW = _assets->get<Texture>("waterInfo");
+	infoG = _assets->get<Texture>("grassInfo");
+	infoReaper = _assets->get<Texture>("reapInfo");
+	infoBomb = _assets->get<Texture>("tickInfo");
+	infoMirror = _assets->get<Texture>("mirrorInfo");
+	infoNinja = _assets->get<Texture>("shurInfo");
+	infoParty = _assets->get<Texture>("partyInfo");
+	infoSpy = _assets->get<Texture>("spyInfo");
+	infoThick = _assets->get<Texture>("thickInfo");
+	infoWitch = _assets->get<Texture>("witchInfo");
 
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
@@ -149,6 +185,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	frontCanvas = Node::alloc();
 	layer->addChild(frontCanvas);
 
+	//Add clash button canvas
+	clashButtonCanvas = Node::alloc();
+	layer->addChild(clashButtonCanvas);
+	clashButtonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+
+	//Create an info node
+	infoCanvas = Node::alloc();
+	layer->addChild(infoCanvas);
 
 	//Add button canvas
 	buttonCanvas = Node::alloc();
@@ -201,6 +245,13 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	foreground->setPosition(SCENE_WIDTH/2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
 
+	//Draw info
+	std::shared_ptr<PolygonNode> info = PolygonNode::allocWithTexture(infoF);
+	info->setScale(INFO_SCALE);
+	info->setAnchor(Vec2::ANCHOR_CENTER);
+	info->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT/2 + INFO_Y_OFFSET);
+	infoCanvas->addChild(info);
+	infoCanvas->setVisible(false);
 	
 
 	//Init appropriately sized buttons
@@ -274,7 +325,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		}
 	});
 
-	buttonCanvas->addChild(butt);
+	clashButtonCanvas->addChild(butt);
 	//ensure keys are unique
 	butt->activate(99);
 
@@ -303,8 +354,63 @@ void SceneBuilder1::updateGameScene() {
 			buttons[i]->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
-				
-				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH/2, 150));
+
+				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
+				std::shared_ptr<Texture> infoText;
+				special cel = playerGlobe->getHandAt(i).getSpecial();
+				switch (cel) {
+				case special::BasicFire:
+					infoText = infoF;
+					break;
+				case special::BasicWater:
+					infoText = infoW;
+					break;
+				case special::BasicGrass:
+					infoText = infoG;
+					break;
+				case special::Reaper:
+					infoText = infoReaper;
+					break;
+				case special::Bomb:
+					infoText = infoBomb;
+					break;
+				case special::Mirror:
+					infoText = infoMirror;
+					break;
+				case special::Ninja:
+					infoText = infoNinja;
+					break;
+				case special::PartyFowl:
+					infoText = infoParty;
+					break;
+				case special::Spy:
+					infoText = infoSpy;
+					break;
+				case special::Thicken:
+					infoText = infoThick;
+					break;
+				case special::Witchen:
+					infoText = infoWitch;
+					break;
+				default:
+					switch (playerGlobe->getHandAt(i).getElement()) {
+					case element::Fire:
+						infoText = infoF;
+						break;
+					case element::Water:
+						infoText = infoW;
+						break;
+					case element::Grass:
+						infoText = infoG;
+						break;
+					}
+				}
+				std::shared_ptr<PolygonNode> newPoly = PolygonNode::allocWithTexture(infoText);
+				newPoly->setScale(INFO_SCALE);
+				newPoly->setAnchor(Vec2::ANCHOR_CENTER);
+				newPoly->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT / 2 + INFO_Y_OFFSET);
+				infoCanvas->swapChild(infoCanvas->getChild(0), newPoly, false);
+
 			}
 		}
 		else {
@@ -505,6 +611,14 @@ void SceneBuilder1::updateGameScene() {
 			ostackNodes[i]->setTexture(text);
 			texturesOStack[i] = text;
 		}
+	}
+
+	//Update the info card
+	if (heldButton == nullptr) {
+		infoCanvas->setVisible(false);
+	}
+	else {
+		infoCanvas->setVisible(true);
 	}
 
 }
