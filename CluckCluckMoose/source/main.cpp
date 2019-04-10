@@ -37,7 +37,7 @@ using namespace cugl;
 
 Engine g_engine;
 ANativeActivity *activity_;
-
+std::shared_ptr<ThreadPool> _gpg;
 
 /*
  * Ctor
@@ -313,6 +313,8 @@ int main(int argc, char * argv[]) {
     CCMApp app;
     android_app *state;
 
+    _gpg = ThreadPool::alloc(1);
+
     
     // Set the properties of your application
     app.setName("Cluck Cluck Moose");
@@ -326,9 +328,12 @@ int main(int argc, char * argv[]) {
     app.setSize(288, 512);
     app.setFPS(60.0f);
 
-//    ndk_helper::JNIHelper::Init(activity_, "com/sample/helper/NDKHelper");
-    ANativeActivity_onCreate(activity_, NULL, state->savedStateSize);
-    
+    _gpg->addTask([=](void) {
+//        ndk_helper::JNIHelper::Init(activity_, "com/sample/helper/NDKHelper");
+        ANativeActivity_onCreate(activity_, NULL, 0);
+//        android_app_create(activity_, NULL, state->savedStateSize);
+    });
+
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
     if (!app.init()) {
         return 1;

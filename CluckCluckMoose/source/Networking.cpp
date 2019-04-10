@@ -45,7 +45,7 @@ void Engine::InitGooglePlayGameServices() {
 
     // Game Services have not been initialized, create a new Game Services.
     gpg::AndroidPlatformConfiguration platform_configuration;
-    platform_configuration.SetActivity(app_->activity->clazz);
+//    platform_configuration.SetActivity(app_->activity->clazz);
 
     gpg::GameServices::Builder builder;
     service_ =
