@@ -250,6 +250,10 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 		player->getStack().add(playerOrder.front());
 		opp->getStack().add(oppOrder.front());
 		//Resolve effects
+		int initState = 0;
+		while (initState != EXIT)
+			// Resolves the special chicken effects
+			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
 
 		playerOrder.erase(playerOrder.begin());
 		oppOrder.erase(playerOrder.begin());
