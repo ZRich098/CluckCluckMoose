@@ -17,25 +17,37 @@
 #include <cugl/cugl.h>
 #include "CCMGameScene.h"
 #include "CCMLoadingScene.h"
+#include "CCMMenuScene.h"
+#include "CCMInput.h"
+
+#define SCENE_COUNT 2
 
 /**
  * This class represents the application root for the ship demo.
  */
 class CCMApp : public cugl::Application {
 protected:
+    /** Whether or not we have finished loading all assets */
+    bool _loaded;
+
     /** The global sprite batch for drawing (only want one of these) */
     std::shared_ptr<cugl::SpriteBatch> _batch;
     /** The global asset manager */
     std::shared_ptr<cugl::AssetManager> _assets;
     
     // Player modes
+    /** The controller for the various game worlds */
+    std::vector<std::shared_ptr<cugl::Scene>> _gameplay;
     /** The primary controller for the game world */
-    GameScene _gameplay;
+    GameScene _gamescene;
+    /** The currently active scene */
+    size_t _current;
     /** The controller for the loading screen */
-    LoadingScene _loading;
-      
-    /** Whether or not we have finished loading all assets */
-    bool _loaded;
+    LoadingScene _loadingscene;
+    /** The controller for the menu screen */
+    MenuScene _menuscene;
+
+    CCMInput _input;
     
 public:
 #pragma mark Constructors
