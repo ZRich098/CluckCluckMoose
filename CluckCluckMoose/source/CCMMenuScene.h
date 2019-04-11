@@ -18,10 +18,6 @@ protected:
 
     std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
 
-//    bool playClicked;
-//    bool helpClicked;
-//    bool settingsClicked;
-
 public:
 #pragma mark -
 #pragma mark Constructors
@@ -47,7 +43,7 @@ public:
     virtual void dispose() override;
 
     /**
-     * Initializes the controller contents, and starts the game
+     * Initializes the controller contents, and starts the Menu
      *
      * The constructor does not allocate any objects or memory.  This allows
      * us to have a non-pointer reference to this controller, reducing our
@@ -80,8 +76,11 @@ public:
      */
     void update(float timestep);
 
+    /**
+     * Getters for menu buttons
+     *
+     */
     bool getPlay();
-    bool setPlay(bool val);
     bool getHelp();
     bool getSettings();
 };

@@ -46,10 +46,13 @@ protected:
     LoadingScene _loadingscene;
     /** The controller for the menu screen */
     MenuScene _menuscene;
-
+    /** The controller for scene input */
     CCMInput _input;
 
+    // Values for tracking menu buttons
     bool _playClicked;
+    bool _helpClicked;
+    bool _settingsClicked;
     
 public:
 #pragma mark Constructors

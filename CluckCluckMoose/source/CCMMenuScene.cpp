@@ -18,12 +18,7 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 
-#define FORE_HEIGHT 550
-
-//Menu Textures
-//std::shared_ptr<Texture> texturePlay;
-//std::shared_ptr<Texture> textureHelp;
-//std::shared_ptr<Texture> textureSettings;
+#define TITLE_HEIGHT 600 //
 
 //Main canvas to draw stuff to
 std::shared_ptr<Node> menulayer;
@@ -73,12 +68,6 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     root->removeAllChildren();
 
     _assets = assets;
-//    _input.init();
-
-    // Get chicken textures.
-//    texturePlay = _assets->get<Texture>("fire");
-//    textureHelp = _assets->get<Texture>("water");
-//    textureSettings = _assets->get<Texture>("grass");
 
     menulayer = assets->get<Node>("menu");
     menulayer->setContentSize(dimen);
@@ -98,7 +87,6 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     menulayer->addChild(menubuttonCanvas);
     menubuttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
 
-
     //reset drawing between frames
     menubackCanvas->removeAllChildren();
     titleCanvas->removeAllChildren();
@@ -107,19 +95,20 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("menubg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.7f); // Magic number to rescale asset
+    background->setScale(0.55f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
     background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
     menubackCanvas->addChild(background);
 
     //Draw title
-    std::shared_ptr<Texture> texturefg = _assets->get<Texture>("menutitle");
-    std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
-    foreground->setScale(0.7f); // Magic number to rescale asset
-    foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
-    foreground->setPosition(SCENE_WIDTH/2, FORE_HEIGHT);
-    titleCanvas->addChild(foreground);
+    std::shared_ptr<Texture> texturetitle = _assets->get<Texture>("menutitle");
+    std::shared_ptr<PolygonNode> title = PolygonNode::allocWithTexture(texturetitle);
+    title->setScale(0.5f); // Magic number to rescale asset
+    title->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
+    title->setPosition(SCENE_WIDTH/2, TITLE_HEIGHT);
+    titleCanvas->addChild(title);
 
+    // Play button
     std::shared_ptr<Texture> texturePlay = _assets->get<Texture>("menuplay");
     std::shared_ptr<PolygonNode> idplay = PolygonNode::allocWithTexture(texturePlay);
     idplay->setAnchor(Vec2::ANCHOR_CENTER);
@@ -132,10 +121,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     playbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             playClicked = true;
-            CULog("\n!!!!!play clicked true\n\n");
         }
     });
 
+    // Help button
     std::shared_ptr<Texture> textureHelp = _assets->get<Texture>("menuhelp");
     std::shared_ptr<PolygonNode> idhelp = PolygonNode::allocWithTexture(textureHelp);
     idhelp->setAnchor(Vec2::ANCHOR_CENTER);
@@ -148,10 +137,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             helpClicked = true;
-            CULog("help clucked true\n\n");
         }
     });
 
+    // Settings button
     std::shared_ptr<Texture> textureSettings = _assets->get<Texture>("menusettings");
     std::shared_ptr<PolygonNode> idsettings = PolygonNode::allocWithTexture(textureSettings);
     idsettings->setAnchor(Vec2::ANCHOR_CENTER);
@@ -164,13 +153,13 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     settingsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             settingsClicked = true;
-            CULog("settings clucked true\n\n");
         }
     });
 
     menubuttonCanvas->addChild(playbutt);
     menubuttonCanvas->addChild(helpbutt);
     menubuttonCanvas->addChild(settingsbutt);
+
     //ensure keys are unique
     playbutt->activate(100);
     helpbutt->activate(101);
@@ -189,12 +178,9 @@ void MenuScene::dispose() {
 }
 
 void MenuScene::update(float timestep) {
-    CULog("enter MenuScene update\n");
-    if (playClicked) { //replace with if Preview button is pressed
-        CULog("inside update playClicked\n");
+    if (playClicked) { // this doesn't seem to do anything
         playClicked = false;
     }
-//    sb->updateGameScene();
 }
 
 /**
@@ -215,6 +201,5 @@ void MenuScene::setActive(bool value) {
 }
 
 bool MenuScene::getPlay() { return playClicked; }
-//bool MenuScene::setPlay(bool val) { playClicked = val; }
 bool MenuScene::getHelp() { return helpClicked; }
 bool MenuScene::getSettings() { return settingsClicked; }
