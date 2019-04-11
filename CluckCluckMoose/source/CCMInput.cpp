@@ -84,7 +84,7 @@ bool CCMInput::init() {
 	_down = false;
 	_prevDown = false;
 
-#ifndef CU_TOUCH_SCREEN
+//#ifndef CU_TOUCH_SCREEN
 	success = Input::activate<Keyboard>();
 	success = success && Input::activate<Mouse>();
 	Mouse* mouse = Input::get<Mouse>();
@@ -100,17 +100,17 @@ bool CCMInput::init() {
 	mouse->addMotionListener(LISTENER_KEY, [=](const cugl::MouseEvent& event, const cugl::Vec2& previous, bool focus) {
 		this->mouseMovedCB(event, previous, focus);
 });
-#else
-	PanInput* panInput = Input::get<PanInput>();
-	panInput->setFingerSensitive(true);
-	panInput->setTouchScreen(true);
-	panInput->addEndListener(LISTENER_KEY,[=](const PanEvent& event, bool focus) {
-		this->panEndedCB(event,focus);
-	});
-	panInput->addMotionListener(LISTENER_KEY,[=](const PanEvent& event, bool focus) {
-		this->panMovedCB(event,focus);
-	});
-#endif
+//#else
+	//PanInput* panInput = Input::get<PanInput>();
+	//panInput->setFingerSensitive(true);
+	//panInput->setTouchScreen(true);
+	//panInput->addEndListener(LISTENER_KEY,[=](const PanEvent& event, bool focus) {
+		//this->panEndedCB(event,focus);
+	//});
+	//panInput->addMotionListener(LISTENER_KEY,[=](const PanEvent& event, bool focus) {
+		//this->panMovedCB(event,focus);
+	//});
+//#endif
 	_active = success;
 	return success;
 }
