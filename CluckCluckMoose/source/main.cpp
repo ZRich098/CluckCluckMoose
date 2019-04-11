@@ -32,11 +32,13 @@
 #include "Networking.h"
 #include "android_native_app_glue.h"
 #include "JNIHelper.h"
+#include "SDL.h"
+#include <jni.h>
 
 using namespace cugl;
 
 Engine g_engine;
-ANativeActivity *activity_;
+//ANativeActivity *activity_;
 std::shared_ptr<ThreadPool> _gpg;
 
 /*
@@ -327,6 +329,16 @@ int main(int argc, char * argv[]) {
     //app.setFullscreen(true);
     app.setSize(288, 512);
     app.setFPS(60.0f);
+
+    // retrieve the JNI environment.
+    JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+
+    // retrieve the Java instance of the SDLActivity
+    jobject activity_ = (jobject)SDL_AndroidGetActivity();
+
+    // find the Java class of the activity. It should be SDLActivity or a subclass of it.
+    jclass clazz(env->GetObjectClass(activity));
+
 
     _gpg->addTask([=](void) {
 //        ndk_helper::JNIHelper::Init(activity_, "com/sample/helper/NDKHelper");
