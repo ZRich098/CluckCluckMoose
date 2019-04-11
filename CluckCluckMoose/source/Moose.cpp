@@ -29,8 +29,7 @@ void Moose::refillDeck() {
 bool Moose::init(int h, int hSize) {
     health = h;
     handSize = hSize;
-    // [Amanda] hi i didn't know what this did so i commented it out for now
-    // deck = Coop(4);
+	numChickensWillDiePreview = 0;
     return true;
 }
 

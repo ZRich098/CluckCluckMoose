@@ -115,6 +115,8 @@ public:
 	void handEffect();
 	/** Does special chicken effects of the chickens on the top of both stacks. */
 	//void specialChickenEffect(Stack &player, Stack &opp);
+	/** Sets the number of chickens in both moose's stack that will die if clashes were to occur with the current stacks*/
+	void setNumChickensWillDiePreview();
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */
