@@ -39,9 +39,9 @@ std::shared_ptr<Node> menubuttonCanvas;
 
 
 //Preview tracking
-//bool playClicked;
-//bool helpClicked;
-//bool settingsClicked;
+bool playClicked;
+bool helpClicked;
+bool settingsClicked;
 
 /**
  * Initializes the controller contents, and starts the game
@@ -144,7 +144,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpbutt->setScale(0.4, 0.4);
 
     helpbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    helpbutt->setPosition(0, SCENE_HEIGHT/3 - 75);
+    helpbutt->setPosition(0, SCENE_HEIGHT/3 - 100);
     helpbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             helpClicked = true;
@@ -160,7 +160,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     settingsbutt->setScale(0.4, 0.4);
 
     settingsbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    settingsbutt->setPosition(0, SCENE_HEIGHT/3 - 150);
+    settingsbutt->setPosition(0, SCENE_HEIGHT/3 - 200);
     settingsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             settingsClicked = true;
@@ -188,6 +188,15 @@ void MenuScene::dispose() {
     Scene::dispose();
 }
 
+void MenuScene::update(float timestep) {
+    CULog("enter MenuScene update\n");
+    if (playClicked) { //replace with if Preview button is pressed
+        CULog("inside update playClicked\n");
+        playClicked = false;
+    }
+//    sb->updateGameScene();
+}
+
 /**
  * Sets whether the scene is currently active
  *
@@ -205,6 +214,7 @@ void MenuScene::setActive(bool value) {
     }
 }
 
-bool MenuScene::isPlay() { return playClicked; }
-bool MenuScene::isHelp() { return helpClicked; }
-bool MenuScene::isSettings() { return settingsClicked; }
+bool MenuScene::getPlay() { return playClicked; }
+//bool MenuScene::setPlay(bool val) { playClicked = val; }
+bool MenuScene::getHelp() { return helpClicked; }
+bool MenuScene::getSettings() { return settingsClicked; }

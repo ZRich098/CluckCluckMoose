@@ -18,9 +18,9 @@ protected:
 
     std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
 
-    bool playClicked;
-    bool helpClicked;
-    bool settingsClicked;
+//    bool playClicked;
+//    bool helpClicked;
+//    bool settingsClicked;
 
 public:
 #pragma mark -
@@ -71,9 +71,19 @@ public:
      */
     virtual void setActive(bool value) override;
 
-    bool isPlay();
-    bool isHelp();
-    bool isSettings();
+    /**
+    * The method called to update the game mode.
+     *
+     * This method contains any gameplay code that is not an OpenGL call.
+     *
+     * @param timestep  The amount of time (in seconds) since the last frame
+     */
+    void update(float timestep);
+
+    bool getPlay();
+    bool setPlay(bool val);
+    bool getHelp();
+    bool getSettings();
 };
 
 #endif /* __CCM_MENU_SCENE_H__ */

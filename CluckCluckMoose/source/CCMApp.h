@@ -48,6 +48,8 @@ protected:
     MenuScene _menuscene;
 
     CCMInput _input;
+
+    bool _playClicked;
     
 public:
 #pragma mark Constructors

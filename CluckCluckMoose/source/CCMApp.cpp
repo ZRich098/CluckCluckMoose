@@ -151,12 +151,22 @@ void CCMApp::update(float timestep) {
         _loaded = true;
     } else {
         _input.update(timestep);
-        if (_menuscene.isPlay()) {
-            CULog("\nisplay!!\n");
-            _gameplay[_current]->setActive(false);
-            _current = (_current + 1);
-            _gameplay[_current]->setActive(true);
+        CULog("menuscene before isplay: %d\n\n", _menuscene.getPlay());
+        if (_menuscene.getPlay()) {
+            _playClicked = true;
+        } else {
+            _playClicked = false;
         }
+        if (_playClicked) {
+            _playClicked = false;
+//            _menuscene.setPlay(false);
+            _gameplay[_current]->setActive(false);
+//            _current = (_current + 1);
+            _current = 1;
+            _gameplay[_current]->setActive(true);
+            CULog("menuscene end getplay: %d\n\n", _menuscene.getPlay());
+        }
+        _playClicked = false;
         _gameplay[_current]->update(timestep);
     }
 }
