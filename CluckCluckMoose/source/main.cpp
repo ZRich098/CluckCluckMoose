@@ -30,16 +30,14 @@
 // Include your application class
 #include "CCMApp.h"
 #include "Networking.h"
-#include "android_native_app_glue.h"
-#include "JNIHelper.h"
-#include "SDL.h"
-#include <jni.h>
+//#include "android_native_app_glue.h"
+#include <SDL/SDL.h>
 
 using namespace cugl;
 
 Engine g_engine;
 //ANativeActivity *activity_;
-std::shared_ptr<ThreadPool> _gpg;
+//std::shared_ptr<ThreadPool> _gpg;
 
 /*
  * Ctor
@@ -310,12 +308,12 @@ void Engine::UpdateFPS(float fFPS) {
  *
  * @return the exit status of the application
  */
-int main(int argc, char * argv[]) {
+//int main(int argc, char * argv[]) {
+int main() {
     // Change this to your application class
     CCMApp app;
     android_app *state;
-
-    _gpg = ThreadPool::alloc(1);
+//    _gpg = ThreadPool::alloc(1);
 
     
     // Set the properties of your application
@@ -330,21 +328,29 @@ int main(int argc, char * argv[]) {
     app.setSize(288, 512);
     app.setFPS(60.0f);
 
-    // retrieve the JNI environment.
-    JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+//    // retrieve the JNI environment.
+//    JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
+//
+//    // retrieve the Java instance of the SDLActivity
+//    jobject activity_ = (jobject)SDL_AndroidGetActivity();
+//
+//    // find the Java class of the activity. It should be SDLActivity or a subclass of it.
+//    jclass clazz(env->GetObjectClass(activity_));
 
-    // retrieve the Java instance of the SDLActivity
-    jobject activity_ = (jobject)SDL_AndroidGetActivity();
-
-    // find the Java class of the activity. It should be SDLActivity or a subclass of it.
-    jclass clazz(env->GetObjectClass(activity));
+//    struct android_app* android_app = (struct android_app*)malloc(sizeof(struct android_app));
+//    memset(android_app, 0, sizeof(struct android_app));
+//    android_app->activity = activity_;
 
 
-    _gpg->addTask([=](void) {
+//    _gpg->addTask([=](void) {
 //        ndk_helper::JNIHelper::Init(activity_, "com/sample/helper/NDKHelper");
-        ANativeActivity_onCreate(activity_, NULL, 0);
-//        android_app_create(activity_, NULL, state->savedStateSize);
-    });
+//        ANativeActivity_onCreate(activity_, NULL, 0);
+//        state = android_app_create(activity_, NULL, 0);
+//        android_main(android_app);
+//    });
+
+//    gpg::AndroidPlatformConfiguration platform_configuration;
+//    platform_configuration.SetActivity((env->GetObjectClass(activity_)));
 
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
     if (!app.init()) {
@@ -361,7 +367,7 @@ int main(int argc, char * argv[]) {
 
 void android_main(android_app *state) {
     CULog("ANDROID MAIN PLS\n");
-//    g_engine.SetState(state);
+    g_engine.SetState(state);
 
 //    // Init helper functions
 //    ndk_helper::JNIHelper::Init(state->activity, HELPER_CLASS_NAME, HELPER_CLASS_SONAME);
@@ -374,31 +380,32 @@ void android_main(android_app *state) {
     state->onInputEvent = Engine::HandleInput;
 
     // loop waiting for stuff to do.
-    while (1) {
-        // Read all pending events.
-        int id;
-        int events;
-        android_poll_source *source;
-
-        // If not animating, we will block forever waiting for events.
-        // If animating, we loop until all events are read, then continue
-        // to draw the next frame of animation.
-        while ((id = ALooper_pollAll(g_engine.IsReady() ? 0 : -1, NULL, &events,
-                                     (void **)&source)) >= 0) {
-            // Process this event.
-            if (source != NULL) source->process(state, source);
-
-            // Check if we are exiting.
-            if (state->destroyRequested != 0) {
-                g_engine.TermDisplay(APP_CMD_TERM_WINDOW);
-                return;
-            }
-        }
-
-        if (g_engine.IsReady()) {
-            // Drawing is throttled to the screen update rate, so there
-            // is no need to do timing here.
-            g_engine.DrawFrame();
-        }
-    }
+//    while (1) {
+//        // Read all pending events.
+//        int id;
+//        int events;
+//        android_poll_source *source;
+//
+//        // If not animating, we will block forever waiting for events.
+//        // If animating, we loop until all events are read, then continue
+//        // to draw the next frame of animation.
+//        while ((id = ALooper_pollAll(g_engine.IsReady() ? 0 : -1, NULL, &events,
+//                                     (void **)&source)) >= 0) {
+//            // Process this event.
+//            if (source != NULL) source->process(state, source);
+//
+//            // Check if we are exiting.
+//            if (state->destroyRequested != 0) {
+//                g_engine.TermDisplay(APP_CMD_TERM_WINDOW);
+//                return;
+//            }
+//        }
+//
+//        if (g_engine.IsReady()) {
+//            // Drawing is throttled to the screen update rate, so there
+//            // is no need to do timing here.
+//            g_engine.DrawFrame();
+//        }
+//    }
+    main();
 }
