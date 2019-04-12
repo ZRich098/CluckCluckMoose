@@ -46,6 +46,9 @@ void CCMApp::onStartup() {
     // Create a "loading" screen
     _loaded = false;
     _loading.init(_assets);
+
+	// Create the saving and loading controller
+	//_saveLoad
     
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
@@ -94,7 +97,7 @@ void CCMApp::onShutdown() {
 void CCMApp::onSuspend() {
 	//save player's game state
 	//save current level state, if applicable
-	//SaveController::saveLevel(GameScene::getPlayer(),getOpp());
+	//_saveLoad.saveLevel(_gameplay.getPlayer(),_gameplay.getOpp());
 }
 
 /**

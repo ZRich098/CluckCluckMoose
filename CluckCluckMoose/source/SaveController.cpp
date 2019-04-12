@@ -146,7 +146,10 @@ void SaveController::saveGame() { //called in onSuspend()
 	writer->close();
 }
 
-void SaveController::saveLevel(Moose player, Moose opp) { //called in onSuspend()
+void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr) { //called in onSuspend()
+	Moose player = *playerPtr;
+	Moose opp = *oppPtr;
+
 	//create JSONValue
 	JsonValue saveFile;
 	saveFile.initObject();

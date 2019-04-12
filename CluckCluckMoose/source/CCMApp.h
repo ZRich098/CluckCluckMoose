@@ -34,6 +34,8 @@ protected:
     GameScene _gameplay;
     /** The controller for the loading screen */
     LoadingScene _loading;
+	/** The controller for saving and loading states */
+	SaveController _saveLoad;
       
     /** Whether or not we have finished loading all assets */
     bool _loaded;
