@@ -31,6 +31,7 @@ using namespace cugl;
 void CCMApp::onStartup() {
     _assets = AssetManager::alloc();
     _batch  = SpriteBatch::alloc();
+	AudioChannels::start(24);
     
     // Start-up basic input
 #ifdef CU_TOUCH_SCREEN
@@ -41,6 +42,7 @@ void CCMApp::onStartup() {
 #endif
     _assets->attach<Font>(FontLoader::alloc()->getHook());
     _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+	_assets->attach<Sound>(SoundLoader::alloc()->getHook());
     _assets->attach<Node>(SceneLoader::alloc()->getHook());
 
     // Create a "loading" screen
@@ -76,7 +78,8 @@ void CCMApp::onShutdown() {
 #else
     Input::deactivate<Mouse>();
 #endif
-    
+
+	AudioChannels::stop();
     Application::onShutdown();  // YOU MUST END with call to parent
 }
 
@@ -92,6 +95,7 @@ void CCMApp::onShutdown() {
  * the background.
  */
 void CCMApp::onSuspend() {
+	AudioChannels::get()->pauseAll();
 }
 
 /**
@@ -105,6 +109,7 @@ void CCMApp::onSuspend() {
  * paused before app suspension.
  */
 void CCMApp::onResume() {
+	AudioChannels::get()->resumeAll();
 }
 
 
