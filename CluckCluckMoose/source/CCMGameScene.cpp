@@ -183,6 +183,8 @@ void GameScene::update(float timestep) {
 			stackSize++;
 			skipState = ENTRY; // Returns the state machine to the entry state
 		}
+
+		setNumChickensWillDiePreview();
 		//CULog("SKIP: %d",skipState);
 	}
 
@@ -229,6 +231,9 @@ void GameScene::update(float timestep) {
 			prevHand = player->getHand().size();
 			stackSize = 0;
 
+			player->setNumChickensWillDiePreview(0);
+			opp->setNumChickensWillDiePreview(0);
+
 			player->takeDamage(opp->getStack().getSize());
 			opp->takeDamage(player->getStack().getSize());
 
@@ -260,6 +265,18 @@ void GameScene::setActive(bool value) {
             it->second->deactivate();
         }
     } */
+}
+
+void GameScene::setNumChickensWillDiePreview() {
+	Stack p = Stack(player->getStack());
+	Stack o = Stack(opp->getStack());
+
+	int size = p.getSize();
+
+	while (!p.empty() && !o.empty()) p.compare(o);
+
+	player->setNumChickensWillDiePreview(size - p.getSize());
+	opp->setNumChickensWillDiePreview(size - o.getSize());
 }
 
 void GameScene::handEffect() {
