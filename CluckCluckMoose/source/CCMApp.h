@@ -19,11 +19,12 @@
 #include "CCMLoadingScene.h"
 #include "CCMMenuScene.h"
 #include "CCMInput.h"
+#include "SaveController.h"
 
 #define SCENE_COUNT 2
 
 /**
- * This class represents the application root for the ship demo.
+ * This class represents the application root.
  */
 class CCMApp : public cugl::Application {
 protected:
@@ -48,6 +49,8 @@ protected:
     MenuScene _menuscene;
     /** The controller for scene input */
     CCMInput _input;
+    /** The controller for saving and loading states */
+    SaveController _saveLoad;
 
     // Values for tracking menu buttons
     bool _playClicked;
