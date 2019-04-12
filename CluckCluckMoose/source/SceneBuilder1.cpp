@@ -414,8 +414,6 @@ std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture
 }
 
 void SceneBuilder1::updateGameScene() {
-
-	
 	vector <Chicken> hand = playerGlobe->getHand();
 
 	for (int i = 0; i < 6; i++) {
@@ -690,24 +688,21 @@ void SceneBuilder1::updateGameScene() {
 		infoCanvas->setVisible(true);
 	}
 
-	//Update the health bar
-	for (int i = 5; i < 1; i--) {
-		int inc = 0;
-		if (playerGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(inc + 2);
-			child->setVisible(false);
-			inc++;
-		}
-	}
-	for (int i = 5; i < 1; i--) {
-		int inc = 0;
-		if (oppGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(inc + 7);
-			child->setVisible(false);
-			inc++;
-		}
-	}
+	//Update the opponent health bar
+    for (int i = 1; i < 6; i++) {
+        if (oppGlobe->getHealth() < i) {
+            std::shared_ptr<Node> child = healthCanvas->getChild(i + 7);
+            child->setVisible(false);
+        }
+    }
 
+	//Update the player health bar
+	for (int i = 1; i < 6; i++) {
+		if (playerGlobe->getHealth() < i) {
+			std::shared_ptr<Node> child = healthCanvas->getChild(i + 2);
+			child->setVisible(false);
+		}
+	}
 }
 
 void SceneBuilder1::updateInput(float timestep) {

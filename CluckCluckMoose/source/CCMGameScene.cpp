@@ -224,7 +224,6 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-
 			player->clearHandToDiscard();
 			opp->clearHandToDiscard();
 			// refills before discarding to prevent specials being obtained twice in a row
@@ -239,8 +238,8 @@ void GameScene::update(float timestep) {
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
 
-			//player->takeDamage(opp->getStack().getSize());
-			//opp->takeDamage(player->getStack().getSize());
+			player->takeDamage(opp->getStack().getSize());
+			opp->takeDamage(player->getStack().getSize());
 
 			player->getStack().clear();
 			opp->getStack().clear();
@@ -258,6 +257,22 @@ void GameScene::update(float timestep) {
 	}
 	
 	sb->updateGameScene();
+}
+
+void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
+	while (!playerOrder.empty && !oppOrder.empty) {
+		//play both vector::front() Chickens and resolve them
+		player->getStack().add(playerOrder.front());
+		opp->getStack().add(oppOrder.front());
+		//Resolve effects
+		int initState = 0;
+		while (initState != EXIT)
+			// Resolves the special chicken effects
+			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
+
+		playerOrder.erase(playerOrder.begin());
+		oppOrder.erase(playerOrder.begin());
+	}
 }
 
 

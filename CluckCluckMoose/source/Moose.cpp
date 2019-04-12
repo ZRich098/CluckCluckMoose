@@ -34,14 +34,14 @@ bool Moose::init(int h, int hSize) {
 }
 
 
-void Moose::jsonInit(int h, vector<int> handArray, vector<int> stackArray, vector<int> coopArray, vector<int> discardArray, string cost) {
+void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<int> coopArray, vector<int> discardArray, string cost) {
 	health = h;
 	for (int i : handArray) {
 		hand.push_back(Chicken(intToSpecial(i)));
 	}
 
-	for (int i : stackArray) {
-		stack.add(Chicken(intToSpecial(i)));
+	for (int i : playOrderArray) {
+		playOrder.push_back(Chicken(intToSpecial(i)));
 	}
 
 	deck.clear();
@@ -195,6 +195,15 @@ string Moose::handString() const {
 	stringstream ss;
 	for (int i = 0; i < hand.size(); i++) {
 		ss << "Hand " << i + 1 << ": " << hand.at(i).toString().c_str() << "\n";
+	}
+	ss << "\n";
+	return ss.str();
+}
+
+string Moose::playOrderString() const {
+	stringstream ss;
+	for (int i = 0; i < playOrder.size(); i++) {
+		ss << "PlayOrder " << i + 1 << ": " << playOrder.at(i).toString().c_str() << "\n";
 	}
 	ss << "\n";
 	return ss.str();
