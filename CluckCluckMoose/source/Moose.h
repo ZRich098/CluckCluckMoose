@@ -27,6 +27,7 @@ protected:
 	int handSize;
 	int health;
 	void refillDeck();
+	int numChickensWillDiePreview;
     
 public:
    
@@ -99,6 +100,11 @@ public:
 	Chicken getDiscardAt(int pos) { return discard.at(pos); };
 	/** Get the current health of the Moose*/
 	int getHealth() { return health; };
+
+	/** Gets the number of chickens in the moose's stack that will die if clashes were to occur with the current stacks*/
+	int getNumChickensWillDiePreview() { return numChickensWillDiePreview; };
+	/** Sets the number of chickens in the moose's stack that will die if clashes were to occur with the current stacks*/
+	void setNumChickensWillDiePreview(int num) { numChickensWillDiePreview = num; };
 
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();
