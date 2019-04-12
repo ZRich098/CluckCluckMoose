@@ -45,13 +45,15 @@ void CCMApp::onStartup() {
 
     // Create a "loading" screen
     _loaded = false;
-    _loading.init(_assets);
+    _loadingscene.init(_assets);
 
 	// Create the saving and loading controller
 	//_saveLoad
     
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
+
+    _input.init();
     
     Application::onStartup(); // YOU MUST END with call to parent
 }
@@ -68,8 +70,8 @@ void CCMApp::onStartup() {
  * causing the application to be deleted.
  */
 void CCMApp::onShutdown() {
-    _loading.dispose();
-    _gameplay.dispose();
+    _loadingscene.dispose();
+    _gameplay.clear();
     _assets = nullptr;
     _batch = nullptr;
     
@@ -79,7 +81,8 @@ void CCMApp::onShutdown() {
 #else
     Input::deactivate<Mouse>();
 #endif
-    
+
+    _input.dispose();
     Application::onShutdown();  // YOU MUST END with call to parent
 }
 
@@ -131,16 +134,45 @@ void CCMApp::onResume() {
  * at all. The default implmentation does nothing.
  *
  * @param timestep  The amount of time (in seconds) since the last frame
- */
+// */
+//void CCMApp::update(float timestep) {
+//    if (!_loaded && _loading.isActive()) {
+//        _loading.update(0.01f);
+//    } else if (!_loaded) {
+//        _loading.dispose(); // Disables the input listeners in this mode
+//        _gameplay.init(_assets);
+//        _loaded = true;
+//    } else {
+//        _gameplay.update(timestep);
+//    }
+//}
+
 void CCMApp::update(float timestep) {
-    if (!_loaded && _loading.isActive()) {
-        _loading.update(0.01f);
+    if (!_loaded && _loadingscene.isActive()) {
+        _loadingscene.update(timestep);
     } else if (!_loaded) {
-        _loading.dispose(); // Disables the input listeners in this mode
-        _gameplay.init(_assets);
+        _loadingscene.dispose(); // Disables the input listeners in this mode
+        _gameplay.push_back(MenuScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
+        _gameplay.push_back(GameScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
+        _current = 0;
+        _gameplay[_current]->setActive(true);
         _loaded = true;
     } else {
-        _gameplay.update(timestep);
+        _input.update(timestep);
+        _playClicked = false; // loading start and Play might overlap on some devices
+        if (_menuscene.getPlay()) {
+            _playClicked = true;
+        }
+        if (_playClicked) {
+            _playClicked = false;
+            _gameplay[_current]->setActive(false);
+//            _current = (_current + 1);
+            _current = 1; // this will have to change with Help and Settings
+            _gameplay[_current]->setActive(true);
+        }
+        _gameplay[_current]->update(timestep);
     }
 }
 
@@ -155,9 +187,9 @@ void CCMApp::update(float timestep) {
  */
 void CCMApp::draw() {
     if (!_loaded) {
-        _loading.render(_batch);
+        _loadingscene.render(_batch);
     } else {
-        _gameplay.render(_batch);
+        _gameplay[_current]->render(_batch);
     }
 }
 

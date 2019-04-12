@@ -19,7 +19,8 @@ using namespace cugl;
 /** The ID for the button listener */
 #define LISTENER_ID 2
 /** This is adjusted by screen aspect ratio to get the height */
-#define SCENE_WIDTH 1024
+#define SCENE_WIDTH 576
+#define SCENE_HEIGHT 1024
 /** length of time in frames for a clash between chickens */
 #define CLASHLENGTH 50
 /** maximum size of chicken stack */
@@ -88,7 +89,7 @@ Stack oppPreviewStack;
  */
 bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     // Initialize the scene to a locked width
-    Size dimen = Application::get()->getDisplaySize();
+    Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     if (assets == nullptr) {
         return false;
@@ -182,6 +183,8 @@ void GameScene::update(float timestep) {
 			stackSize++;
 			skipState = ENTRY; // Returns the state machine to the entry state
 		}
+
+		setNumChickensWillDiePreview();
 		//CULog("SKIP: %d",skipState);
 	}
 
@@ -217,7 +220,6 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-
 			player->clearHandToDiscard();
 			opp->clearHandToDiscard();
 			// refills before discarding to prevent specials being obtained twice in a row
@@ -229,8 +231,11 @@ void GameScene::update(float timestep) {
 			prevHand = player->getHand().size();
 			stackSize = 0;
 
-			//player->takeDamage(opp->getStack().getSize());
-			//opp->takeDamage(player->getStack().getSize());
+			player->setNumChickensWillDiePreview(0);
+			opp->setNumChickensWillDiePreview(0);
+
+			player->takeDamage(opp->getStack().getSize());
+			opp->takeDamage(player->getStack().getSize());
 
 			player->getStack().clear();
 			opp->getStack().clear();
@@ -278,6 +283,18 @@ void GameScene::setActive(bool value) {
     } */
 }
 
+void GameScene::setNumChickensWillDiePreview() {
+	Stack p = Stack(player->getStack());
+	Stack o = Stack(opp->getStack());
+
+	int size = p.getSize();
+
+	while (!p.empty() && !o.empty()) p.compare(o);
+
+	player->setNumChickensWillDiePreview(size - p.getSize());
+	opp->setNumChickensWillDiePreview(size - o.getSize());
+}
+
 void GameScene::handEffect() {
 	special pLast = player->getOrder().back().getSpecial();
 	special oLast = opp->getOrder().back().getSpecial();
@@ -297,4 +314,17 @@ void GameScene::handEffect() {
 	}
 	if (oLast == special::Spy)
 		opp->draw();
+}
+
+Size GameScene::computeActiveSize() const {
+	Size dimen = Application::get()->getDisplaySize();
+	float ratio1 = dimen.width / dimen.height;
+	float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+	if (ratio1 < ratio2) {
+		dimen *= SCENE_WIDTH / dimen.width;
+	}
+	else {
+		dimen *= SCENE_HEIGHT / dimen.height;
+	}
+	return dimen;
 }

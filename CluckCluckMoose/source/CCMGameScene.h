@@ -74,6 +74,14 @@ public:
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
+
+	/**
+	 * Returns the active screen size of this scene.
+	 *
+	 * This method is for graceful handling of different aspect
+	 * ratios
+	 */
+	cugl::Size computeActiveSize() const;
     
     /**
      * Sets whether the scene is currently active
@@ -137,6 +145,8 @@ public:
 	void handEffect();
 	/** Does special chicken effects of the chickens on the top of both stacks. */
 	//void specialChickenEffect(Stack &player, Stack &opp);
+	/** Sets the number of chickens in both moose's stack that will die if clashes were to occur with the current stacks*/
+	void setNumChickensWillDiePreview();
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */
