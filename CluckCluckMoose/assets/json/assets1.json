@@ -260,6 +260,26 @@
             "wrapT": "clamp"
         }
     },
+	"sounds": {
+        "bell": {
+            "type":     "sample",
+            "file":     "audio/boxing_bell.wav",
+            "volume":   0.5,
+			"stream": false
+        },
+        "screech": {
+            "type":     "sample",
+            "file":     "audio/chicken_screech.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "theme": {
+            "type":     "sample",
+            "file":     "audio/CCM_Theme.wav",
+            "volume":   0.5,
+			"stream":	true
+        }
+    },
 	"fonts": {
 		"felt": {
 			"file":     "fonts/MarkerFelt.ttf",

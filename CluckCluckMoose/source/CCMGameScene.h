@@ -13,6 +13,7 @@
 
 #include <cugl/cugl.h>
 #include <unordered_map>
+#include <cugl/audio/CUAudioChannels.h>
 
 #include "CCMInput.h"
 #include "Moose.h"
@@ -27,7 +28,6 @@ class GameScene : public cugl::Scene {
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
-    
     
     //std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
     

@@ -6,6 +6,9 @@
 
 using namespace cugl;
 
+/** Sfx for the game*/
+#define CHICKEN_SCREECH		"screech"
+
 std::shared_ptr<AssetManager> _assets;
 
 //Button list for player hand
@@ -314,6 +317,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 				heldButton = nullptr;
 				if (butt->getPositionX() < MOOSE_X_OFFSET/2 && butt->getPositionY() > MOOSE_HEIGHT) {
 					playerGlobe->addToStackFromHand(i);
+
+					//Play chicken cluck sfx
+					auto source = _assets->get<Sound>(CHICKEN_SCREECH);
+					if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
+						AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
+					}
 				}
 				if (i < 3) {
 					butt->setPosition((i - 1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET);

@@ -26,6 +26,12 @@ using namespace cugl;
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
+/** BGM for the game*/
+#define GAME_MUSIC			"theme"
+
+/** Sfx for the game*/
+#define BOXING_BELL			"bell"
+
 /** Values representing the relevant states for special chicken effect */
 #define ENTRY -1
 #define NONE 0
@@ -96,12 +102,17 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     } else if (!Scene::init(dimen)) {
         return false;
     }
+	_assets = assets;
 
+	auto loading = _assets->get<Sound>("trailer");
+	auto game_music = _assets->get<Sound>(GAME_MUSIC);
+	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
 	root = Node::alloc();
 	addChild(root);
   
+	//Initialize audio channels
   
 	//Initialize stack sizes
 	stackSize = 0;
@@ -112,11 +123,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	//Initialize cooldown
 	//cooldown = (int)(CLASHLENGTH / MAXSTACKSIZE);
 
-
 	//Initialize moose
-//    player = Moose::Moose(3, 3);
     player = Moose::alloc(5, 6);
-//    opp = Moose::Moose(3, 3);
     opp = Moose::alloc(5, 6);
 	player->refillHand();
 	opp->refillHand();
@@ -124,13 +132,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 	oppAI = AI::alloc(opp, player, AIType::Intro);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
-
-	//Initialize AI
-	//oppAI = AI::AI(opp,player);
-
-	//Draw
-
-    
     
     setActive(_active);
     
@@ -147,6 +148,9 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 void GameScene::dispose() {
     _assets = nullptr;
     Scene::dispose();
+
+	//Stop playing audio
+	AudioChannels::get()->stopMusic();
 }
 
 /**
@@ -244,6 +248,12 @@ void GameScene::update(float timestep) {
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
 		cooldown = CLASHLENGTH*1.5;
+
+		//Play the clashing sfx
+		auto source = _assets->get<Sound>(BOXING_BELL);
+		if (!AudioChannels::get()->isActiveEffect(BOXING_BELL)) {
+			AudioChannels::get()->playEffect(BOXING_BELL, source, false, source->getVolume());
+		}
 	}
 	
 	sb->updateGameScene();

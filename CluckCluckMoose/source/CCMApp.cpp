@@ -31,6 +31,7 @@ using namespace cugl;
 void CCMApp::onStartup() {
     _assets = AssetManager::alloc();
     _batch  = SpriteBatch::alloc();
+	AudioChannels::start(24);
     
     // Start-up basic input
 #ifdef CU_TOUCH_SCREEN
@@ -41,6 +42,7 @@ void CCMApp::onStartup() {
 #endif
     _assets->attach<Font>(FontLoader::alloc()->getHook());
     _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+	_assets->attach<Sound>(SoundLoader::alloc()->getHook());
     _assets->attach<Node>(SceneLoader::alloc()->getHook());
 
     // Create a "loading" screen
@@ -82,6 +84,7 @@ void CCMApp::onShutdown() {
     Input::deactivate<Mouse>();
 #endif
 
+	  AudioChannels::stop();
     _input.dispose();
     Application::onShutdown();  // YOU MUST END with call to parent
 }
@@ -98,6 +101,7 @@ void CCMApp::onShutdown() {
  * the background.
  */
 void CCMApp::onSuspend() {
+	AudioChannels::get()->pauseAll();
 	//save player's game state
 	//save current level state, if applicable
 	//_saveLoad.saveLevel(_gameplay.getPlayer(),_gameplay.getOpp());
@@ -114,6 +118,7 @@ void CCMApp::onSuspend() {
  * paused before app suspension.
  */
 void CCMApp::onResume() {
+	AudioChannels::get()->resumeAll();
 	//load player's game state
 	//JsonLoader::alloc();
 	//JsonLoader::read();
