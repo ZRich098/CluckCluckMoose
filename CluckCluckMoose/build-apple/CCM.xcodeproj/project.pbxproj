@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3709F2C62261159400DBBA36 /* CCMMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */; };
+		3709F2C72261159400DBBA36 /* CCMMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */; };
+		3709F2C82261159400DBBA36 /* CCMMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */; };
 		370CB46222275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
 		370CB46322275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
 		370CB46422275E3B00D47C32 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370CB45D22275E3B00D47C32 /* AI.cpp */; };
@@ -137,6 +140,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMMenuScene.cpp; sourceTree = "<group>"; };
+		3709F2C52261159400DBBA36 /* CCMMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMMenuScene.h; sourceTree = "<group>"; };
 		370CB45D22275E3B00D47C32 /* AI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AI.cpp; sourceTree = "<group>"; };
 		370CB45E22275E3B00D47C32 /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AI.h; sourceTree = "<group>"; };
 		371BAF76221FCC0800EBF11E /* CCMGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMGameScene.h; sourceTree = "<group>"; };
@@ -399,6 +404,8 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */,
+				3709F2C52261159400DBBA36 /* CCMMenuScene.h */,
 				375831A32249420100413F43 /* MooseFile.h */,
 				375831A42249420100413F43 /* SaveController.cpp */,
 				375831A62249420400413F43 /* SaveController.h */,
@@ -512,6 +519,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -616,6 +624,7 @@
 				371BAF89221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 				375831A92249420400413F43 /* Stack.cpp in Sources */,
 				375831AF2249420400413F43 /* SaveController.cpp in Sources */,
+				3709F2C82261159400DBBA36 /* CCMMenuScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +644,7 @@
 				371BAF88221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 				375831A82249420400413F43 /* Stack.cpp in Sources */,
 				375831AE2249420400413F43 /* SaveController.cpp in Sources */,
+				3709F2C72261159400DBBA36 /* CCMMenuScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +664,7 @@
 				371BAF87221FCC0900EBF11E /* CCMApp.cpp in Sources */,
 				375831A72249420400413F43 /* Stack.cpp in Sources */,
 				375831AD2249420400413F43 /* SaveController.cpp in Sources */,
+				3709F2C62261159400DBBA36 /* CCMMenuScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

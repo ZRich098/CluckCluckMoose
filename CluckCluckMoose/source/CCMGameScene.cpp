@@ -220,7 +220,6 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-
 			player->clearHandToDiscard();
 			opp->clearHandToDiscard();
 			// refills before discarding to prevent specials being obtained twice in a row
@@ -235,8 +234,8 @@ void GameScene::update(float timestep) {
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
 
-			//player->takeDamage(opp->getStack().getSize());
-			//opp->takeDamage(player->getStack().getSize());
+			player->takeDamage(opp->getStack().getSize());
+			opp->takeDamage(player->getStack().getSize());
 
 			player->getStack().clear();
 			opp->getStack().clear();
