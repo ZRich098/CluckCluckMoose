@@ -150,8 +150,6 @@ void CCMApp::update(float timestep) {
 
     } else {
         _input.update(timestep);
-//        _playClicked = false; // loading start and Play might overlap on some devices
-//        _levelSelected = false;
         if (_menuscene.getPlay()) { _playClicked = true; }
         else if (_levelscene.getLevel() != 0) { _levelSelected = true; }
         if (_playClicked and (_current == 0)) { // from mainmenu to level select
@@ -163,7 +161,7 @@ void CCMApp::update(float timestep) {
         }
         else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect to gameplay
             CULog("from levelselect to game");
-//            _levelscene.deactivateButtons();
+            _levelscene.deactivateButtons();
             _gameplay[_current]->setActive(false);
             _current = 2;
             _gameplay[_current]->setActive(true);

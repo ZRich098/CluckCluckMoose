@@ -125,6 +125,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	oppAI = AI::alloc(opp, player, AIType::Intro);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
+	sb->deactivateHand();
+
 	//Initialize AI
 	//oppAI = AI::AI(opp,player);
 
@@ -258,6 +260,12 @@ void GameScene::update(float timestep) {
 void GameScene::setActive(bool value) {
     _active = value;
     int pos = LISTENER_ID;
+    cooldown = CLASHLENGTH/2;
+    if (cooldown > 0) {
+        cooldown--;
+        return;
+    }
+	sb->activateHand();
     /* For(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
         if (value && !it->second->isActive()) {
             it->second->activate(pos++);

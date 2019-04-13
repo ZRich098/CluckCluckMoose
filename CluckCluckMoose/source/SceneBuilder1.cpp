@@ -400,7 +400,6 @@ std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture
 	chick->setPosition(posX, posY);
 	chick->flipHorizontal(flip);
 	node->addChild(chick);
-
 	return chick;
 }
 
@@ -709,4 +708,26 @@ void SceneBuilder1::dispose() {
 
 void SceneBuilder1::setPreview(bool preview) {
 	previewSet = preview;
+}
+
+void SceneBuilder1::deactivateHand() {
+	vector <Chicken> hand = playerGlobe->getHand();
+
+	for (int i = 0; i < 6; i++) {
+		if (i < hand.size()) {
+			buttons[i]->setVisible(false);
+			buttons[i]->deactivate();
+		}
+	}
+}
+
+void SceneBuilder1::activateHand() {
+	vector <Chicken> hand = playerGlobe->getHand();
+
+	for (int i = 0; i < 6; i++) {
+		if (i < hand.size()) {
+			buttons[i]->setVisible(true);
+			buttons[i]->activate(i + 2);
+		}
+	}
 }
