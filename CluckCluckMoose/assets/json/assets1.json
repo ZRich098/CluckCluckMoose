@@ -225,35 +225,77 @@
             "wrapT": "clamp"
         },
         "menubg": {
-            "file": "textures/bg_homescreen_v1.png",
+            "file": "textures/mainmenu/bg_homescreen_v1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "menutitle": {
-            "file": "textures/title_mainTitle_v3.png",
+            "file": "textures/mainmenu/title_mainTitle_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "menuplay": {
-            "file": "textures/btn_play_v1.png",
+            "file": "textures/mainmenu/btn_play_v1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "menuhelp": {
-            "file": "textures/btn_help_v1.png",
+            "file": "textures/mainmenu/btn_help_v1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "menusettings": {
-            "file": "textures/btn_settings_v1.png",
+            "file": "textures/mainmenu/btn_settings_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelbg": {
+            "file": "textures/levelselect/menu_levels_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelhoof": {
+            "file": "textures/levelselect/hoof.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelfarm": {
+            "file": "textures/levelselect/lvl_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelforest": {
+            "file": "textures/levelselect/lvl_forest_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelplant": {
+            "file": "textures/levelselect/lvl_plant_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelthrone": {
+            "file": "textures/levelselect/lvl_throneRoom_v1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -287,6 +329,23 @@
                     "layout" : {
                         "priority" : 1
                     }
+        },
+        "levelselect" : {
+            "comment"   : "A scene graph of buttons to demo a layout manager",
+            "type"      : "Node",
+            "format"    : {
+                "type"        : "Float",
+                "orientation" : "horizontal",
+                "x_alignment" : "center",
+                "y_alignment" : "bottom"
+            },
+            "children"  : {
+
+
+            },
+            "layout" : {
+                "priority" : 1
+            }
         },
         "game" : {
             "comment"   : "A scene graph of buttons to demo a layout manager",

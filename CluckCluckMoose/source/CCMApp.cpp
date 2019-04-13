@@ -46,6 +46,12 @@ void CCMApp::onStartup() {
     // Create a "loading" screen
     _loaded = false;
     _loadingscene.init(_assets);
+
+    _playClicked = false;
+    _helpClicked = false;
+    _settingsClicked = false;
+
+    _levelSelected = false;
     
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
@@ -125,17 +131,6 @@ void CCMApp::onResume() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
 // */
-//void CCMApp::update(float timestep) {
-//    if (!_loaded && _loading.isActive()) {
-//        _loading.update(0.01f);
-//    } else if (!_loaded) {
-//        _loading.dispose(); // Disables the input listeners in this mode
-//        _gameplay.init(_assets);
-//        _loaded = true;
-//    } else {
-//        _gameplay.update(timestep);
-//    }
-//}
 
 void CCMApp::update(float timestep) {
     if (!_loaded && _loadingscene.isActive()) {
@@ -144,22 +139,33 @@ void CCMApp::update(float timestep) {
         _loadingscene.dispose(); // Disables the input listeners in this mode
         _gameplay.push_back(MenuScene::alloc(_assets));
         _gameplay.back()->setActive(false);
+        _gameplay.push_back(LevelScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
         _gameplay.push_back(GameScene::alloc(_assets));
         _gameplay.back()->setActive(false);
         _current = 0;
         _gameplay[_current]->setActive(true);
         _loaded = true;
+        _levelscene.deactivateButtons();
+
     } else {
         _input.update(timestep);
-        _playClicked = false; // loading start and Play might overlap on some devices
-        if (_menuscene.getPlay()) {
-            _playClicked = true;
-        }
-        if (_playClicked) {
-            _playClicked = false;
+//        _playClicked = false; // loading start and Play might overlap on some devices
+//        _levelSelected = false;
+        if (_menuscene.getPlay()) { _playClicked = true; }
+        else if (_levelscene.getLevel() != 0) { _levelSelected = true; }
+        if (_playClicked and (_current == 0)) { // from mainmenu to level select
+            CULog("from mainmenu to level select");
+            _levelscene.activateButtons();
             _gameplay[_current]->setActive(false);
-//            _current = (_current + 1);
-            _current = 1; // this will have to change with Help and Settings
+            _current = 1;
+            _gameplay[_current]->setActive(true);
+        }
+        else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect to gameplay
+            CULog("from levelselect to game");
+//            _levelscene.deactivateButtons();
+            _gameplay[_current]->setActive(false);
+            _current = 2;
             _gameplay[_current]->setActive(true);
         }
         _gameplay[_current]->update(timestep);

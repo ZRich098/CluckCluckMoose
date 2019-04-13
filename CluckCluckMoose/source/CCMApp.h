@@ -18,9 +18,17 @@
 #include "CCMGameScene.h"
 #include "CCMLoadingScene.h"
 #include "CCMMenuScene.h"
+#include "CCMLevelScene.h"
 #include "CCMInput.h"
 
-#define SCENE_COUNT 2
+#include <unistd.h>
+
+//enum class SCENES {
+//    Loading = 0,
+//    MainMenu = 1,
+//    LevelSelect = 2,
+//    Gameplay = 3
+//};
 
 /**
  * This class represents the application root for the ship demo.
@@ -40,12 +48,17 @@ protected:
     std::vector<std::shared_ptr<cugl::Scene>> _gameplay;
     /** The primary controller for the game world */
     GameScene _gamescene;
+
     /** The currently active scene */
     size_t _current;
+//    SCENES _current;
+
     /** The controller for the loading screen */
     LoadingScene _loadingscene;
     /** The controller for the menu screen */
     MenuScene _menuscene;
+    /** The controller for the level select screen */
+    LevelScene _levelscene;
     /** The controller for scene input */
     CCMInput _input;
 
@@ -53,6 +66,9 @@ protected:
     bool _playClicked;
     bool _helpClicked;
     bool _settingsClicked;
+
+    // Values for tracking level selection
+    bool _levelSelected;
     
 public:
 #pragma mark Constructors
