@@ -29,6 +29,9 @@
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\CCMMenuScene.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\AI.h" />
@@ -64,6 +67,9 @@
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\MooseFile.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\CCMMenuScene.h">
       <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>

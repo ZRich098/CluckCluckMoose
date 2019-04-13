@@ -49,7 +49,7 @@ public:
 	/** Loads the level tag from a json file
 	Returns true if succeeds, else returns false
 	*/
-	bool loadLevelTag(const std::stared_ptr<JsonValue>& json);
+	bool loadLevelTag(const std::shared_ptr<JsonValue>& json);
 
 #pragma mark - 
 #pragma mark Savers
@@ -70,6 +70,5 @@ public:
 	*/
 	const std::shared_ptr<Moose>& getOpponent() { return opponent; };
 
-}
-
+};
 #endif /* __SAVE_CONTROLLER_H__ */

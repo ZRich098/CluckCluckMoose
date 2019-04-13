@@ -28,6 +28,9 @@ class GameScene : public cugl::Scene {
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
+
+	std::shared_ptr<Moose> player;
+	std::shared_ptr<Moose> opp;
     
     //std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
     
