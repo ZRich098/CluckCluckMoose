@@ -104,7 +104,7 @@ void LoadingScene::update(float progress) {
         if (_progress >= 1) {
             _progress = 1.0f;
             _button->setVisible(true);
-            _button->activate(1);
+            _button->activate(0);
         }
         _bar->setProgress(_progress);
     }
