@@ -1,5 +1,10 @@
 //Scene builder file
 
+/*  Input scheme manipulation:
+For drag, uncomment line 477 and change the conditional on 353 to check whether the chicken is in the bounding box to play
+For touch and hold, uncomment lines 347-349, 788-790, and 812-826 and change the conditional to check if the timer for the button >0 but less than the threshold
+*/
+
 //Import important files
 #include "Moose.h"
 #include "SceneBuilder1.h"
