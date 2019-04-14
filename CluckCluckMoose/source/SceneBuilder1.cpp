@@ -1,5 +1,10 @@
 //Scene builder file
 
+/*  Input scheme manipulation:
+For drag, uncomment line 477 and change the conditional on 353 to check whether the chicken is in the bounding box to play (butt->getPosition().x < <tunable int a> && butt->getPosition().y > <tunable int b>)
+For touch and hold, uncomment lines 347-349, 788-790, and 812-826 and change the conditional to check if the timer for the button >0 but less than the threshold (timers[i] < 30 && timers[i] > 1)
+*/
+
 //Import important files
 #include "Moose.h"
 #include "SceneBuilder1.h"
@@ -134,6 +139,10 @@ float timeBtnFrames = 0.1;
 //std::vector<std::shared_ptr<int>> flappingFrame;
 std::vector<int> flappingFrame;
 
+//Input timer to determine if the player wants info or wants to play a chicken
+std::vector<int> timers;
+int heldButtInd;
+
 
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
 
@@ -143,6 +152,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	oppGlobe = opp;
 
 	heldButton = nullptr;
+	for (int i = 0; i < 6; i++) {
+		timers.push_back(0);
+	}
+	heldButtInd = -1;
 
 	_assets = assets;
 	_input.init();
@@ -330,13 +343,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		}
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
-
 				heldButton = butt;
+				if (timers[i] > 30) {
+					infoCanvas->setVisible(true);
+				}
 
 			}
 			if (!down) {
-				heldButton = nullptr;
-				if (butt->getPositionX() < MOOSE_X_OFFSET/2 && butt->getPositionY() > MOOSE_HEIGHT) {
+				if (timers[i] < 30 && timers[i] > 1) {
 					playerGlobe->addToStackFromHand(i);
 
 					//Play chicken cluck sfx
@@ -345,12 +359,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 						AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
 					}
 				}
-				if (i < 3) {
+				heldButton = nullptr;
+				heldButtInd = -1;
+				/*if (i < 3) {
 					butt->setPosition((i - 1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
 				}
 				else {
 					butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
-				}
+				} */
 			}
 		});
 
@@ -457,8 +473,8 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			buttons[i]->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
-
-				buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
+				heldButtInd = i;
+				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
 				std::shared_ptr<Texture> infoText;
 				special cel = playerGlobe->getHandAt(i).getSpecial();
 				switch (cel) {
@@ -769,7 +785,9 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		infoCanvas->setVisible(false);
 	}
 	else {
-		infoCanvas->setVisible(true);
+		if (timers[heldButtInd] > 30) {
+			infoCanvas->setVisible(true);
+		}
 	}
 
 	//Update the opponent health bar
@@ -791,6 +809,22 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 void SceneBuilder1::updateInput(float timestep) {
 	_input.update(timestep);
+	if (heldButtInd >= 0) {
+		for (int i = 0; i < 6; i++) {
+			if (i == heldButtInd) {
+				timers[i]++;
+			}
+			else {
+				timers[i] = 0;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < 6; i++) {
+			timers[i] = 0;
+		}
+	}
+
 }
 
 //Dispose of the scene builder
