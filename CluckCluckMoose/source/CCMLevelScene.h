@@ -83,8 +83,6 @@ public:
     int getLevel();
     void deactivateButtons();
     void activateButtons();
-//    bool getHelp();
-//    bool getSettings();
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */

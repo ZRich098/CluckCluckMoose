@@ -55,6 +55,7 @@ void CCMApp::onStartup() {
     
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
+//    _assets->loadAsync<LevelModel>(LEVEL_ONE_KEY,LEVEL_ONE_FILE,nullptr);
 
     _input.init();
     
@@ -86,6 +87,7 @@ void CCMApp::onShutdown() {
 #endif
 
     _input.dispose();
+    AudioChannels::stop();
     Application::onShutdown();  // YOU MUST END with call to parent
 }
 
@@ -101,6 +103,7 @@ void CCMApp::onShutdown() {
  * the background.
  */
 void CCMApp::onSuspend() {
+    AudioChannels::get()->pauseAll();
 }
 
 /**
@@ -114,6 +117,7 @@ void CCMApp::onSuspend() {
  * paused before app suspension.
  */
 void CCMApp::onResume() {
+    AudioChannels::get()->resumeAll();
 }
 
 
@@ -153,14 +157,18 @@ void CCMApp::update(float timestep) {
         if (_menuscene.getPlay()) { _playClicked = true; }
         else if (_levelscene.getLevel() != 0) { _levelSelected = true; }
         if (_playClicked and (_current == 0)) { // from mainmenu to level select
-            CULog("from mainmenu to level select");
             _levelscene.activateButtons();
             _gameplay[_current]->setActive(false);
             _current = 1;
             _gameplay[_current]->setActive(true);
         }
         else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect to gameplay
-            CULog("from levelselect to game");
+//            std::string levelNum = std::to_string(_levelScene.getLevel());
+//            std::string levelFile = "json/assets" + levelNum + ".json";
+
+//             Que up the other assets
+//            _assets->loadDirectoryAsync(levelFile,nullptr);
+
             _levelscene.deactivateButtons();
             _gameplay[_current]->setActive(false);
             _current = 2;

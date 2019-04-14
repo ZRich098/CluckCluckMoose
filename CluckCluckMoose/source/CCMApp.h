@@ -22,6 +22,7 @@
 #include "CCMInput.h"
 
 #include <unistd.h>
+#include <string>
 
 //enum class SCENES {
 //    Loading = 0,

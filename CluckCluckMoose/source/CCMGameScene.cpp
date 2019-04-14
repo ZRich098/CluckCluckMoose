@@ -51,6 +51,11 @@ bool isClashing;
 //bool to signify a clash preview is in progress
 bool isPreviewing;
 
+//bool to signify a a winState
+bool didWin;
+
+//bool to signify a a loseState
+bool didLose;
 
 
 //SceneBuilder
@@ -242,6 +247,18 @@ void GameScene::update(float timestep) {
 			player->getStack().clear();
 			opp->getStack().clear();
 			isClashing = false;
+
+			if (player->getHealth() <= 0) {
+				didLose = true;
+				didWin = false;
+				CULog("lost! lmao");
+			}
+
+			if (opp->getHealth() <= 0) {
+				didLose = false;
+				didWin = true;
+				CULog("win");
+			}
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
