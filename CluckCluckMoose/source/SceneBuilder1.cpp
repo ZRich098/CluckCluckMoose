@@ -4,6 +4,7 @@
 #include "Moose.h"
 #include "SceneBuilder1.h"
 
+
 using namespace cugl;
 
 /** Sfx for the game*/
@@ -13,17 +14,18 @@ std::shared_ptr<AssetManager> _assets;
 
 //Button list for player hand
 std::vector<std::shared_ptr<Button>> buttons;
+std::vector<std::shared_ptr<AnimationNode>> buttonTextures;
 
 //Texture list for determining which textures need to be replaced in the hand
 std::vector<std::shared_ptr<Texture>> texturesHand;
 
 //List of player stack nodes
-std::vector<std::shared_ptr<PolygonNode>> pstackNodes;
+std::vector<std::shared_ptr<AnimationNode>> pstackNodes;
 //Texture list for determining which textures need to be replaced in the player stack
 std::vector<std::shared_ptr<Texture>> texturesPStack;
 
 //List of opponent stack nodes
-std::vector<std::shared_ptr<PolygonNode>> ostackNodes;
+std::vector<std::shared_ptr<AnimationNode>> ostackNodes;
 //Texture list for determining which textures need to be replaced in the opponent stack
 std::vector<std::shared_ptr<Texture>> texturesOStack;
 
@@ -58,6 +60,7 @@ std::shared_ptr<Button> heldButton;
 #define HEALTH_BLOCK_SPACING 24
 #define HEART_X_OFFSET 225
 #define BAR_DISTANCE 165
+#define CHICKEN_FILMSTRIP_LENGTH 8
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -124,6 +127,12 @@ std::shared_ptr<Moose> oppGlobe;
 
 //Preview tracking
 bool previewSet;
+//values for animation
+int  thisFrame = 0;
+float timeAmount = 0;
+float timeBtnFrames = 0.1;
+//std::vector<std::shared_ptr<int>> flappingFrame;
+std::vector<int> flappingFrame;
 
 
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
@@ -181,22 +190,34 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
 
-	//Init stack nodes
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
-		poly = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
-
-		pstackNodes.push_back(poly);
-		texturesPStack.push_back(text);
+	//init flapping booleans to 0
+	for(int i =0; i< 6; i++){
+        int f = 0;
+	    flappingFrame.push_back(f);
 	}
 
 
+	//Init stack nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
-		text = textureF;
-		std::shared_ptr<PolygonNode> poly;
+		text = textureW;
+		//this is std library for c++
+		std::shared_ptr<AnimationNode> anim;
+		//get changed to animation nodes EMMMAAA
+		anim = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
+
+		pstackNodes.push_back(anim);
+		texturesPStack.push_back(text);
+	}
+
+	//origin is bottom left
+
+
+	//init enemy chicken nodes
+	for (int i = 0; i < 5; i++) {
+		std::shared_ptr<Texture> text;
+		text = textureW;
+		std::shared_ptr<AnimationNode> poly;
 		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
 
 		ostackNodes.push_back(poly);
@@ -229,9 +250,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	healthCanvas = Node::alloc();
 	layer->addChild(healthCanvas);
 
-	
 
-	
+
+
 
 
 	//reset drawing between frames
@@ -248,8 +269,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
 	backCanvas->addChild(background);
 
-	
-	
+
+
 	//Draw player moose
 	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
@@ -282,15 +303,15 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	info->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT/2 + INFO_Y_OFFSET);
 	infoCanvas->addChild(info);
 	infoCanvas->setVisible(false);
-	
+
 
 	//Init appropriately sized buttons
 	for (int i = 0; i < 6; i++) {
 		std::shared_ptr<Button> button;
 		std::shared_ptr<Texture> text;
-		text = textureF;
-		
-		std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(text);
+		text = textureW;
+
+		std::shared_ptr<AnimationNode> id = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH,CHICKEN_FILMSTRIP_LENGTH);
 		id->setAnchor(Vec2::ANCHOR_CENTER);
 		id->flipHorizontal(true);
 		std::shared_ptr<Button> butt = Button::alloc(id);
@@ -309,9 +330,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		}
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
-				
+
 				heldButton = butt;
-			
+
 			}
 			if (!down) {
 				heldButton = nullptr;
@@ -338,10 +359,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		butt->activate(i + 2);
 		//CULog("Button %d made", i);
 		buttons.push_back(butt);
+		buttonTextures.push_back(id);
 		texturesHand.push_back(text);
 	}
 
-	
+
 
 	//Init the clash preview button
 
@@ -401,9 +423,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	return true;
 }
 
-std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
-	
-	std::shared_ptr<PolygonNode> chick = PolygonNode::allocWithTexture(texture);
+std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
+
+	std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(texture,1,CHICKEN_FILMSTRIP_LENGTH);
 	chick->setScale(STACK_SCALE); // Magic number to rescale asset
 	chick->setAnchor(Vec2::ANCHOR_CENTER);
 	chick->setPosition(posX, posY);
@@ -413,8 +435,22 @@ std::shared_ptr<PolygonNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture
 	return chick;
 }
 
-void SceneBuilder1::updateGameScene() {
+
+void SceneBuilder1::updateGameScene(float timestep) {
+	timeAmount +=timestep;
+	bool isNextFrame = (timeAmount > timeBtnFrames);
+	if(timeAmount > timeBtnFrames)
+	{
+	    isNextFrame = true;
+		timeAmount = 0;
+		if(thisFrame>=CHICKEN_FILMSTRIP_LENGTH -1)
+			thisFrame = 0;
+		thisFrame++;
+	}
+
+
 	vector <Chicken> hand = playerGlobe->getHand();
+
 
 	for (int i = 0; i < 6; i++) {
 		if (i < hand.size()) {
@@ -539,18 +575,41 @@ void SceneBuilder1::updateGameScene() {
 		}
 
 		std::shared_ptr<Node> upchld = buttons[i]->getChild(0);
-		
-		std::shared_ptr<PolygonNode> newUp = PolygonNode::allocWithTexture(text);
-		newUp->flipHorizontal(true);
-		buttons[i]->swapChild(upchld, newUp, false);
-		
+
+		std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH,CHICKEN_FILMSTRIP_LENGTH);
+		//animates bottom chickens in coop
+		int curFrame = (flappingFrame[i]);
+//        int curFrame = 0;
+        int nextFrame = curFrame + 1;
+
+        //decides if a flapping animation should start
+		if(isNextFrame && (curFrame!=0|| std::rand()%50==0)){
+
+		    if(nextFrame >= CHICKEN_FILMSTRIP_LENGTH -1) {
+		        nextFrame = 0;
+
+            }
+            flappingFrame[i] = nextFrame;
+            newUp->setFrame(nextFrame);
+		}
+		else{
+		    newUp->setFrame(nextFrame-1);
+
+		}
+
+        newUp->flipHorizontal(true);
+        buttons[i]->swapChild(upchld, newUp, false);
+
+
 	}
 
 	Stack pstack = playerGlobe->getStack();
 
+
 	for (int i = 0; i < 5; i++) {
 		if (i < pstack.getSize()) {
 			pstackNodes[i]->setVisible(true);
+
 		}
 		else {
 			pstackNodes[i]->setVisible(false);
@@ -608,9 +667,21 @@ void SceneBuilder1::updateGameScene() {
 			}
 		}
 		if (texturesPStack[i] != text) {
-			pstackNodes[i]->setTexture(text);
-			texturesPStack[i] = text;
+
 		}
+        std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
+        chick->setScale(STACK_SCALE); // Magic number to rescale asset
+        chick->setAnchor(Vec2::ANCHOR_CENTER);
+        chick->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
+        chick->flipHorizontal(true);
+
+        layer->swapChild(pstackNodes[i], chick, false);
+        pstackNodes[i] = chick;
+
+        texturesPStack[i] = text;
+
+        pstackNodes[i]->setFrame(thisFrame);
+
 	}
 
 	Stack ostack = oppGlobe->getStack();
@@ -618,6 +689,7 @@ void SceneBuilder1::updateGameScene() {
 	for (int i = 0; i < 5; i++) {
 		if (i < ostack.getSize()) {
 			ostackNodes[i]->setVisible(true);
+//            ostackNodes[i]->setFrame(thisFrame);
 		}
 		else {
 			ostackNodes[i]->setVisible(false);
@@ -675,9 +747,21 @@ void SceneBuilder1::updateGameScene() {
 			}
 		}
 		if (texturesOStack[i] != text) {
-			ostackNodes[i]->setTexture(text);
-			texturesOStack[i] = text;
+//			ostackNodes[i]->setTexture(text);
+//			texturesOStack[i] = text;
 		}
+        std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
+        chick->setScale(STACK_SCALE); // Magic number to rescale asset
+        chick->setAnchor(Vec2::ANCHOR_CENTER);
+        chick->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
+        chick->flipHorizontal(false);
+
+        layer->swapChild(ostackNodes[i], chick, false);
+        ostackNodes[i] = chick;
+
+        texturesPStack[i] = text;
+
+        ostackNodes[i]->setFrame(thisFrame);
 	}
 
 	//Update the info card
