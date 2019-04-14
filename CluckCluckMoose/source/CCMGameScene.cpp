@@ -256,7 +256,7 @@ void GameScene::update(float timestep) {
 		}
 	}
 	
-	sb->updateGameScene();
+	sb->updateGameScene(timestep);
 }
 
 void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
