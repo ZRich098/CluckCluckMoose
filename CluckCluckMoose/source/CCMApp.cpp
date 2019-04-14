@@ -159,11 +159,15 @@ void CCMApp::update(float timestep) {
 		_loadingscene.dispose(); // Disables the input listeners in this mode
 		_gameplay.push_back(MenuScene::alloc(_assets));
 		_gameplay.back()->setActive(false);
-		_gameplay.push_back(GameScene::alloc(_assets));
+		std::shared_ptr<GameScene> gs = GameScene::alloc(_assets);
+		_gamescene = *gs;
+		_gameplay.push_back(gs);
 		_gameplay.back()->setActive(false);
 		_current = 0;
 		_gameplay[_current]->setActive(true);
 		_loaded = true;
+
+		_input = _gamescene.getSceneBuilder()->getInput();
 	} else {
 		_input.update(timestep);
 		_playClicked = false; // loading start and Play might overlap on some devices

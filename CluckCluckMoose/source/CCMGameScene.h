@@ -150,6 +150,11 @@ public:
 	//void specialChickenEffect(Stack &player, Stack &opp);
 	/** Sets the number of chickens in both moose's stack that will die if clashes were to occur with the current stacks*/
 	void setNumChickensWillDiePreview();
+
+#pragma mark -
+#pragma mark Accessors
+	/** Gets the Scene Builder instance. */
+	std::shared_ptr<SceneBuilder1> getSceneBuilder();
 };
 
 #endif /* __CCM_GAME_SCENE_H__ */

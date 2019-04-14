@@ -85,7 +85,10 @@ public:
 #pragma mark -
 #pragma mark Accessors
 	//gets if preview button has been pressed
-	bool getPreview() { return previewSet; }
+	bool getPreview() { return previewSet; };
+
+	//gets the Input instance
+	CCMInput getInput() { return _input; };
 
 #pragma mark -
 #pragma mark Setters

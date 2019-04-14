@@ -338,3 +338,7 @@ Size GameScene::computeActiveSize() const {
 	}
 	return dimen;
 }
+
+std::shared_ptr<SceneBuilder1> getSceneBuilder() {
+	return sb;
+}
