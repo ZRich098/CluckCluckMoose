@@ -37,6 +37,12 @@ std::vector<std::shared_ptr<Texture>> texturesOStack;
 //Track held chicken
 std::shared_ptr<Button> heldButton;
 
+//Track previous chicken distribution
+std::vector<int> prevDist;
+
+//Track scale for drawing UI elements
+float healthYScale;
+
 
 
 /** The ID for the button listener */
@@ -61,11 +67,22 @@ std::shared_ptr<Button> heldButton;
 #define INFO_X_OFFSET 7
 #define INFO_Y_OFFSET 100
 #define INFO_SCALE 0.5
-#define HEALTH_BAR_Y_OFFSET 925
-#define HEALTH_BLOCK_SPACING 24
-#define HEART_X_OFFSET 225
-#define BAR_DISTANCE 165
+#define HEALTH_BAR_Y_FACTOR 12
+#define HEALTH_BLOCK_SPACING 19
+#define HEART_X_OFFSET 180
+#define BAR_DISTANCE 120
 #define CHICKEN_FILMSTRIP_LENGTH 8
+#define HEART_SCALE 0.3
+#define BLOCK_X_SCALE 0.29
+#define BLOCK_Y_SCALE 0.2
+#define HBAR_SCALE 0.5
+#define ELT_Y_OFFSET 75
+#define ELT_INFO_SCALE 0.7
+#define ELT_INFO_X_OFFSET 30
+#define ELT_NUM_X_OFFSET 40
+#define ELT_NUM_Y_OFFSET 5
+#define ELT_NUM_SCALE 0.7
+#define ELT_NUM_SPACING 50
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -100,6 +117,12 @@ std::shared_ptr<Texture> oHeart;
 std::shared_ptr<Texture> pBlock;
 std::shared_ptr<Texture> oBlock;
 
+//Number textures
+std::shared_ptr<Texture> num1;
+std::shared_ptr<Texture> num2;
+std::shared_ptr<Texture> num3;
+std::shared_ptr<Texture> num4;
+
 
 
 //Main canvas to draw stuff to
@@ -125,6 +148,9 @@ std::shared_ptr<Node> clashButtonCanvas;
 
 //Canvas for health bar
 std::shared_ptr<Node> healthCanvas;
+
+//Canvas for elemental info
+std::shared_ptr<Node> eltInfoCanvas;
 
 //Players
 std::shared_ptr<Moose> playerGlobe;
@@ -249,6 +275,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	clashButtonCanvas = Node::alloc();
 	layer->addChild(clashButtonCanvas);
 	clashButtonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+
+	//Add elt info canvas
+	eltInfoCanvas = Node::alloc();
+	layer->addChild(eltInfoCanvas);
 
 	//Create an info node
 	infoCanvas = Node::alloc();
@@ -404,38 +434,76 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	butt->activate(99);
 
 	//Draw initial health
+	//Scale factor * scene height makes the health bar appear in consistent locations, independent of device
+	healthYScale = (((float)(HEALTH_BAR_Y_FACTOR - 1)) / ((float)HEALTH_BAR_Y_FACTOR)) * SCENE_HEIGHT;
+	CULog("%d", healthYScale);
 	//Bar
 	std::shared_ptr<PolygonNode> hBar = PolygonNode::allocWithTexture(bar);
 	hBar->setAnchor(Vec2::ANCHOR_CENTER);
-	hBar->setScale(0.7);
-	hBar->setPosition(SCENE_WIDTH / 2, HEALTH_BAR_Y_OFFSET);
+	hBar->setScale(HBAR_SCALE);
+	hBar->setPosition(SCENE_WIDTH / 2, healthYScale);
 	healthCanvas->addChild(hBar);
 	//Hearts
 	std::shared_ptr<PolygonNode> playerH = PolygonNode::allocWithTexture(pHeart);
 	playerH->setAnchor(Vec2::ANCHOR_CENTER);
-	playerH->setScale(1.0);
-	playerH->setPosition(SCENE_WIDTH / 2 - HEART_X_OFFSET, HEALTH_BAR_Y_OFFSET);
+	playerH->setScale(HEART_SCALE);
+	playerH->setPosition(SCENE_WIDTH / 2 - HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(playerH);
 	std::shared_ptr<PolygonNode> oppH = PolygonNode::allocWithTexture(oHeart);
 	oppH->setAnchor(Vec2::ANCHOR_CENTER);
-	oppH->setScale(1.0);
-	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, HEALTH_BAR_Y_OFFSET);
+	oppH->setScale(HEART_SCALE);
+	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(oppH);
 	//Blocks
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
 		playerB->setAnchor(Vec2::ANCHOR_CENTER);
-		playerB->setScale(0.8);
-		playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), HEALTH_BAR_Y_OFFSET);
+		playerB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
+		playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
 		healthCanvas->addChild(playerB);
 	}
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(oBlock);
 		oppB->setAnchor(Vec2::ANCHOR_CENTER);
-		oppB->setScale(0.8);
-		oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), HEALTH_BAR_Y_OFFSET);
+		oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
+		oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
 		healthCanvas->addChild(oppB);
 	}
+	
+	//Add elemental information
+	std::shared_ptr<Texture> eltInfoText = _assets->get<Texture>("groupedElts");
+	std::shared_ptr<PolygonNode> eltInfo = PolygonNode::allocWithTexture(eltInfoText);
+	eltInfo->setAnchor(Vec2::ANCHOR_TOP_CENTER);
+	eltInfo->setScale(ELT_INFO_SCALE);
+	eltInfo->setPosition(SCENE_WIDTH / 2 - ELT_INFO_X_OFFSET, healthYScale - ELT_Y_OFFSET);
+	eltInfoCanvas->addChild(eltInfo);
+
+	//Add numeric values (also alloc textures here)
+	num1 = _assets->get<Texture>("num1");
+	num2 = _assets->get<Texture>("num2");
+	num3 = _assets->get<Texture>("num3");
+	num4 = _assets->get<Texture>("num4");
+	std::shared_ptr<PolygonNode> fireNum = PolygonNode::allocWithTexture(num1);
+	std::shared_ptr<PolygonNode> waterNum = PolygonNode::allocWithTexture(num1);
+	std::shared_ptr<PolygonNode> grassNum = PolygonNode::allocWithTexture(num1);
+	fireNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
+	fireNum->setScale(ELT_NUM_SCALE);
+	fireNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET);
+	eltInfoCanvas->addChild(fireNum);
+	waterNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
+	waterNum->setScale(ELT_NUM_SCALE);
+	waterNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - ELT_NUM_SPACING);
+	eltInfoCanvas->addChild(waterNum);
+	grassNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
+	grassNum->setScale(ELT_NUM_SCALE);
+	grassNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (2*ELT_NUM_SPACING));
+	eltInfoCanvas->addChild(grassNum);
+
+	//Initialize distribution
+	prevDist.push_back(1);
+	prevDist.push_back(1);
+	prevDist.push_back(1);
+
 	return true;
 }
 
@@ -803,6 +871,48 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		if (playerGlobe->getHealth() < i) {
 			std::shared_ptr<Node> child = healthCanvas->getChild(i + 2);
 			child->setVisible(false);
+		}
+	}
+
+	//Update the opponent type distribution
+	for (int i = 0; i < 3; i++) {
+		int currDistI = (oppGlobe->getChickenElementDistribution())[i];
+		CULog("There should be %d chickens for type %d", currDistI, i);
+		int prevDistI = (prevDist[i]);
+		CULog("There were previously %d chickens for type %d", prevDistI, i);
+		if (currDistI != prevDistI) {
+			CULog("There is a chicken update for type %d", i);
+			std::shared_ptr<Texture> text;
+			if (currDistI == 0) {
+				CULog("There are no chickens of type %d", i);
+				eltInfoCanvas->getChild(i + 1)->setVisible(false);
+			}
+			else if (currDistI == 1) {
+				CULog("There are 1 chickens of type %d", i);
+				text = num1;
+			}
+			else if (currDistI == 2) {
+				CULog("There are 2 chickens of type %d", i);
+				text = num2;
+			}
+			else if (currDistI == 3) {
+				CULog("There are 3 chickens of type %d", i);
+				text = num3;
+			}
+			else if (currDistI == 4) {
+				CULog("There are 4 chickens of type %d", i);
+				text = num4;
+			}
+			prevDist[i] = currDistI;
+			if (currDistI != 0) {
+				std::shared_ptr<PolygonNode> swapPoly = PolygonNode::allocWithTexture(text);
+				swapPoly->setAnchor(Vec2::ANCHOR_TOP_CENTER);
+				swapPoly->setScale(ELT_NUM_SCALE);
+				swapPoly->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (i*ELT_NUM_SPACING));
+				swapPoly->setVisible(true);
+				std::shared_ptr<Node> oldChild = eltInfoCanvas->getChild(i + 1);
+				eltInfoCanvas->swapChild(oldChild, swapPoly, false);
+			}
 		}
 	}
 }

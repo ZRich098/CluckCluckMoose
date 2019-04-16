@@ -183,21 +183,21 @@
             "wrapT": "clamp"
         },
         "oHeart": {
-            "file": "textures/heart_opponent_v2.png",
+            "file": "textures/heart_opponent.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "pBlock": {
-            "file": "textures/block_playerHealth.png",
+            "file": "textures/tile_player.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "oBlock": {
-            "file": "textures/block_opponentHealth_v2.png",
+            "file": "textures/tile_opponent.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -219,6 +219,41 @@
         },
         "farmbg": {
             "file": "textures/bg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "groupedElts": {
+            "file": "textures/grouped_elements_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "num1": {
+            "file": "textures/num_1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "num2": {
+            "file": "textures/num_2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "num3": {
+            "file": "textures/num_3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "num4": {
+            "file": "textures/num_4.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
