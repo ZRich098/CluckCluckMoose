@@ -213,7 +213,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	JsonValue oppHand;
 	oppHand.initArray();
-	//JsonValue cardInHand; //Make opp Hand
+	//Make opp Hand
 	for (int i = 0; i < opp.getHand().size(); i++) {
 		cardInHand.init(opp.getHandAt(i).toString());
 		oppHand.appendChild(std::make_shared<JsonValue>(cardInHand));
@@ -222,7 +222,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	JsonValue oppOrder;
 	oppOrder.initArray();
-	//JsonValue cardInOrder; //Make opp PlayOrder
+	//Make opp PlayOrder
 	for (int i = 0; i < opp.getPlayOrder().size(); i++) {
 		cardInOrder.init(opp.getPlayOrderAt(i).toString());
 		oppOrder.appendChild(std::make_shared<JsonValue>(cardInOrder));
@@ -231,7 +231,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	JsonValue oppCoop;
 	oppCoop.initArray();
-	//JsonValue cardInCoop; //Make opp Coop
+	//Make opp Coop - @TODO REPLACE WITH NESTED ARRAYS
 	for (int i = 0; i < opp.getDeck().getSize(); i++) {
 		cardInCoop.init(opp.getDeckAt(i).toString());
 		oppCoop.appendChild(std::make_shared<JsonValue>(cardInCoop));
@@ -240,7 +240,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	JsonValue oppDiscard;
 	oppDiscard.initArray();
-	//JsonValue cardInDiscard; //Make opp Discard
+	//Make opp Discard
 	for (int i = 0; i < opp.getDiscard().size(); i++) {
 		cardInDiscard.init(opp.getDiscardAt(i).toString());
 		oppDiscard.appendChild(std::make_shared<JsonValue>(cardInDiscard));

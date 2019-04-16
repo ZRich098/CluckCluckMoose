@@ -121,9 +121,11 @@ void CCMApp::onSuspend() {
 void CCMApp::onResume() {
 	AudioChannels::get()->resumeAll();
 	//load player's game state
-	//JsonLoader::alloc();
-	//JsonLoader::read();
 	//load last level state, if applicable
+	//std::shared_ptr<JsonReader> json = JsonReader::alloc("saveGame.json");
+	//json->readJson();
+	//_saveLoad.loadPlayerMoose(/*Player Moose JSONValue*/);
+	//_saveLoad.loadOpponentMoose(/*Opponent Moose JSONValue*/);
 }
 
 #pragma mark -
