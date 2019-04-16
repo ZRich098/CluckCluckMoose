@@ -29,6 +29,7 @@ std::vector<std::shared_ptr<Button>> levelbuttons;
 
 
 //Level tracking
+bool backClicked;
 //bool farmClicked;
 //bool forestClicked;
 //bool plantClicked;
@@ -65,6 +66,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     root->removeAllChildren();
 
     level = 0;
+    backClicked = false;
 
     _assets = assets;
 
@@ -89,10 +91,36 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.5f); // Magic number to rescale asset
+    background->setScale(0.55f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
     background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
     levelbackCanvas->addChild(background);
+
+
+    //Draw level box
+    std::shared_ptr<Texture> texturebox = _assets->get<Texture>("levelbox");
+    std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
+    box->setScale(0.5f); // Magic number to rescale asset
+    box->setAnchor(Vec2::ANCHOR_CENTER);
+    box->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+    levelbackCanvas->addChild(box);
+
+    // back button
+    std::shared_ptr<Texture> textureBack = _assets->get<Texture>("levelback");
+    std::shared_ptr<PolygonNode> idback = PolygonNode::allocWithTexture(textureBack);
+    idback->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> backbutt = Button::alloc(idback);
+    backbutt->setAnchor(Vec2::ANCHOR_CENTER);
+    backbutt->setScale(0.5, 0.5);
+
+    backbutt->setAnchor(Vec2::ANCHOR_CENTER);
+    backbutt->setPosition(-SCENE_WIDTH*3/8, SCENE_HEIGHT*3/4);
+    backbutt->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            CULog("back");
+            backClicked = true;
+        }
+    });
 
     // farm button
     std::shared_ptr<Texture> textureFarm = _assets->get<Texture>("levelfarm");
@@ -103,7 +131,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     farmbutt->setScale(0.5, 0.5);
 
     farmbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    farmbutt->setPosition(SCENE_WIDTH/8, SCENE_HEIGHT/16);
+    farmbutt->setPosition(-SCENE_WIDTH/16, SCENE_HEIGHT/16);
     farmbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             level = 1;
@@ -118,16 +146,15 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idforest->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> forestbutt = Button::alloc(idforest);
     forestbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    forestbutt->setScale(0.5, 0.5);
+    forestbutt->setScale(0.3, 0.3);
 
     forestbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    forestbutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT*5/16);
+    forestbutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT/4);
     forestbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             level = 2;
         }
     });
-
 
 
     // Plant button
@@ -136,30 +163,50 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idplant->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> plantbutt = Button::alloc(idplant);
     plantbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    plantbutt->setScale(0.5, 0.5);
+    plantbutt->setScale(0.2, 0.2);
 
     plantbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    plantbutt->setPosition(-SCENE_WIDTH*3/16, SCENE_HEIGHT*17/32);
+    plantbutt->setPosition(-SCENE_WIDTH*3/16, SCENE_HEIGHT*7/16);
     plantbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             level = 3;
         }
     });
 
+    // Throne button
+    std::shared_ptr<Texture> textureThrone = _assets->get<Texture>("levelthrone");
+    std::shared_ptr<PolygonNode> idthrone = PolygonNode::allocWithTexture(textureThrone);
+    idthrone->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> thronebutt = Button::alloc(idthrone);
+    thronebutt->setAnchor(Vec2::ANCHOR_CENTER);
+    thronebutt->setScale(0.4, 0.4);
 
+    thronebutt->setAnchor(Vec2::ANCHOR_CENTER);
+    thronebutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT*9/16);
+    thronebutt->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            level = 4;
+        }
+    });
 
+    levelbuttonCanvas->addChild(backbutt);
     levelbuttonCanvas->addChild(farmbutt);
     levelbuttonCanvas->addChild(forestbutt);
     levelbuttonCanvas->addChild(plantbutt);
+    levelbuttonCanvas->addChild(thronebutt);
 
     //ensure keys are unique
-    farmbutt->activate(103);
-    forestbutt->activate(104);
-    plantbutt->activate(105);
+    backbutt->activate(103);
+    farmbutt->activate(104);
+    forestbutt->activate(105);
+    plantbutt->activate(106);
+    thronebutt->activate(107);
 
+    levelbuttons.push_back(backbutt);
     levelbuttons.push_back(farmbutt);
     levelbuttons.push_back(forestbutt);
     levelbuttons.push_back(plantbutt);
+    levelbuttons.push_back(thronebutt);
 
     return true;
 }
@@ -201,6 +248,8 @@ void LevelScene::deactivateButtons() {
     levelbuttons[0]->deactivate();
     levelbuttons[1]->deactivate();
     levelbuttons[2]->deactivate();
+    levelbuttons[3]->deactivate();
+    levelbuttons[4]->deactivate();
 //    for (int i = 0; i < levelbuttons.getSize(); i++) {
 //        CULog("deactivating i %d", i);
 //        levelbuttons[i]->deactivate();
@@ -212,5 +261,8 @@ void LevelScene::activateButtons() {
     levelbuttons[0]->activate(103);
     levelbuttons[1]->activate(104);
     levelbuttons[2]->activate(105);
-
+    levelbuttons[3]->activate(106);
+    levelbuttons[4]->activate(107);
 }
+
+bool LevelScene::getBack() { return backClicked; }

@@ -162,7 +162,15 @@ void CCMApp::update(float timestep) {
             _current = 1;
             _gameplay[_current]->setActive(true);
         }
-        else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect to gameplay
+//        else if (_current = 1 and _levelscene.getLevel() == 0) {
+//            if (_levelscene.getBack()) {
+//                _levelscene.deactivateButtons();
+//                _gameplay[_current]->setActive(false); // from level select to main
+//                _current = 2;
+//                _gameplay[_current]->setActive(true);
+//            }
+//        }
+        else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect
 //            std::string levelNum = std::to_string(_levelScene.getLevel());
 //            std::string levelFile = "json/assets" + levelNum + ".json";
 

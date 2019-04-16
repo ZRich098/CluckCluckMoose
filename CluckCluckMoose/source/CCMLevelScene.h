@@ -81,6 +81,7 @@ public:
      *
      */
     int getLevel();
+    bool getBack();
     void deactivateButtons();
     void activateButtons();
 };

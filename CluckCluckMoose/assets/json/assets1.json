@@ -267,7 +267,21 @@
             "wrapT": "clamp"
         },
         "levelbg": {
-            "file": "textures/levelselect/menu_levels_v1.png",
+            "file": "textures/levelselect/bg_neutral_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelbox": {
+            "file": "textures/levelselect/base_level_select.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelback": {
+            "file": "textures/levelselect/btn_back.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -288,21 +302,21 @@
             "wrapT": "clamp"
         },
         "levelforest": {
-            "file": "textures/levelselect/lvl_forest_v1.png",
+            "file": "textures/levelselect/lvl_forest_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelplant": {
-            "file": "textures/levelselect/lvl_plant_v1.png",
+            "file": "textures/levelselect/lvl_plant_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelthrone": {
-            "file": "textures/levelselect/lvl_throneRoom_v1.png",
+            "file": "textures/levelselect/lvl_throneRoom_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
