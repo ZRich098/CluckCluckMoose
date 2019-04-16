@@ -877,30 +877,22 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	//Update the opponent type distribution
 	for (int i = 0; i < 3; i++) {
 		int currDistI = (oppGlobe->getChickenElementDistribution())[i];
-		CULog("There should be %d chickens for type %d", currDistI, i);
 		int prevDistI = (prevDist[i]);
-		CULog("There were previously %d chickens for type %d", prevDistI, i);
 		if (currDistI != prevDistI) {
-			CULog("There is a chicken update for type %d", i);
 			std::shared_ptr<Texture> text;
 			if (currDistI == 0) {
-				CULog("There are no chickens of type %d", i);
 				eltInfoCanvas->getChild(i + 1)->setVisible(false);
 			}
 			else if (currDistI == 1) {
-				CULog("There are 1 chickens of type %d", i);
 				text = num1;
 			}
 			else if (currDistI == 2) {
-				CULog("There are 2 chickens of type %d", i);
 				text = num2;
 			}
 			else if (currDistI == 3) {
-				CULog("There are 3 chickens of type %d", i);
 				text = num3;
 			}
 			else if (currDistI == 4) {
-				CULog("There are 4 chickens of type %d", i);
 				text = num4;
 			}
 			prevDist[i] = currDistI;
