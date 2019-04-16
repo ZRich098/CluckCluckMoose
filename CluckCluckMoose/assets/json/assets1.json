@@ -231,6 +231,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "num0": {
+            "file": "textures/num_0.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "num1": {
             "file": "textures/num_1.png",
             "minfilter": "linear",

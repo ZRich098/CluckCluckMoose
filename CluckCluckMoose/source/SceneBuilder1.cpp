@@ -118,6 +118,7 @@ std::shared_ptr<Texture> pBlock;
 std::shared_ptr<Texture> oBlock;
 
 //Number textures
+std::shared_ptr<Texture> num0;
 std::shared_ptr<Texture> num1;
 std::shared_ptr<Texture> num2;
 std::shared_ptr<Texture> num3;
@@ -479,6 +480,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	eltInfoCanvas->addChild(eltInfo);
 
 	//Add numeric values (also alloc textures here)
+	num0 = _assets->get<Texture>("num0");
 	num1 = _assets->get<Texture>("num1");
 	num2 = _assets->get<Texture>("num2");
 	num3 = _assets->get<Texture>("num3");
@@ -881,7 +883,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		if (currDistI != prevDistI) {
 			std::shared_ptr<Texture> text;
 			if (currDistI == 0) {
-				eltInfoCanvas->getChild(i + 1)->setVisible(false);
+				text = num0;
 			}
 			else if (currDistI == 1) {
 				text = num1;
@@ -896,7 +898,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				text = num4;
 			}
 			prevDist[i] = currDistI;
-			if (currDistI != 0) {
+			
 				std::shared_ptr<PolygonNode> swapPoly = PolygonNode::allocWithTexture(text);
 				swapPoly->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 				swapPoly->setScale(ELT_NUM_SCALE);
@@ -904,7 +906,6 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				swapPoly->setVisible(true);
 				std::shared_ptr<Node> oldChild = eltInfoCanvas->getChild(i + 1);
 				eltInfoCanvas->swapChild(oldChild, swapPoly, false);
-			}
 		}
 	}
 }
