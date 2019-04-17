@@ -103,7 +103,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw title
     std::shared_ptr<Texture> texturetitle = _assets->get<Texture>("menutitle");
     std::shared_ptr<PolygonNode> title = PolygonNode::allocWithTexture(texturetitle);
-    title->setScale(0.5f); // Magic number to rescale asset
+    title->setScale(0.55f); // Magic number to rescale asset
     title->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
     title->setPosition(SCENE_WIDTH/2, TITLE_HEIGHT);
     titleCanvas->addChild(title);
@@ -201,5 +201,6 @@ void MenuScene::setActive(bool value) {
 }
 
 bool MenuScene::getPlay() { return playClicked; }
+void MenuScene::setPlay(bool val) { playClicked = val; }
 bool MenuScene::getHelp() { return helpClicked; }
 bool MenuScene::getSettings() { return settingsClicked; }

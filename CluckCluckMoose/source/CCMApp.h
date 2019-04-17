@@ -19,10 +19,18 @@
 #include "CCMGameScene.h"
 #include "CCMLoadingScene.h"
 #include "CCMMenuScene.h"
+#include "CCMLevelScene.h"
 #include "CCMInput.h"
 #include "SaveController.h"
 
-#define SCENE_COUNT 2
+#include <unistd.h>
+#include <string>
+
+//enum class SCENES {
+//    MainMenu = 0,
+//    LevelSelect = 1,
+//    Gameplay = 2
+//};
 
 /**
 * This class represents the application root.
@@ -48,15 +56,13 @@ protected:
 	LoadingScene _loadingscene;
 	/** The controller for the menu screen */
 	MenuScene _menuscene;
+	/** The controller for the level select screen */
+	LevelScene _levelscene;
 	/** The controller for scene input */
 	CCMInput _input;
 	/** The controller for saving and loading states */
 	SaveController _saveLoad;
 
-	// Values for tracking menu buttons
-	bool _playClicked;
-	bool _helpClicked;
-	bool _settingsClicked;
 
 public:
 #pragma mark Constructors

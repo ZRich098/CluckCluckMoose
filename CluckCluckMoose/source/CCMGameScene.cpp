@@ -57,6 +57,11 @@ bool isClashing;
 //bool to signify a clash preview is in progress
 bool isPreviewing;
 
+//bool to signify a a winState
+bool didWin;
+
+//bool to signify a a loseState
+bool didLose;
 
 
 //SceneBuilder
@@ -104,7 +109,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 	_assets = assets;
 
-	auto loading = _assets->get<Sound>("trailer");
 	auto game_music = _assets->get<Sound>(GAME_MUSIC);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
@@ -130,8 +134,15 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Intro);
+	oppAI = AI::alloc(opp, player, AIType::Smart);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+
+	sb->deactivateHand();
+
+	//Initialize AI
+	//oppAI = AI::AI(opp,player);
+
+	//Draw
     
     setActive(_active);
     
@@ -170,7 +181,6 @@ void GameScene::update(float timestep) {
 
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == ENTRY) {
-			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
@@ -238,12 +248,24 @@ void GameScene::update(float timestep) {
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
 
-			player->takeDamage(opp->getStack().getSize());
-			opp->takeDamage(player->getStack().getSize());
+			player->takeDamage(opp->getStack().getDamage());
+			opp->takeDamage(player->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
 			isClashing = false;
+
+			if (player->getHealth() <= 0) {
+				didLose = true;
+				didWin = false;
+				CULog("lost! lmao");
+			}
+
+			if (opp->getHealth() <= 0) {
+				didLose = false;
+				didWin = true;
+				CULog("win");
+			}
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
@@ -284,6 +306,12 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 void GameScene::setActive(bool value) {
     _active = value;
     int pos = LISTENER_ID;
+    cooldown = CLASHLENGTH/2;
+    if (cooldown > 0) {
+        cooldown--;
+        return;
+    }
+	sb->activateHand();
     /* For(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
         if (value && !it->second->isActive()) {
             it->second->activate(pos++);

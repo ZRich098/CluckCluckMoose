@@ -240,12 +240,19 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Init stack nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
+    
+		/* text = textureF;
+		std::shared_ptr<PolygonNode> poly;
+		poly = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
+        poly->setVisible(false);
+		pstackNodes.push_back(poly); */
+    
 		text = textureW;
 		//this is std library for c++
 		std::shared_ptr<AnimationNode> anim;
 		//get changed to animation nodes EMMMAAA
 		anim = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
-
+		anim->setVisible(false);
 		pstackNodes.push_back(anim);
 		texturesPStack.push_back(text);
 	}
@@ -256,10 +263,15 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//init enemy chicken nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
+    
+    /*text = textureF;
+		std::shared_ptr<PolygonNode> poly;*/
+  
 		text = textureW;
 		std::shared_ptr<AnimationNode> poly;
+    
 		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
-
+        poly->setVisible(false);
 		ostackNodes.push_back(poly);
 		texturesOStack.push_back(text);
 	}
@@ -517,7 +529,6 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 	chick->setPosition(posX, posY);
 	chick->flipHorizontal(flip);
 	node->addChild(chick);
-
 	return chick;
 }
 
@@ -939,4 +950,26 @@ void SceneBuilder1::dispose() {
 
 void SceneBuilder1::setPreview(bool preview) {
 	previewSet = preview;
+}
+
+void SceneBuilder1::deactivateHand() {
+	vector <Chicken> hand = playerGlobe->getHand();
+
+	for (int i = 0; i < 6; i++) {
+		if (i < hand.size()) {
+			buttons[i]->setVisible(false);
+			buttons[i]->deactivate();
+		}
+	}
+}
+
+void SceneBuilder1::activateHand() {
+	vector <Chicken> hand = playerGlobe->getHand();
+
+	for (int i = 0; i < 6; i++) {
+		if (i < hand.size()) {
+			buttons[i]->setVisible(true);
+			buttons[i]->activate(i + 2);
+		}
+	}
 }
