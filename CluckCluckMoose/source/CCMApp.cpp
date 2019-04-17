@@ -159,18 +159,21 @@ void CCMApp::update(float timestep) {
 
     } else {
         _input.update(timestep);
-        if (_loaded and _menuscene.getPlay()) { // main menu PLAY is clicked
-            _gameplay[_current]->setActive(false);
-            _current = 1; // to level select
-            _gameplay[_current]->setActive(true);
-            _menuscene.setPlay(false);
-            _levelscene.activateButtons();
+//        if (_loaded and _menuscene.getPlay()) { // main menu PLAY is clicked
+        if (_current == 0) { // if on menu scene
+            if (_menuscene.getPlay()) { // play is clicked
+                _gameplay[_current]->setActive(false);
+                _current = 1; // to level select
+                _gameplay[_current]->setActive(true);
+                _menuscene.setPlay(false);
+                _levelscene.activateButtons();
+            }
         }
         else if (_current == 1) { // on level select
-            if (_levelscene.getBack()) { // back to main menu
+            if (_levelscene.getBack()) {
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
-                _current = 0;
+                _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
                 _levelscene.setBack(false);
             }
