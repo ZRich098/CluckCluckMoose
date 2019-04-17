@@ -224,11 +224,6 @@ void LevelScene::deactivateButtons() {
     for (int i = 0; i <= LEVELS; i++) {
         levelbuttons[i]->deactivate();
     }
-//    levelbuttons[0]->deactivate();
-//    levelbuttons[1]->deactivate();
-//    levelbuttons[2]->deactivate();
-//    levelbuttons[3]->deactivate();
-//    levelbuttons[4]->deactivate();
 }
 
 /**
@@ -239,11 +234,6 @@ void LevelScene::activateButtons() {
     for (int i = 0; i <= LEVELS; i++) {
         levelbuttons[i]->activate(103 + i);
     }
-//    levelbuttons[0]->activate(103);
-//    levelbuttons[1]->activate(104);
-//    levelbuttons[2]->activate(105);
-//    levelbuttons[3]->activate(106);
-//    levelbuttons[4]->activate(107);
 }
 
 bool LevelScene::getBack() { return backClicked; }

@@ -7,13 +7,6 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "init": {
-            "file": "textures/init_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
         "fire": {
             "file": "textures/fire_chick.png",
             "minfilter": "linear",

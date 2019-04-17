@@ -57,7 +57,6 @@ std::shared_ptr<Button> heldButton;
 #define BAR_DISTANCE 165
 
 //Chicken Textures
-std::shared_ptr<Texture> textureINIT;
 std::shared_ptr<Texture> textureF;
 std::shared_ptr<Texture> textureW;
 std::shared_ptr<Texture> textureG;
@@ -137,7 +136,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	_input.init();
 
 	// Get chicken textures.
-    textureINIT = _assets->get<Texture>("init");
 	textureF = _assets->get<Texture>("fire");
 	textureW = _assets->get<Texture>("water");
 	textureG = _assets->get<Texture>("grass");
@@ -183,10 +181,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Init stack nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
-		text = textureINIT; // blank texture
+		text = textureF;
 		std::shared_ptr<PolygonNode> poly;
 		poly = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
-
+        poly->setVisible(false);
 		pstackNodes.push_back(poly);
 		texturesPStack.push_back(text);
 	}
@@ -194,10 +192,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
-        text = textureINIT; // blank texture
+        text = textureF;
 		std::shared_ptr<PolygonNode> poly;
 		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
-
+        poly->setVisible(false);
 		ostackNodes.push_back(poly);
 		texturesOStack.push_back(text);
 	}
