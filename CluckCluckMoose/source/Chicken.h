@@ -10,6 +10,7 @@ enum class element {
 	LoseAll, 
 	WinAll, 
 	TieAll,
+	SpecialWin,
 	Unset	//Not set until stack time
 };
 

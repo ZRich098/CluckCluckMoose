@@ -238,7 +238,7 @@ void LevelScene::setBack(bool val) { backClicked = val; }
  * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
  */
 void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr){
-    if (!locked and !curr) { // flags
+    if (!locked && !curr) { // flags
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levelflag");
         std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
         id->setAnchor(Vec2::ANCHOR_CENTER);
