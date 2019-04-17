@@ -193,6 +193,7 @@
     <ClInclude Include="..\..\source\CCMApp.h" />
     <ClInclude Include="..\..\source\CCMGameScene.h" />
     <ClInclude Include="..\..\source\CCMInput.h" />
+    <ClInclude Include="..\..\source\CCMLevelScene.h" />
     <ClInclude Include="..\..\source\CCMLoadingScene.h" />
     <ClInclude Include="..\..\source\CCMMenuScene.h" />
     <ClInclude Include="..\..\source\Chicken.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="..\..\source\CCMApp.cpp" />
     <ClCompile Include="..\..\source\CCMGameScene.cpp" />
     <ClCompile Include="..\..\source\CCMInput.cpp" />
+    <ClCompile Include="..\..\source\CCMLevelScene.cpp" />
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp" />
     <ClCompile Include="..\..\source\CCMMenuScene.cpp" />
     <ClCompile Include="..\..\source\Chicken.cpp" />

@@ -24,6 +24,9 @@ protected:
 	Coop deck;
 	vector <Chicken> discard;
 	vector <Chicken> playOrder;
+	vector <vector<Chicken>> handPool;
+	//nonEleDist is a seed for the non-elemental chickens in the element distribution to stay as one element
+	vector <int> nonEleDist;
 	int handSize;
 	int health;
 	void refillDeck();
@@ -112,6 +115,11 @@ public:
 
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();
+
+	/** Sets the opponent's possible hands.
+		Input is a vector of chicken vectors
+		(where the internal vectors are the hands and the external one is the pool of possible hands)*/
+	void setOppHands(vector<vector<Chicken>> pool) { handPool = pool; }
 
     
 #pragma mark -

@@ -86,6 +86,14 @@ vector<int> Moose::getChickenElementDistribution() {
 			grass += 1;
 			break;
 		default:
+			if (nonEleDist.size() <= other)
+				nonEleDist.push_back(rand() % 3);
+			if (nonEleDist.at(other) == 0)
+				fire += 1;
+			if (nonEleDist.at(other) == 1)
+				water += 1;
+			if (nonEleDist.at(other) == 2)
+				grass += 1;
 			other += 1;
 			break;
 		}
@@ -156,6 +164,7 @@ void Moose::clearHandToDiscard() {
 			discard.push_back(c);
 		}
 	}
+	nonEleDist.clear();
 	hand.clear();
 }
 
@@ -166,16 +175,25 @@ void Moose::refillHand() {
 		hand.push_back(Chicken(element::Grass, special::BasicGrass));
 		hand.push_back(Chicken(element::Water, special::BasicWater));
 	}
-	random_shuffle(hand.begin(), hand.end());
-	hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
-	while (hand.size() < handSize) {
-		//refill deck if hand not full yet but deck is empty
-		//if (deck.getSize() == 0) refillDeck();
-		hand.push_back(deck.draw());
+	random_shuffle(hand.begin(),hand.end());
+	if (handPool.size() != 0) {
+		//Uses hands that are given if one is available
+		random_shuffle(handPool.begin(), handPool.end());
+		for (Chicken i : handPool.front()) {
+			hand.push_back(i);
+		}
 	}
-	// Pool system
-	refillDeck();
-	deck.shuffle();
+	else {
+		hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
+		while (hand.size() < handSize) {
+			//refill deck if hand not full yet but deck is empty
+			//if (deck.getSize() == 0) refillDeck();
+			hand.push_back(deck.draw());
+		}
+		// Pool system
+		refillDeck();
+		deck.shuffle();
+	}
 }
 
 void Moose::draw(int num) {
