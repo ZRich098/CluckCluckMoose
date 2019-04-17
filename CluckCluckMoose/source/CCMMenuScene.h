@@ -81,6 +81,7 @@ public:
      *
      */
     bool getPlay();
+    void setPlay(bool val);
     bool getHelp();
     bool getSettings();
 };

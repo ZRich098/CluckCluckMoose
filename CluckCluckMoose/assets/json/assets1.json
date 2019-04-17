@@ -274,7 +274,7 @@
             "wrapT": "clamp"
         },
         "levelbox": {
-            "file": "textures/levelselect/base_level_select.png",
+            "file": "textures/levelselect/base_level_select_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -295,28 +295,63 @@
             "wrapT": "clamp"
         },
         "levelfarm": {
-            "file": "textures/levelselect/lvl_farm_v1.png",
+            "file": "textures/levelselect/lvl_farm.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelforest": {
-            "file": "textures/levelselect/lvl_forest_v2.png",
+            "file": "textures/levelselect/lvl_forest.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelplant": {
-            "file": "textures/levelselect/lvl_plant_v2.png",
+            "file": "textures/levelselect/lvl_plant.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelthrone": {
-            "file": "textures/levelselect/lvl_throneRoom_v2.png",
+            "file": "textures/levelselect/lvl_throneRoom.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levellock": {
+            "file": "textures/levelselect/lock_normal.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levellockboss": {
+            "file": "textures/levelselect/lock_boss.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelflag": {
+            "file": "textures/levelselect/flag_normal.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelflagboss": {
+            "file": "textures/levelselect/flag_boss.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelarrow": {
+            "file": "textures/levelselect/arrow_currLevel.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

@@ -201,5 +201,6 @@ void MenuScene::setActive(bool value) {
 }
 
 bool MenuScene::getPlay() { return playClicked; }
+void MenuScene::setPlay(bool val) { playClicked = val; }
 bool MenuScene::getHelp() { return helpClicked; }
 bool MenuScene::getSettings() { return settingsClicked; }

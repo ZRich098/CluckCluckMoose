@@ -31,7 +31,8 @@ using namespace cugl;
 void CCMApp::onStartup() {
     _assets = AssetManager::alloc();
     _batch  = SpriteBatch::alloc();
-    
+    AudioChannels::start(24);
+
     // Start-up basic input
 #ifdef CU_TOUCH_SCREEN
     Input::activate<Touchscreen>();
@@ -46,12 +47,6 @@ void CCMApp::onStartup() {
     // Create a "loading" screen
     _loaded = false;
     _loadingscene.init(_assets);
-
-    _playClicked = false;
-    _helpClicked = false;
-    _settingsClicked = false;
-
-    _levelSelected = false;
     
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
@@ -86,8 +81,8 @@ void CCMApp::onShutdown() {
     Input::deactivate<Mouse>();
 #endif
 
-    _input.dispose();
     AudioChannels::stop();
+    _input.dispose();
     Application::onShutdown();  // YOU MUST END with call to parent
 }
 
@@ -139,7 +134,7 @@ void CCMApp::onResume() {
 void CCMApp::update(float timestep) {
     if (!_loaded && _loadingscene.isActive()) {
         _loadingscene.update(timestep);
-    } else if (!_loaded) {
+    } else if (!_loaded) { // if loading scene's PLAY is clicked
         _loadingscene.dispose(); // Disables the input listeners in this mode
         _gameplay.push_back(MenuScene::alloc(_assets));
         _gameplay.back()->setActive(false);
@@ -147,40 +142,34 @@ void CCMApp::update(float timestep) {
         _gameplay.back()->setActive(false);
         _gameplay.push_back(GameScene::alloc(_assets));
         _gameplay.back()->setActive(false);
-        _current = 0;
+        _current = 0; // go to main menu
         _gameplay[_current]->setActive(true);
         _loaded = true;
         _levelscene.deactivateButtons();
 
     } else {
         _input.update(timestep);
-        if (_menuscene.getPlay()) { _playClicked = true; }
-        else if (_levelscene.getLevel() != 0) { _levelSelected = true; }
-        if (_playClicked and (_current == 0)) { // from mainmenu to level select
+        if (_loaded and _menuscene.getPlay()) { // main menu PLAY is clicked
+            _gameplay[_current]->setActive(false);
+            _current = 1; // to level select
+            _gameplay[_current]->setActive(true);
+            _menuscene.setPlay(false);
             _levelscene.activateButtons();
-            _gameplay[_current]->setActive(false);
-            _current = 1;
-            _gameplay[_current]->setActive(true);
         }
-//        else if (_current = 1 and _levelscene.getLevel() == 0) {
-//            if (_levelscene.getBack()) {
-//                _levelscene.deactivateButtons();
-//                _gameplay[_current]->setActive(false); // from level select to main
-//                _current = 2;
-//                _gameplay[_current]->setActive(true);
-//            }
-//        }
-        else if (_levelscene.getLevel() != 0 and (_current == 1)) { // from levelselect
-//            std::string levelNum = std::to_string(_levelScene.getLevel());
-//            std::string levelFile = "json/assets" + levelNum + ".json";
-
-//             Que up the other assets
-//            _assets->loadDirectoryAsync(levelFile,nullptr);
-
-            _levelscene.deactivateButtons();
-            _gameplay[_current]->setActive(false);
-            _current = 2;
-            _gameplay[_current]->setActive(true);
+        else if (_current == 1) { // on level select
+            if (_levelscene.getBack()) { // back to main menu
+                _levelscene.deactivateButtons();
+                _gameplay[_current]->setActive(false);
+                _current = 0;
+                _gameplay[_current]->setActive(true);
+                _levelscene.setBack(false);
+            }
+            else if (_levelscene.getLevel() != 0) { // level chosen
+                _levelscene.deactivateButtons();
+                _gameplay[_current]->setActive(false);
+                _current = 2; // need to load in assets for new level here
+                _gameplay[_current]->setActive(true);
+            }
         }
         _gameplay[_current]->update(timestep);
     }

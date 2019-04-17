@@ -77,13 +77,39 @@ public:
     void update(float timestep);
 
     /**
-     * Getters for menu buttons
-     *
+     * Getters and setters for level select buttons
      */
     int getLevel();
     bool getBack();
+    void setBack(bool val);
     void deactivateButtons();
     void activateButtons();
+
+    /**
+     * Creates lock on level select.
+     *
+     * @param texture
+     * @param node canvas
+     * @param posX x position
+     * @param posY y position
+     * @param list that contains lock
+     * @return lock
+     */
+    std::shared_ptr<cugl::PolygonNode> buildLock(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list);
+
+    /**
+     * Creates arrow and flags on level select.
+     *
+     * @param texture
+     * @param node canvas
+     * @param posX x position
+     * @param posY y position
+     * @param list list that contains button
+     * @param lev level number
+     * @param key unique key for listener
+     */
+    void buildFlag(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, int key);
+
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */

@@ -25,10 +25,9 @@
 #include <string>
 
 //enum class SCENES {
-//    Loading = 0,
-//    MainMenu = 1,
-//    LevelSelect = 2,
-//    Gameplay = 3
+//    MainMenu = 0,
+//    LevelSelect = 1,
+//    Gameplay = 2
 //};
 
 /**
@@ -52,7 +51,6 @@ protected:
 
     /** The currently active scene */
     size_t _current;
-//    SCENES _current;
 
     /** The controller for the loading screen */
     LoadingScene _loadingscene;
@@ -62,14 +60,6 @@ protected:
     LevelScene _levelscene;
     /** The controller for scene input */
     CCMInput _input;
-
-    // Values for tracking menu buttons
-    bool _playClicked;
-    bool _helpClicked;
-    bool _settingsClicked;
-
-    // Values for tracking level selection
-    bool _levelSelected;
     
 public:
 #pragma mark Constructors

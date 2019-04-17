@@ -12,14 +12,14 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 
+/** The number of levels in game--used for activation and deactivation */
+#define LEVELS 4
+
 //Main canvas to draw stuff to
 std::shared_ptr<Node> levellayer;
 
 //Canvas for background
 std::shared_ptr<Node> levelbackCanvas;
-
-//Canvas for title
-//std::shared_ptr<Node> titleCanvas;
 
 //Canvas for buttons
 std::shared_ptr<Node> levelbuttonCanvas;
@@ -27,13 +27,11 @@ std::shared_ptr<Node> levelbuttonCanvas;
 // List for buttons
 std::vector<std::shared_ptr<Button>> levelbuttons;
 
+//List of level lock nodes
+std::vector<std::shared_ptr<cugl::PolygonNode>> levelNodes;
 
 //Level tracking
 bool backClicked;
-//bool farmClicked;
-//bool forestClicked;
-//bool plantClicked;
-
 int level;
 
 /**
@@ -59,15 +57,12 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     //Root node for scene builder
     std::shared_ptr<Node> root;
-
     root = Node::alloc();
     addChild(root);
-
     root->removeAllChildren();
 
     level = 0;
     backClicked = false;
-
     _assets = assets;
 
     levellayer = assets->get<Node>("levelselect");
@@ -96,7 +91,6 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
     levelbackCanvas->addChild(background);
 
-
     //Draw level box
     std::shared_ptr<Texture> texturebox = _assets->get<Texture>("levelbox");
     std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
@@ -112,15 +106,15 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<Button> backbutt = Button::alloc(idback);
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
     backbutt->setScale(0.5, 0.5);
-
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
     backbutt->setPosition(-SCENE_WIDTH*3/8, SCENE_HEIGHT*3/4);
     backbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
-            CULog("back");
             backClicked = true;
-        }
-    });
+            level = 0; }});
+    levelbuttonCanvas->addChild(backbutt);
+    backbutt->activate(103);
+    levelbuttons.push_back(backbutt);
 
     // farm button
     std::shared_ptr<Texture> textureFarm = _assets->get<Texture>("levelfarm");
@@ -128,17 +122,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idfarm->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> farmbutt = Button::alloc(idfarm);
     farmbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    farmbutt->setScale(0.5, 0.5);
-
-    farmbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    farmbutt->setPosition(-SCENE_WIDTH/16, SCENE_HEIGHT/16);
-    farmbutt->setListener([=](const std::string& name, bool down) {
-        if (down) {
-            level = 1;
-        }
-    });
-
-
+    farmbutt->setScale(0.45, 0.45);
+    farmbutt->setPosition(SCENE_WIDTH*3/8, SCENE_HEIGHT*3/16);
+    levelbackCanvas->addChild(farmbutt);
 
     // Forest button
     std::shared_ptr<Texture> textureForest = _assets->get<Texture>("levelforest");
@@ -146,16 +132,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idforest->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> forestbutt = Button::alloc(idforest);
     forestbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    forestbutt->setScale(0.3, 0.3);
-
-    forestbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    forestbutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT/4);
-    forestbutt->setListener([=](const std::string& name, bool down) {
-        if (down) {
-            level = 2;
-        }
-    });
-
+    forestbutt->setScale(0.45, 0.45);
+    forestbutt->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT*3/8);
+    levelbackCanvas->addChild(forestbutt);
 
     // Plant button
     std::shared_ptr<Texture> texturePlant = _assets->get<Texture>("levelplant");
@@ -163,15 +142,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idplant->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> plantbutt = Button::alloc(idplant);
     plantbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    plantbutt->setScale(0.2, 0.2);
-
-    plantbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    plantbutt->setPosition(-SCENE_WIDTH*3/16, SCENE_HEIGHT*7/16);
-    plantbutt->setListener([=](const std::string& name, bool down) {
-        if (down) {
-            level = 3;
-        }
-    });
+    plantbutt->setScale(0.45, 0.45);
+    plantbutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT*9/16);
+    levelbackCanvas->addChild(plantbutt);
 
     // Throne button
     std::shared_ptr<Texture> textureThrone = _assets->get<Texture>("levelthrone");
@@ -179,34 +152,33 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idthrone->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> thronebutt = Button::alloc(idthrone);
     thronebutt->setAnchor(Vec2::ANCHOR_CENTER);
-    thronebutt->setScale(0.4, 0.4);
+    thronebutt->setScale(0.45, 0.45);
+    thronebutt->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT*3/4);
+    levelbackCanvas->addChild(thronebutt);
 
-    thronebutt->setAnchor(Vec2::ANCHOR_CENTER);
-    thronebutt->setPosition(SCENE_WIDTH/4, SCENE_HEIGHT*9/16);
-    thronebutt->setListener([=](const std::string& name, bool down) {
-        if (down) {
-            level = 4;
-        }
-    });
+    // Initializing static locks
+    // for playtesting 4/16
+    std::shared_ptr<Texture> texturelock = _assets->get<Texture>("levellock");
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 50, SCENE_HEIGHT*51/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 75, SCENE_HEIGHT*47/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 20, SCENE_HEIGHT*44/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 + 20, SCENE_HEIGHT*40/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 + 10, SCENE_HEIGHT*36/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 30, SCENE_HEIGHT*32/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 70, SCENE_HEIGHT*28/64, levelNodes);
+    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 80, SCENE_HEIGHT*24/64, levelNodes);
 
-    levelbuttonCanvas->addChild(backbutt);
-    levelbuttonCanvas->addChild(farmbutt);
-    levelbuttonCanvas->addChild(forestbutt);
-    levelbuttonCanvas->addChild(plantbutt);
-    levelbuttonCanvas->addChild(thronebutt);
+    // Initializing arrow
+    // for playtesting 4/16
+    std::shared_ptr<Texture> textureArrow = _assets->get<Texture>("levelarrow");
+    buildFlag(textureArrow, levelbuttonCanvas, -SCENE_WIDTH*5/64, SCENE_HEIGHT*11/64, levelNodes, 4, 104);
 
-    //ensure keys are unique
-    backbutt->activate(103);
-    farmbutt->activate(104);
-    forestbutt->activate(105);
-    plantbutt->activate(106);
-    thronebutt->activate(107);
-
-    levelbuttons.push_back(backbutt);
-    levelbuttons.push_back(farmbutt);
-    levelbuttons.push_back(forestbutt);
-    levelbuttons.push_back(plantbutt);
-    levelbuttons.push_back(thronebutt);
+    // Initializing flags
+    // for playtesting 4/16
+    std::shared_ptr<Texture> textureFlag = _assets->get<Texture>("levelflag");
+    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH/8, SCENE_HEIGHT*8/64, levelNodes, 3, 105);
+    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH*3/16, SCENE_HEIGHT*5/64, levelNodes, 2, 106);
+    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH*7/32, SCENE_HEIGHT/128, levelNodes, 1, 107);
 
     return true;
 }
@@ -244,25 +216,68 @@ void LevelScene::setActive(bool value) {
 
 int LevelScene::getLevel() { return level; }
 
+/**
+ * Deactivates buttons to allow for seamless scene changes
+ */
 void LevelScene::deactivateButtons() {
-    levelbuttons[0]->deactivate();
-    levelbuttons[1]->deactivate();
-    levelbuttons[2]->deactivate();
-    levelbuttons[3]->deactivate();
-    levelbuttons[4]->deactivate();
-//    for (int i = 0; i < levelbuttons.getSize(); i++) {
-//        CULog("deactivating i %d", i);
-//        levelbuttons[i]->deactivate();
-//    }
-
+    //note: zero is the back button
+    for (int i = 0; i <= LEVELS; i++) {
+        levelbuttons[i]->deactivate();
+    }
+//    levelbuttons[0]->deactivate();
+//    levelbuttons[1]->deactivate();
+//    levelbuttons[2]->deactivate();
+//    levelbuttons[3]->deactivate();
+//    levelbuttons[4]->deactivate();
 }
 
+/**
+ * Activates buttons to allow for seamless scene changes
+ */
 void LevelScene::activateButtons() {
-    levelbuttons[0]->activate(103);
-    levelbuttons[1]->activate(104);
-    levelbuttons[2]->activate(105);
-    levelbuttons[3]->activate(106);
-    levelbuttons[4]->activate(107);
+    //note: zero is the back button
+    for (int i = 0; i <= LEVELS; i++) {
+        levelbuttons[i]->activate(103 + i);
+    }
+//    levelbuttons[0]->activate(103);
+//    levelbuttons[1]->activate(104);
+//    levelbuttons[2]->activate(105);
+//    levelbuttons[3]->activate(106);
+//    levelbuttons[4]->activate(107);
 }
 
 bool LevelScene::getBack() { return backClicked; }
+void LevelScene::setBack(bool val) { backClicked = val; }
+
+/**
+ * Builds the button for each locked level
+ * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
+ */
+std::shared_ptr<cugl::PolygonNode> LevelScene::buildLock(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list){
+    std::shared_ptr<PolygonNode> levelptr = PolygonNode::allocWithTexture(texture);
+    levelptr->setScale(0.5f); // Magic number to rescale asset
+    levelptr->setAnchor(Vec2::ANCHOR_CENTER);
+    levelptr->setPosition(posX, posY);
+    node->addChild(levelptr);
+    list.push_back(levelptr);
+    return levelptr;
+}
+
+/**
+ * Builds the button for each current completed level, i.e. the white flag, or the arrow
+ * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
+ */
+void LevelScene::buildFlag(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, int key){
+    std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
+    id->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> butt = Button::alloc(id);
+    butt->setAnchor(Vec2::ANCHOR_CENTER);
+    butt->setScale(0.45, 0.45);
+    butt->setPosition(posX, posY);
+    butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+    levelbuttonCanvas->addChild(butt);
+    butt->activate(key);
+    levelbuttons.push_back(butt);
+}
+
+
