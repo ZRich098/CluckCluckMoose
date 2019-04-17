@@ -29,7 +29,6 @@
 
 // Include your application class
 #include "CCMApp.h"
-#include "AITest.h"
 
 using namespace cugl;
 
@@ -43,8 +42,6 @@ using namespace cugl;
  * @return the exit status of the application
  */
 int main(int argc, char * argv[]) {
-	testAll();
-	/*
     // Change this to your application class
     CCMApp app;
     
@@ -71,6 +68,5 @@ int main(int argc, char * argv[]) {
     app.onShutdown();
 
     exit(0);    // Necessary to quit on mobile devices
-	*/
     return 0;   // This line is never reached
 }
