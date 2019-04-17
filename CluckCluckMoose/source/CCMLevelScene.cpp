@@ -27,7 +27,7 @@ std::shared_ptr<Node> levelbuttonCanvas;
 // List for buttons
 std::vector<std::shared_ptr<Button>> levelbuttons;
 
-//List of level lock nodes
+//List of level nodes
 std::vector<std::shared_ptr<cugl::PolygonNode>> levelNodes;
 
 //Level tracking
@@ -156,29 +156,23 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     thronebutt->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT*3/4);
     levelbackCanvas->addChild(thronebutt);
 
-    // Initializing static locks
-    // for playtesting 4/16
-    std::shared_ptr<Texture> texturelock = _assets->get<Texture>("levellock");
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 50, SCENE_HEIGHT*51/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 75, SCENE_HEIGHT*47/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 20, SCENE_HEIGHT*44/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 + 20, SCENE_HEIGHT*40/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 + 10, SCENE_HEIGHT*36/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 30, SCENE_HEIGHT*32/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 70, SCENE_HEIGHT*28/64, levelNodes);
-    buildLock(texturelock, levelbackCanvas, SCENE_WIDTH/2 - 80, SCENE_HEIGHT*24/64, levelNodes);
+    // Initializing locks
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 50, SCENE_HEIGHT*51/64, levelNodes, 12, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 75, SCENE_HEIGHT*47/64, levelNodes, 11, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 20, SCENE_HEIGHT*44/64, levelNodes, 10, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 20, SCENE_HEIGHT*40/64, levelNodes, 9, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 10, SCENE_HEIGHT*36/64, levelNodes, 8, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 30, SCENE_HEIGHT*32/64, levelNodes, 7, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 70, SCENE_HEIGHT*28/64, levelNodes, 6, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 80, SCENE_HEIGHT*24/64, levelNodes, 5, true, false);
 
     // Initializing arrow
-    // for playtesting 4/16
-    std::shared_ptr<Texture> textureArrow = _assets->get<Texture>("levelarrow");
-    buildFlag(textureArrow, levelbuttonCanvas, -SCENE_WIDTH*5/64, SCENE_HEIGHT*11/64, levelNodes, 4, 104);
+    buildLevelSelect(levelbuttonCanvas, -SCENE_WIDTH*5/64, SCENE_HEIGHT*11/64, levelNodes, 4, true, true);
 
     // Initializing flags
-    // for playtesting 4/16
-    std::shared_ptr<Texture> textureFlag = _assets->get<Texture>("levelflag");
-    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH/8, SCENE_HEIGHT*8/64, levelNodes, 3, 105);
-    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH*3/16, SCENE_HEIGHT*5/64, levelNodes, 2, 106);
-    buildFlag(textureFlag, levelbuttonCanvas, SCENE_WIDTH*7/32, SCENE_HEIGHT/128, levelNodes, 1, 107);
+    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH/8, SCENE_HEIGHT*8/64, levelNodes, 3, false, false);
+    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*3/16, SCENE_HEIGHT*5/64, levelNodes, 2, false, false);
+    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*7/32, SCENE_HEIGHT/128, levelNodes, 1, false, false);
 
     return true;
 }
@@ -240,34 +234,43 @@ bool LevelScene::getBack() { return backClicked; }
 void LevelScene::setBack(bool val) { backClicked = val; }
 
 /**
- * Builds the button for each locked level
+ * Builds the button for each level, i.e. the white flag, , or lock arrow
  * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
  */
-std::shared_ptr<cugl::PolygonNode> LevelScene::buildLock(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list){
-    std::shared_ptr<PolygonNode> levelptr = PolygonNode::allocWithTexture(texture);
-    levelptr->setScale(0.5f); // Magic number to rescale asset
-    levelptr->setAnchor(Vec2::ANCHOR_CENTER);
-    levelptr->setPosition(posX, posY);
-    node->addChild(levelptr);
-    list.push_back(levelptr);
-    return levelptr;
+void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr){
+    if (!locked and !curr) { // flags
+        std::shared_ptr<Texture> texture = _assets->get<Texture>("levelflag");
+        std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
+        id->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> butt = Button::alloc(id);
+        butt->setAnchor(Vec2::ANCHOR_CENTER);
+        butt->setScale(0.45, 0.45);
+        butt->setPosition(posX, posY);
+        butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+        levelbuttonCanvas->addChild(butt);
+        butt->activate(103 + lev);
+        levelbuttons.push_back(butt);
+    }
+    else if (curr){ // arrow
+        std::shared_ptr<Texture> texture = _assets->get<Texture>("levelarrow");
+        std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
+        id->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> butt = Button::alloc(id);
+        butt->setAnchor(Vec2::ANCHOR_CENTER);
+        butt->setScale(0.45, 0.45);
+        butt->setPosition(posX, posY);
+        butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+        levelbuttonCanvas->addChild(butt);
+        butt->activate(103 + lev);
+        levelbuttons.push_back(butt);
+    }
+    else { // locks
+        std::shared_ptr<Texture> texture = _assets->get<Texture>("levellock");
+        std::shared_ptr<PolygonNode> levelptr = PolygonNode::allocWithTexture(texture);
+        levelptr->setScale(0.5f); // Magic number to rescale asset
+        levelptr->setAnchor(Vec2::ANCHOR_CENTER);
+        levelptr->setPosition(posX, posY);
+        node->addChild(levelptr);
+        list.push_back(levelptr);
+    }
 }
-
-/**
- * Builds the button for each current completed level, i.e. the white flag, or the arrow
- * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
- */
-void LevelScene::buildFlag(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, int key){
-    std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
-    id->setAnchor(Vec2::ANCHOR_CENTER);
-    std::shared_ptr<Button> butt = Button::alloc(id);
-    butt->setAnchor(Vec2::ANCHOR_CENTER);
-    butt->setScale(0.45, 0.45);
-    butt->setPosition(posX, posY);
-    butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
-    levelbuttonCanvas->addChild(butt);
-    butt->activate(key);
-    levelbuttons.push_back(butt);
-}
-
-

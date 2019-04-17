@@ -105,7 +105,7 @@ void CCMApp::onSuspend() {
 	//save player's game state
 	//save current level state, if applicable
 	//needs to have a way of accessing the GameScene
-	_saveLoad.saveLevel(_gamescene.getPlayer(),_gamescene.getOpp());
+//	_saveLoad.saveLevel(_gamescene.getPlayer(),_gamescene.getOpp());
 }
 
 /**
@@ -156,10 +156,8 @@ void CCMApp::update(float timestep) {
         _gameplay[_current]->setActive(true);
         _loaded = true;
         _levelscene.deactivateButtons();
-
     } else {
         _input.update(timestep);
-//        if (_loaded and _menuscene.getPlay()) { // main menu PLAY is clicked
         if (_current == 0) { // if on menu scene
             if (_menuscene.getPlay()) { // play is clicked
                 _gameplay[_current]->setActive(false);

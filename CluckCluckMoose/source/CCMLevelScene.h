@@ -86,30 +86,17 @@ public:
     void activateButtons();
 
     /**
-     * Creates lock on level select.
+     * Creates locks, flags, and arrow on level select.
      *
-     * @param texture
-     * @param node canvas
+     * @param node canvas for this object
      * @param posX x position
      * @param posY y position
-     * @param list that contains lock
-     * @return lock
+     * @param list list of items this belongs to (i.e. background or buttons)
+     * @param lev int; level number
+     * @param locked bool; if locked
+     * @param curr bool; if arrow
      */
-    std::shared_ptr<cugl::PolygonNode> buildLock(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list);
-
-    /**
-     * Creates arrow and flags on level select.
-     *
-     * @param texture
-     * @param node canvas
-     * @param posX x position
-     * @param posY y position
-     * @param list list that contains button
-     * @param lev level number
-     * @param key unique key for listener
-     */
-    void buildFlag(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, int key);
-
+    void buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr);
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */
