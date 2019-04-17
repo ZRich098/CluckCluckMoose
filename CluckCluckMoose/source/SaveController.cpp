@@ -105,7 +105,7 @@ bool SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) {
 	return success;
 }
 
-bool loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
+bool SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false;
 
 	auto tag = json->get(TAG_FIELD);

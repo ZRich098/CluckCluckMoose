@@ -165,14 +165,18 @@ void GameScene::dispose() {
 }
 
 void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
-	while (playerOrder.size() < player->getStack().getSize() && oppOrder.size() < opp->getStack().getSize()) {
-		//play chickens from play order
+	while (!playerOrder.empty() && !oppOrder.empty()) {
+		//play both vector::front() Chickens and resolve them
 		player->getStack().add(playerOrder.front());
-		playerOrder.erase(playerOrder.begin());
 		opp->getStack().add(oppOrder.front());
-		oppOrder.erase(oppOrder.begin());
-		//resolve effects
-		player->getStack().specialChickenEffect(opp->getStack(), skipState);
+		//Resolve effects
+		int initState = 0;
+		while (initState != EXIT)
+			// Resolves the special chicken effects
+			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
+
+		playerOrder.erase(playerOrder.begin());
+		oppOrder.erase(playerOrder.begin());
 		stackSize++;
 	}
 }
@@ -296,22 +300,6 @@ void GameScene::update(float timestep) {
 	}
 	
 	sb->updateGameScene(timestep);
-}
-
-void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
-	while (!playerOrder.empty() && !oppOrder.empty()) {
-		//play both vector::front() Chickens and resolve them
-		player->getStack().add(playerOrder.front());
-		opp->getStack().add(oppOrder.front());
-		//Resolve effects
-		int initState = 0;
-		while (initState != EXIT)
-			// Resolves the special chicken effects
-			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
-
-		playerOrder.erase(playerOrder.begin());
-		oppOrder.erase(playerOrder.begin());
-	}
 }
 
 

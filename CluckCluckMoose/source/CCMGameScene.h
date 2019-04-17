@@ -94,11 +94,10 @@ public:
     virtual void setActive(bool value) override;
 
 	/**
-	 * Initializes the player and opp stacks according
-	 * to the given play order vectors
+	 * Initializes Stacks given playOrder vectors for both Moose
 	 *
-	 * @param playerOrder the play order for the player
-	 * @param oppOrder the play order for the opponent
+	 * @param playerOrder the playOrder of the player Moose
+	 * @param oppOrder the playOrder of the opponent Moose
 	 */
 	void initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder);
 
@@ -140,14 +139,6 @@ public:
 	 * Resets the status of the game so that we can play again.
 	 */
 	//void reset();
-
-	/** 
-	 * Initializes Stacks given playOrder vectors for both Moose 
-	 * 
-	 * @param playerOrder the playOrder of the player Moose
-	 * @param oppOrder the playOrder of the opponent Moose
-	 */
-	void initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder);
 
 #pragma mark -
 #pragma mark Special Handling

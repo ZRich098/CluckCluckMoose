@@ -122,23 +122,34 @@ void CCMApp::onResume() {
 	AudioChannels::get()->resumeAll();
 	//load player's game state
 	std::shared_ptr<JsonReader> stateReader = JsonReader::allocWithAsset("saveState.json");
-	std::shared_ptr<JsonValue> json = stateReader->readJson();
-	if (json == nullptr) {
-		CULog("Failed to load state file");
+	if (stateReader == nullptr) {
+		CULog("State file not found");
 	}
 	else {
-		_saveLoad.loadSaveGame(json);
+		std::shared_ptr<JsonValue> json = stateReader->readJson();
+		if (json == nullptr) {
+			CULog("Failed to load state file");
+		}
+		else {
+			_saveLoad.loadSaveGame(json);
+		}
 	}
+	
 	//load last level state, if applicable
 	std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("saveGame.json");
-	json = gameReader->readJson();
-	if (json == nullptr) {
-		CULog("Failed to load level file");
+	if (gameReader == nullptr) {
+		CULog("Level file not found");
 	}
 	else {
-		_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-		_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-		_saveLoad.loadLevelTag(json->get("Tag"));
+		std::shared_ptr<JsonValue> json = gameReader->readJson();
+		if (json == nullptr) {
+			CULog("Failed to load level file");
+		}
+		else {
+			_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+			_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+			_saveLoad.loadLevelTag(json->get("Tag"));
+		}
 	}
 }
 
@@ -195,6 +206,24 @@ void CCMApp::update(float timestep) {
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 2; // need to load in assets for new level here
+
+				//load level, if able
+				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("level%d.json", _levelscene.getLevel());
+				if (gameReader == nullptr) {
+					CULog("Level file not found");
+				}
+				else {
+					std::shared_ptr<JsonValue> json = gameReader->readJson();
+					if (json == nullptr) {
+						CULog("Failed to load level file");
+					}
+					else {
+						_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+						_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+						_saveLoad.loadLevelTag(json->get("Tag"));
+					}
+				}
+
                 _gameplay[_current]->setActive(true);
             }
         }
