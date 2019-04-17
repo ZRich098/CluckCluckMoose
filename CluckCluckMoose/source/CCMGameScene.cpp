@@ -236,8 +236,8 @@ void GameScene::update(float timestep) {
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
 
-			player->takeDamage(opp->getStack().getSize());
-			opp->takeDamage(player->getStack().getSize());
+			player->takeDamage(opp->getStack().getDamage());
+			opp->takeDamage(player->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
