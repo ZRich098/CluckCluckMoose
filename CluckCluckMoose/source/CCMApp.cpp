@@ -103,9 +103,9 @@ void CCMApp::onShutdown() {
 void CCMApp::onSuspend() {
 	AudioChannels::get()->pauseAll();
 	//save player's game state
-	_saveLoad.saveGame(0/*_levelscene.getLevel()*/);
+	_saveLoad.saveGame(_levelscene.getLevel());
 	//save current level state, if applicable
-	_saveLoad.saveLevel(_gamescene.getPlayer(),_gamescene.getOpp(),0/*_levelscene.getLevel()*/);
+	_saveLoad.saveLevel(_gamescene.getPlayer(),_gamescene.getOpp(),_levelscene.getLevel());
 }
 
 /**
