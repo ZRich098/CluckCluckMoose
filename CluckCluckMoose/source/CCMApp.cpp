@@ -136,9 +136,9 @@ void CCMApp::onResume() {
 		CULog("Failed to load level file");
 	}
 	else {
-		_saveLoad.loadPlayerMoose(json);
-		_saveLoad.loadOpponentMoose(json);
-		_saveLoad.loadLevelTag(json);
+		_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+		_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+		_saveLoad.loadLevelTag(json->get("Tag"));
 	}
 }
 

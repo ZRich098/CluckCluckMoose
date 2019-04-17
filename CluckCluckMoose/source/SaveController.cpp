@@ -84,9 +84,12 @@ bool SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) {
 	success = success && playOrderArray->isArray();
 	vector<int> playOrder = playOrderArray->asIntArray();
 
-	auto coopArray = json->get(COOP_FIELD);
-	success = success && coopArray->isArray();
-	vector<int> coop = coopArray->asIntArray();
+	auto handPoolArray = json->get(COOP_FIELD);
+	success = success && handPoolArray->isArray();
+	vector<vector<int>> handPool;
+	for (int i = 0; i < handPoolArray->size(); i++) {
+		handPool.push_back(handPoolArray->get(i)->asIntArray());
+	}
 
 	auto discardArray = json->get(DISCARD_FIELD);
 	success = success && discardArray->isArray();
@@ -97,7 +100,7 @@ bool SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) {
 	string cost = costume->asString();
 
 	opponent = Moose::alloc(3, 3);
-	opponent->jsonInit(h, hand, playOrder, coop, discard, cost);
+	opponent->jsonInit(h, hand, playOrder, handPool, discard, cost);
 
 	return success;
 }
@@ -231,10 +234,14 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	JsonValue oppCoop;
 	oppCoop.initArray();
-	//Make opp Coop - @TODO REPLACE WITH NESTED ARRAYS
-	for (int i = 0; i < opp.getDeck().getSize(); i++) {
-		cardInCoop.init((float)specialToInt(opp.getDeckAt(i).getSpecial()));
-		oppCoop.appendChild(std::make_shared<JsonValue>(cardInCoop));
+	//Make opp Coop
+	for (int h = 0; h < opp.getHandPool().size(); h++) {
+		JsonValue oppCoopHand;
+		for (int i = 0; i < opp.getHandPool().at(h).size(); i++) {
+			cardInCoop.init((float)specialToInt(opp.getDeckAt(i).getSpecial()));
+			oppCoopHand.appendChild(std::make_shared<JsonValue>(cardInCoop));
+		}
+		oppCoop.appendChild(std::make_shared<JsonValue>(oppCoopHand));
 	}
 	oppMoose.appendChild("Coop", std::make_shared<JsonValue>(oppCoop));
 

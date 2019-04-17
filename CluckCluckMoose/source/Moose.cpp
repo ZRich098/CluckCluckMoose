@@ -55,6 +55,33 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	//costume = cost;
 }
 
+void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<vector<int>> handPoolArray, vector<int> discardArray, string cost) {
+	health = h;
+	for (int i : handArray) {
+		hand.push_back(Chicken(intToSpecial(i)));
+	}
+
+	for (int i : playOrderArray) {
+		playOrder.push_back(Chicken(intToSpecial(i)));
+	}
+
+	handPool.clear();
+	for (vector<int> h : handPoolArray) {
+		vector<Chicken> hand;
+		for (int i : h) {
+			hand.push_back(Chicken(intToSpecial(i)));
+		}
+		handPool.push_back(hand);
+	}
+
+	for (int i : discardArray) {
+		discard.push_back(Chicken(intToSpecial(i)));
+	}
+
+	//not yet supported
+	//costume = cost;
+}
+
 
 /**
  * Disposes all resources and assets of this moose
