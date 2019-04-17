@@ -357,21 +357,22 @@ int Chicken::compare(const Chicken& other) const {
 			return -1;
 		case element::LoseAll:
 			return 1;
+		default:
+			switch (e) {
+				case element::WinAll:
+					return 1;
+				case element::LoseAll:
+					return -1;
+				case element::Fire:
+					return other.e == element::Grass ? 1 : -1;
+				case element::Water:
+					return other.e == element::Fire ? 1 : -1;
+				case element::Grass:
+					return other.e == element::Water ? 1 : -1;
+				default:
+					//Never reached
+					return -2;
+			}
 	}
 
-	switch (e) {
-		case element::WinAll:
-			return 1;
-		case element::LoseAll:
-			return -1;
-		case element::Fire:
-			return other.e == element::Grass ? 1 : -1;
-		case element::Water:
-			return other.e == element::Fire ? 1 : -1;
-		case element::Grass:
-			return other.e == element::Water ? 1 : -1;
-	}
-
-	//Never reached
-	return -2;
 }
