@@ -109,7 +109,6 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 	_assets = assets;
 
-	auto loading = _assets->get<Sound>("trailer");
 	auto game_music = _assets->get<Sound>(GAME_MUSIC);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
@@ -135,7 +134,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	opp->refillHand();
 	prevHand = player->getHand().size();
 
-	oppAI = AI::alloc(opp, player, AIType::Intro);
+	oppAI = AI::alloc(opp, player, AIType::Smart);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
 
 	sb->deactivateHand();
@@ -182,7 +181,6 @@ void GameScene::update(float timestep) {
 
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == ENTRY) {
-			//player->addToStackFromHand( The index of the chicken played ) if input works
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
@@ -250,8 +248,8 @@ void GameScene::update(float timestep) {
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
 
-			player->takeDamage(opp->getStack().getSize());
-			opp->takeDamage(player->getStack().getSize());
+			player->takeDamage(opp->getStack().getDamage());
+			opp->takeDamage(player->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();

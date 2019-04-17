@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\source\AI.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\SaveController.cpp" />
     <ClCompile Include="..\..\source\SceneBuilder1.cpp" />
@@ -32,9 +31,14 @@
     <ClCompile Include="..\..\source\CCMMenuScene.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\AI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\AITest.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\AI.h" />
     <ClInclude Include="..\..\source\HelloApp.h" />
     <ClInclude Include="..\..\source\SaveController.h" />
     <ClInclude Include="..\..\source\SceneBuilder1.h" />
@@ -72,6 +76,12 @@
     <ClInclude Include="..\..\source\CCMMenuScene.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\AI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\AITest.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />
@@ -85,6 +95,9 @@
     </Filter>
     <Filter Include="App">
       <UniqueIdentifier>{ea1093e0-4d74-4011-9f73-a7744a084b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{3d1645aa-5c5d-4cca-ab4c-bdded998f97f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

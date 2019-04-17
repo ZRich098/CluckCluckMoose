@@ -189,6 +189,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\AI.h" />
+    <ClInclude Include="..\..\source\AITest.h" />
     <ClInclude Include="..\..\source\CCMApp.h" />
     <ClInclude Include="..\..\source\CCMGameScene.h" />
     <ClInclude Include="..\..\source\CCMInput.h" />
@@ -207,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\AI.cpp" />
+    <ClCompile Include="..\..\source\AITest.cpp" />
     <ClCompile Include="..\..\source\CCMApp.cpp" />
     <ClCompile Include="..\..\source\CCMGameScene.cpp" />
     <ClCompile Include="..\..\source\CCMInput.cpp" />
