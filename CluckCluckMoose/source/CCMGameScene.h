@@ -93,6 +93,15 @@ public:
      */
     virtual void setActive(bool value) override;
 
+	/**
+	 * Initializes the player and opp stacks according
+	 * to the given play order vectors
+	 *
+	 * @param playerOrder the play order for the player
+	 * @param oppOrder the play order for the opponent
+	 */
+	void initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder);
+
 
 #pragma mark -
 #pragma mark Accessors

@@ -164,6 +164,19 @@ void GameScene::dispose() {
 	AudioChannels::get()->stopMusic();
 }
 
+void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
+	while (playerOrder.size() < player->getStack().getSize() && oppOrder.size() < opp->getStack().getSize()) {
+		//play chickens from play order
+		player->getStack().add(playerOrder.front());
+		playerOrder.erase(playerOrder.begin());
+		opp->getStack().add(oppOrder.front());
+		oppOrder.erase(oppOrder.begin());
+		//resolve effects
+		player->getStack().specialChickenEffect(opp->getStack(), skipState);
+		stackSize++;
+	}
+}
+
 /**
  * The method called to update the game mode.
  *
@@ -175,6 +188,10 @@ void GameScene::update(float timestep) {
 	if (cooldown > 0) {
 		cooldown--;
 		return;
+	}
+
+	if (player->getOrder().size() < player->getStack().getSize() && opp->getOrder().size() < opp->getStack().getSize()) {
+		initStacks(player->getOrder(), opp->getOrder());
 	}
 
 	sb->updateInput(timestep);
