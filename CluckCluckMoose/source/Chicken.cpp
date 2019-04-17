@@ -23,7 +23,7 @@ Chicken::Chicken(special sp) {
 		e = element::Grass;
 		return;
 	case special::Reaper:
-		e = element::TieAll;
+		e = element::SpecialWin;
 		damage = 0;
 		return;
 	case special::BirdBrain:
@@ -358,6 +358,11 @@ int Chicken::compare(const Chicken& other) const {
 		case element::LoseAll:
 			return 1;
 	}
+
+	if (e == element::SpecialWin && (other.s == special::BasicFire || other.s == special::BasicGrass || other.s == special::BasicWater))
+		return 1;
+	else if (e == element::SpecialWin)
+		return -1;
 
 	switch (e) {
 		case element::WinAll:

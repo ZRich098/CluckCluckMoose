@@ -24,6 +24,7 @@ protected:
 	Coop deck;
 	vector <Chicken> discard;
 	vector <Chicken> playOrder;
+	vector <vector<Chicken>> handPool;
 	int handSize;
 	int health;
 	void refillDeck();
@@ -113,6 +114,11 @@ public:
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();
 
+	/** Sets the opponent's possible hands.
+		Input is a vector of chicken vectors
+		(where the internal vectors are the hands and the external one is the pool of possible hands)*/
+	void setOppHands(vector<vector<Chicken>> pool) { handPool = pool; }
+
     
 #pragma mark -
 #pragma mark Stack
@@ -134,6 +140,10 @@ public:
 	void clearHandToDiscard();
 	/** Refills the hand with Chickens from the Coop */
 	void refillHand();
+	/** Refills the hand of the opponent using random set hands rather than random chickens. 
+	    Input is a vector of chicken vectors 
+		(where the internal vectors are the hands and the external one is the pool of possible hands)*/
+	void refillOppHand(vector<vector<Chicken>> cardPool);
 	/** Draws num card from the Coop and adds it to the hand 
 		Discards any cards drawn over the hand size (straight to discard pile)*/
 	void draw(int num = 1);

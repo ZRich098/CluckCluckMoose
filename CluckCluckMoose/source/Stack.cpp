@@ -153,16 +153,16 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 		return setSkip(skipState, OPP);
 	}
 
-	if (s1 == special::Scientist && getSize() >= 2) {
+	if (s1 == special::Thicken && getSize() >= 2) {
 		swap(getSize() - 2, getSize() - 1);
 		return setSkip(skipState, PLAYER);
 	}
-	if (s2 == special::Scientist && opp.getSize() >= 2) {
+	if (s2 == special::Thicken && opp.getSize() >= 2) {
 		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
 		return setSkip(skipState, OPP);
 	}
 
-	if (s1 == special::Thicken) {
+	/*if (s1 == special::Thicken) {
 		insert(0, getTop());
 		removeTop();
 		return setSkip(skipState, PLAYER);
@@ -171,7 +171,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 		opp.insert(0, opp.getTop());
 		opp.removeTop();
 		return setSkip(skipState, OPP);
-	}
+	}*/
 
 	//TODO special::Hide
 
@@ -201,7 +201,7 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 	//CULog("\n%s", stackString().c_str());
 
 	// Exits state machine if no special chicken is found
-	return make_tuple(3, 0);
+	return make_tuple(EXIT, 0);
 }
 
 
@@ -218,14 +218,14 @@ void Stack::specialChickenEffect() {
 		at(getSize() - 2).cycle();
 	}
 
-	if (s1 == special::Scientist && getSize() >= 2) {
+	if (s1 == special::Thicken && getSize() >= 2) {
 		swap(getSize() - 2, getSize() - 1);
 	}
 
-	if (s1 == special::Thicken) {
+	/*if (s1 == special::Thicken) {
 		insert(0, getTop());
 		removeTop();
-	}
+	}*/
 
 }
 
