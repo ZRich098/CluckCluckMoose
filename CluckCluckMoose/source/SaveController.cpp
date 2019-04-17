@@ -112,15 +112,15 @@ bool loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume
 	return success;
 }
 
-void SaveController::saveGame() { //called in onSuspend()
+void SaveController::saveGame(int level) { //called in onSuspend()
 	//create JSONValue
 	JsonValue saveGame;
 	saveGame.initObject();
 
 	//Add Level (last level completed)
-	JsonValue level;
-	level.init(0.0); //@TODO Get from game state
-	saveGame.appendChild("Level", std::make_shared<JsonValue>(level));
+	JsonValue lastLevel;
+	lastLevel.init((float)level); //@TODO Get from game state
+	saveGame.appendChild("Level", std::make_shared<JsonValue>(lastLevel));
 
 	//Add Volume
 	JsonValue vol;
@@ -145,7 +145,7 @@ void SaveController::saveGame() { //called in onSuspend()
 	writer->close();
 }
 
-void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr) { //called in onSuspend()
+void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr, int level) { //called in onSuspend()
 	Moose player = *playerPtr;
 	Moose opp = *oppPtr;
 
@@ -255,7 +255,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	//Add Tag
 	JsonValue levelTag;
-	levelTag.init(0.0); //GET FROM GAME STATE
+	levelTag.init((float)level);
 	saveFile.appendChild(std::make_shared<JsonValue>(levelTag));
 
 	//save to file
