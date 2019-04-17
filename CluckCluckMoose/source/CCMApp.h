@@ -56,38 +56,13 @@ protected:
 	LoadingScene _loadingscene;
 	/** The controller for the menu screen */
 	MenuScene _menuscene;
+	/** The controller for the level select screen */
+	LevelScene _levelscene;
 	/** The controller for scene input */
 	CCMInput _input;
 	/** The controller for saving and loading states */
 	SaveController _saveLoad;
 
-    /** The global sprite batch for drawing (only want one of these) */
-    std::shared_ptr<cugl::SpriteBatch> _batch;
-    /** The global asset manager */
-    std::shared_ptr<cugl::AssetManager> _assets;
-    
-    // Player modes
-    /** The controller for the various game worlds */
-    std::vector<std::shared_ptr<cugl::Scene>> _gameplay;
-    /** The primary controller for the game world */
-    GameScene _gamescene;
-
-    /** The currently active scene */
-    size_t _current;
-
-    /** The controller for the loading screen */
-    LoadingScene _loadingscene;
-    /** The controller for the menu screen */
-    MenuScene _menuscene;
-    /** The controller for the level select screen */
-    LevelScene _levelscene;
-    /** The controller for scene input */
-    CCMInput _input;
-    
-	// Values for tracking menu buttons
-	bool _playClicked;
-	bool _helpClicked;
-	bool _settingsClicked;
 
 public:
 #pragma mark Constructors

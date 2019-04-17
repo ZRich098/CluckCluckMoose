@@ -29,36 +29,35 @@ using namespace cugl;
 * causing the application to run.
 */
 void CCMApp::onStartup() {
-	_assets = AssetManager::alloc();
-	_batch  = SpriteBatch::alloc();
-	AudioChannels::start(24);
-	
-	// Start-up basic input
+    _assets = AssetManager::alloc();
+    _batch  = SpriteBatch::alloc();
+    AudioChannels::start(24);
+
+    // Start-up basic input
 #ifdef CU_TOUCH_SCREEN
-	Input::activate<Touchscreen>();
-	Input::activate<PanInput>();
+    Input::activate<Touchscreen>();
+    Input::activate<PanInput>();
 #else
-	Input::activate<Mouse>();
+    Input::activate<Mouse>();
 #endif
-	_assets->attach<Font>(FontLoader::alloc()->getHook());
-	_assets->attach<Texture>(TextureLoader::alloc()->getHook());
-	_assets->attach<Sound>(SoundLoader::alloc()->getHook());
-	_assets->attach<Node>(SceneLoader::alloc()->getHook());
+    _assets->attach<Font>(FontLoader::alloc()->getHook());
+    _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+    _assets->attach<Sound>(SoundLoader::alloc()->getHook());
+    _assets->attach<Node>(SceneLoader::alloc()->getHook());
 
-	// Create a "loading" screen
-	_loaded = false;
-	_loadingscene.init(_assets);
+    // Create a "loading" screen
+    _loaded = false;
+    _loadingscene.init(_assets);
 
-	// Create the saving and loading controller
-	//_saveLoad
+    // Create the saving and loading controller
+    //_saveLoad
 
-	// Que up the other assets
-	_assets->loadDirectoryAsync("json/assets1.json",nullptr);
-  //_assets->loadAsync<LevelModel>(LEVEL_ONE_KEY,LEVEL_ONE_FILE,nullptr);
+    // Que up the other assets
+    _assets->loadDirectoryAsync("json/assets1.json",nullptr);
 
-	_input.init();
+    _input.init();
 
-	Application::onStartup(); // YOU MUST END with call to parent
+    Application::onStartup(); // YOU MUST END with call to parent
 }
 
 /**
@@ -73,21 +72,21 @@ void CCMApp::onStartup() {
 * causing the application to be deleted.
 */
 void CCMApp::onShutdown() {
-	_loadingscene.dispose();
-	_gameplay.clear();
-	_assets = nullptr;
-	_batch = nullptr;
+    _loadingscene.dispose();
+    _gameplay.clear();
+    _assets = nullptr;
+    _batch = nullptr;
 
-	// Shutdown input
+    // Shutdown input
 #ifdef CU_TOUCH_SCREEN
-	Input::deactivate<Touchscreen>();
+    Input::deactivate<Touchscreen>();
 #else
-	Input::deactivate<Mouse>();
+    Input::deactivate<Mouse>();
 #endif
 
-	AudioChannels::stop();
-	_input.dispose();
-	Application::onShutdown();  // YOU MUST END with call to parent
+    AudioChannels::stop();
+    _input.dispose();
+    Application::onShutdown();  // YOU MUST END with call to parent
 }
 
 /**

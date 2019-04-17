@@ -252,7 +252,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		std::shared_ptr<AnimationNode> anim;
 		//get changed to animation nodes EMMMAAA
 		anim = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
-
+		anim->setVisible(false);
 		pstackNodes.push_back(anim);
 		texturesPStack.push_back(text);
 	}
