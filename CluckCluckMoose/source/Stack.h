@@ -4,6 +4,11 @@
 #include <cugl/cugl.h>
 
 #include "Chicken.h"
+
+
+/** Nullifies a chicken */
+void partyHelper(Chicken& target);
+
 class Stack {
 private:
 	/** Return the list of chicken special abilities in order the chickens were added to the stack. */
@@ -11,9 +16,6 @@ private:
 	/** List of current Chickens on stack in order of bottom to top
 		chickens can have elements modified*/
 	vector <Chicken> chickens;
-
-	/** Nullifies a chicken */
-	void partyHelper(Chicken& target);
 
 public:
 	//Constructor

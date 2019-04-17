@@ -18,7 +18,8 @@ enum class AIType {
 	Intro, //Plays random card, but different special
 	Basic, //Plays non-trivially
     Smart, // Randomly chooses between decent moves
-	Expert //Hits up that minimax tree
+	Expert, //Hits up that minimax tree
+	Starter //Tries to lose if possible
 };
 
 
