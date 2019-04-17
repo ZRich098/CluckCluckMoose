@@ -359,16 +359,16 @@ int Chicken::compare(const Chicken& other) const {
 			return 1;
 		case element::SpecialWin:
 			if (s == special::BasicFire || s == special::BasicGrass || s == special::BasicWater)
-				return -1;
-			else
 				return 1;
+			else
+				return -1;
 		default:
 			switch (e) {
 			case element::SpecialWin:
 				if (other.s == special::BasicFire || other.s == special::BasicGrass || other.s == special::BasicWater)
-					return 1;
-				else
 					return -1;
+				else
+					return 1;
 			case element::WinAll:
 				return 1;
 			case element::LoseAll:

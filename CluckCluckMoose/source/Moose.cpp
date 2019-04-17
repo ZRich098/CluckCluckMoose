@@ -86,13 +86,15 @@ vector<int> Moose::getChickenElementDistribution() {
 			grass += 1;
 			break;
 		default:
-			int random = rand() % 3;
-			if (random == 0)
+			if (nonEleDist.size() <= other)
+				nonEleDist.push_back(rand() % 3);
+			if (nonEleDist.at(other) == 0)
 				fire += 1;
-			if (random == 1)
+			if (nonEleDist.at(other) == 1)
 				water += 1;
-			if (random == 2)
+			if (nonEleDist.at(other) == 2)
 				grass += 1;
+			other += 1;
 			break;
 		}
 	}
@@ -162,6 +164,7 @@ void Moose::clearHandToDiscard() {
 			discard.push_back(c);
 		}
 	}
+	nonEleDist.clear();
 	hand.clear();
 }
 

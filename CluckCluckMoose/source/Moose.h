@@ -25,6 +25,8 @@ protected:
 	vector <Chicken> discard;
 	vector <Chicken> playOrder;
 	vector <vector<Chicken>> handPool;
+	//nonEleDist is a seed for the non-elemental chickens in the element distribution to stay as one element
+	vector <int> nonEleDist;
 	int handSize;
 	int health;
 	void refillDeck();
