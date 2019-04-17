@@ -193,18 +193,6 @@ void Moose::refillHand() {
 	}
 }
 
-void Moose::refillOppHand(vector<vector<Chicken>> cardPool) {
-	if (hand.size() == 0) {
-		hand.push_back(Chicken(element::Fire, special::BasicFire));
-		hand.push_back(Chicken(element::Grass, special::BasicGrass));
-		hand.push_back(Chicken(element::Water, special::BasicWater));
-	}
-	random_shuffle(cardPool.begin(), cardPool.end());
-	for (Chicken i : cardPool.front()) {
-		hand.push_back(i);
-	}
-}
-
 void Moose::draw(int num) {
 	for (int i = 0; i < num; i++) {
 		//refill deck if empty

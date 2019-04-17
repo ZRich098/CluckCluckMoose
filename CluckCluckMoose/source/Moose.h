@@ -82,7 +82,7 @@ public:
     /** Get the current pecking order of the Moose*/
 	Stack& getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
-	Chicken getStackAt(int pos) { return stack.at(pos); };
+	Chicken& getStackAt(int pos) { return stack.at(pos); };
 	/** Get the order that chickens have been played in*/
 	vector <Chicken> getOrder() { return playOrder; };
 	/** Get the Chicken at position pos in the play order*/
@@ -140,10 +140,8 @@ public:
 	void clearHandToDiscard();
 	/** Refills the hand with Chickens from the Coop */
 	void refillHand();
-	/** Refills the hand of the opponent using random set hands rather than random chickens. 
-	    Input is a vector of chicken vectors 
-		(where the internal vectors are the hands and the external one is the pool of possible hands)*/
-	void refillOppHand(vector<vector<Chicken>> cardPool);
+	/** Shuffles the hand into a random order*/
+	void shuffleHand() { random_shuffle(hand.begin(), hand.end()); };
 	/** Draws num card from the Coop and adds it to the hand 
 		Discards any cards drawn over the hand size (straight to discard pile)*/
 	void draw(int num = 1);

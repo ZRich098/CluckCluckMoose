@@ -229,7 +229,7 @@ void Stack::specialChickenEffect() {
 
 }
 
-void Stack::partyHelper(Chicken& target) {
+void partyHelper(Chicken& target) {
 	switch (target.getSpecial()) {
 	case special::Reaper:
 		target.setChicken(element::Water, special::BasicWater);
