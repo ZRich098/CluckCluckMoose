@@ -165,7 +165,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	playerHand.initArray();
 	JsonValue cardInHand; //Make player Hand
 	for (int i = 0; i < player.getHand().size(); i++) {
-		cardInHand.init(player.getHandAt(i).toString());
+		cardInHand.init((float)specialToInt(player.getHandAt(i).getSpecial()));
 		playerHand.appendChild(std::make_shared<JsonValue>(cardInHand));
 	}
 	playerMoose.appendChild("Hand", std::make_shared<JsonValue>(playerHand));
@@ -174,7 +174,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	playerOrder.initArray();
 	JsonValue cardInOrder; //Make player PlayOrder
 	for (int i = 0; i < player.getPlayOrder().size(); i++) {
-		cardInOrder.init(player.getPlayOrderAt(i).toString());
+		cardInOrder.init((float)specialToInt(player.getPlayOrderAt(i).getSpecial()));
 		playerOrder.appendChild(std::make_shared<JsonValue>(cardInOrder));
 	}
 	playerMoose.appendChild("PlayOrder", std::make_shared<JsonValue>(playerOrder));
@@ -183,7 +183,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	playerCoop.initArray();
 	JsonValue cardInCoop; //Make player Coop
 	for (int i = 0; i < player.getDeck().getSize(); i++) {
-		cardInCoop.init(player.getDeckAt(i).toString());
+		cardInCoop.init((float)specialToInt(player.getDeckAt(i).getSpecial()));
 		playerCoop.appendChild(std::make_shared<JsonValue>(cardInCoop));
 	}
 	playerMoose.appendChild("Coop", std::make_shared<JsonValue>(playerCoop));
@@ -192,7 +192,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	playerDiscard.initArray();
 	JsonValue cardInDiscard; //Make player Discard
 	for (int i = 0; i < player.getDiscard().size(); i++) {
-		cardInDiscard.init(player.getDiscardAt(i).toString());
+		cardInDiscard.init((float)specialToInt(player.getDiscardAt(i).getSpecial()));
 		playerDiscard.appendChild(std::make_shared<JsonValue>(cardInDiscard));
 	}
 	playerMoose.appendChild("Discard", std::make_shared<JsonValue>(playerDiscard));
@@ -215,7 +215,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	oppHand.initArray();
 	//Make opp Hand
 	for (int i = 0; i < opp.getHand().size(); i++) {
-		cardInHand.init(opp.getHandAt(i).toString());
+		cardInHand.init((float)specialToInt(opp.getHandAt(i).getSpecial()));
 		oppHand.appendChild(std::make_shared<JsonValue>(cardInHand));
 	}
 	oppMoose.appendChild("Hand", std::make_shared<JsonValue>(oppHand));
@@ -224,7 +224,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	oppOrder.initArray();
 	//Make opp PlayOrder
 	for (int i = 0; i < opp.getPlayOrder().size(); i++) {
-		cardInOrder.init(opp.getPlayOrderAt(i).toString());
+		cardInOrder.init((float)specialToInt(opp.getPlayOrderAt(i).getSpecial()));
 		oppOrder.appendChild(std::make_shared<JsonValue>(cardInOrder));
 	}
 	oppMoose.appendChild("PlayOrder", std::make_shared<JsonValue>(oppOrder));
@@ -233,7 +233,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	oppCoop.initArray();
 	//Make opp Coop - @TODO REPLACE WITH NESTED ARRAYS
 	for (int i = 0; i < opp.getDeck().getSize(); i++) {
-		cardInCoop.init(opp.getDeckAt(i).toString());
+		cardInCoop.init((float)specialToInt(opp.getDeckAt(i).getSpecial()));
 		oppCoop.appendChild(std::make_shared<JsonValue>(cardInCoop));
 	}
 	oppMoose.appendChild("Coop", std::make_shared<JsonValue>(oppCoop));
@@ -242,7 +242,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 	oppDiscard.initArray();
 	//Make opp Discard
 	for (int i = 0; i < opp.getDiscard().size(); i++) {
-		cardInDiscard.init(opp.getDiscardAt(i).toString());
+		cardInDiscard.init((float)specialToInt(opp.getDiscardAt(i).getSpecial()));
 		oppDiscard.appendChild(std::make_shared<JsonValue>(cardInDiscard));
 	}
 	oppMoose.appendChild("Discard", std::make_shared<JsonValue>(oppDiscard));
