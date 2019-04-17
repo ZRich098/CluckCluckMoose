@@ -91,6 +91,9 @@ public:
 #pragma mark Setters
 	//sets previewSet to the given value
 	void setPreview(bool preview);
+	void deactivateHand();
+	void activateHand();
+
 };
 
 

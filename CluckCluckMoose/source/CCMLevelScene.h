@@ -2,8 +2,8 @@
 // Created by Amanda Trang on 4/10/19.
 //
 
-#ifndef __CCM_MENU_SCENE_H__
-#define __CCM_MENU_SCENE_H__
+#ifndef __CCM_LEVEL_SCENE_H__
+#define __CCM_LEVEL_SCENE_H__
 
 #include <cugl/cugl.h>
 #include <unordered_map>
@@ -11,7 +11,7 @@
 /**
  * A scene for demoing a layout manager
  */
-class MenuScene : public cugl::Scene {
+class LevelScene : public cugl::Scene {
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -27,7 +27,7 @@ public:
      * This constructor does not allocate any objects or start the controller.
      * This allows us to use a controller without a heap pointer.
      */
-    MenuScene() {}
+    LevelScene() {}
 
     /**
      * Disposes of all (non-static) resources allocated to this mode.
@@ -35,7 +35,7 @@ public:
      * This method is different from dispose() in that it ALSO shuts off any
      * static resources, like the input controller.
      */
-    ~MenuScene() { dispose(); }
+    ~LevelScene() { dispose(); }
 
     /**
      * Disposes of all (non-static) resources allocated to this mode.
@@ -55,8 +55,8 @@ public:
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
 
-    static std::shared_ptr<MenuScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
-        std::shared_ptr<MenuScene> result = std::make_shared<MenuScene>();
+    static std::shared_ptr<LevelScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
+        std::shared_ptr<LevelScene> result = std::make_shared<LevelScene>();
         return (result->init(assets) ? result : nullptr);
     }
 
@@ -77,13 +77,26 @@ public:
     void update(float timestep);
 
     /**
-     * Getters for menu buttons
-     *
+     * Getters and setters for level select buttons
      */
-    bool getPlay();
-    void setPlay(bool val);
-    bool getHelp();
-    bool getSettings();
+    int getLevel();
+    bool getBack();
+    void setBack(bool val);
+    void deactivateButtons();
+    void activateButtons();
+
+    /**
+     * Creates locks, flags, and arrow on level select.
+     *
+     * @param node canvas for this object
+     * @param posX x position
+     * @param posY y position
+     * @param list list of items this belongs to (i.e. background or buttons)
+     * @param lev int; level number
+     * @param locked bool; if locked
+     * @param curr bool; if arrow
+     */
+    void buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr);
 };
 
-#endif /* __CCM_MENU_SCENE_H__ */
+#endif /* __CCM_LEVEL_SCENE_H__ */
