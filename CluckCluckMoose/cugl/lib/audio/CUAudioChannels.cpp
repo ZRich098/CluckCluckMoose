@@ -96,7 +96,7 @@ bool AudioChannels::init(Uint32 channels) {
     _capacity = channels;
 
     // Assume that manager has already started
-    _output = AudioManager::get()->openOutput();
+    _output = AudioManager::get()->openOutput(2, 44100);
     _mixer  = AudioMixer::alloc(_capacity+1,_output->getChannels(),
                                 _output->getRate(),_output->getCapacity());
 
