@@ -81,7 +81,7 @@ public:
     /** Get the current pecking order of the Moose*/
 	Stack& getStack() { return stack; };
 	/** Get the Chicken at position pos in the stack of the Moose*/
-	Chicken& getStackAt(int pos) { return stack.at(pos); };
+	Chicken getStackAt(int pos) { return stack.at(pos); };
 	/** Get the order that chickens have been played in*/
 	vector <Chicken> getOrder() { return playOrder; };
 	/** Get the Chicken at position pos in the play order*/

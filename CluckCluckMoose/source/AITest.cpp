@@ -17,8 +17,8 @@ void testAll() {
 	std::shared_ptr<AI> smart2 = AI::alloc(p2, p1, AIType::Smart);
 	std::shared_ptr<AI> expert2 = AI::alloc(p2, p1, AIType::Expert);
 
-	int p1win = playGames(p1, basic1, p2, smart2, 1000);
-	CULog("Basic vs Smart: %i to %i", p1win, 1000 - p1win);
+	int p1win = playGames(p1, basic1, p2, smart2, 100);
+	CULog("Basic vs Smart: %i to %i", p1win, 100 - p1win);
 
 	/*
 	int NUM_GAMES = 1000;
@@ -115,9 +115,11 @@ int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, std::shared_pt
 					p2->draw();
 			}
 
+
 			//clash
-			while (!p1->getStack().empty() && !p2->getStack().empty())
+			while (!p1->getStack().empty() && !p2->getStack().empty()) {
 				p1->getStack().compare(p2->getStack());
+			}
 
 			p1->takeDamage(p2->getStack().getSize());
 			p2->takeDamage(p1->getStack().getSize());
@@ -142,6 +144,8 @@ int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, std::shared_pt
 
 		p1->setHealth(5);
 		p2->setHealth(5);
+
+		CULog("%i game done", games);
 	}
 
 	if (p1win + p2win != num_games) CULogError("That aint right");
