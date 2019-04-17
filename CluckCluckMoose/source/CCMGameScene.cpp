@@ -194,7 +194,7 @@ void GameScene::update(float timestep) {
 		return;
 	}
 
-	if (player->getOrder().size() < player->getStack().getSize() && opp->getOrder().size() < opp->getStack().getSize()) {
+	if (player->getOrder().size() > player->getStack().getSize() && opp->getOrder().size() > opp->getStack().getSize()) {
 		initStacks(player->getOrder(), opp->getOrder());
 	}
 
