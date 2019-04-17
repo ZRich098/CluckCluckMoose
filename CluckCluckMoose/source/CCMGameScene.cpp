@@ -57,6 +57,11 @@ bool isClashing;
 //bool to signify a clash preview is in progress
 bool isPreviewing;
 
+//bool to signify a a winState
+bool didWin;
+
+//bool to signify a a loseState
+bool didLose;
 
 
 //SceneBuilder
@@ -132,6 +137,13 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 	oppAI = AI::alloc(opp, player, AIType::Intro);
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+
+	sb->deactivateHand();
+
+	//Initialize AI
+	//oppAI = AI::AI(opp,player);
+
+	//Draw
     
     setActive(_active);
     
@@ -244,6 +256,18 @@ void GameScene::update(float timestep) {
 			player->getStack().clear();
 			opp->getStack().clear();
 			isClashing = false;
+
+			if (player->getHealth() <= 0) {
+				didLose = true;
+				didWin = false;
+				CULog("lost! lmao");
+			}
+
+			if (opp->getHealth() <= 0) {
+				didLose = false;
+				didWin = true;
+				CULog("win");
+			}
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
@@ -284,6 +308,12 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 void GameScene::setActive(bool value) {
     _active = value;
     int pos = LISTENER_ID;
+    cooldown = CLASHLENGTH/2;
+    if (cooldown > 0) {
+        cooldown--;
+        return;
+    }
+	sb->activateHand();
     /* For(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
         if (value && !it->second->isActive()) {
             it->second->activate(pos++);

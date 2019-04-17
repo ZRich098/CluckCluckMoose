@@ -29,35 +29,35 @@ using namespace cugl;
 * causing the application to run.
 */
 void CCMApp::onStartup() {
-	_assets = AssetManager::alloc();
-	_batch  = SpriteBatch::alloc();
-	AudioChannels::start(24);
-	
-	// Start-up basic input
+    _assets = AssetManager::alloc();
+    _batch  = SpriteBatch::alloc();
+    AudioChannels::start(24);
+
+    // Start-up basic input
 #ifdef CU_TOUCH_SCREEN
-	Input::activate<Touchscreen>();
-	Input::activate<PanInput>();
+    Input::activate<Touchscreen>();
+    Input::activate<PanInput>();
 #else
-	Input::activate<Mouse>();
+    Input::activate<Mouse>();
 #endif
-	_assets->attach<Font>(FontLoader::alloc()->getHook());
-	_assets->attach<Texture>(TextureLoader::alloc()->getHook());
-	_assets->attach<Sound>(SoundLoader::alloc()->getHook());
-	_assets->attach<Node>(SceneLoader::alloc()->getHook());
+    _assets->attach<Font>(FontLoader::alloc()->getHook());
+    _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+    _assets->attach<Sound>(SoundLoader::alloc()->getHook());
+    _assets->attach<Node>(SceneLoader::alloc()->getHook());
 
-	// Create a "loading" screen
-	_loaded = false;
-	_loadingscene.init(_assets);
+    // Create a "loading" screen
+    _loaded = false;
+    _loadingscene.init(_assets);
 
-	// Create the saving and loading controller
-	//_saveLoad
+    // Create the saving and loading controller
+    //_saveLoad
 
-	// Que up the other assets
-	_assets->loadDirectoryAsync("json/assets1.json",nullptr);
+    // Que up the other assets
+    _assets->loadDirectoryAsync("json/assets1.json",nullptr);
 
-	_input.init();
+    _input.init();
 
-	Application::onStartup(); // YOU MUST END with call to parent
+    Application::onStartup(); // YOU MUST END with call to parent
 }
 
 /**
@@ -72,21 +72,21 @@ void CCMApp::onStartup() {
 * causing the application to be deleted.
 */
 void CCMApp::onShutdown() {
-	_loadingscene.dispose();
-	_gameplay.clear();
-	_assets = nullptr;
-	_batch = nullptr;
+    _loadingscene.dispose();
+    _gameplay.clear();
+    _assets = nullptr;
+    _batch = nullptr;
 
-	// Shutdown input
+    // Shutdown input
 #ifdef CU_TOUCH_SCREEN
-	Input::deactivate<Touchscreen>();
+    Input::deactivate<Touchscreen>();
 #else
-	Input::deactivate<Mouse>();
+    Input::deactivate<Mouse>();
 #endif
 
-	AudioChannels::stop();
-	_input.dispose();
-	Application::onShutdown();  // YOU MUST END with call to parent
+    AudioChannels::stop();
+    _input.dispose();
+    Application::onShutdown();  // YOU MUST END with call to parent
 }
 
 /**
@@ -146,55 +146,60 @@ void CCMApp::onResume() {
 #pragma mark Application Loop
 
 /**
-* The method called to update the application data.
-*
-* This is your core loop and should be replaced with your custom implementation.
-* This method should contain any code that is not an OpenGL call.
-*
-* When overriding this method, you do not need to call the parent method
-* at all. The default implmentation does nothing.
-*
-* @param timestep  The amount of time (in seconds) since the last frame
-*/
-//void CCMApp::update(float timestep) {
-//    if (!_loaded && _loading.isActive()) {
-//        _loading.update(0.01f);
-//    } else if (!_loaded) {
-//        _loading.dispose(); // Disables the input listeners in this mode
-//        _gameplay.init(_assets);
-//        _loaded = true;
-//    } else {
-//        _gameplay.update(timestep);
-//    }
-//}
+ * The method called to update the application data.
+ *
+ * This is your core loop and should be replaced with your custom implementation.
+ * This method should contain any code that is not an OpenGL call.
+ *
+ * When overriding this method, you do not need to call the parent method
+ * at all. The default implmentation does nothing.
+ *
+ * @param timestep  The amount of time (in seconds) since the last frame
+ */
 
 void CCMApp::update(float timestep) {
-	if (!_loaded && _loadingscene.isActive()) {
-		_loadingscene.update(timestep);
-	} else if (!_loaded) {
-		_loadingscene.dispose(); // Disables the input listeners in this mode
-		_gameplay.push_back(MenuScene::alloc(_assets));
-		_gameplay.back()->setActive(false);
-		_gameplay.push_back(GameScene::alloc(_assets));
-		_gameplay.back()->setActive(false);
-		_current = 0;
-		_gameplay[_current]->setActive(true);
-		_loaded = true;
-	} else {
-		_input.update(timestep);
-		_playClicked = false; // loading start and Play might overlap on some devices
-		if (_menuscene.getPlay()) {
-			_playClicked = true;
-		}
-		if (_playClicked) {
-			_playClicked = false;
-			_gameplay[_current]->setActive(false);
-			//_current = (_current + 1);
-			_current = 1; // this will have to change with Help and Settings
-			_gameplay[_current]->setActive(true);
-		}
-		_gameplay[_current]->update(timestep);
-	}
+    if (!_loaded && _loadingscene.isActive()) {
+        _loadingscene.update(timestep);
+    } else if (!_loaded) { // if loading scene's PLAY is clicked
+        _loadingscene.dispose(); // Disables the input listeners in this mode
+        _gameplay.push_back(MenuScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
+        _gameplay.push_back(LevelScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
+        _gameplay.push_back(GameScene::alloc(_assets));
+        _gameplay.back()->setActive(false);
+        _current = 0; // go to main menu
+        _gameplay[_current]->setActive(true);
+        _loaded = true;
+        _levelscene.deactivateButtons();
+    } else {
+        _input.update(timestep);
+        if (_current == 0) { // if on menu scene
+            if (_menuscene.getPlay()) { // play is clicked
+                _gameplay[_current]->setActive(false);
+                _current = 1; // to level select
+                _gameplay[_current]->setActive(true);
+                _menuscene.setPlay(false);
+                _levelscene.activateButtons();
+            }
+        }
+        else if (_current == 1) { // on level select
+            if (_levelscene.getBack()) {
+                _levelscene.deactivateButtons();
+                _gameplay[_current]->setActive(false);
+                _current = 0; // back to main menu
+                _gameplay[_current]->setActive(true);
+                _levelscene.setBack(false);
+            }
+            else if (_levelscene.getLevel() != 0) { // level chosen
+                _levelscene.deactivateButtons();
+                _gameplay[_current]->setActive(false);
+                _current = 2; // need to load in assets for new level here
+                _gameplay[_current]->setActive(true);
+            }
+        }
+        _gameplay[_current]->update(timestep);
+    }
 }
 
 /**

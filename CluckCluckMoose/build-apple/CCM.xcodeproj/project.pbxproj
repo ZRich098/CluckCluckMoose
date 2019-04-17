@@ -43,6 +43,9 @@
 		375E32E6221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
 		375E32E7221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
 		375E32E8221F42EC0010F98D /* Chicken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375E32DF221F42EB0010F98D /* Chicken.cpp */; };
+		37BAF2F422664B460003D6E3 /* CCMLevelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */; };
+		37BAF2F522664B460003D6E3 /* CCMLevelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */; };
+		37BAF2F622664B460003D6E3 /* CCMLevelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */; };
 		EB0FF5092016E4A700517030 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0FF5082016E4A700517030 /* CoreFoundation.framework */; };
 		EB0FF6172016EFB200517030 /* iOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB7454A71D74D846002FBAE6 /* iOS.xcassets */; };
 		EB0FF6182016EFB200517030 /* Landscape.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB7454A81D74D846002FBAE6 /* Landscape.storyboard */; };
@@ -166,6 +169,8 @@
 		375E32DD221F42EB0010F98D /* Moose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Moose.cpp; sourceTree = "<group>"; };
 		375E32DE221F42EB0010F98D /* Moose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moose.h; sourceTree = "<group>"; };
 		375E32DF221F42EB0010F98D /* Chicken.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chicken.cpp; sourceTree = "<group>"; };
+		37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMLevelScene.cpp; sourceTree = "<group>"; };
+		37BAF2F322664B460003D6E3 /* CCMLevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMLevelScene.h; sourceTree = "<group>"; };
 		EB0FF5082016E4A700517030 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EB0FF5FC2016EF4F00517030 /* CCM (Sim).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CCM (Sim).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE9B41D74952A002FE78B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -404,6 +409,8 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */,
+				37BAF2F322664B460003D6E3 /* CCMLevelScene.h */,
 				3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */,
 				3709F2C52261159400DBBA36 /* CCMMenuScene.h */,
 				375831A32249420100413F43 /* MooseFile.h */,
@@ -617,6 +624,7 @@
 				375E32E8221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB0FF61D2016F06000517030 /* main.cpp in Sources */,
 				371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */,
+				37BAF2F622664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				375E32E5221F42EB0010F98D /* Moose.cpp in Sources */,
 				370CB46422275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
@@ -637,6 +645,7 @@
 				375E32E7221F42EC0010F98D /* Chicken.cpp in Sources */,
 				EB7454AE1D74D891002FBAE6 /* main.cpp in Sources */,
 				371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */,
+				37BAF2F522664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				375E32E4221F42EB0010F98D /* Moose.cpp in Sources */,
 				370CB46322275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
@@ -657,6 +666,7 @@
 				375E32E6221F42EC0010F98D /* Chicken.cpp in Sources */,
 				371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				375E32E3221F42EB0010F98D /* Moose.cpp in Sources */,
+				37BAF2F422664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				EB2BE9B61D74952A002FE78B /* main.cpp in Sources */,
 				370CB46222275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
