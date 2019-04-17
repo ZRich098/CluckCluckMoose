@@ -345,7 +345,7 @@ string Chicken::toString() const {
 int Chicken::compare(const Chicken& other) const {
 	//CULog("%s clashing with %s", toString().c_str(), other.toString().c_str());
 	if (e == element::Unset || other.e == element::Unset) {
-		CULogError("Unset element exception: %s and %s cannot be compared", toString().c_str(), other.toString().c_str());
+		//CULogError("Unset element exception: %s and %s cannot be compared", toString().c_str(), other.toString().c_str());
 		return 0;
 	}
 

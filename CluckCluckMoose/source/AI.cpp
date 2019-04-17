@@ -238,7 +238,7 @@ int AI::smartPlay() {
 }
 
 void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Stack currentStack) {
-	if (hand.empty()) {
+	if (currentStack.getSize() == 5) {
 		int orderScore = 0;
 		for (int i = 1; i < currentStack.getSize(); i++) {
 			orderScore += stackOrderingBonus(currentStack.at(i), currentStack.at(i - 1));
