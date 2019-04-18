@@ -207,26 +207,27 @@ void CCMApp::update(float timestep) {
                 _levelscene.setBack(false);
             }
             else if (_levelscene.getLevel() != 0) { // level chosen
+				if (_current != 2) {
+					//load level, if able
+					std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("level%d.json", _levelscene.getLevel());
+					if (gameReader == nullptr) {
+						CULog("Level file not found");
+					}
+					else {
+						std::shared_ptr<JsonValue> json = gameReader->readJson();
+						if (json == nullptr) {
+							CULog("Failed to load level file");
+						}
+						else {
+							_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+							_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+							_saveLoad.loadLevelTag(json->get("Tag"));
+						}
+					}
+				}
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 2; // need to load in assets for new level here
-
-				//load level, if able
-				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("level%d.json", _levelscene.getLevel());
-				if (gameReader == nullptr) {
-					CULog("Level file not found");
-				}
-				else {
-					std::shared_ptr<JsonValue> json = gameReader->readJson();
-					if (json == nullptr) {
-						CULog("Failed to load level file");
-					}
-					else {
-						_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-						_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-						_saveLoad.loadLevelTag(json->get("Tag"));
-					}
-				}
 
                 _gameplay[_current]->setActive(true);
             }
