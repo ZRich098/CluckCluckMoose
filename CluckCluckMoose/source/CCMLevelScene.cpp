@@ -230,6 +230,7 @@ void LevelScene::activateButtons() {
     }
 }
 
+void LevelScene::setLevel(int lev) { level = lev; }
 bool LevelScene::getBack() { return backClicked; }
 void LevelScene::setBack(bool val) { backClicked = val; }
 
