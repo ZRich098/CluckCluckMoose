@@ -195,7 +195,7 @@ void GameScene::update(float timestep) {
 	}
 
 	if (player->getOrder().size() > player->getStack().getSize() && opp->getOrder().size() > opp->getStack().getSize() && !isClashing) {
-		CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
+		//CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
 		initStacks(player->getOrder(), opp->getOrder());
 	}
 
