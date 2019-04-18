@@ -41,7 +41,7 @@ bool SaveController::loadSaveGame(const std::shared_ptr<JsonValue>& json) {
 	return success;
 }
 
-bool SaveController::loadPlayerMoose(const std::shared_ptr<JsonValue>& json) { //called in onResume()
+std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false;
 
 	auto health = json->get(HEALTH_FIELD);
@@ -60,21 +60,21 @@ bool SaveController::loadPlayerMoose(const std::shared_ptr<JsonValue>& json) { /
 	success = success && coopArray->isArray();
 	vector<int> coop = coopArray->asIntArray();
 
-	auto discardArray = json->get(DISCARD_FIELD);
+	/* auto discardArray = json->get(DISCARD_FIELD);
 	success = success && discardArray->isArray();
-	vector<int> discard = discardArray->asIntArray();
+	vector<int> discard = discardArray->asIntArray(); */
 
 	auto costume = json->get(COSTUME_FIELD);
 	success = success && costume->isString();
 	string cost = costume->asString();
 
 	player = Moose::alloc(3, 3);
-	player->jsonInit(h, hand, playOrder, coop, discard, cost);
+	player->jsonInit(h, hand, playOrder, coop, cost);
 
-	return success;
+	return player;
 }
 
-bool SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) { //called in onResume()
+std::shared_ptr<Moose> SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false; 
 
 	auto health = json->get(HEALTH_FIELD);
@@ -96,28 +96,28 @@ bool SaveController::loadOpponentMoose(const std::shared_ptr<JsonValue>& json) {
 		handPool.push_back(handPoolArray->get(i)->asIntArray());
 	}
 
-	auto discardArray = json->get(DISCARD_FIELD);
+	/* auto discardArray = json->get(DISCARD_FIELD);
 	success = success && discardArray->isArray();
-	vector<int> discard = discardArray->asIntArray();
+	vector<int> discard = discardArray->asIntArray(); */
 
 	auto costume = json->get(COSTUME_FIELD);
 	success = success && costume->isString();
 	string cost = costume->asString();
 
 	opponent = Moose::alloc(3, 3);
-	opponent->jsonInit(h, hand, playOrder, handPool, discard, cost);
+	opponent->jsonInit(h, hand, playOrder, handPool, cost);
 
-	return success;
+	return opponent;
 }
 
-bool SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
+int SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false;
 
-	auto tag = json->get(TAG_FIELD);
+	auto tag = json;
 	success = tag->isNumber();
 	int t = tag->asInt();
 
-	return success;
+	return t;
 }
 
 void SaveController::saveGame(int level) { //called in onSuspend()

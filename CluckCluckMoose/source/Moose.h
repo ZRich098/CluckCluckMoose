@@ -64,8 +64,8 @@ public:
 	/**
 	 * Initializes the moose with json style arguments
 	 */
-	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, vector<int> discard, string costume);
-	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<vector<int>> handPoolArray, vector<int> discard, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<vector<int>> handPoolArray, string costume);
     
     
 #pragma mark Static Constructors    

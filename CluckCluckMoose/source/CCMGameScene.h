@@ -72,11 +72,17 @@ public:
      * @return true if the controller is initialized properly, false otherwise.
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
+
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose) {
+		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
+		return (result->init(assets, playerMoose, oppMoose) ? result : nullptr);
+	}
 
 	/**
 	 * Returns the active screen size of this scene.

@@ -152,6 +152,61 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose) {
+	// Initialize the scene to a locked width
+	Size dimen = computeActiveSize();
+	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
+	if (assets == nullptr) {
+		return false;
+	}
+	else if (!Scene::init(dimen)) {
+		return false;
+	}
+	_assets = assets;
+
+	auto game_music = _assets->get<Sound>(GAME_MUSIC);
+	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+
+	//Root node the drawer can build off of
+	root = Node::alloc();
+	addChild(root);
+
+	//Initialize audio channels
+
+	//Initialize stack sizes
+	stackSize = 0;
+
+	//Initialize skip state
+	skipState = ENTRY;
+
+	//Initialize cooldown
+	//cooldown = (int)(CLASHLENGTH / MAXSTACKSIZE);
+
+	//Initialize moose
+	player = playerMoose;
+	opp = oppMoose;
+	//player->refillHand();
+	//opp->refillHand();
+	prevHand = player->getHand().size();
+
+	oppAI = AI::alloc(opp, player, AIType::Smart);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb->setPreview(false);
+	sb->deactivateHand();
+
+	//Initialize AI
+	//oppAI = AI::AI(opp,player);
+
+	//Draw
+
+	setActive(_active);
+
+	// XNA nostalgia
+	Application::get()->setClearColor(Color4f::CORNFLOWER);
+	return true;
+
+}
+
 
 /**
  * Disposes of all (non-static) resources allocated to this mode.
@@ -165,18 +220,20 @@ void GameScene::dispose() {
 }
 
 void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder) {
-	while (!playerOrder.empty() && !oppOrder.empty()) {
+	vector<Chicken>::iterator pl = playerOrder.begin();
+	vector<Chicken>::iterator op = oppOrder.begin();
+	while (pl != playerOrder.end() && op != oppOrder.end()) {
 		//play both vector::front() Chickens and resolve them
-		player->getStack().add(playerOrder.front());
-		opp->getStack().add(oppOrder.front());
+		player->getStack().add(*pl);
+		opp->getStack().add(*op);
 		//Resolve effects
 		int initState = 0;
 		while (initState != EXIT)
 			// Resolves the special chicken effects
 			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
 
-		playerOrder.erase(playerOrder.begin());
-		oppOrder.erase(playerOrder.begin());
+		++pl;
+		++op;
 		stackSize++;
 	}
 }

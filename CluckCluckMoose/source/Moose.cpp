@@ -34,7 +34,7 @@ bool Moose::init(int h, int hSize) {
 }
 
 
-void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<int> coopArray, vector<int> discardArray, string cost) {
+void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<int> coopArray, string cost) {
 	health = h;
 	for (int i : handArray) {
 		hand.push_back(Chicken(intToSpecial(i)));
@@ -47,15 +47,15 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	deck.clear();
 	deck.fill(coopArray);
 
-	for (int i : discardArray) {
+	/*for (int i : discardArray) {
 		discard.push_back(Chicken(intToSpecial(i)));
-	}
+	}*/
 
 	//not yet supported
 	//costume = cost;
 }
 
-void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<vector<int>> handPoolArray, vector<int> discardArray, string cost) {
+void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<vector<int>> handPoolArray, string cost) {
 	health = h;
 	for (int i : handArray) {
 		hand.push_back(Chicken(intToSpecial(i)));
@@ -74,9 +74,9 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 		handPool.push_back(hand);
 	}
 
-	for (int i : discardArray) {
+	/*for (int i : discardArray) {
 		discard.push_back(Chicken(intToSpecial(i)));
-	}
+	}*/
 
 	//not yet supported
 	//costume = cost;

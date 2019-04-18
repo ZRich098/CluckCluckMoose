@@ -11,6 +11,7 @@
 //  Version: 1/29/17
 //
 #include "CCMApp.h"
+#include <sstream>
 
 using namespace cugl;
 
@@ -102,12 +103,13 @@ void CCMApp::onShutdown() {
 */
 void CCMApp::onSuspend() {
 	AudioChannels::get()->pauseAll();
+	/*
 	//save player's game state
 	_saveLoad.saveGame(4); //@TODO - Replace with call to highest active level
 	//save current level state, if applicable
 	if (_levelscene.getLevel() != 0) {
 		_saveLoad.saveLevel(_gamescene.getPlayer(), _gamescene.getOpp(), _levelscene.getLevel());
-	}
+	} */
 }
 
 /**
@@ -122,8 +124,9 @@ void CCMApp::onSuspend() {
 */
 void CCMApp::onResume() {
 	AudioChannels::get()->resumeAll();
+	/*
 	//load player's game state
-	std::shared_ptr<JsonReader> stateReader = JsonReader::allocWithAsset("saveState.json");
+	std::shared_ptr<JsonReader> stateReader = JsonReader::allocWithAsset("json/saveState.json");
 	if (stateReader == nullptr) {
 		CULog("State file not found");
 	}
@@ -139,7 +142,7 @@ void CCMApp::onResume() {
 	
 	//load last level state, if applicable
 	if (_levelscene.getLevel() != 0) {
-		std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("saveGame.json");
+		std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("json/saveGame.json");
 		if (gameReader == nullptr) {
 			CULog("Level file not found");
 		}
@@ -154,7 +157,7 @@ void CCMApp::onResume() {
 				_saveLoad.loadLevelTag(json->get("Tag"));
 			}
 		}
-	}
+	} */
 }
 
 #pragma mark -
@@ -181,8 +184,8 @@ void CCMApp::update(float timestep) {
         _gameplay.back()->setActive(false);
         _gameplay.push_back(LevelScene::alloc(_assets));
         _gameplay.back()->setActive(false);
-        _gameplay.push_back(GameScene::alloc(_assets));
-        _gameplay.back()->setActive(false);
+        //_gameplay.push_back(GameScene::alloc(_assets));
+        //_gameplay.back()->setActive(false);
         _current = 0; // go to main menu
         _gameplay[_current]->setActive(true);
         _loaded = true;
@@ -207,27 +210,37 @@ void CCMApp::update(float timestep) {
                 _levelscene.setBack(false);
             }
             else if (_levelscene.getLevel() != 0) { // level chosen
-				if (_current != 2) {
-					//load level, if able
-					std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("level%d.json", _levelscene.getLevel());
-					if (gameReader == nullptr) {
-						CULog("Level file not found");
-					}
-					else {
-						std::shared_ptr<JsonValue> json = gameReader->readJson();
-						if (json == nullptr) {
-							CULog("Failed to load level file");
-						}
-						else {
-							_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-							_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-							_saveLoad.loadLevelTag(json->get("Tag"));
-						}
-					}
-				}
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 2; // need to load in assets for new level here
+
+				//load level, if able
+				stringstream ss;
+				ss << "json/level" << _levelscene.getLevel() << ".json";
+				string fileName = ss.str();
+				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
+				if (gameReader == nullptr) {
+					CULog("json/level%d.json file not found", _levelscene.getLevel());
+					_gameplay.push_back(GameScene::alloc(_assets));
+					_gameplay.back()->setActive(false);
+				}
+				else {
+					std::shared_ptr<JsonValue> json = gameReader->readJson();
+					if (json == nullptr) {
+						CULog("Failed to load level file");
+						_gameplay.push_back(GameScene::alloc(_assets));
+						_gameplay.back()->setActive(false);
+					}
+					else {
+						CULog("File loading");
+						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+						_gameplay.push_back(GameScene::alloc(_assets, pl, op));
+						_gameplay.back()->setActive(false);
+
+						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
+					}
+				}
 
                 _gameplay[_current]->setActive(true);
             }
