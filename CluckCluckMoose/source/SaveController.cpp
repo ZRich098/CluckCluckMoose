@@ -127,7 +127,7 @@ void SaveController::saveGame(int level) { //called in onSuspend()
 
 	//Add Level (last level completed)
 	JsonValue lastLevel;
-	lastLevel.init((float)level); //@TODO Get from game state
+	lastLevel.init((float)level);
 	saveGame.appendChild("Level", std::make_shared<JsonValue>(lastLevel));
 
 	//Add Volume

@@ -103,9 +103,11 @@ void CCMApp::onShutdown() {
 void CCMApp::onSuspend() {
 	AudioChannels::get()->pauseAll();
 	//save player's game state
-	_saveLoad.saveGame(_levelscene.getLevel());
+	_saveLoad.saveGame(4); //@TODO - Replace with call to highest active level
 	//save current level state, if applicable
-	_saveLoad.saveLevel(_gamescene.getPlayer(),_gamescene.getOpp(),_levelscene.getLevel());
+	if (_levelscene.getLevel() != 0) {
+		_saveLoad.saveLevel(_gamescene.getPlayer(), _gamescene.getOpp(), _levelscene.getLevel());
+	}
 }
 
 /**
@@ -136,19 +138,21 @@ void CCMApp::onResume() {
 	}
 	
 	//load last level state, if applicable
-	std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("saveGame.json");
-	if (gameReader == nullptr) {
-		CULog("Level file not found");
-	}
-	else {
-		std::shared_ptr<JsonValue> json = gameReader->readJson();
-		if (json == nullptr) {
-			CULog("Failed to load level file");
+	if (_levelscene.getLevel() != 0) {
+		std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset("saveGame.json");
+		if (gameReader == nullptr) {
+			CULog("Level file not found");
 		}
 		else {
-			_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-			_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-			_saveLoad.loadLevelTag(json->get("Tag"));
+			std::shared_ptr<JsonValue> json = gameReader->readJson();
+			if (json == nullptr) {
+				CULog("Failed to load level file");
+			}
+			else {
+				_saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+				_saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+				_saveLoad.loadLevelTag(json->get("Tag"));
+			}
 		}
 	}
 }
