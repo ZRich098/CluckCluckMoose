@@ -14,6 +14,11 @@ SaveController::~SaveController() {
 	if (opponent != nullptr) opponent = nullptr;
 }
 
+void SaveController::init() {
+	player = nullptr;
+	opponent = nullptr;
+}
+
 bool SaveController::loadSaveGame(const std::shared_ptr<JsonValue>& json) {
 	bool success = false;
 

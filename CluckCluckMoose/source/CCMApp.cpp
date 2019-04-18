@@ -50,7 +50,7 @@ void CCMApp::onStartup() {
     _loadingscene.init(_assets);
 
     // Create the saving and loading controller
-    //_saveLoad
+	_saveLoad.init();
 
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);

@@ -29,6 +29,9 @@ public:
 	/** Destroys this SaveController. */
 	virtual ~SaveController();
 
+	/** Initializes this SaveController. */
+	void init();
+
 #pragma mark -
 #pragma mark Loaders
 	/** Loads the player's save game from a json file
