@@ -23,7 +23,7 @@ Chicken::Chicken(special sp) {
 		e = element::Grass;
 		return;
 	case special::Reaper:
-		e = element::TieAll;
+		e = element::SpecialWin;
 		damage = 0;
 		return;
 	case special::BirdBrain:
@@ -138,6 +138,8 @@ int elementToInt(element e) {
 		return 6;
 	case element::Unset:
 		return 7;
+	case element::SpecialWin:
+		return 8;
 	}
 }
 
@@ -357,22 +359,31 @@ int Chicken::compare(const Chicken& other) const {
 			return -1;
 		case element::LoseAll:
 			return 1;
+		case element::SpecialWin:
+			if (s == special::BasicFire || s == special::BasicGrass || s == special::BasicWater)
+				return 1;
+			else
+				return -1;
 		default:
 			switch (e) {
-				case element::WinAll:
-					return 1;
-				case element::LoseAll:
+			case element::SpecialWin:
+				if (other.s == special::BasicFire || other.s == special::BasicGrass || other.s == special::BasicWater)
 					return -1;
-				case element::Fire:
-					return other.e == element::Grass ? 1 : -1;
-				case element::Water:
-					return other.e == element::Fire ? 1 : -1;
-				case element::Grass:
-					return other.e == element::Water ? 1 : -1;
-				default:
-					//Never reached
-					return -2;
+				else
+					return 1;
+			case element::WinAll:
+				return 1;
+			case element::LoseAll:
+				return -1;
+			case element::Fire:
+				return other.e == element::Grass ? 1 : -1;
+			case element::Water:
+				return other.e == element::Fire ? 1 : -1;
+			case element::Grass:
+				return other.e == element::Water ? 1 : -1;
+			default:
+				//Never reached
+				return -2;
 			}
 	}
-
 }

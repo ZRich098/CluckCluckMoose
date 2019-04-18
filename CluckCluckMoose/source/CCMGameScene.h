@@ -72,11 +72,17 @@ public:
      * @return true if the controller is initialized properly, false otherwise.
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
+
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose) {
+		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
+		return (result->init(assets, playerMoose, oppMoose) ? result : nullptr);
+	}
 
 	/**
 	 * Returns the active screen size of this scene.
@@ -92,6 +98,14 @@ public:
      * @param value whether the scene is currently active
      */
     virtual void setActive(bool value) override;
+
+	/**
+	 * Initializes Stacks given playOrder vectors for both Moose
+	 *
+	 * @param playerOrder the playOrder of the player Moose
+	 * @param oppOrder the playOrder of the opponent Moose
+	 */
+	void initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder);
 
 
 #pragma mark -
@@ -131,14 +145,6 @@ public:
 	 * Resets the status of the game so that we can play again.
 	 */
 	//void reset();
-
-	/** 
-	 * Initializes Stacks given playOrder vectors for both Moose 
-	 * 
-	 * @param playerOrder the playOrder of the player Moose
-	 * @param oppOrder the playOrder of the opponent Moose
-	 */
-	void initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder);
 
 #pragma mark -
 #pragma mark Special Handling

@@ -80,6 +80,7 @@ public:
      * Getters and setters for level select buttons
      */
     int getLevel();
+	void setLevel(int lev);
     bool getBack();
     void setBack(bool val);
     void deactivateButtons();

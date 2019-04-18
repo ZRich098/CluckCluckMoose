@@ -193,6 +193,7 @@
     <ClInclude Include="..\..\source\CCMApp.h" />
     <ClInclude Include="..\..\source\CCMGameScene.h" />
     <ClInclude Include="..\..\source\CCMInput.h" />
+    <ClInclude Include="..\..\source\CCMLevelScene.h" />
     <ClInclude Include="..\..\source\CCMLoadingScene.h" />
     <ClInclude Include="..\..\source\CCMMenuScene.h" />
     <ClInclude Include="..\..\source\Chicken.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="..\..\source\CCMApp.cpp" />
     <ClCompile Include="..\..\source\CCMGameScene.cpp" />
     <ClCompile Include="..\..\source\CCMInput.cpp" />
+    <ClCompile Include="..\..\source\CCMLevelScene.cpp" />
     <ClCompile Include="..\..\source\CCMLoadingScene.cpp" />
     <ClCompile Include="..\..\source\CCMMenuScene.cpp" />
     <ClCompile Include="..\..\source\Chicken.cpp" />
@@ -232,6 +234,10 @@
     <ProjectReference Include="..\..\cugl\build-win10\CUGL\CUGL.vcxproj">
       <Project>{60c028a4-977f-44e9-a709-d79a153d6f69}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="saveGame.json" />
+    <None Include="saveLevel.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

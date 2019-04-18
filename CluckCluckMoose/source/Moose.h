@@ -24,6 +24,9 @@ protected:
 	Coop deck;
 	vector <Chicken> discard;
 	vector <Chicken> playOrder;
+	vector <vector<Chicken>> handPool;
+	//nonEleDist is a seed for the non-elemental chickens in the element distribution to stay as one element
+	vector <int> nonEleDist;
 	int handSize;
 	int health;
 	void refillDeck();
@@ -61,7 +64,8 @@ public:
 	/**
 	 * Initializes the moose with json style arguments
 	 */
-	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, vector<int> discard, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<vector<int>> handPoolArray, string costume);
     
     
 #pragma mark Static Constructors    
@@ -98,6 +102,10 @@ public:
 	Coop getDeck() { return deck; };
 	/** Get the Chicken at position pos in the Coop of the Moose*/
 	Chicken getDeckAt(int pos) { return deck.at(pos); };
+	/** Get the current hand pool of the Moose*/
+	vector<vector<Chicken>> getHandPool() { return handPool; };
+	/** Get the hand at position pos in the handPool of the Moose*/
+	vector<Chicken> getHandPoolAt(int pos) { return handPool.at(pos); };
 	/** Get the current discard pile of the Moose*/
 	vector <Chicken> getDiscard() { return discard; };
 	/** Get the Chicken at position pos in the discard pile of the Moose*/
@@ -112,6 +120,11 @@ public:
 
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();
+
+	/** Sets the opponent's possible hands.
+		Input is a vector of chicken vectors
+		(where the internal vectors are the hands and the external one is the pool of possible hands)*/
+	void setOppHands(vector<vector<Chicken>> pool) { handPool = pool; }
 
     
 #pragma mark -
