@@ -68,7 +68,7 @@ std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<Jso
 	success = success && costume->isString();
 	string cost = costume->asString();
 
-	player = Moose::alloc(3, 3);
+	player = Moose::alloc(5, 6);
 	player->jsonInit(h, hand, playOrder, coop, cost);
 
 	return player;
@@ -104,7 +104,7 @@ std::shared_ptr<Moose> SaveController::loadOpponentMoose(const std::shared_ptr<J
 	success = success && costume->isString();
 	string cost = costume->asString();
 
-	opponent = Moose::alloc(3, 3);
+	opponent = Moose::alloc(5, 6);
 	opponent->jsonInit(h, hand, playOrder, handPool, cost);
 
 	return opponent;
