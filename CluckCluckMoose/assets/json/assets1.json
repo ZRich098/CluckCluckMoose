@@ -266,6 +266,34 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "fireLabel": {
+            "file": "textures/stamp_fire_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "grassLabel": {
+            "file": "textures/stamp_grass_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "waterLabel": {
+            "file": "textures/stamp_water_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "shadow": {
+            "file": "textures/shadow.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "menubg": {
             "file": "textures/mainmenu/bg_homescreen_v1.png",
             "minfilter": "linear",

@@ -43,6 +43,10 @@ std::vector<int> prevDist;
 //Track scale for drawing UI elements
 float healthYScale;
 
+//List of stamp nodes for player and opponent
+std::vector<std::shared_ptr<PolygonNode>> pStamps;
+std::vector<std::shared_ptr<PolygonNode>> oStamps;
+
 
 
 /** The ID for the button listener */
@@ -83,6 +87,11 @@ float healthYScale;
 #define ELT_NUM_Y_OFFSET 5
 #define ELT_NUM_SCALE 0.7
 #define ELT_NUM_SPACING 50
+#define SHADOW_SCALE 0.6
+#define SHADOW_OFFSET 50
+#define STAMP_X_OFFSET 5
+#define STAMP_Y_OFFSET -10
+#define STAMP_SCALE 0.1
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -123,6 +132,14 @@ std::shared_ptr<Texture> num1;
 std::shared_ptr<Texture> num2;
 std::shared_ptr<Texture> num3;
 std::shared_ptr<Texture> num4;
+
+//Shadow Texture
+std::shared_ptr<Texture> shadow;
+
+//Type stamp textures
+std::shared_ptr<Texture> fstamp;
+std::shared_ptr<Texture> gstamp;
+std::shared_ptr<Texture> wstamp;
 
 
 
@@ -220,6 +237,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pBlock = _assets->get<Texture>("pBlock");
 	oBlock = _assets->get<Texture>("oBlock");
 
+	//get Shadow Texture
+	shadow = _assets->get<Texture>("shadow");
+
+	//get Stamp textures
+	fstamp = _assets->get<Texture>("fireLabel");
+	gstamp = _assets->get<Texture>("grassLabel");
+	wstamp = _assets->get<Texture>("waterLabel");
+
 
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
@@ -255,6 +280,15 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		anim->setVisible(false);
 		pstackNodes.push_back(anim);
 		texturesPStack.push_back(text);
+
+		//Init type stamp nodes
+		std::shared_ptr<PolygonNode> stamp = PolygonNode::allocWithTexture(fstamp);
+		stamp->setAnchor(Vec2::ANCHOR_CENTER);
+		stamp->setPosition(STACK_X_OFFSET + STAMP_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING) + STAMP_Y_OFFSET);
+		stamp->setScale(STAMP_SCALE);
+		stamp->setVisible(false);
+		pStamps.push_back(stamp);
+		layer->addChild(stamp);
 	}
 
 	//origin is bottom left
@@ -274,6 +308,15 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
         poly->setVisible(false);
 		ostackNodes.push_back(poly);
 		texturesOStack.push_back(text);
+
+		//Init type stamp nodes
+		std::shared_ptr<PolygonNode> stamp = PolygonNode::allocWithTexture(fstamp);
+		stamp->setAnchor(Vec2::ANCHOR_CENTER);
+		stamp->setPosition(SCENE_WIDTH - STACK_X_OFFSET - STAMP_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING) + STAMP_Y_OFFSET);
+		stamp->setScale(STAMP_SCALE);
+		stamp->setVisible(false);
+		oStamps.push_back(stamp);
+		layer->addChild(stamp);
 	}
 
 	//Create a node for drawing moose
@@ -375,11 +418,20 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		butt->setScale(HAND_SCALE, HAND_SCALE);
 
 		butt->setAnchor(Vec2::ANCHOR_CENTER);
+
+		//Draw shadows
+		std::shared_ptr<PolygonNode> shadowNode = PolygonNode::allocWithTexture(shadow);
+		shadowNode->setAnchor(Vec2::ANCHOR_CENTER);
+		shadowNode->setScale(SHADOW_SCALE);
+		shadowNode->setVisible(false);
+
 		if (i < 3) {
 			butt->setPosition((i-1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
+			shadowNode->setPosition((i - 1)*BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET- SHADOW_OFFSET);
 		}
 		else {
 			butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
+			shadowNode->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING - SHADOW_OFFSET);
 		}
 		if (_input.isActive()) {
 			//CULog("active");
@@ -412,7 +464,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 				} */
 			}
 		});
-
+		
+		
+		buttonCanvas->addChild(shadowNode);
 		buttonCanvas->addChild(butt);
 		//i+2 to ensure keys are unique
 		butt->activate(i + 2);
@@ -420,6 +474,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		buttons.push_back(butt);
 		buttonTextures.push_back(id);
 		texturesHand.push_back(text);
+
 	}
 
 
@@ -552,6 +607,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	for (int i = 0; i < 6; i++) {
 		if (i < hand.size()) {
 			buttons[i]->setVisible(true);
+			buttonCanvas->getChild(2*i)->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
@@ -615,6 +671,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		}
 		else {
 			buttons[i]->setVisible(false);
+			buttonCanvas->getChild(2*i)->setVisible(false);
 			buttons[i]->deactivate();
 		}
 	}
@@ -919,7 +976,65 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				eltInfoCanvas->swapChild(oldChild, swapPoly, false);
 		}
 	}
+
+	//update stamps, only if there is a witchen
+
+	for (int i = 0; i < playerGlobe->getStack().getSize(); i++) {
+		if (i + 1 < playerGlobe->getStack().getSize()) {
+			Chicken candidate = playerGlobe->getStackAt(i + 1);
+			if (candidate.getSpecial() == special::Witchen) {
+				Chicken stampedChick = playerGlobe->getStackAt(i);
+				if (stampedChick.getElement() == element::Fire) {
+					pStamps[i]->setTexture(fstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else if (stampedChick.getElement() == element::Water) {
+					pStamps[i]->setTexture(wstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else if (stampedChick.getElement() == element::Grass) {
+					pStamps[i]->setTexture(gstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else {
+
+				}
+			}
+			else {
+				pStamps[i]->setVisible(false);
+			}
+		}
+	}
+
+	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
+		if (i + 1 < oppGlobe->getStack().getSize()) {
+			Chicken candidate = oppGlobe->getStackAt(i + 1);
+			if (candidate.getSpecial() == special::Witchen) {
+				Chicken stampedChick = oppGlobe->getStackAt(i);
+				if (stampedChick.getElement() == element::Fire) {
+					oStamps[i]->setTexture(fstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else if (stampedChick.getElement() == element::Water) {
+					oStamps[i]->setTexture(wstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else if (stampedChick.getElement() == element::Grass) {
+					oStamps[i]->setTexture(gstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else {
+
+				}
+			}
+			else {
+				oStamps[i]->setVisible(false);
+			}
+		}
+	}
 }
+
+
 
 void SceneBuilder1::updateInput(float timestep) {
 	_input.update(timestep);
