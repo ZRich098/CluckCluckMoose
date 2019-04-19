@@ -648,7 +648,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
-	pausebutt->activate(50); //ensure keys are unique
+	pausebutt->activate(200); //ensure keys are unique
 
 	//Draw pause box
     std::shared_ptr<Texture> texturePauseOverlay = _assets->get<Texture>("pauseoverlay");
@@ -671,9 +671,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(SCENE_WIDTH / 4, SCENE_HEIGHT/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) {
+		retry = true;
+		CULog("retry pause");
+	}});
     pauseMenuCanvas->addChild(pauseRestart);
-	pauseRestart->activate(51); //ensure keys are unique
+	pauseRestart->activate(201); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart);
 
     std::shared_ptr<Texture> texturePauseHome = _assets->get<Texture>("pausehome");
@@ -686,7 +689,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pauseHome->setListener([=](const std::string& name, bool down) { if (down) {
 		goHome = true; }});
     pauseMenuCanvas->addChild(pauseHome);
-	pauseHome->activate(52); //ensure keys are unique
+	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome);
 
     std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesettings");
@@ -698,7 +701,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT/2 + 50);
 	pauseSettings->setListener([=](const std::string& name, bool down) { if (down) { pauseSettingsDown = true; }});
     pauseMenuCanvas->addChild(pauseSettings);
-	pauseSettings->activate(53); //ensure keys are unique
+	pauseSettings->activate(203); //ensure keys are unique
 	pausebuttons.push_back(pauseSettings);
 
     std::shared_ptr<Texture> texturePauseResume = _assets->get<Texture>("pauseresume");
@@ -714,7 +717,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
         deactivatePause();
 	}});
     pauseMenuCanvas->addChild(pauseResume);
-	pauseResume->activate(54); //ensure keys are unique
+	pauseResume->activate(204); //ensure keys are unique
 	pausebuttons.push_back(pauseResume);
 
     pauseMenuCanvas->setVisible(false);
@@ -1246,6 +1249,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			rButtL->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
+					CULog("retry loss");
 				}
 			});
 			loseCanvas->addChild(rButtL);
@@ -1285,6 +1289,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			rButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
+					CULog("retry win");
 				}
 			});
 			winCanvas->addChild(rButt);
@@ -1390,12 +1395,13 @@ bool SceneBuilder1::getNextLevel() {
 
 void SceneBuilder1::activatePause() {
     for (int i = 1; i <= 4; i++) {
-        pausebuttons[i]->activate(50 + i);
+        pausebuttons[i]->activate(200 + i);
     }
 }
 
 void SceneBuilder1::deactivatePause() {
-    for (int i = 0; i < 4; i++) {
+    // @TODO: for some reason restart gets mad
+    for (int i = 1; i < 4; i++) {
         pausebuttons[i]->deactivate();
     }
 }
