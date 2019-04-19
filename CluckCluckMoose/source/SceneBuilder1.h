@@ -86,6 +86,13 @@ public:
 #pragma mark Accessors
 	//gets if preview button has been pressed
 	bool getPreview() { return previewSet; }
+	
+	//returns true if the layer has pressed the go home button
+	bool getHome();
+	//returns true if the player has pressed the retry button
+	bool getRedo();
+	//returns true if the player has pressed the next level button
+	bool getNextLevel();
 
 #pragma mark -
 #pragma mark Setters
