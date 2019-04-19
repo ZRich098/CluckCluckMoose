@@ -28,14 +28,6 @@
             }
         }
 	},
-	"sounds": {
-        "trailer": {
-            "type":     "sample",
-            "file":     "audio/CCM_Trailer.wav",
-            "volume":   0.5,
-			"stream":	true
-        }
-    },
     "scenes" : {
         "load" : {
             "type"      : "Node",
