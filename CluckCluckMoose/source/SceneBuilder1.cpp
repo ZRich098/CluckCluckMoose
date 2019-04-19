@@ -1394,14 +1394,17 @@ bool SceneBuilder1::getNextLevel() {
 }
 
 void SceneBuilder1::activatePause() {
-    for (int i = 1; i <= 4; i++) {
-        pausebuttons[i]->activate(200 + i);
+    for (int i = 0; i < 4; i++) {
+        pausebuttons[i]->activate(201 + i);
     }
 }
 
 void SceneBuilder1::deactivatePause() {
     // @TODO: for some reason restart gets mad
-    for (int i = 1; i < 4; i++) {
+//    for (int i = 0; i < 4; i++) {
+//        pausebuttons[i]->deactivate();
+//    }
+	for (int i = 0; i < pausebuttons.size(); i++){
         pausebuttons[i]->deactivate();
-    }
+	}
 }
