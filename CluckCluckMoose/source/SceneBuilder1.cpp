@@ -57,8 +57,6 @@ bool hasLost;
 //Button list for pause menu
 std::vector<std::shared_ptr<Button>> pausebuttons;
 
-bool pauseRestartDown;
-//bool pauseHomeDown;
 bool pauseSettingsDown;
 
 /** The ID for the button listener */
@@ -246,7 +244,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	}
 	heldButtInd = -1;
 
-	pauseRestartDown = false;
+	retry = false;
 //	pauseHomeDown = false;
 	pauseSettingsDown = false;
 
@@ -673,7 +671,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(SCENE_WIDTH / 4, SCENE_HEIGHT/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { pauseRestartDown = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(51); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart);
