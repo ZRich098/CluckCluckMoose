@@ -245,6 +245,16 @@ void CCMApp::update(float timestep) {
                 _gameplay[_current]->setActive(true);
             }
         }
+        else if (_current == 2) { // in game scene
+            if (_gamescene.getHome()) { //@TODO: save current level
+                _gamescene.setHome(false);
+//                _gamescene.deactivateButtons();
+                _gameplay[_current]->setActive(false);
+                _current = 0; // back to main menu
+                _gameplay[_current]->setActive(true);
+                _levelscene.setLevel(0);
+            }
+        }
         _gameplay[_current]->update(timestep);
     }
 }

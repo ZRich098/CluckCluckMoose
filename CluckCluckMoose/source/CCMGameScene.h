@@ -31,6 +31,9 @@ protected:
 
 	std::shared_ptr<Moose> player;
 	std::shared_ptr<Moose> opp;
+
+	//SceneBuilder
+	std::shared_ptr<SceneBuilder1> sb;
     
     //std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
     
@@ -115,6 +118,8 @@ public:
 	/** Get the opponent Moose */
 	std::shared_ptr<Moose> getOpp() { return opp; };
 
+	bool getHome() { return sb->getHome(); }
+
 #pragma mark -
 #pragma mark Mutators
 	/** 
@@ -129,6 +134,8 @@ public:
 	 * @param newOpp the Moose to set opp as
 	 */
 	void setOpp(Moose newOpp) { opp = make_shared<Moose>(newOpp); };
+
+	void setHome(bool val) { sb->setHome(val); }
 
 #pragma mark -
 #pragma mark Gameplay Handling

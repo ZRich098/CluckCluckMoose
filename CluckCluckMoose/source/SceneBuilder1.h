@@ -86,6 +86,10 @@ public:
 #pragma mark Accessors
 	//gets if preview button has been pressed
 	bool getPreview() { return previewSet; }
+	bool getHome();
+//	bool getHome() { return pauseHomeDown; }
+//	bool getRestart() { return pauseRestartDown; }
+//	bool getSettings() { return pauseSettingsDown; }
 
 #pragma mark -
 #pragma mark Setters
@@ -93,6 +97,9 @@ public:
 	void setPreview(bool preview);
 	void deactivateHand();
 	void activateHand();
+	void setHome(bool val);
+//	void setRestart(bool val);
+//	void setSettings(bool val);
 
 };
 

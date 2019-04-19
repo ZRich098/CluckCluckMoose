@@ -391,6 +391,69 @@
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
+        },
+        "pausebutton": {
+            "file": "textures/pausemenu/pause.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pauseoverlay": {
+            "file": "textures/pausemenu/dark_overlay.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pausebox": {
+            "file": "textures/pausemenu/base_pause.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pausehome": {
+            "file": "textures/pausemenu/btn_home.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pauserestart": {
+            "file": "textures/pausemenu/btn_restart.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pauseresume": {
+            "file": "textures/pausemenu/btn_resume.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pausesettings": {
+            "file": "textures/pausemenu/btn_settings.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pausesoundoff": {
+            "file": "textures/pausemenu/btn_soundOff.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "pausesoundon": {
+            "file": "textures/pausemenu/btn_soundOn.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         }
     },
 	"sounds": {
