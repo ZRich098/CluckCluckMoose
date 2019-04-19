@@ -184,6 +184,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 
 	//Initialize moose
 	player = playerMoose;
+	CULog("%d, %d, %d", specialToInt(player->getHandAt(0).getSpecial()), specialToInt(player->getHandAt(1).getSpecial()), specialToInt(player->getHandAt(2).getSpecial()));
 	opp = oppMoose;
 	//player->refillHand();
 	//opp->refillHand();
