@@ -29,6 +29,9 @@ public:
 	/** Destroys this SaveController. */
 	virtual ~SaveController();
 
+	/** Initializes this SaveController. */
+	void init();
+
 #pragma mark -
 #pragma mark Loaders
 	/** Loads the player's save game from a json file
@@ -39,24 +42,24 @@ public:
 	/** Loads the Player Moose from a json file
 		Returns true if succeeds, else returns false 
 		*/
-	bool loadPlayerMoose(const std::shared_ptr<JsonValue>& json);
+	std::shared_ptr<Moose> loadPlayerMoose(const std::shared_ptr<JsonValue>& json);
 
 	/** Loads the Opponent Moose from a json file
 	Returns true if succeeds, else returns false
 	*/
-	bool loadOpponentMoose(const std::shared_ptr<JsonValue>& json);
+	std::shared_ptr<Moose> loadOpponentMoose(const std::shared_ptr<JsonValue>& json);
 
 	/** Loads the level tag from a json file
 	Returns true if succeeds, else returns false
 	*/
-	bool loadLevelTag(const std::shared_ptr<JsonValue>& json);
+	int loadLevelTag(const std::shared_ptr<JsonValue>& json);
 
 #pragma mark - 
 #pragma mark Savers
 	/** Saves the overall current state of the game to a json file */
-	void saveGame();
+	void saveGame(int level);
 	/** Saves the current level's game state to a json file */
-	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp);
+	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, int level);
 
 #pragma mark -
 #pragma mark Accessors

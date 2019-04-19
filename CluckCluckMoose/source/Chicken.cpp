@@ -138,6 +138,8 @@ int elementToInt(element e) {
 		return 6;
 	case element::Unset:
 		return 7;
+	case element::SpecialWin:
+		return 8;
 	}
 }
 

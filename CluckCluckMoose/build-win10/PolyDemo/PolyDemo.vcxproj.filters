@@ -37,7 +37,9 @@
     <ClCompile Include="..\..\source\AITest.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\CCMLevelScene.cpp" />
+    <ClCompile Include="..\..\source\CCMLevelScene.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\HelloApp.h" />
@@ -83,7 +85,9 @@
     <ClInclude Include="..\..\source\AITest.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\CCMLevelScene.h" />
+    <ClInclude Include="..\..\source\CCMLevelScene.h">
+      <Filter>App</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PolyDemo.rc" />
@@ -101,5 +105,13 @@
     <Filter Include="AI">
       <UniqueIdentifier>{3d1645aa-5c5d-4cca-ab4c-bdded998f97f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="saveGame.json">
+      <Filter>App</Filter>
+    </None>
+    <None Include="saveLevel.json">
+      <Filter>App</Filter>
+    </None>
   </ItemGroup>
 </Project>

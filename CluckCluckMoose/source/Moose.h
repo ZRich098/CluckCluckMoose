@@ -64,7 +64,8 @@ public:
 	/**
 	 * Initializes the moose with json style arguments
 	 */
-	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, vector<int> discard, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<int> coop, string costume);
+	void jsonInit(int health, vector<int> hand, vector<int> playOrder, vector<vector<int>> handPoolArray, string costume);
     
     
 #pragma mark Static Constructors    
@@ -101,6 +102,10 @@ public:
 	Coop getDeck() { return deck; };
 	/** Get the Chicken at position pos in the Coop of the Moose*/
 	Chicken getDeckAt(int pos) { return deck.at(pos); };
+	/** Get the current hand pool of the Moose*/
+	vector<vector<Chicken>> getHandPool() { return handPool; };
+	/** Get the hand at position pos in the handPool of the Moose*/
+	vector<Chicken> getHandPoolAt(int pos) { return handPool.at(pos); };
 	/** Get the current discard pile of the Moose*/
 	vector <Chicken> getDiscard() { return discard; };
 	/** Get the Chicken at position pos in the discard pile of the Moose*/
