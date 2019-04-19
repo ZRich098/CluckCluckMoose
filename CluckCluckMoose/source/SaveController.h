@@ -64,7 +64,7 @@ public:
 	/** Saves the overall current state of the game to a json file */
 	void saveGame(int level);
 	/** Saves the current level's game state to a json file */
-	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, int level);
+	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, std::shared_ptr<AI> ai, int level);
 
 #pragma mark -
 #pragma mark Accessors

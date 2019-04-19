@@ -189,7 +189,7 @@ void SaveController::saveGame(int level) { //called in onSuspend()
 	writer->close();
 }
 
-void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr, int level) { //called in onSuspend()
+void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr, std::shared_ptr<AI> ai, int level) { //called in onSuspend()
 	Moose player = *playerPtr;
 	Moose opp = *oppPtr;
 
@@ -301,10 +301,37 @@ void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr
 
 	saveFile.appendChild("OpponentMoose", std::make_shared<JsonValue>(oppMoose));
 
+	//Add AI
+	JsonValue aiType;
+	AIType a = ai->getType();
+	if (a == AIType::Basic) {
+		aiType.init("Basic");
+	}
+	else if (a == AIType::Dumb) {
+		aiType.init("Dumb");
+	}
+	else if (a == AIType::Expert) {
+		aiType.init("Expert");
+	}
+	else if (a == AIType::Intro) {
+		aiType.init("Intro");
+	}
+	else if (a == AIType::Smart) {
+		aiType.init("Smart");
+	}
+	else if (a == AIType::Starter) {
+		aiType.init("Starter");
+	}
+	else {
+		CULog("AI Type not found");
+		aiType.init("Basic");
+	}
+	saveFile.appendChild("AI", std::make_shared<JsonValue>(aiType));
+
 	//Add Tag
 	JsonValue levelTag;
 	levelTag.init((float)level);
-	saveFile.appendChild(std::make_shared<JsonValue>(levelTag));
+	saveFile.appendChild("Level", std::make_shared<JsonValue>(levelTag));
 
 	//save to file
 	JsonWriter file;

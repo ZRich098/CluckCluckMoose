@@ -107,6 +107,9 @@ public:
     /** Gets the position of the next card in hand to play
 		i.e. 0 means play card at position 0 in hand */
 	int getPlay();
+
+	/** Gets the type of the AI */
+	AIType getType() { return type; };
 };
 
 #endif /* __AI_H__ */

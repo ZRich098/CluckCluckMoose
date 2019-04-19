@@ -247,6 +247,7 @@ void CCMApp::update(float timestep) {
         }
         else if (_current == 2) { // in game scene
             if (_gamescene.getHome()) { //@TODO: save current level
+				//_saveLoad.saveLevel(_gamescene.getPlayer(), _gamescene.getOpp(), _gamescene.getAI(), _levelscene.getLevel());
                 _gamescene.setHome(false);
                 _gameplay[_current]->setActive(false);
                 _gameplay[_current]->dispose();

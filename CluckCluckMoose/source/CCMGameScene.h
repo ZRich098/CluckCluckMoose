@@ -32,6 +32,8 @@ protected:
 	std::shared_ptr<Moose> player;
 	std::shared_ptr<Moose> opp;
 
+	std::shared_ptr<AI> oppAI;
+
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
     
@@ -117,6 +119,8 @@ public:
 	std::shared_ptr<Moose> getPlayer() { return player; };
 	/** Get the opponent Moose */
 	std::shared_ptr<Moose> getOpp() { return opp; };
+	/** Get the opponent AI */
+	std::shared_ptr<AI> getAI() { return oppAI; };
 
 	bool getHome() { return sb->getHome(); }
 
