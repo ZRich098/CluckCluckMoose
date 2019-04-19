@@ -206,6 +206,53 @@ void Moose::setStack(Stack s) {
 	}
 }
 
+void Moose::discardChickens() {
+	// booleans to check if one of each basic is erased
+	bool fireRemoved, waterRemoved, grassRemoved;
+	//for debugging purposes
+	int basicCounter;
+	// concatenates playOrder and hand, this is fine since they are both cleared at the end
+	playOrder.insert(playOrder.end(), hand.begin(), hand.end());
+
+	for (Chicken &c : playOrder) {
+		switch (c.getSpecial()) {
+		case special::BasicFire:
+			if (!fireRemoved)
+				fireRemoved == true;
+			else {
+				basicCounter++;
+				deck.add(c);
+			}
+			break;
+		case special::BasicGrass:
+			if (!grassRemoved) 
+				grassRemoved == true;
+			else {
+				basicCounter++;
+				deck.add(c);
+			}
+			break;
+		case special::BasicWater:
+			if (!waterRemoved)
+				waterRemoved == true;
+			else {
+				basicCounter++;
+				deck.add(c);
+			}
+			break;
+		default:
+			discard.push_back(c);
+			break;
+		}
+	}
+	if (discard.size() + basicCounter != playOrder.size() - 3)
+		CULog("Warning: Basic chicken discard inconsistency.");
+
+	playOrder.clear();
+	nonEleDist.clear();
+	hand.clear();
+}
+
 void Moose::clearHandToDiscard() {
 	for (Chicken &c : hand) {
 		switch (c.getSpecial()) {
@@ -239,9 +286,18 @@ void Moose::refillHand() {
 	else {
 		hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
 		while (hand.size() < handSize) {
-			//refill deck if hand not full yet but deck is empty
-			//if (deck.getSize() == 0) refillDeck();
-			hand.push_back(deck.draw());
+			//If deck is empty for whatever reason, draw random basic
+			if (deck.getSize() == 0) {
+				int random = rand() % 3;
+				if (random == 0)
+					hand.push_back(Chicken(element::Fire, special::BasicFire));
+				if (random == 1)
+					hand.push_back(Chicken(element::Grass, special::BasicGrass));
+				if (random == 2)
+					hand.push_back(Chicken(element::Water, special::BasicWater));
+			}
+			else
+				hand.push_back(deck.draw());
 		}
 		// Pool system
 		refillDeck();
