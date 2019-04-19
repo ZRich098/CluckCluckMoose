@@ -171,7 +171,7 @@ std::vector<int> timers;
 int heldButtInd;
 
 
-bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
+bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, const std::shared_ptr<CCMInput> inputInstance, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
 
 	root->removeAllChildren();
 
@@ -185,7 +185,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	heldButtInd = -1;
 
 	_assets = assets;
-	_input.init();
+	_input = inputInstance;
 
 	// Get chicken textures.
 	textureF = _assets->get<Texture>("fire");
@@ -381,7 +381,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		else {
 			butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
 		}
-		if (_input.isActive()) {
+		if (_input->isActive()) {
 			//CULog("active");
 		}
 		butt->setListener([=](const std::string& name, bool down) {
@@ -555,7 +555,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
-				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
+				//buttons[i]->setPosition(layer->screenToNodeCoords(_input->getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
 				std::shared_ptr<Texture> infoText;
 				special cel = playerGlobe->getHandAt(i).getSpecial();
 				switch (cel) {
@@ -922,7 +922,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 }
 
 void SceneBuilder1::updateInput(float timestep) {
-	_input.update(timestep);
+	_input->update(timestep);
 	if (heldButtInd >= 0) {
 		for (int i = 0; i < 6; i++) {
 			if (i == heldButtInd) {
@@ -944,7 +944,7 @@ void SceneBuilder1::updateInput(float timestep) {
 //Dispose of the scene builder
 void SceneBuilder1::dispose() {
 	_assets = nullptr;
-	_input.dispose();
+	_input->dispose();
 	//_buttons.clear();
 }
 

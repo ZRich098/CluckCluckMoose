@@ -221,21 +221,21 @@ void CCMApp::update(float timestep) {
 				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
 				if (gameReader == nullptr) {
 					CULog("json/level%d.json file not found", _levelscene.getLevel());
-					_gameplay.push_back(GameScene::alloc(_assets));
+					_gameplay.push_back(GameScene::alloc(_assets, std::make_shared<CCMInput>(_input)));
 					_gameplay.back()->setActive(false);
 				}
 				else {
 					std::shared_ptr<JsonValue> json = gameReader->readJson();
 					if (json == nullptr) {
 						CULog("Failed to load level file");
-						_gameplay.push_back(GameScene::alloc(_assets));
+						_gameplay.push_back(GameScene::alloc(_assets, std::make_shared<CCMInput>(_input)));
 						_gameplay.back()->setActive(false);
 					}
 					else {
 						CULog("File loading");
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-						_gameplay.push_back(GameScene::alloc(_assets, pl, op));
+						_gameplay.push_back(GameScene::alloc(_assets, std::make_shared<CCMInput>(_input), pl, op));
 						_gameplay.back()->setActive(false);
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));

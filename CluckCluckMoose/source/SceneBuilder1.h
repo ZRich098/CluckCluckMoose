@@ -16,7 +16,7 @@ protected:
 	/** The asset manager for this scene builder. */
 	std::shared_ptr<cugl::AssetManager> _assets;
 
-	CCMInput _input;
+	std::shared_ptr<CCMInput> _input;
 
 	std::shared_ptr<cugl::Node> selectedChicken;
 
@@ -58,12 +58,12 @@ public:
 	 *
 	 * @return true if the controller is initialized properly, false otherwise.
 	 */
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, const std::shared_ptr<CCMInput> inputInstance, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp);
 
 	//Allocate a scene builder
-	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
+	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, const std::shared_ptr<CCMInput> inputInstance, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
 		std::shared_ptr<SceneBuilder1> result = std::make_shared<SceneBuilder1>();
-		return (result->init(assets, size, root, player, opp) ? result : nullptr);
+		return (result->init(assets, size, root, inputInstance, player, opp) ? result : nullptr);
 	}
 
 #pragma mark -
@@ -88,7 +88,7 @@ public:
 	bool getPreview() { return previewSet; };
 
 	//gets the Input instance
-	CCMInput getInput() { return _input; };
+	std::shared_ptr<CCMInput> getInput() { return _input; };
 
 #pragma mark -
 #pragma mark Setters

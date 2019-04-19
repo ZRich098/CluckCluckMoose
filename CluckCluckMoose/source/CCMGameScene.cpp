@@ -98,7 +98,7 @@ Stack oppPreviewStack;
  *
  * @return true if the controller is initialized properly, false otherwise.
  */
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<CCMInput> inputInstance) {
     // Initialize the scene to a locked width
     Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -135,7 +135,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, AIType::Smart);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, inputInstance, player, opp);
 
 	sb->deactivateHand();
 
@@ -152,7 +152,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<CCMInput> inputInstance, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose) {
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
@@ -190,7 +190,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, AIType::Smart);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, inputInstance, player, opp);
 	sb->setPreview(false);
 	sb->deactivateHand();
 
