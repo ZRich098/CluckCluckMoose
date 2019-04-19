@@ -184,6 +184,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 
 	//Initialize moose
 	player = playerMoose;
+	CULog("%d, %d, %d", specialToInt(player->getHandAt(0).getSpecial()), specialToInt(player->getHandAt(1).getSpecial()), specialToInt(player->getHandAt(2).getSpecial()));
 	opp = oppMoose;
 	//player->refillHand();
 	//opp->refillHand();
@@ -334,17 +335,6 @@ void GameScene::update(float timestep) {
 			opp->getStack().clear();
 			isClashing = false;
 
-			if (player->getHealth() <= 0) {
-				didLose = true;
-				didWin = false;
-				CULog("lost! lmao");
-			}
-
-			if (opp->getHealth() <= 0) {
-				didLose = false;
-				didWin = true;
-				CULog("win");
-			}
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;

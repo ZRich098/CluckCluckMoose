@@ -1396,11 +1396,7 @@ void SceneBuilder1::activatePause() {
 }
 
 void SceneBuilder1::deactivatePause() {
-    // @TODO: for some reason restart gets mad
-//    for (int i = 0; i < 4; i++) {
-//        pausebuttons[i]->deactivate();
-//    }
-	for (int i = 0; i < pausebuttons.size(); i++){
+    for (int i = 0; i < pausebuttons.size(); i++) {
         pausebuttons[i]->deactivate();
 	}
 }

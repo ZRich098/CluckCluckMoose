@@ -232,9 +232,10 @@ void CCMApp::update(float timestep) {
 						_gameplay.back()->setActive(false);
 					}
 					else {
-						CULog("File loading");
+						CULog("json/level%d.json loading", _levelscene.getLevel());
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+						CULog("%d, %d, %d", specialToInt(pl->getHandAt(0).getSpecial()), specialToInt(pl->getHandAt(1).getSpecial()), specialToInt(pl->getHandAt(2).getSpecial()));
 						_gameplay.push_back(GameScene::alloc(_assets, pl, op));
 						_gameplay.back()->setActive(false);
 
@@ -248,11 +249,12 @@ void CCMApp::update(float timestep) {
             if (_gamescene.getHome()) { //@TODO: save current level
                 _gamescene.setHome(false);
                 _gameplay[_current]->setActive(false);
-//                _gameplay[_current]->dispose();
-//                _gameplay.erase(_gameplay.begin()+_current-1);
+                _gameplay[_current]->dispose();
+				_gameplay.pop_back();
+				_input.init();
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
-//                _levelscene.setLevel(0);
+                _levelscene.setLevel(0);
             }
         }
         _gameplay[_current]->update(timestep);
