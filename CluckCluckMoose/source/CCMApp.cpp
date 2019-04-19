@@ -212,7 +212,7 @@ void CCMApp::update(float timestep) {
             else if (_levelscene.getLevel() != 0) { // level chosen
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
-                _current = 2; // need to load in assets for new level here
+                _current = 2;
 
 				//load level, if able
 				stringstream ss;
@@ -241,18 +241,18 @@ void CCMApp::update(float timestep) {
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 					}
 				}
-
                 _gameplay[_current]->setActive(true);
             }
         }
         else if (_current == 2) { // in game scene
             if (_gamescene.getHome()) { //@TODO: save current level
                 _gamescene.setHome(false);
-//                _gamescene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
+                _gameplay[_current]->dispose();
+                _gameplay.erase(_gameplay.begin()+_current-1);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
-                _levelscene.setLevel(0);
+//                _levelscene.setLevel(0);
             }
         }
         _gameplay[_current]->update(timestep);

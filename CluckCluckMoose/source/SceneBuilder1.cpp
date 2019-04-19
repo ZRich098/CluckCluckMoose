@@ -542,7 +542,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pausebutt->setListener([=](const std::string& name, bool down) {
 	    if (down) {
 	        pauseMenuCanvas->setVisible(true);
-//			deactivateHand(); //@TODO: freeze game state??
+			deactivateHand(); //@TODO: freeze game state??
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
@@ -604,7 +604,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2 - INFO_Y_OFFSET);
 	pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
 	    pauseMenuCanvas->setVisible(false);
-//		activateHand(); //@TODO: freeze game state
+		activateHand(); //@TODO: freeze game state
 	}});
     pauseMenuCanvas->addChild(pauseResume);
 	pauseResume->activate(54); //ensure keys are unique
