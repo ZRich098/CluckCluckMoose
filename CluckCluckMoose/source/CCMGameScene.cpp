@@ -364,7 +364,8 @@ void GameScene::setActive(bool value) {
         cooldown--;
         return;
     }
-	sb->activateHand();
+	if (value) { sb->activateHand(); }
+	else { sb->deactivateHand(); }
     /* For(auto it = _buttons.begin(); it != _buttons.end(); ++it) {
         if (value && !it->second->isActive()) {
             it->second->activate(pos++);

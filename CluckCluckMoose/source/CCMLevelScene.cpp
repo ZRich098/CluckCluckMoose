@@ -157,7 +157,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     levelbackCanvas->addChild(thronebutt);
 
     // Initializing locks
-    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 50, SCENE_HEIGHT*51/64, levelNodes, 12, true, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 45, SCENE_HEIGHT*51/64, levelNodes, 12, true, false);
     buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 75, SCENE_HEIGHT*47/64, levelNodes, 11, true, false);
     buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 20, SCENE_HEIGHT*44/64, levelNodes, 10, true, false);
     buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 20, SCENE_HEIGHT*40/64, levelNodes, 9, true, false);
@@ -167,12 +167,12 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 80, SCENE_HEIGHT*24/64, levelNodes, 5, true, false);
 
     // Initializing arrow
-    buildLevelSelect(levelbuttonCanvas, -SCENE_WIDTH*5/64, SCENE_HEIGHT*11/64, levelNodes, 4, true, true);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 - 45, SCENE_HEIGHT*21/64, levelNodes, 4, true, true);
 
     // Initializing flags
-    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH/8, SCENE_HEIGHT*8/64, levelNodes, 3, false, false);
-    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*3/16, SCENE_HEIGHT*5/64, levelNodes, 2, false, false);
-    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*7/32, SCENE_HEIGHT/128, levelNodes, 1, false, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 70, SCENE_HEIGHT*17/64, levelNodes, 3, false, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 115, SCENE_HEIGHT*13/64, levelNodes, 2, false, false);
+    buildLevelSelect(levelbackCanvas, SCENE_WIDTH/2 + 125, SCENE_HEIGHT*9/64, levelNodes, 1, false, false);
 
     return true;
 }
@@ -245,10 +245,10 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         id->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> butt = Button::alloc(id);
         butt->setAnchor(Vec2::ANCHOR_CENTER);
-        butt->setScale(0.45, 0.45);
+        butt->setScale(0.45f);
         butt->setPosition(posX, posY);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
-        levelbuttonCanvas->addChild(butt);
+        node->addChild(butt);
         butt->activate(103 + lev);
         levelbuttons.push_back(butt);
     }
@@ -258,17 +258,17 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         id->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> butt = Button::alloc(id);
         butt->setAnchor(Vec2::ANCHOR_CENTER);
-        butt->setScale(0.45, 0.45);
+        butt->setScale(0.45f);
         butt->setPosition(posX, posY);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
-        levelbuttonCanvas->addChild(butt);
+        node->addChild(butt);
         butt->activate(103 + lev);
         levelbuttons.push_back(butt);
     }
     else { // locks
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levellock");
         std::shared_ptr<PolygonNode> levelptr = PolygonNode::allocWithTexture(texture);
-        levelptr->setScale(0.5f); // Magic number to rescale asset
+        levelptr->setScale(0.45f); // Magic number to rescale asset
         levelptr->setAnchor(Vec2::ANCHOR_CENTER);
         levelptr->setPosition(posX, posY);
         node->addChild(levelptr);

@@ -379,7 +379,7 @@
             "wrapT": "clamp"
         },
         "levelbox": {
-            "file": "textures/levelselect/base_level_select_v2.png",
+            "file": "textures/levelselect/base_level_select_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -442,14 +442,14 @@
             "wrapT": "clamp"
         },
         "levelflag": {
-            "file": "textures/levelselect/flag_normal.png",
+            "file": "textures/levelselect/flag_normal_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelflagboss": {
-            "file": "textures/levelselect/flag_boss.png",
+            "file": "textures/levelselect/flag_boss_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
