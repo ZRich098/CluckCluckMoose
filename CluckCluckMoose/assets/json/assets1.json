@@ -266,6 +266,76 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "fireLabel": {
+            "file": "textures/stamp_fire_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "grassLabel": {
+            "file": "textures/stamp_grass_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "waterLabel": {
+            "file": "textures/stamp_water_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "shadow": {
+            "file": "textures/shadow.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "victoryScreen": {
+            "file": "textures/base_victory_noUnlock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "wlOverlay": {
+            "file": "textures/dark_overlay.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "defeatScreen": {
+            "file": "textures/defeat_base.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "redo": {
+            "file": "textures/btn_redo.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "homeButton": {
+            "file": "textures/btn_home.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "nextLvl": {
+            "file": "textures/btn_next.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "menubg": {
             "file": "textures/mainmenu/bg_homescreen_v1.png",
             "minfilter": "linear",
