@@ -1366,7 +1366,7 @@ void SceneBuilder1::activateHand() {
 }
 
 bool SceneBuilder1::getHome() {
-	return goHome;
+	return goHome || pauseHomeDown;
 }
 
 bool SceneBuilder1::getRedo() {
