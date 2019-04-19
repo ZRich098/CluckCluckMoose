@@ -21,6 +21,20 @@ void Moose::refillDeck() {
 	discard.clear();
 }
 
+void Moose::refillHandPool() {
+	vector<Chicken> hand;
+	vector<int> options;
+	int opts[] = { 3,5,7,8,9,11,13,15 }; //implemented specials: 3,5,7,8,9,11,13,15
+	for (int i : opts) {
+		options.push_back(i);
+	}
+	for (int i = 0; i < 3; i++) {
+		int rand = std::rand() % options.size();
+		hand.push_back(intToSpecial(options.at(rand)));
+		handPool.push_back(hand);
+	}
+}
+
 /**
  * Initializes a new moose with the given health and hand size.
  *
@@ -36,6 +50,9 @@ bool Moose::init(int h, int hSize) {
 
 void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<int> coopArray, string cost) {
 	health = h;
+	if (handArray.size() == 0) {
+		refillHand();
+	}
 	for (int i : handArray) {
 		hand.push_back(Chicken(intToSpecial(i)));
 	}
@@ -66,6 +83,9 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	}
 
 	handPool.clear();
+	if (handPoolArray.size() == 0) {
+		refillHandPool();
+	}
 	for (vector<int> h : handPoolArray) {
 		vector<Chicken> hand;
 		for (int i : h) {
