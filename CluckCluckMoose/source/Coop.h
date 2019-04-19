@@ -10,8 +10,10 @@
 class Coop {
 	private:
 		int deckNumber;
-		vector <Chicken> chickens;
-		bool shuffled;
+		vector <Chicken> specials;
+		vector <Chicken> basics;
+		bool specialShuffled;
+		bool basicShuffled;
 		/** Loads all chickens in Deck deckNumber into the Coop
 			DO NOT USE IF COOP NOT EMPTY*/
 		void loadDeck();
@@ -23,25 +25,30 @@ class Coop {
 		~Coop();
 
 		//Access
-		/** Get the size of the Coop*/
-		const int getSize() const { return chickens.size(); };
+		/** Get the sizes of the Coop*/
+		const int getSize() const { return basics.size() + specials.size(); }
+		const int getSizeS() const { return specials.size(); };
+		const int getSizeB() const { return basics.size(); };
 		/** Returns whether the Coop has been shuffled yet 
 			(Chickens are in random order after shuffling)*/
-		const bool isShuffled() const { return shuffled; };
-		/** Returns the Chicken at position pos, where 0 is next to be drawn
-			If deck is shuffled, chicken will change position */
-		Chicken at(int pos);
+		const bool isShuffled() const { return specialShuffled && basicShuffled; };
+		/** Returns the Chicken at position pos,
+			0 is the first basic
+			getSizeB() is the first special*/
+		Chicken at(int pos) { return (pos < basics.size()) ? basics.at(pos) : specials.at(pos - basics.size()); };
 
 		//Modify
 		/** Draw a Chicken, removing it from the Coop
 			REQUIRES Coop not empty*/
-		Chicken draw();
+		Chicken drawSpecial();
+		Chicken drawBasic();
 		/** Clear the coop of all Chickens*/
-		void clear() { chickens.clear(); };
+		void clear() { specials.clear(); basics.clear(); };
 		/** Shuffles the coop so all chickens are in random order*/
 		void shuffle();
-		/** Add Chicken c to the end of Coop (c will be next chicken drawn)*/
-		void add(const Chicken& c);
+		/** Add Chicken c to the end of Coop (c will be next chicken drawn)
+			The boolean tells the deck to shuffle if true */
+		void add(const Chicken& c, bool shouldShuffle = false);
 		/** Add the c Chickens to the Coop */
 		void fill(const vector <Chicken> c);
 		/** Add the c Chickens to the Coop */

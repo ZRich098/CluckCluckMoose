@@ -20,6 +20,7 @@ Coop::~Coop() {
 }
 
 void Coop::loadDeck() {
+	vector<Chicken> chickens;
 	switch (deckNumber) {
 		case 0: //Empty Deck
 			break;
@@ -40,54 +41,81 @@ void Coop::loadDeck() {
 				chickens.push_back(Chicken(c));
 			break;
 	}
-	shuffled = false;
+	fill(chickens);
 }
 
 Chicken Coop::at(int pos) {
-	return chickens.at(chickens.size() - pos);
+	if (pos >= getSize())
+		CULogError("Deck position out of bounds");
+	return (pos < basics.size()) ? basics.at(pos) : specials.at(pos - basics.size());
 }
 
-Chicken Coop::draw() {
-	if (!shuffled) {
-		random_shuffle(chickens.begin(), chickens.end());
-		shuffled = true;
-	}
-	Chicken& c = chickens.back();
-	chickens.pop_back();
+Chicken Coop::drawSpecial() {
+	if (specials.size() == 0)
+		CULogError("No special chicken to draw");
+	if (!specialShuffled)
+		shuffle();
+	Chicken& c = specials.back();
+	specials.pop_back();
+	return c;
+}
+
+Chicken Coop::drawBasic() {
+	if (basics.size() == 0)
+		CULogError("No basic chicken to draw");
+	if (!basicShuffled)
+		shuffle();
+	Chicken& c = basics.back();
+	basics.pop_back();
 	return c;
 }
 
 void Coop::shuffle() {
-	random_shuffle(chickens.begin(), chickens.end());
-	shuffled = true;
+	if (!specialShuffled) {
+		random_shuffle(specials.begin(), specials.end());
+		specialShuffled = true;
+	}
+	if (!basicShuffled) {
+		random_shuffle(specials.begin(), specials.end());
+		basicShuffled = true;
+	}
 }
 
-void Coop::add(const Chicken& c) {
-	chickens.push_back(c);
+void Coop::add(const Chicken& c, bool shouldShuffle) {
+	if (c.isBasic) {
+		basics.push_back(c);
+		if (shouldShuffle)
+			basicShuffled = false;
+	}
+	else {
+		specials.push_back(c);
+		if (shouldShuffle)
+			specialShuffled = false;
+	}
 }
 
 void Coop::fill(const vector <Chicken> c) {
-	for (const Chicken &ch : c) {
-		chickens.push_back(ch);
-	}
-	shuffled = false;
+	for (const Chicken &ch : c)
+		add(ch,true);
 }
 
 void Coop::fill(const vector <int> cArray) {
-	for (int i : cArray) {
-		chickens.push_back(Chicken(intToSpecial(i)));
-	}
-	shuffled = false;
+	for (int i : cArray)
+		add(Chicken(intToSpecial(i)));
 }
 
 string Coop::coopString() const {
 	stringstream ss;
-	if (!shuffled) {
+	if (!basicShuffled || !specialShuffled) {
 		ss << "Unshuffled\n";
 	}
 
-	for (int i = 0; i < chickens.size(); i++) {
-		ss << "Coop " << i + 1 << ": " << chickens.at(chickens.size() - i - 1).toString().c_str() << "\n";
+	for (int i = 0; i < basics.size(); i++) {
+		ss << "Coop Basics " << i + 1 << ": " << basics.at(basics.size() - i - 1).toString().c_str() << "\n";
+	}
+
+	for (int i = 0; i < specials.size(); i++) {
+		ss << "Coop Specials " << i + 1 << ": " << specials.at(specials.size() - i - 1).toString().c_str() << "\n";
 	}
 
 	return ss.str();
