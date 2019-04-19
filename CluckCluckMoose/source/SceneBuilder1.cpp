@@ -79,14 +79,14 @@ bool hasLost;
 #define INFO_Y_OFFSET 100
 #define INFO_SCALE 0.5
 #define HEALTH_BAR_Y_FACTOR 12
-#define HEALTH_BLOCK_SPACING 19
+#define HEALTH_BLOCK_SPACING 20
 #define HEART_X_OFFSET 180
-#define BAR_DISTANCE 120
+#define BAR_DISTANCE 90
 #define CHICKEN_FILMSTRIP_LENGTH 8
-#define HEART_SCALE 0.3
-#define BLOCK_X_SCALE 0.29
-#define BLOCK_Y_SCALE 0.2
-#define HBAR_SCALE 0.5
+#define HEART_SCALE 0.4
+#define BLOCK_X_SCALE 0.3
+#define BLOCK_Y_SCALE 0.3
+#define HBAR_SCALE 0.25
 #define ELT_Y_OFFSET 75
 #define ELT_INFO_SCALE 0.7
 #define ELT_INFO_X_OFFSET 30
@@ -555,6 +555,21 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	hBar->setScale(HBAR_SCALE);
 	hBar->setPosition(SCENE_WIDTH / 2, healthYScale);
 	healthCanvas->addChild(hBar);
+    //Blocks
+    for (int i = 0; i < 5; i++) {
+        std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
+        playerB->setAnchor(Vec2::ANCHOR_CENTER);
+        playerB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
+        playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
+        healthCanvas->addChild(playerB);
+    }
+    for (int i = 0; i < 5; i++) {
+        std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(oBlock);
+        oppB->setAnchor(Vec2::ANCHOR_CENTER);
+        oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
+        oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
+        healthCanvas->addChild(oppB);
+    }
 	//Hearts
 	std::shared_ptr<PolygonNode> playerH = PolygonNode::allocWithTexture(pHeart);
 	playerH->setAnchor(Vec2::ANCHOR_CENTER);
@@ -566,21 +581,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	oppH->setScale(HEART_SCALE);
 	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(oppH);
-	//Blocks
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
-		playerB->setAnchor(Vec2::ANCHOR_CENTER);
-		playerB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-		playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
-		healthCanvas->addChild(playerB);
-	}
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(oBlock);
-		oppB->setAnchor(Vec2::ANCHOR_CENTER);
-		oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-		oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
-		healthCanvas->addChild(oppB);
-	}
+
 	
 	//Add elemental information
 	std::shared_ptr<Texture> eltInfoText = _assets->get<Texture>("groupedElts");
@@ -1001,17 +1002,17 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	}
 
 	//Update the opponent health bar
-    for (int i = 1; i < 6; i++) {
-        if (oppGlobe->getHealth() < i) {
-            std::shared_ptr<Node> child = healthCanvas->getChild(i + 7);
-            child->setVisible(false);
-        }
-    }
+	for (int i = 1; i < 6; i++) {
+		if (oppGlobe->getHealth() < i) {
+			std::shared_ptr<Node> child = healthCanvas->getChild(11 - i);
+			child->setVisible(false);
+		}
+	}
 
 	//Update the player health bar
 	for (int i = 1; i < 6; i++) {
 		if (playerGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(i + 2);
+			std::shared_ptr<Node> child = healthCanvas->getChild(6 - i);
 			child->setVisible(false);
 		}
 	}
