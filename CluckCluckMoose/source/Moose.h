@@ -23,6 +23,8 @@ protected:
 	vector <Chicken> hand;
 	Coop deck;
 	vector <Chicken> discard;
+	//Chickens that are less likely or simply not allowed to be drawn next turn
+	vector <Chicken> blacklist;
 	vector <Chicken> playOrder;
 	vector <vector<Chicken>> handPool;
 	//nonEleDist is a seed for the non-elemental chickens in the element distribution to stay as one element

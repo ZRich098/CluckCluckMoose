@@ -211,10 +211,11 @@ void Moose::discardChickens() {
 	bool fireRemoved, waterRemoved, grassRemoved;
 	//for debugging purposes
 	int basicCounter;
-	// concatenates playOrder and hand, this is fine since they are both cleared at the end
+	// concatenates playOrder and hand for iterating, this is fine since they are both cleared at the end
 	playOrder.insert(playOrder.end(), hand.begin(), hand.end());
 
 	for (Chicken &c : playOrder) {
+		// basics are added to the deck directly so they aren't blacklisted at the end of the method
 		switch (c.getSpecial()) {
 		case special::BasicFire:
 			if (!fireRemoved)
@@ -245,12 +246,17 @@ void Moose::discardChickens() {
 			break;
 		}
 	}
+
 	if (discard.size() + basicCounter != playOrder.size() - 3)
 		CULog("Warning: Basic chicken discard inconsistency.");
+	blacklist = discard;
+	refillDeck();
+	deck.shuffle();
 
 	playOrder.clear();
 	nonEleDist.clear();
 	hand.clear();
+	CULog("blacklist size: %d", blacklist.size());
 }
 
 void Moose::clearHandToDiscard() {
@@ -276,18 +282,18 @@ void Moose::refillHand() {
 		hand.push_back(Chicken(element::Water, special::BasicWater));
 	}
 	random_shuffle(hand.begin(),hand.end());
+	//Uses hands that are given if one is available
 	if (handPool.size() != 0) {
-		//Uses hands that are given if one is available
 		random_shuffle(handPool.begin(), handPool.end());
 		for (Chicken i : handPool.front()) {
 			hand.push_back(i);
 		}
 	}
+	//Uses the pool system otherwise
 	else {
-		hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
 		while (hand.size() < handSize) {
 			//If deck is empty for whatever reason, draw random basic
-			if (deck.getSize() == 0) {
+			if (deck.getSize() == 0 && discard.size() == 0) {
 				int random = rand() % 3;
 				if (random == 0)
 					hand.push_back(Chicken(element::Fire, special::BasicFire));
@@ -296,12 +302,26 @@ void Moose::refillHand() {
 				if (random == 2)
 					hand.push_back(Chicken(element::Water, special::BasicWater));
 			}
-			else
-				hand.push_back(deck.draw());
+			else if (discard.size() != 0) {
+				//TODO: fix everything here goddamnit
+			}
+			//Gets every special chicken in the deck first
+			else {
+				Chicken &c = deck.draw();
+				switch (c.getSpecial()) {
+				case special::BasicFire:
+				case special::BasicWater:
+				case special::BasicGrass:
+					discard.push_back(c);
+					break;
+				default:
+					hand.push_back(c);
+				}
+			}
 		}
-		// Pool system
-		refillDeck();
-		deck.shuffle();
+		// Deprecated Pool system portion
+		//refillDeck();
+		//deck.shuffle();
 	}
 }
 
