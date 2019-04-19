@@ -1161,59 +1161,55 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		}
 	}
 
-	//update stamps, only if there is a witchen
+	//update stamps
 
 	for (int i = 0; i < playerGlobe->getStack().getSize(); i++) {
-		if (i + 1 < playerGlobe->getStack().getSize()) {
-			Chicken candidate = playerGlobe->getStackAt(i + 1);
-			if (candidate.getSpecial() == special::Witchen) {
-				Chicken stampedChick = playerGlobe->getStackAt(i);
-				if (stampedChick.getElement() == element::Fire) {
-					pStamps[i]->setTexture(fstamp);
-					pStamps[i]->setVisible(true);
-				}
-				else if (stampedChick.getElement() == element::Water) {
-					pStamps[i]->setTexture(wstamp);
-					pStamps[i]->setVisible(true);
-				}
-				else if (stampedChick.getElement() == element::Grass) {
-					pStamps[i]->setTexture(gstamp);
-					pStamps[i]->setVisible(true);
-				}
-				else {
-
-				}
+		Chicken chick = playerGlobe->getStackAt(i);
+		if (chick.isCycled()) {
+			if (chick.getElement() == element::Fire) {
+				pStamps[i]->setTexture(fstamp);
+				pStamps[i]->setVisible(true);
+			}
+			else if (chick.getElement() == element::Water) {
+				pStamps[i]->setTexture(wstamp);
+				pStamps[i]->setVisible(true);
+			}
+			else if (chick.getElement() == element::Grass) {
+				pStamps[i]->setTexture(gstamp);
+				pStamps[i]->setVisible(true);
 			}
 			else {
-				pStamps[i]->setVisible(false);
+
 			}
+		}
+		else {
+			pStamps[i]->setVisible(false);
 		}
 	}
 
 	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
-		if (i + 1 < oppGlobe->getStack().getSize()) {
-			Chicken candidate = oppGlobe->getStackAt(i + 1);
-			if (candidate.getSpecial() == special::Witchen) {
-				Chicken stampedChick = oppGlobe->getStackAt(i);
-				if (stampedChick.getElement() == element::Fire) {
-					oStamps[i]->setTexture(fstamp);
-					oStamps[i]->setVisible(true);
-				}
-				else if (stampedChick.getElement() == element::Water) {
-					oStamps[i]->setTexture(wstamp);
-					oStamps[i]->setVisible(true);
-				}
-				else if (stampedChick.getElement() == element::Grass) {
-					oStamps[i]->setTexture(gstamp);
-					oStamps[i]->setVisible(true);
-				}
-				else {
-
-				}
+		
+		Chicken chick = oppGlobe->getStackAt(i);
+		//CULog("Chicken is cycled: %d", chick.isCycled());
+		if (chick.isCycled()) {
+			if (chick.getElement() == element::Fire) {
+				oStamps[i]->setTexture(fstamp);
+				oStamps[i]->setVisible(true);
+			}
+			else if (chick.getElement() == element::Water) {
+				oStamps[i]->setTexture(wstamp);
+				oStamps[i]->setVisible(true);
+			}
+			else if (chick.getElement() == element::Grass) {
+				oStamps[i]->setTexture(gstamp);
+				oStamps[i]->setVisible(true);
 			}
 			else {
-				oStamps[i]->setVisible(false);
+
 			}
+		}
+		else {
+			oStamps[i]->setVisible(false);
 		}
 	}
 

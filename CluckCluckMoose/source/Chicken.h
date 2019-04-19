@@ -84,7 +84,7 @@ class Chicken{
 		element e;
 		special s;
 		int damage;
-		bool cycled;
+		bool cycled = false;
 	public:
 		//Constructors
 		/** Creates a standard chicken card of special s */

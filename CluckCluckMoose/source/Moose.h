@@ -30,6 +30,7 @@ protected:
 	int handSize;
 	int health;
 	void refillDeck();
+	void refillHandPool();
 	int numChickensWillDiePreview;
     
 public:
@@ -141,6 +142,8 @@ public:
 	//void clearStackToDiscard();
 	/** Sets the stack to be the equal to Stack s */
 	void setStack(Stack s);
+	/** Discards the chickens that were put into the stack and those that are left in hand */
+	void discardChickens();
 
 	//Hand
 	/** Clears the hand of all Chickens */
