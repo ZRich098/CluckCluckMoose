@@ -100,6 +100,11 @@ public:
 	void setPreview(bool preview);
 	void deactivateHand();
 	void activateHand();
+	void deactivatePause();
+	void activatePause();
+	void setHome(bool val);
+//	void setRestart(bool val);
+//	void setSettings(bool val);
 
 };
 

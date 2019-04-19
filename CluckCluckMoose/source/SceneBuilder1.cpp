@@ -54,7 +54,12 @@ bool retry;
 bool hasWon;
 bool hasLost;
 
+//Button list for pause menu
+std::vector<std::shared_ptr<Button>> pausebuttons;
 
+bool pauseRestartDown;
+//bool pauseHomeDown;
+bool pauseSettingsDown;
 
 /** The ID for the button listener */
 #define LISTENER_ID 2
@@ -201,6 +206,13 @@ std::shared_ptr<Node> loseCanvas;
 std::shared_ptr<Moose> playerGlobe;
 std::shared_ptr<Moose> oppGlobe;
 
+//Canvas for pause button
+std::shared_ptr<Node> pauseButtonCanvas;
+
+//Canvas for misc. UI (i.e. pause)
+std::shared_ptr<Node> pauseMenuCanvas;
+
+
 //Preview tracking
 bool previewSet;
 //values for animation
@@ -233,6 +245,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		timers.push_back(0);
 	}
 	heldButtInd = -1;
+
+	pauseRestartDown = false;
+//	pauseHomeDown = false;
+	pauseSettingsDown = false;
 
 	_assets = assets;
 	_input.init();
@@ -396,7 +412,13 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	loseCanvas = Node::alloc();
 	layer->addChild(loseCanvas);
 
+	//Add pause button canvas
+	pauseButtonCanvas = Node::alloc();
+	layer->addChild(pauseButtonCanvas);
 
+    //Add pause menu canvas
+    pauseMenuCanvas = Node::alloc();
+    layer->addChild(pauseMenuCanvas);
 
 	//reset drawing between frames
 	backCanvas->removeAllChildren();
@@ -611,6 +633,95 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	grassNum->setScale(ELT_NUM_SCALE);
 	grassNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (2*ELT_NUM_SPACING));
 	eltInfoCanvas->addChild(grassNum);
+
+	//Init the pause button
+	std::shared_ptr<Texture> texturePause = _assets->get<Texture>("pausebutton");
+	std::shared_ptr<PolygonNode> pauseid = PolygonNode::allocWithTexture(texturePause);
+	pauseid->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> pausebutt = Button::alloc(pauseid);
+	pausebutt->setScale(0.25, 0.25);
+	pausebutt->setAnchor(Vec2::ANCHOR_CENTER);
+	pausebutt->setPosition(SCENE_WIDTH/2, healthYScale);
+	pausebutt->setListener([=](const std::string& name, bool down) {
+	    if (down) {
+	        pauseMenuCanvas->setVisible(true);
+			deactivateHand(); //@TODO: freeze game state??
+            activatePause();
+	    }
+	});
+	pauseButtonCanvas->addChild(pausebutt);
+	pausebutt->activate(50); //ensure keys are unique
+
+	//Draw pause box
+    std::shared_ptr<Texture> texturePauseOverlay = _assets->get<Texture>("pauseoverlay");
+    std::shared_ptr<PolygonNode> pauseOverlay = PolygonNode::allocWithTexture(texturePauseOverlay);
+    pauseOverlay->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseOverlay->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT/2);
+    pauseMenuCanvas->addChild(pauseOverlay);
+
+	std::shared_ptr<Texture> texturePauseBox = _assets->get<Texture>("pausebox");
+	std::shared_ptr<PolygonNode> pauseBox = PolygonNode::allocWithTexture(texturePauseBox);
+	pauseBox->setScale(0.7, 0.7);
+	pauseBox->setAnchor(Vec2::ANCHOR_CENTER);
+	pauseBox->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT/2);
+    pauseMenuCanvas->addChild(pauseBox);
+
+    std::shared_ptr<Texture> texturePauseRestart = _assets->get<Texture>("pauserestart");
+    std::shared_ptr<PolygonNode> pauserestartid = PolygonNode::allocWithTexture(texturePauseRestart);
+	pauserestartid->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> pauseRestart = Button::alloc(pauserestartid);
+    pauseRestart->setScale(0.65, 0.65);
+    pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseRestart->setPosition(SCENE_WIDTH / 4, SCENE_HEIGHT/2 + 50);
+	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { pauseRestartDown = true; }});
+    pauseMenuCanvas->addChild(pauseRestart);
+	pauseRestart->activate(51); //ensure keys are unique
+	pausebuttons.push_back(pauseRestart);
+
+    std::shared_ptr<Texture> texturePauseHome = _assets->get<Texture>("pausehome");
+    std::shared_ptr<PolygonNode> pausehomeid = PolygonNode::allocWithTexture(texturePauseHome);
+	pausehomeid->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> pauseHome = Button::alloc(pausehomeid);
+    pauseHome->setScale(0.65, 0.65);
+    pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseHome->setPosition(SCENE_WIDTH / 2 , SCENE_HEIGHT/2 + 50);
+	pauseHome->setListener([=](const std::string& name, bool down) { if (down) {
+		goHome = true; }});
+    pauseMenuCanvas->addChild(pauseHome);
+	pauseHome->activate(52); //ensure keys are unique
+	pausebuttons.push_back(pauseHome);
+
+    std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesettings");
+	std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
+	pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
+    pauseSettings->setScale(0.65, 0.65);
+    pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseSettings->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT/2 + 50);
+	pauseSettings->setListener([=](const std::string& name, bool down) { if (down) { pauseSettingsDown = true; }});
+    pauseMenuCanvas->addChild(pauseSettings);
+	pauseSettings->activate(53); //ensure keys are unique
+	pausebuttons.push_back(pauseSettings);
+
+    std::shared_ptr<Texture> texturePauseResume = _assets->get<Texture>("pauseresume");
+	std::shared_ptr<PolygonNode> pauseresumeid = PolygonNode::allocWithTexture(texturePauseResume);
+	pauseresumeid->setAnchor(Vec2::ANCHOR_CENTER);
+	std::shared_ptr<Button> pauseResume = Button::alloc(pauseresumeid);
+    pauseResume->setScale(0.65, 0.65);
+    pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseResume->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2 - INFO_Y_OFFSET);
+	pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
+	    pauseMenuCanvas->setVisible(false);
+		activateHand(); //@TODO: freeze game state
+        deactivatePause();
+	}});
+    pauseMenuCanvas->addChild(pauseResume);
+	pauseResume->activate(54); //ensure keys are unique
+	pausebuttons.push_back(pauseResume);
+
+    pauseMenuCanvas->setVisible(false);
+
+    deactivatePause();
 
 	//Initialize distribution
 	prevDist.push_back(1);
@@ -1235,8 +1346,14 @@ void SceneBuilder1::dispose() {
 	//_buttons.clear();
 }
 
+//bool SceneBuilder1::getHome(){ return pauseHomeDown; }
+
 void SceneBuilder1::setPreview(bool preview) {
 	previewSet = preview;
+}
+
+void SceneBuilder1::setHome(bool val) {
+	goHome = val;
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -1270,5 +1387,17 @@ bool SceneBuilder1::getRedo() {
 }
 
 bool SceneBuilder1::getNextLevel() {
-	return nextLevel;
+    return nextLevel;
+}
+
+void SceneBuilder1::activatePause() {
+    for (int i = 1; i <= 4; i++) {
+        pausebuttons[i]->activate(50 + i);
+    }
+}
+
+void SceneBuilder1::deactivatePause() {
+    for (int i = 0; i < 4; i++) {
+        pausebuttons[i]->deactivate();
+    }
 }

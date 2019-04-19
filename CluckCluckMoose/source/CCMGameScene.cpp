@@ -64,8 +64,8 @@ bool didWin;
 bool didLose;
 
 
-//SceneBuilder
-std::shared_ptr<SceneBuilder1> sb;
+////SceneBuilder
+//std::shared_ptr<SceneBuilder1> sb;
 
 //Root node for scene builder
 std::shared_ptr<Node> root;
