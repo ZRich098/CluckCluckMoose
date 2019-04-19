@@ -92,77 +92,77 @@
             "wrapT": "clamp"
         },
         "fireInfo": {
-            "file": "textures/card_basic_fireChicken_v2.png",
+            "file": "textures/card_basic_fireChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "waterInfo": {
-            "file": "textures/card_basic_waterChicken_v2.png",
+            "file": "textures/card_basic_waterChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "grassInfo": {
-            "file": "textures/card_basic_grassChicken_v2.png",
+            "file": "textures/card_basic_grassChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "spyInfo": {
-            "file": "textures/card_special_chickenSpy_v2.png",
+            "file": "textures/card_special_chickenSpy_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "mirrorInfo": {
-            "file": "textures/card_special_mirrorChicken_v2.png",
+            "file": "textures/card_special_mirrorChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "partyInfo": {
-            "file": "textures/card_special_partyFowl_v2.png",
+            "file": "textures/card_special_partyFowl_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "reapInfo": {
-            "file": "textures/card_special_reaperChicken_v2.png",
+            "file": "textures/card_special_reaperChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "shurInfo": {
-            "file": "textures/card_special_shuriken.png",
+            "file": "textures/card_special_shuriken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "thickInfo": {
-            "file": "textures/card_special_thicken_v2.png",
+            "file": "textures/card_special_thicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "tickInfo": {
-            "file": "textures/card_special_ticken.png",
+            "file": "textures/card_special_ticken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "witchInfo": {
-            "file": "textures/card_special_witchen_v2.png",
+            "file": "textures/card_special_witchen_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
