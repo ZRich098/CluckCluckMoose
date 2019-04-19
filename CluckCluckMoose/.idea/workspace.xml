@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3306a8c5-0cd4-4246-8d1b-0d694d333f6a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/assets/json/assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-android/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/build-android/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/SDL_android_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/SDL_android_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/jni/SDL2_codec/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/jni/SDL2_codec/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/jni/cugl/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/jni/cugl/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-android/jni/hidapi/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-android/jni/hidapi/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-apple/Box2D.xcodeproj/xcuserdata/wmwhite.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-apple/Box2D.xcodeproj/xcuserdata/wmwhite.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-apple/CUGL.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-apple/CUGL.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-apple/CUGL.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-apple/CUGL.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/build-apple/Resources/iOS-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/build-apple/Resources/iOS-Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2MouseJoint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2MouseJoint.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2MouseJoint.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2MouseJoint.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2PulleyJoint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/external/Box2D/Dynamics/Joints/b2PulleyJoint.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/Box2D/Dynamics/Joints/b2MouseJoint.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/Box2D/Dynamics/Joints/b2MouseJoint.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/Box2D/Dynamics/b2World.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/Box2D/Dynamics/b2World.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL2_mixer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL2_mixer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_assert.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_assert.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_atomic.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_atomic.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_audio.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_audio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_bits.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_bits.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_blendmode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_blendmode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_clipboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_clipboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_android.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_android.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_iphoneos.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_iphoneos.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_macosx.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_macosx.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_minimal.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_minimal.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_os2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_os2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_pandora.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_pandora.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_psp.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_psp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_windows.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_windows.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_winrt.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_winrt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_wiz.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_config_wiz.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_copying.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_copying.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_cpuinfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_cpuinfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_egl.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_egl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_endian.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_endian.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_error.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_events.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_events.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_filesystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_filesystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_gamecontroller.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_gamecontroller.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_gesture.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_gesture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_haptic.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_haptic.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_hints.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_hints.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_image.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_image.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_joystick.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_joystick.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_keyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_keyboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_keycode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_keycode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_loadso.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_loadso.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_log.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_log.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_main.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_messagebox.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_messagebox.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_mixer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_mixer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_mouse.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_mouse.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_mutex.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_mutex.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_name.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_name.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengl.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengl_glext.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengl_glext.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2ext.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2ext.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_gl2platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_khrplatform.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_opengles2_khrplatform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_pixels.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_pixels.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_power.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_power.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_quit.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_quit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_rect.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_rect.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_render.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_render.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_revision.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_revision.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_rwops.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_rwops.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_scancode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_scancode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_sensor.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_sensor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_shape.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_shape.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_stdinc.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_stdinc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_surface.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_surface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_system.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_system.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_syswm.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_syswm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_assert.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_assert.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_common.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_common.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_compare.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_compare.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_crc32.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_crc32.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_font.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_fuzzer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_fuzzer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_harness.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_harness.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_images.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_images.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_log.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_log.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_md5.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_memory.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_memory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_random.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_test_random.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_thread.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_thread.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_timer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_touch.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_touch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_ttf.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_ttf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_version.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_version.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_video.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_video.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/SDL_vulkan.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/SDL_vulkan.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/begin_code.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/begin_code.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/close_code.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/close_code.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/miniz.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/miniz.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/SDL/timidity/timidity.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/SDL/timidity/timidity.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/android/cpu-features.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/android/cpu-features.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cJSON/cJSON.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cJSON/cJSON.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/all.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/all.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/alloc.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/alloc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/assert.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/assert.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/callback.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/callback.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/compat.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/compat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/endswap.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/endswap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/export.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/export.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/format.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/format.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/getopt.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/getopt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/cuesheet.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/cuesheet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/file.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/picture.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/picture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/replaygain.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/replaygain.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/seektable.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/grabbag/seektable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/macros.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/macros.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/metadata.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/metadata.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/ordinals.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/ordinals.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/private.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/private.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/replaygain_analysis.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/replaygain_analysis.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/replaygain_synthesis.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/replaygain_synthesis.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/safe_str.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/safe_str.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/stream_decoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/stream_decoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/stream_encoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/stream_encoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/utf8.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/utf8.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/win_utf8_io.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/win_utf8_io.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/FLAC/windows_unicode_filenames.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/FLAC/windows_unicode_filenames.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/mpg/mpegsound.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/mpg/mpegsound.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/mpg/mpegsound_locals.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/mpg/mpegsound_locals.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/ogg/config_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/ogg/config_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/ogg/ogg.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/ogg/ogg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/ogg/os_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/ogg/os_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/vorbis/codec.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/vorbis/codec.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/vorbis/vorbisenc.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/vorbis/vorbisenc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/codecs/vorbis/vorbisfile.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/codecs/vorbis/vorbisfile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUAnimationNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUAnimationNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUButton.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUFont.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUFont.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CULabel.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CULabel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUNinePatch.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUNinePatch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUPathNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUPathNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUPolygonNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUPolygonNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUProgressBar.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUProgressBar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUScene.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUScene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUSlider.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUSlider.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUTextField.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUTextField.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUTexturedNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUTexturedNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/CUWireNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/CUWireNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUActionManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUActionManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUAnimateAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUAnimateAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUFadeAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUFadeAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUMoveAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUMoveAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CURotateAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CURotateAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUScaleAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/CUScaleAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/cu_actions.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/actions/cu_actions.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/cu_2d.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/cu_2d.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUAnchoredLayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUAnchoredLayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUFloatLayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUFloatLayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUGridLayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CUGridLayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CULayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/CULayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/cu_layout.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/layout/cu_layout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUBoxObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUBoxObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUCapsuleObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUCapsuleObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUComplexObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUComplexObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacleSelector.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacleSelector.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacleWorld.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUObstacleWorld.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUPolygonObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUPolygonObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUSimpleObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUSimpleObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUWheelObstacle.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/CUWheelObstacle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/cu_physics.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/2d/physics/cu_physics.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorParser.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUBehaviorParser.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUCompositeNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUCompositeNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUDecoratorNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUDecoratorNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUInverterNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUInverterNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CULeafNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CULeafNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUPriorityNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUPriorityNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CURandomNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CURandomNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUSelectorNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUSelectorNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUTimerNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/ai/behavior/CUTimerNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUAsset.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUAsset.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUAssetManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUAssetManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUFontLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUFontLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUGenericLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUGenericLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUJsonLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUJsonLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUJsonValue.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUJsonValue.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CULoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CULoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUSceneLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUSceneLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUSoundLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUSoundLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/CUTextureLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/CUTextureLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/assets/cu_assets.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/assets/cu_assets.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioChannels.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioChannels.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioSample.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioSample.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioWaveform.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/CUAudioWaveform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/CUSound.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/CUSound.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUAudioDecoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUAudioDecoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUFLACDecoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUFLACDecoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUMP3Decoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUMP3Decoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUOGGDecoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUOGGDecoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUWAVDecoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/CUWAVDecoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/cu_codecs.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/codecs/cu_codecs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/cu_audio.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/cu_audio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioFader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioFader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioMixer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioMixer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioNode.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioNode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioOutput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioOutput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioPanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioPanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioResampler.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioResampler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioScheduler.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioScheduler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioSpinner.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/CUAudioSpinner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/cu_audio_graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/audio/graph/cu_audio_graph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/CUApplication.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/CUApplication.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/CUBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/CUBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/CUDisplay.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/CUDisplay.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/CUEndian.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/CUEndian.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/cu_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/cu_platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/base/platform/CUDisplay-impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/base/platform/CUDisplay-impl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/cugl.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/cugl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUAccelerometer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUAccelerometer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUKeyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUKeyboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUMouse.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUMouse.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUTextInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUTextInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/CUTouchscreen.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/CUTouchscreen.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/cu_input.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/cu_input.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CUPanInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CUPanInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CUPinchInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CUPinchInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CURotationInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/CURotationInput.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/cu_gesture.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/input/gestures/cu_gesture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUBinaryReader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUBinaryReader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUBinaryWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUBinaryWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUJsonReader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUJsonReader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUJsonWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUJsonWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUPathname.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUPathname.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUTextReader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUTextReader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/CUTextWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/CUTextWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/io/cu_io.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/io/cu_io.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUAffine2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUAffine2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUColor4.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUColor4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUCubicSpline.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUCubicSpline.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUEasingBezier.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUEasingBezier.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUEasingFunction.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUEasingFunction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUFrustum.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUFrustum.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUMat4.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUMat4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUMathBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUMathBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUPlane.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUPlane.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUPoly2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUPoly2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUPolynomial.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUPolynomial.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUQuaternion.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUQuaternion.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CURay.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CURay.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CURect.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CURect.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUSize.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUSize.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec3.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec4.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/CUVec4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/cu_math.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/cu_math.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUBiquadIIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUBiquadIIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUDSPMath.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUDSPMath.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUFIRFilter.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUFIRFilter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUIIRFilter.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUIIRFilter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUOnePoleIIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUOnePoleIIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUOneZeroFIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUOneZeroFIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUPoleZeroIIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUPoleZeroIIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUTwoPoleIIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUTwoPoleIIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUTwoZeroFIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/CUTwoZeroFIR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/cu_dsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/dsp/cu_dsp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUCubicSplineApproximator.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUCubicSplineApproximator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUDelaunayTriangulator.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUDelaunayTriangulator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUPathExtruder.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUPathExtruder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUPathOutliner.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUPathOutliner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUSimpleTriangulator.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/CUSimpleTriangulator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/cu_polygon.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/math/polygon/cu_polygon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUCamera.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUCamera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUOrthographicCamera.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUOrthographicCamera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUPerspectiveCamera.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUPerspectiveCamera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUShader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUSpriteBatch.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUSpriteBatch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUSpriteShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUSpriteShader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUTexture.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUTexture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUVertex.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/CUVertex.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/renderer/cu_renderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/renderer/cu_renderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUAligned.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUAligned.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUDebug.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUDebug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUFreeList.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUFreeList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUGreedyFreeList.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUGreedyFreeList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUStrings.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUStrings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUThreadPool.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUThreadPool.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/CUTimestamp.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/CUTimestamp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/cugl/util/cu_util.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/cugl/util/cu_util.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/config/ftconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/config/ftconfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/config/ftheader.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/config/ftheader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/config/ftmodule.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/config/ftmodule.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/config/ftoption.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/config/ftoption.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/config/ftstdlib.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/config/ftstdlib.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/freetype.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftadvanc.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftadvanc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftautoh.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftautoh.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftbbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftbbox.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftbdf.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftbdf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftbitmap.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftbitmap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftbzip2.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftbzip2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftcache.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftcache.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftcffdrv.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftcffdrv.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftchapters.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftchapters.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftcid.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftcid.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/fterrdef.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/fterrdef.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/fterrors.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/fterrors.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftgasp.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftgasp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftglyph.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftglyph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftgxval.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftgxval.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftgzip.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftgzip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftimage.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftimage.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftincrem.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftincrem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftlcdfil.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftlcdfil.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftlist.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftlist.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftlzw.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftlzw.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftmac.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftmm.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftmm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftmodapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftmodapi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftmoderr.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftmoderr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftotval.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftotval.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftoutln.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftoutln.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftpfr.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftpfr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftrender.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftrender.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftsizes.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftsizes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftsnames.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftsnames.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftstroke.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftstroke.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftsynth.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftsynth.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftsystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftsystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/fttrigon.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/fttrigon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/fttypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/fttypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftwinfnt.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftwinfnt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ftxf86.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ftxf86.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/t1tables.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/t1tables.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ttnameid.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ttnameid.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/tttables.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/tttables.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/tttags.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/tttags.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/freetype/ttunpat.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/freetype/ttunpat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/ft2build.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/ft2build.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/ogg/config_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/ogg/config_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/ogg/ogg.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/ogg/ogg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/ogg/os_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/ogg/os_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/utf8/utf8.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/utf8/utf8.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/utf8/utf8checked.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/utf8/utf8checked.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/utf8/utf8core.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/utf8/utf8core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/include/utf8/utf8unchecked.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/include/utf8/utf8unchecked.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUAnimationNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUAnimationNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUFont.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUFont.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CULabel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CULabel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUNinePatch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUNinePatch.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUPathNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUPathNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUPolygonNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUPolygonNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUProgressBar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUProgressBar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUScene.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUScene.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUSlider.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUSlider.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUTextField.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUTextField.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUTexturedNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUTexturedNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/CUWireNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/CUWireNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/TODO.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/actions/CUActionManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/actions/CUActionManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/actions/CUFadeAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/actions/CUFadeAction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/layout/CUAnchoredLayout.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/layout/CUAnchoredLayout.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/layout/CUFloatLayout.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/layout/CUFloatLayout.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/layout/CUGridLayout.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/layout/CUGridLayout.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/layout/CULayout.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/layout/CULayout.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUBoxObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUBoxObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUCapsuleObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUCapsuleObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUComplexObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUComplexObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacleSelector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacleSelector.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacleWorld.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUObstacleWorld.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUPolygonObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUPolygonObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUSimpleObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUSimpleObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/2d/physics/CUWheelObstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/2d/physics/CUWheelObstacle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorAction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUBehaviorParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUCompositeNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUCompositeNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUDecoratorNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUDecoratorNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUInverterNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUInverterNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CULeafNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CULeafNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUPriorityNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUPriorityNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CURandomNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CURandomNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUSelectorNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUSelectorNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUTimerNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/ai/behavior/CUTimerNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUAssetManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUAssetManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUFontLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUFontLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUJsonLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUJsonLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUJsonValue.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUJsonValue.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUSceneLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUSceneLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUSoundLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUSoundLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/assets/CUTextureLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/assets/CUTextureLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/CUAudioChannels.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/CUAudioChannels.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/CUAudioManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/CUAudioManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/CUAudioSample.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/CUAudioSample.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/CUAudioWaveform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/CUAudioWaveform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/CUSound.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/CUSound.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUAudioDecoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUAudioDecoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUFLACDecoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUFLACDecoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUMP3Decoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUMP3Decoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUOGGDecoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUOGGDecoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUWAVDecoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/codecs/CUWAVDecoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioFader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioFader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioMixer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioMixer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioNode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioNode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioOutput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioOutput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioPanner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioPanner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioResampler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioResampler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioScheduler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioScheduler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioSpinner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/audio/graph/CUAudioSpinner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/CUApplication.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/CUApplication.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/CUDisplay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/CUDisplay.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/platform/CUDIsplay-Mac.mm" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/platform/CUDIsplay-Mac.mm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-SDL.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-SDL.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-iOS.mm" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-iOS.mm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-impl.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/base/platform/CUDisplay-impl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUAccelerometer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUAccelerometer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUKeyboard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUKeyboard.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUMouse.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUMouse.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUTextInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUTextInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/CUTouchscreen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/CUTouchscreen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/gestures/CUPanInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/gestures/CUPanInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/gestures/CUPinchInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/gestures/CUPinchInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/input/gestures/CURotationInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/input/gestures/CURotationInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUBinaryReader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUBinaryReader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUBinaryWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUBinaryWriter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUJsonReader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUJsonReader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUJsonWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUJsonWriter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUPathname.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUPathname.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUTextReader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUTextReader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/io/CUTextWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/io/CUTextWriter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUAffine2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUAffine2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUColor4.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUColor4.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUCubicSpline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUCubicSpline.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUEasingBezier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUEasingBezier.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUEasingFunction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUEasingFunction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUFrustum.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUFrustum.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUMat4.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUMat4.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUMathBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUMathBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUPlane.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUPlane.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUPoly2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUPoly2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUPolynomial.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUPolynomial.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUQuaternion.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUQuaternion.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CURay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CURay.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CURect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CURect.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUSize.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUSize.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUVec2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUVec2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUVec3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUVec3.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/CUVec4.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/CUVec4.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/cpu-features.c" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/cpu-features.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/cuACC128.inl" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/cuACC128.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUBiquadIIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUBiquadIIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUDSPMath.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUDSPMath.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUFIRFilter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUFIRFilter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUIIRFilter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUIIRFilter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUOnePoleIIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUOnePoleIIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUOneZeroFIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUOneZeroFIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUPoleZeroIIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUPoleZeroIIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUTwoPoleIIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUTwoPoleIIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/CUTwoZeroFIR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/CUTwoZeroFIR.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/dsp/cuDSP128.inl" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/dsp/cuDSP128.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/polygon/CUCubicSplineApproximator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/polygon/CUCubicSplineApproximator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/polygon/CUDelaunayTriangulator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/polygon/CUDelaunayTriangulator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/polygon/CUPathExtruder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/polygon/CUPathExtruder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/polygon/CUPathOutliner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/polygon/CUPathOutliner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/math/polygon/CUSimpleTriangulator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/math/polygon/CUSimpleTriangulator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUCamera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUCamera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUOrthographicCamera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUOrthographicCamera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUPerspectiveCamera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUPerspectiveCamera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUShader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUSpriteBatch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUSpriteBatch.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUSpriteShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUSpriteShader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/CUTexture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/CUTexture.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/ColorTextureOpenGL.frag" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/ColorTextureOpenGL.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/renderer/ColorTextureOpenGL.vert" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/renderer/ColorTextureOpenGL.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/test/TCU2DTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/test/TCU2DTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/test/TCU2DTest.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/test/TCU2DTest.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/test/TCUMathTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/test/TCUMathTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/test/TCUMathTest.h" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/test/TCUMathTest.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/test/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/test/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/util/CUDebug.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/util/CUDebug.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/util/CUStrings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/util/CUStrings.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cugl/lib/util/CUThreadPool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cugl/lib/util/CUThreadPool.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/SceneBuilder1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/SceneBuilder1.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/SceneBuilder1.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/SceneBuilder1.h" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-676096684">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="16" />
+    <option name="y" value="25" />
+    <option name="width" value="1889" />
+    <option name="height" value="955" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="CluckCluckMoose" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CluckCluckMoose" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CluckCluckMoose" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CluckCluckMoose" type="462c0819:PsiDirectoryNode" />
+              <item name="build-android" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3306a8c5-0cd4-4246-8d1b-0d694d333f6a" name="Default Changelist" comment="" />
+      <created>1554934563649</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1554934563649</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="13" y="20" width="1511" height="764" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.32971507" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+</project>
