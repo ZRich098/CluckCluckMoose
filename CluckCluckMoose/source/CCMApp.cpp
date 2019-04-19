@@ -235,7 +235,8 @@ void CCMApp::update(float timestep) {
 						CULog("File loading");
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-						_gameplay.push_back(GameScene::alloc(_assets, pl, op));
+						AIType ai = _saveLoad.loadAI(json->get("AI"));
+						_gameplay.push_back(GameScene::alloc(_assets, pl, op, ai));
 						_gameplay.back()->setActive(false);
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));

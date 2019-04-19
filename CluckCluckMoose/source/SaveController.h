@@ -7,6 +7,7 @@
 
 #include "MooseFile.h"
 #include "Moose.h"
+#include "AI.h"
 
 using namespace cugl;
 
@@ -48,6 +49,10 @@ public:
 	Returns true if succeeds, else returns false
 	*/
 	std::shared_ptr<Moose> loadOpponentMoose(const std::shared_ptr<JsonValue>& json);
+
+	/** Loads the AI type from a json file
+	Returns a shared pointer to the AI */
+	AIType loadAI(const std::shared_ptr<JsonValue>& json);
 
 	/** Loads the level tag from a json file
 	Returns true if succeeds, else returns false

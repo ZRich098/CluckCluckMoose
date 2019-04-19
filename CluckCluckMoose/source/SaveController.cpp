@@ -110,6 +110,42 @@ std::shared_ptr<Moose> SaveController::loadOpponentMoose(const std::shared_ptr<J
 	return opponent;
 }
 
+AIType SaveController::loadAI(const std::shared_ptr<JsonValue>& json) {
+	bool success = false;
+
+	auto ai = json;
+	success = ai->isString();
+	string a = ai->asString();
+	if (a == "Basic") {
+		//CULog("loading Basic");
+		return AIType::Basic;
+	}
+	else if (a == "Dumb") {
+		//CULog("loading Dumb");
+		return AIType::Dumb;
+	}
+	else if (a == "Expert") {
+		//CULog("loading Expert");
+		return AIType::Expert;
+	}
+	else if (a == "Intro") {
+		//CULog("loading Intro");
+		return AIType::Intro;
+	}
+	else if (a == "Smart") {
+		//CULog("loading Smart");
+		return AIType::Smart;
+	}
+	else if (a == "Starter") {
+		//CULog("loading Starter");
+		return AIType::Starter;
+	}
+	else {
+		CULog("AI Type not found");
+		return AIType::Basic;
+	}
+}
+
 int SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false;
 

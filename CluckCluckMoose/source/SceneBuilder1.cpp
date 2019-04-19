@@ -1333,7 +1333,7 @@ void SceneBuilder1::dispose() {
 	//_buttons.clear();
 }
 
-bool SceneBuilder1::getHome(){ return pauseHomeDown; }
+//bool SceneBuilder1::getHome(){ return pauseHomeDown; }
 
 void SceneBuilder1::setPreview(bool preview) {
 	previewSet = preview;
