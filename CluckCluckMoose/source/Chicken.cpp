@@ -12,6 +12,7 @@ using namespace std;
 Chicken::Chicken(special sp) {
 	s = sp;
 	damage = 1;
+	cycled = false;
 	switch (s) {
 	case special::BasicFire:
 		e = element::Fire;
@@ -103,6 +104,7 @@ void Chicken::cycle() {
 			s = special::BasicGrass;
 		}
 	}
+	cycled = true;
 }
 
 string eString(element e) {

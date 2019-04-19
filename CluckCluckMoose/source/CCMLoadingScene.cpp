@@ -22,7 +22,7 @@ using namespace cugl;
 #define SCENE_WIDTH 1024
 
 /** The music to play while loading*/
-#define LOADING_MUSIC "trailer"
+//#define LOADING_MUSIC "trailer"
 
 #pragma mark -
 #pragma mark Constructors
@@ -55,9 +55,11 @@ bool LoadingScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
     
+	/*
+	play music
 	auto loading_music = _assets->get<Sound>(LOADING_MUSIC);
 	AudioChannels::get()->queueMusic(loading_music, true, loading_music->getVolume());
-	
+	*/
 
     _bar = std::dynamic_pointer_cast<ProgressBar>(assets->get<Node>("load_bar"));
     _button = std::dynamic_pointer_cast<Button>(assets->get<Node>("load_claw_play"));
@@ -84,8 +86,7 @@ void LoadingScene::dispose() {
     _progress = 0.0f;
 
 	//Stop playing audio
-
-	AudioChannels::get()->stopMusic();
+	//AudioChannels::get()->stopMusic();
 }
 
 

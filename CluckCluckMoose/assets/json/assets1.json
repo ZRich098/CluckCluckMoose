@@ -92,77 +92,77 @@
             "wrapT": "clamp"
         },
         "fireInfo": {
-            "file": "textures/card_basic_fireChicken_v2.png",
+            "file": "textures/card_basic_fireChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "waterInfo": {
-            "file": "textures/card_basic_waterChicken_v2.png",
+            "file": "textures/card_basic_waterChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "grassInfo": {
-            "file": "textures/card_basic_grassChicken_v2.png",
+            "file": "textures/card_basic_grassChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "spyInfo": {
-            "file": "textures/card_special_chickenSpy_v2.png",
+            "file": "textures/card_special_chickenSpy_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "mirrorInfo": {
-            "file": "textures/card_special_mirrorChicken_v2.png",
+            "file": "textures/card_special_mirrorChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "partyInfo": {
-            "file": "textures/card_special_partyFowl_v2.png",
+            "file": "textures/card_special_partyFowl_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "reapInfo": {
-            "file": "textures/card_special_reaperChicken_v2.png",
+            "file": "textures/card_special_reaperChicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "shurInfo": {
-            "file": "textures/card_special_shuriken.png",
+            "file": "textures/card_special_shuriken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "thickInfo": {
-            "file": "textures/card_special_thicken_v2.png",
+            "file": "textures/card_special_thicken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "tickInfo": {
-            "file": "textures/card_special_ticken.png",
+            "file": "textures/card_special_ticken_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "witchInfo": {
-            "file": "textures/card_special_witchen_v2.png",
+            "file": "textures/card_special_witchen_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -261,6 +261,76 @@
         },
         "num4": {
             "file": "textures/num_4.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "fireLabel": {
+            "file": "textures/stamp_fire_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "grassLabel": {
+            "file": "textures/stamp_grass_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "waterLabel": {
+            "file": "textures/stamp_water_v2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "shadow": {
+            "file": "textures/shadow.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "victoryScreen": {
+            "file": "textures/base_victory_noUnlock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "wlOverlay": {
+            "file": "textures/dark_overlay.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "defeatScreen": {
+            "file": "textures/defeat_base.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "redo": {
+            "file": "textures/btn_redo.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "homeButton": {
+            "file": "textures/btn_home.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "nextLvl": {
+            "file": "textures/btn_next.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -469,9 +539,45 @@
             "volume":   0.8,
 			"stream": false
         },
+        "impact": {
+            "type":     "sample",
+            "file":     "audio/chicken_impact.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "water": {
+            "type":     "sample",
+            "file":     "audio/water_impact.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "witchen": {
+            "type":     "sample",
+            "file":     "audio/witchen_puff.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "button_a": {
+            "type":     "sample",
+            "file":     "audio/button_a.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "button_b": {
+            "type":     "sample",
+            "file":     "audio/button_b.wav",
+            "volume":   0.8,
+			"stream": false
+        },
         "theme": {
             "type":     "sample",
             "file":     "audio/CCM_Theme.wav",
+            "volume":   0.5,
+			"stream":	true
+        },
+        "trailer": {
+            "type":     "sample",
+            "file":     "audio/CCM_Trailer.wav",
             "volume":   0.5,
 			"stream":	true
         }

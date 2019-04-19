@@ -84,6 +84,7 @@ class Chicken{
 		element e;
 		special s;
 		int damage;
+		bool cycled = false;
 	public:
 		//Constructors
 		/** Creates a standard chicken card of special s */
@@ -112,6 +113,8 @@ class Chicken{
 		int const getDamage() const { return damage; };
 		/** Returns a string of the Chicken's details */
 		string toString() const;
+		/** Returns true if the chicken is cycled */
+		bool const isCycled() const { return cycled; };
 
 		//Modify
 		/** Sets the element of the Chicken */
