@@ -262,6 +262,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 void GameScene::update(float timestep) {
 	if (cooldown > 0) {
 		cooldown--;
+		sb->updateGameScene(timestep);
 		return;
 	}
 
