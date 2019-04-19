@@ -145,10 +145,12 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 	//potentially TODO special::Peek
 
 	if (s1 == special::Witchen && getSize() >= 2) {
+		witchenPlayed = true;
 		at(getSize() - 2).cycle();
 		return setSkip(skipState, PLAYER);
 	}
 	if (s2 == special::Witchen && opp.getSize() >= 2) {
+		witchenPlayed = true;
 		opp.at(opp.getSize() - 2).cycle();
 		return setSkip(skipState, OPP);
 	}

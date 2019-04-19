@@ -76,6 +76,10 @@ public:
      */
     void update(float timestep);
 
+
+	/** Helper function for playing a sound when a button is clicked*/
+	void MenuScene::playButtonSound();
+
     /**
      * Getters for menu buttons
      *
