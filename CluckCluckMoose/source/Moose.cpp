@@ -50,9 +50,7 @@ bool Moose::init(int h, int hSize) {
 
 void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<int> coopArray, string cost) {
 	health = h;
-	if (handArray.size() == 0) {
-		refillHand();
-	}
+	
 	for (int i : handArray) {
 		hand.push_back(Chicken(intToSpecial(i)));
 	}
@@ -63,6 +61,10 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 
 	deck.clear();
 	deck.fill(coopArray);
+
+	if (handArray.size() == 0) {
+		refillHand();
+	}
 
 	/*for (int i : discardArray) {
 		discard.push_back(Chicken(intToSpecial(i)));
@@ -92,6 +94,10 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 			hand.push_back(Chicken(intToSpecial(i)));
 		}
 		handPool.push_back(hand);
+	}
+
+	if (handArray.size() == 0) {
+		refillHand();
 	}
 
 	/*for (int i : discardArray) {
