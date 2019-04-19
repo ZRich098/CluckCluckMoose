@@ -103,6 +103,7 @@ void Chicken::cycle() {
 			s = special::BasicGrass;
 		}
 	}
+	cycled = true;
 }
 
 string eString(element e) {
