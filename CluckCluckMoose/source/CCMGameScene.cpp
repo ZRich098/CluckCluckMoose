@@ -302,7 +302,7 @@ void GameScene::update(float timestep) {
 		//CULog("SKIP: %d",skipState);
 	}
 
-	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed
+	if (sb->getPreview() && !isPreviewing && !isClashing) { //replace with if Preview button is pressed
 		//Play the button sfx
 		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 		auto source = _assets->get<Sound>(sfx);
