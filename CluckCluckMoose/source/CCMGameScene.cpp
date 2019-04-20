@@ -313,13 +313,10 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-			player->clearHandToDiscard();
-			opp->clearHandToDiscard();
-			// refills before discarding to prevent specials being obtained twice in a row
+			player->eraseChickens();
+			opp->eraseChickens();
 			player->refillHand();
 			opp->refillHand();
-			player->discardStack();
-			opp->discardStack();
 
 			prevHand = player->getHand().size();
 			stackSize = 0;

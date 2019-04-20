@@ -124,6 +124,9 @@ public:
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();
 
+	/** Erases the chickens in the hand and playOrder (no discard use) 
+		Also resets element distribution seed */
+	void eraseChickens() { hand.clear(); playOrder.clear(); nonEleDist.clear(); };
 	/** Sets the opponent's possible hands.
 		Input is a vector of chicken vectors
 		(where the internal vectors are the hands and the external one is the pool of possible hands)*/

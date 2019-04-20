@@ -291,9 +291,10 @@ void Moose::refillHand() {
 	}
 	//Uses the pool system otherwise
 	else {
+		int specialNum;
 		while (hand.size() < handSize) {
 			//If deck is empty for whatever reason, draw random basic
-			if (deck.getSize() == 0 && discard.size() == 0) {
+			if (deck.getSize() == 0) {
 				int random = rand() % 3;
 				if (random == 0)
 					hand.push_back(Chicken(element::Fire, special::BasicFire));
@@ -302,22 +303,10 @@ void Moose::refillHand() {
 				if (random == 2)
 					hand.push_back(Chicken(element::Water, special::BasicWater));
 			}
-			else if (discard.size() != 0) {
-				//TODO: fix everything here goddamnit
-			}
-			//Gets every special chicken in the deck first
-			else {
-				Chicken &c = deck.draw();
-				switch (c.getSpecial()) {
-				case special::BasicFire:
-				case special::BasicWater:
-				case special::BasicGrass:
-					discard.push_back(c);
-					break;
-				default:
-					hand.push_back(c);
-				}
-			}
+			else if (deck.getSizeS() == 0 || specialNum == 2)
+				hand.push_back(deck.getBasic());
+			else
+				hand.push_back(deck.getSpecial());
 		}
 		// Deprecated Pool system portion
 		//refillDeck();
@@ -328,12 +317,9 @@ void Moose::refillHand() {
 void Moose::draw(int num) {
 	for (int i = 0; i < num; i++) {
 		//refill deck if empty
-		if (deck.getSize() == 0) refillDeck();
-		Chicken c = deck.draw();
+		Chicken c = deck.getSpecial();
 		if (hand.size() < handSize) {
 			hand.push_back(c);
-		} else {
-			discard.push_back(c);
 		}
 	}
 }

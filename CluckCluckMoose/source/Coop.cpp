@@ -82,7 +82,7 @@ void Coop::shuffle() {
 }
 
 void Coop::add(const Chicken& c, bool shouldShuffle) {
-	if (c.isBasic) {
+	if (c.isBasic()) {
 		basics.push_back(c);
 		if (shouldShuffle)
 			basicShuffled = false;

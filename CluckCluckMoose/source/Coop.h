@@ -35,7 +35,10 @@ class Coop {
 		/** Returns the Chicken at position pos,
 			0 is the first basic
 			getSizeB() is the first special*/
-		Chicken at(int pos) { return (pos < basics.size()) ? basics.at(pos) : specials.at(pos - basics.size()); };
+		Chicken at(int pos);
+		/** Returns copy of random chicken from basic or special */
+		Chicken getBasic() { return basics.at(rand() % basics.size()); };
+		Chicken getSpecial() { return specials.at(rand() % specials.size()); };
 
 		//Modify
 		/** Draw a Chicken, removing it from the Coop
