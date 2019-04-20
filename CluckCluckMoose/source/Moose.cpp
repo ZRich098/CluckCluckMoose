@@ -208,7 +208,7 @@ void Moose::setStack(Stack s) {
 
 void Moose::discardChickens() {
 	// booleans to check if one of each basic is erased
-	bool fireRemoved, waterRemoved, grassRemoved;
+	bool fireRemoved, waterRemoved, grassRemoved = false;
 	//for debugging purposes
 	int basicCounter;
 	// concatenates playOrder and hand for iterating, this is fine since they are both cleared at the end
@@ -219,7 +219,7 @@ void Moose::discardChickens() {
 		switch (c.getSpecial()) {
 		case special::BasicFire:
 			if (!fireRemoved)
-				fireRemoved == true;
+				fireRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -227,7 +227,7 @@ void Moose::discardChickens() {
 			break;
 		case special::BasicGrass:
 			if (!grassRemoved) 
-				grassRemoved == true;
+				grassRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -235,7 +235,7 @@ void Moose::discardChickens() {
 			break;
 		case special::BasicWater:
 			if (!waterRemoved)
-				waterRemoved == true;
+				waterRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -291,7 +291,7 @@ void Moose::refillHand() {
 	}
 	//Uses the pool system otherwise
 	else {
-		int specialNum;
+		int specialNum = 0;
 		while (hand.size() < handSize) {
 			//If deck is empty for whatever reason, draw random basic
 			if (deck.getSize() == 0) {
@@ -303,10 +303,12 @@ void Moose::refillHand() {
 				if (random == 2)
 					hand.push_back(Chicken(element::Water, special::BasicWater));
 			}
-			else if (deck.getSizeS() == 0 || specialNum == 2)
+			else if (deck.getSizeB() != 0 && (deck.getSizeS() == 0 || specialNum == 2))
 				hand.push_back(deck.getBasic());
-			else
+			else {
 				hand.push_back(deck.getSpecial());
+				specialNum++;
+			}
 		}
 		// Deprecated Pool system portion
 		//refillDeck();
