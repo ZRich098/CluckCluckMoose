@@ -44,7 +44,7 @@ void Coop::loadDeck() {
 }
 
 Chicken Coop::at(int pos) {
-	return chickens.at(chickens.size() - pos);
+	return chickens.at(pos);
 }
 
 Chicken Coop::draw() {
