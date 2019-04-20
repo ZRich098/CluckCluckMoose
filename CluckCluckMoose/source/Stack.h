@@ -6,6 +6,7 @@
 #include "Chicken.h"
 
 
+
 /** Nullifies a chicken */
 void partyHelper(Chicken& target);
 
@@ -16,6 +17,9 @@ private:
 	/** List of current Chickens on stack in order of bottom to top
 		chickens can have elements modified*/
 	vector <Chicken> chickens;
+
+	//bools for sfx that resolve during specialChickenEffects
+	bool witchenPlayed;
 
 public:
 	//Constructor
@@ -86,6 +90,14 @@ public:
 	tuple<int,int> specialChickenEffect(Stack &opp, int skipState = 0);
 	/** Does special chicken effect on single stack (ignore opponent) for AI*/
 	void specialChickenEffect();
+
+	//Sfx
+	/** Return whether a witchen has been played since the last round of special effects, then setting that bool to false*/
+	bool getWitchenPlayed() { 
+		bool res = witchenPlayed;
+		witchenPlayed = false;
+		return res; 
+	};
 
 	//Info
 	/** Returns whether the stack is empty*/

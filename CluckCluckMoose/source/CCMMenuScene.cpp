@@ -20,6 +20,13 @@ using namespace cugl;
 
 #define TITLE_HEIGHT 600 //
 
+// BGM for the game
+#define MUSIC_THEME			"theme"
+
+// Sfx for the game
+#define SOUND_BUTTON_A		"button_a"
+#define SOUND_BUTTON_B		"button_b"
+
 //Main canvas to draw stuff to
 std::shared_ptr<Node> menulayer;
 
@@ -68,6 +75,9 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     root->removeAllChildren();
 
     _assets = assets;
+
+	//auto game_music = _assets->get<Sound>(MUSIC_THEME);
+	//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
     menulayer = assets->get<Node>("menu");
     menulayer->setContentSize(dimen);
@@ -120,6 +130,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     playbutt->setPosition(0, SCENE_HEIGHT/3);
     playbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
+			playButtonSound();
             playClicked = true;
         }
     });
@@ -136,6 +147,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpbutt->setPosition(0, SCENE_HEIGHT/3 - 100);
     helpbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
+			playButtonSound();
             helpClicked = true;
         }
     });
@@ -152,6 +164,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     settingsbutt->setPosition(0, SCENE_HEIGHT/3 - 200);
     settingsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
+			playButtonSound();
             settingsClicked = true;
         }
     });
@@ -175,6 +188,9 @@ void MenuScene::dispose() {
     _assets = nullptr;
     _buttons.clear();
     Scene::dispose();
+
+	//Stop playing audio
+	AudioChannels::get()->stopMusic();
 }
 
 void MenuScene::update(float timestep) {
@@ -198,6 +214,15 @@ void MenuScene::setActive(bool value) {
             it->second->deactivate();
         }
     }
+}
+
+void MenuScene::playButtonSound() {
+	//Play the button sfx
+	string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+	auto source = _assets->get<Sound>(sfx);
+	if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+		AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+	}
 }
 
 bool MenuScene::getPlay() { return playClicked; }

@@ -27,10 +27,16 @@ using namespace cugl;
 #define MAXSTACKSIZE 5
 
 /** BGM for the game*/
-#define GAME_MUSIC			"theme"
+#define MUSIC_THEME			"theme"
+#define MUSIC_TRAILER		"trailer"
 
 /** Sfx for the game*/
-#define BOXING_BELL			"bell"
+#define SOUND_BELL			"bell"
+#define SOUND_CHICKEN		"impact"
+#define SOUND_WATER			"water"
+#define SOUND_WITCHEN		"witchen"
+#define SOUND_BUTTON_A		"button_a"
+#define SOUND_BUTTON_B		"button_b"
 
 /** Values representing the relevant states for special chicken effect */
 #define ENTRY -1
@@ -109,7 +115,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 	_assets = assets;
 
-	auto game_music = _assets->get<Sound>(GAME_MUSIC);
+	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
@@ -164,7 +170,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	}
 	_assets = assets;
 
-	auto game_music = _assets->get<Sound>(GAME_MUSIC);
+	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
@@ -226,11 +232,19 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 		//play both vector::front() Chickens and resolve them
 		player->getStack().add(*pl);
 		opp->getStack().add(*op);
+
 		//Resolve effects
 		int initState = 0;
-		while (initState != EXIT)
+		while (initState != EXIT) {
 			// Resolves the special chicken effects
 			tie(initState, ignore) = player->getStack().specialChickenEffect(opp->getStack(), initState);
+			if (player->getStack().getWitchenPlayed()) {
+				auto source = _assets->get<Sound>(SOUND_WITCHEN);
+				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN)) {
+					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
+				}
+			}
+		}
 
 		++pl;
 		++op;
@@ -248,6 +262,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 void GameScene::update(float timestep) {
 	if (cooldown > 0) {
 		cooldown--;
+		sb->updateGameScene(timestep);
 		return;
 	}
 
@@ -269,6 +284,12 @@ void GameScene::update(float timestep) {
 		if (skipState != EXIT)
 			// Resolves the special chicken effects
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
+			if (player->getStack().getWitchenPlayed()) {
+				auto source = _assets->get<Sound>(SOUND_WITCHEN);
+				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN)) {
+					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
+				}
+			}
 		if (skipState == EXIT) {
 			// Resolves special chickens that affect the hands
 			handEffect();
@@ -282,6 +303,13 @@ void GameScene::update(float timestep) {
 	}
 
 	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed
+		//Play the button sfx
+		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+		auto source = _assets->get<Sound>(sfx);
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+		}
+
 		isPreviewing = true;
 
 		playerPreviewStack = player->getStack();
@@ -348,9 +376,9 @@ void GameScene::update(float timestep) {
 		cooldown = CLASHLENGTH*1.5;
 
 		//Play the clashing sfx
-		auto source = _assets->get<Sound>(BOXING_BELL);
-		if (!AudioChannels::get()->isActiveEffect(BOXING_BELL)) {
-			AudioChannels::get()->playEffect(BOXING_BELL, source, false, source->getVolume());
+		auto source = _assets->get<Sound>(SOUND_BELL);
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL)) {
+			AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
 		}
 	}
 	
