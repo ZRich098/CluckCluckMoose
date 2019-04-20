@@ -221,14 +221,16 @@ void CCMApp::update(float timestep) {
 				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
 				if (gameReader == nullptr) {
 					CULog("json/level%d.json file not found", _levelscene.getLevel());
-					_gameplay.push_back(GameScene::alloc(_assets));
+					_gamescene = GameScene::alloc(_assets);
+					_gameplay.push_back(_gamescene);
 					_gameplay.back()->setActive(false);
 				}
 				else {
 					std::shared_ptr<JsonValue> json = gameReader->readJson();
 					if (json == nullptr) {
 						CULog("Failed to load level file");
-						_gameplay.push_back(GameScene::alloc(_assets));
+						_gamescene = GameScene::alloc(_assets);
+						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 					}
 					else {
@@ -236,7 +238,8 @@ void CCMApp::update(float timestep) {
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 						AIType ai = _saveLoad.loadAI(json->get("AI"));
-						_gameplay.push_back(GameScene::alloc(_assets, pl, op, ai));
+						_gamescene = GameScene::alloc(_assets, pl, op, ai);
+						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
@@ -246,9 +249,9 @@ void CCMApp::update(float timestep) {
             }
         }
         else if (_current == 2) { // in game scene
-            if (_gamescene.getHome()) { //@TODO: save current level
-				//_saveLoad.saveLevel(_gamescene.getPlayer(), _gamescene.getOpp(), _gamescene.getAI(), _levelscene.getLevel());
-                _gamescene.setHome(false);
+            if (_gamescene->getHome()) { //@TODO: save current level
+				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
+                _gamescene->setHome(false);
                 _gameplay[_current]->setActive(false);
                 _gameplay[_current]->dispose();
                 _gameplay.erase(_gameplay.begin()+_current-1);

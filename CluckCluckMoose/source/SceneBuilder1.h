@@ -86,7 +86,7 @@ public:
 #pragma mark Accessors
 	//gets if preview button has been pressed
 	bool getPreview() { return previewSet; }
-//	bool getHome() { return pauseHomeDown; }
+//	bool getHome() { return goHome; }
 //	bool getRestart() { return pauseRestartDown; }
 //	bool getSettings() { return pauseSettingsDown; }
 	

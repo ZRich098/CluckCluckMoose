@@ -44,7 +44,6 @@ std::vector<int> prevDist;
 float healthYScale;
 
 bool pauseRestartDown;
-bool pauseHomeDown;
 bool pauseSettingsDown;
 
 //List of stamp nodes for player and opponent
@@ -245,7 +244,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	heldButtInd = -1;
 
 	pauseRestartDown = false;
-	pauseHomeDown = false;
+	goHome = false;
 	pauseSettingsDown = false;
 
 	_assets = assets;
@@ -683,7 +682,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseHome->setScale(0.65, 0.65);
     pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
     pauseHome->setPosition(SCENE_WIDTH / 2 , SCENE_HEIGHT/2 + 50);
-	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { pauseHomeDown = true; }});
+	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(52); //ensure keys are unique
 
@@ -1333,14 +1332,12 @@ void SceneBuilder1::dispose() {
 	//_buttons.clear();
 }
 
-//bool SceneBuilder1::getHome(){ return pauseHomeDown; }
-
 void SceneBuilder1::setPreview(bool preview) {
 	previewSet = preview;
 }
 
 void SceneBuilder1::setHome(bool val) {
-	pauseHomeDown = val;
+	goHome = val;
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -1366,7 +1363,7 @@ void SceneBuilder1::activateHand() {
 }
 
 bool SceneBuilder1::getHome() {
-	return goHome || pauseHomeDown;
+	return goHome;
 }
 
 bool SceneBuilder1::getRedo() {

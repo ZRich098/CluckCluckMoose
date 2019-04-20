@@ -49,7 +49,7 @@ protected:
 	/** The controller for the various game worlds */
 	std::vector<std::shared_ptr<cugl::Scene>> _gameplay;
 	/** The primary controller for the game world */
-	GameScene _gamescene;
+	std::shared_ptr<GameScene> _gamescene;
 	/** The currently active scene */
 	size_t _current;
 	/** The controller for the loading screen */
