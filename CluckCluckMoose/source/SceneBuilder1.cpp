@@ -101,10 +101,10 @@ bool hasLost;
 #define STAMP_SCALE 0.1
 #define WIN_LOSS_SCALE 0.5
 #define WIN_LOSS_Y_OFFSET 100
-#define WIN_LOSS_B_SCALE 0.3
-#define WIN_LOSS_B_Y_OFFSET -175
-#define WIN_BUTTON_X_SPACING 100
-#define LOSS_BUTTON_X_SPACING 150
+#define WIN_LOSS_B_SCALE 0.5
+#define WIN_LOSS_B_Y_OFFSET -225
+#define WIN_BUTTON_X_SPACING 140
+#define LOSS_BUTTON_X_SPACING 175
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -203,6 +203,9 @@ std::shared_ptr<Moose> oppGlobe;
 
 //Preview tracking
 bool previewSet;
+//Tint tracking
+bool prevTint;
+
 //values for animation
 int  thisFrame = 0;
 float timeAmount = 0;
@@ -227,6 +230,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	retry = false;
 	hasWon = false;
 	hasLost = false;
+
+	prevTint = false;
 
 	heldButton = nullptr;
 	for (int i = 0; i < 6; i++) {
@@ -537,7 +542,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	butt->setPosition(0, SCENE_HEIGHT/3);
 	butt->setListener([=](const std::string& name, bool down) {
 		if (down) {
-			previewSet = true;
+			//previewSet = true;
+			prevTint = true;
+		}
+		if (!down) {
+			prevTint = false;
 		}
 	});
 
@@ -901,6 +910,10 @@ void SceneBuilder1::updateGameScene(float timestep) {
         chick->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
         chick->flipHorizontal(true);
 
+		if (prevTint && i < (playerGlobe->getNumChickensWillDiePreview())) {
+			chick->setColor(Color4(Vec4(1, 0, 0, 0.5)));
+		}
+
         layer->swapChild(pstackNodes[i], chick, false);
         pstackNodes[i] = chick;
 
@@ -982,6 +995,10 @@ void SceneBuilder1::updateGameScene(float timestep) {
         chick->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
         chick->flipHorizontal(false);
 
+		if (prevTint && i < (oppGlobe->getNumChickensWillDiePreview())) {
+			chick->setColor(Color4(Vec4(1, 0, 0, 0.5)));
+		}
+
         layer->swapChild(ostackNodes[i], chick, false);
         ostackNodes[i] = chick;
 
@@ -1003,7 +1020,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	//Update the opponent health bar
     for (int i = 1; i < 6; i++) {
         if (oppGlobe->getHealth() < i) {
-            std::shared_ptr<Node> child = healthCanvas->getChild(i + 7);
+            std::shared_ptr<Node> child = healthCanvas->getChild(13-i);
             child->setVisible(false);
         }
     }
@@ -1011,7 +1028,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	//Update the player health bar
 	for (int i = 1; i < 6; i++) {
 		if (playerGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(i + 2);
+			std::shared_ptr<Node> child = healthCanvas->getChild(8-i);
 			child->setVisible(false);
 		}
 	}
@@ -1078,7 +1095,6 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
 		
 		Chicken chick = oppGlobe->getStackAt(i);
-		//CULog("Chicken is cycled: %d", chick.isCycled());
 		if (chick.isCycled()) {
 			if (chick.getElement() == element::Fire) {
 				oStamps[i]->setTexture(fstamp);
