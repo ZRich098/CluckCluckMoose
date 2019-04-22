@@ -208,17 +208,18 @@ void Moose::setStack(Stack s) {
 
 void Moose::discardChickens() {
 	// booleans to check if one of each basic is erased
-	bool fireRemoved, waterRemoved, grassRemoved;
+	bool fireRemoved, waterRemoved, grassRemoved = false;
 	//for debugging purposes
 	int basicCounter;
-	// concatenates playOrder and hand, this is fine since they are both cleared at the end
+	// concatenates playOrder and hand for iterating, this is fine since they are both cleared at the end
 	playOrder.insert(playOrder.end(), hand.begin(), hand.end());
 
 	for (Chicken &c : playOrder) {
+		// basics are added to the deck directly so they aren't blacklisted at the end of the method
 		switch (c.getSpecial()) {
 		case special::BasicFire:
 			if (!fireRemoved)
-				fireRemoved == true;
+				fireRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -226,7 +227,7 @@ void Moose::discardChickens() {
 			break;
 		case special::BasicGrass:
 			if (!grassRemoved) 
-				grassRemoved == true;
+				grassRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -234,7 +235,7 @@ void Moose::discardChickens() {
 			break;
 		case special::BasicWater:
 			if (!waterRemoved)
-				waterRemoved == true;
+				waterRemoved = true;
 			else {
 				basicCounter++;
 				deck.add(c);
@@ -245,12 +246,17 @@ void Moose::discardChickens() {
 			break;
 		}
 	}
+
 	if (discard.size() + basicCounter != playOrder.size() - 3)
 		CULog("Warning: Basic chicken discard inconsistency.");
+	blacklist = discard;
+	refillDeck();
+	deck.shuffle();
 
 	playOrder.clear();
 	nonEleDist.clear();
 	hand.clear();
+	CULog("blacklist size: %d", blacklist.size());
 }
 
 void Moose::clearHandToDiscard() {
@@ -276,15 +282,16 @@ void Moose::refillHand() {
 		hand.push_back(Chicken(element::Water, special::BasicWater));
 	}
 	random_shuffle(hand.begin(),hand.end());
+	//Uses hands that are given if one is available
 	if (handPool.size() != 0) {
-		//Uses hands that are given if one is available
 		random_shuffle(handPool.begin(), handPool.end());
 		for (Chicken i : handPool.front()) {
 			hand.push_back(i);
 		}
 	}
+	//Uses the pool system otherwise
 	else {
-		hand.push_back(Chicken(hand.front().getElement(), hand.front().getSpecial()));
+		int specialNum = 0;
 		while (hand.size() < handSize) {
 			//If deck is empty for whatever reason, draw random basic
 			if (deck.getSize() == 0) {
@@ -296,24 +303,25 @@ void Moose::refillHand() {
 				if (random == 2)
 					hand.push_back(Chicken(element::Water, special::BasicWater));
 			}
-			else
-				hand.push_back(deck.draw());
+			else if (deck.getSizeB() != 0 && (deck.getSizeS() == 0 || specialNum == 2))
+				hand.push_back(deck.getBasic());
+			else {
+				hand.push_back(deck.getSpecial());
+				specialNum++;
+			}
 		}
-		// Pool system
-		refillDeck();
-		deck.shuffle();
+		// Deprecated Pool system portion
+		//refillDeck();
+		//deck.shuffle();
 	}
 }
 
 void Moose::draw(int num) {
 	for (int i = 0; i < num; i++) {
 		//refill deck if empty
-		if (deck.getSize() == 0) refillDeck();
-		Chicken c = deck.draw();
+		Chicken c = deck.getSpecial();
 		if (hand.size() < handSize) {
 			hand.push_back(c);
-		} else {
-			discard.push_back(c);
 		}
 	}
 }
