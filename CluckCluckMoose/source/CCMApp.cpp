@@ -212,7 +212,7 @@ void CCMApp::update(float timestep) {
             else if (_levelscene.getLevel() != 0) { // level chosen
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
-                _current = 2; // need to load in assets for new level here
+                _current = 2;
 
 				//load level, if able
 				stringstream ss;
@@ -221,28 +221,44 @@ void CCMApp::update(float timestep) {
 				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
 				if (gameReader == nullptr) {
 					CULog("json/level%d.json file not found", _levelscene.getLevel());
-					_gameplay.push_back(GameScene::alloc(_assets));
+					_gamescene = GameScene::alloc(_assets);
+					_gameplay.push_back(_gamescene);
 					_gameplay.back()->setActive(false);
 				}
 				else {
 					std::shared_ptr<JsonValue> json = gameReader->readJson();
 					if (json == nullptr) {
 						CULog("Failed to load level file");
-						_gameplay.push_back(GameScene::alloc(_assets));
+						_gamescene = GameScene::alloc(_assets);
+						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 					}
 					else {
 						CULog("File loading");
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-						_gameplay.push_back(GameScene::alloc(_assets, pl, op));
+						AIType ai = _saveLoad.loadAI(json->get("AI"));
+						_gamescene = GameScene::alloc(_assets, pl, op, ai);
+						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 					}
 				}
-
                 _gameplay[_current]->setActive(true);
+            }
+        }
+        else if (_current == 2) { // in game scene
+            if (_gamescene->getHome()) { //@TODO: save current level
+				//CULog("%s", getSaveDirectory().c_str());
+				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
+                _gamescene->setHome(false);
+                _gameplay[_current]->setActive(false);
+                _gameplay[_current]->dispose();
+                _gameplay.erase(_gameplay.begin()+_current-1);
+                _current = 0; // back to main menu
+                _gameplay[_current]->setActive(true);
+//                _levelscene.setLevel(0);
             }
         }
         _gameplay[_current]->update(timestep);

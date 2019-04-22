@@ -86,6 +86,9 @@ public:
 #pragma mark Accessors
 	//gets if preview button has been pressed
 	bool getPreview() { return previewSet; }
+//	bool getHome() { return goHome; }
+//	bool getRestart() { return pauseRestartDown; }
+//	bool getSettings() { return pauseSettingsDown; }
 	
 	//returns true if the layer has pressed the go home button
 	bool getHome();
@@ -100,6 +103,11 @@ public:
 	void setPreview(bool preview);
 	void deactivateHand();
 	void activateHand();
+	void deactivatePause();
+	void activatePause();
+	void setHome(bool val);
+//	void setRestart(bool val);
+//	void setSettings(bool val);
 
 };
 

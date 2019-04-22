@@ -1093,7 +1093,7 @@ std::shared_ptr<JsonValue> JsonValue::removeChild(const std::string& key) {
 void JsonValue::appendChild(const std::shared_ptr<JsonValue>& child) {
     CUAssertLog(!child->_parent, "This child already has a parent");
     CUAssertLog(isArray() || isObject(), "This node is a value type");
-    CUAssertLog(!has(child->key()), "The key %s is already in use", child->key().c_str());
+    //CUAssertLog(!has(child->key()), "The key %s is already in use", child->key().c_str());
     _children.push_back(child);
     child->_parent = this;
 }

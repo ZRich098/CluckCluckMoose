@@ -110,6 +110,42 @@ std::shared_ptr<Moose> SaveController::loadOpponentMoose(const std::shared_ptr<J
 	return opponent;
 }
 
+AIType SaveController::loadAI(const std::shared_ptr<JsonValue>& json) {
+	bool success = false;
+
+	auto ai = json;
+	success = ai->isString();
+	string a = ai->asString();
+	if (a == "Basic") {
+		//CULog("loading Basic");
+		return AIType::Basic;
+	}
+	else if (a == "Dumb") {
+		//CULog("loading Dumb");
+		return AIType::Dumb;
+	}
+	else if (a == "Expert") {
+		//CULog("loading Expert");
+		return AIType::Expert;
+	}
+	else if (a == "Intro") {
+		//CULog("loading Intro");
+		return AIType::Intro;
+	}
+	else if (a == "Smart") {
+		//CULog("loading Smart");
+		return AIType::Smart;
+	}
+	else if (a == "Starter") {
+		//CULog("loading Starter");
+		return AIType::Starter;
+	}
+	else {
+		CULog("AI Type not found");
+		return AIType::Basic;
+	}
+}
+
 int SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //called in onResume()
 	bool success = false;
 
@@ -122,157 +158,116 @@ int SaveController::loadLevelTag(const std::shared_ptr<JsonValue>& json) { //cal
 
 void SaveController::saveGame(int level) { //called in onSuspend()
 	//create JSONValue
-	JsonValue saveGame;
-	saveGame.initObject();
+	std::shared_ptr<JsonValue> saveGame = JsonValue::allocObject();
 
 	//Add Level (last level completed)
-	JsonValue lastLevel;
-	lastLevel.init((float)level);
-	saveGame.appendChild("Level", std::make_shared<JsonValue>(lastLevel));
+	saveGame->appendValue("Level", (double)level);
 
 	//Add Volume
-	JsonValue vol;
-	vol.init(0.0); //@TODO Get from game state
-	saveGame.appendChild("Volume", std::make_shared<JsonValue>(vol));
+	saveGame->appendValue("Volume", 0.25); //@TODO Get from game state
 
 	//Add SkinName (current skin of player)
-	JsonValue skin;
-	skin.init("default"); //@TODO Get from game state
-	saveGame.appendChild("SkinName", std::make_shared<JsonValue>(skin));
+	saveGame->appendValue("SkinName", "default"); //@TODO Get from game state
 
 	//Add Purchases (cosmetics bought by player)
-	JsonValue purchases;
-	purchases.initArray();
-	//@TODO Get from game state
-	saveGame.appendChild("Purchases", std::make_shared<JsonValue>(purchases));
+	saveGame->appendArray("Purchases"); //@TODO Get from game state
 
 	//save to file
 	JsonWriter file;
-	std::shared_ptr<JsonWriter> writer = file.alloc("saveGame.json");
-	writer->writeJson(&saveGame);
-	writer->close();
+	std::shared_ptr<JsonWriter> writer = file.alloc("CluckCluckMoose/assets/json/saveGame.json");
+	if (writer == nullptr) {
+		CULogError("writer not initialized");
+	}
+	else {
+		writer->writeJson(saveGame);
+		writer->close();
+	}
 }
 
-void SaveController::saveLevel(std::shared_ptr<Moose> playerPtr, std::shared_ptr<Moose> oppPtr, int level) { //called in onSuspend()
-	Moose player = *playerPtr;
-	Moose opp = *oppPtr;
-
+void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, std::shared_ptr<AI> ai, int level) { //called in onSuspend()
 	//create JSONValue
-	JsonValue saveFile;
-	saveFile.initObject();
+	std::shared_ptr<JsonValue> saveFile = JsonValue::allocObject();
 
 	//Add PlayerMoose (Health, Hand, PlayOrder, Coop, Discard, Skin)
-	JsonValue playerMoose;
-	playerMoose.initObject();
+	saveFile->appendObject("PlayerMoose");
 
-	JsonValue playerHealth;
-	playerHealth.init((double)player.getHealth());
-	playerMoose.appendChild("Health", std::make_shared<JsonValue>(playerHealth));
+	saveFile->get("PlayerMoose")->appendValue("Health", (double)player->getHealth());
 
-	JsonValue playerHand;
-	playerHand.initArray();
-	JsonValue cardInHand; //Make player Hand
-	for (int i = 0; i < player.getHand().size(); i++) {
-		cardInHand.init((float)specialToInt(player.getHandAt(i).getSpecial()));
-		playerHand.appendChild(std::make_shared<JsonValue>(cardInHand));
+	saveFile->get("PlayerMoose")->appendArray("Hand"); //Make player Hand
+	for (int i = 0; i < player->getHand().size(); i++) {
+		saveFile->get("PlayerMoose")->get("Hand")->appendValue((double)specialToInt(player->getHandAt(i).getSpecial()));
 	}
-	playerMoose.appendChild("Hand", std::make_shared<JsonValue>(playerHand));
 
-	JsonValue playerOrder;
-	playerOrder.initArray();
-	JsonValue cardInOrder; //Make player PlayOrder
-	for (int i = 0; i < player.getPlayOrder().size(); i++) {
-		cardInOrder.init((float)specialToInt(player.getPlayOrderAt(i).getSpecial()));
-		playerOrder.appendChild(std::make_shared<JsonValue>(cardInOrder));
+	saveFile->get("PlayerMoose")->appendArray("PlayOrder"); //Make player PlayOrder
+	for (int i = 0; i < player->getPlayOrder().size(); i++) {
+		saveFile->get("PlayerMoose")->get("PlayOrder")->appendValue((double)specialToInt(player->getPlayOrderAt(i).getSpecial()));
 	}
-	playerMoose.appendChild("PlayOrder", std::make_shared<JsonValue>(playerOrder));
 
-	JsonValue playerCoop;
-	playerCoop.initArray();
-	JsonValue cardInCoop; //Make player Coop
-	for (int i = 0; i < player.getDeck().getSize(); i++) {
-		cardInCoop.init((float)specialToInt(player.getDeckAt(i).getSpecial()));
-		playerCoop.appendChild(std::make_shared<JsonValue>(cardInCoop));
+	saveFile->get("PlayerMoose")->appendArray("Coop"); //Make player Coop
+	for (int i = 0; i < player->getDeck().getSize(); i++) {
+		saveFile->get("PlayerMoose")->get("Coop")->appendValue((double)specialToInt(player->getDeckAt(i).getSpecial()));
 	}
-	playerMoose.appendChild("Coop", std::make_shared<JsonValue>(playerCoop));
 
-	JsonValue playerDiscard;
-	playerDiscard.initArray();
-	JsonValue cardInDiscard; //Make player Discard
-	for (int i = 0; i < player.getDiscard().size(); i++) {
-		cardInDiscard.init((float)specialToInt(player.getDiscardAt(i).getSpecial()));
-		playerDiscard.appendChild(std::make_shared<JsonValue>(cardInDiscard));
-	}
-	playerMoose.appendChild("Discard", std::make_shared<JsonValue>(playerDiscard));
-
-	JsonValue playerSkin;
-	playerSkin.init("zoose"); //GET FROM GAME STATE
-	playerMoose.appendChild("Costume", std::make_shared<JsonValue>(playerSkin));
-
-	saveFile.appendChild("PlayerMoose", std::make_shared<JsonValue>(playerMoose));
+	saveFile->get("PlayerMoose")->appendValue("Costume", "zoose");
 
 	//Add OppMoose (Health, Hand, PlayOrder, Coop, Discard, Skin)
-	JsonValue oppMoose;
-	oppMoose.initObject();
+	saveFile->appendObject("OpponentMoose");
 
-	JsonValue oppHealth;
-	oppHealth.init((double)opp.getHealth());
-	oppMoose.appendChild("Health", std::make_shared<JsonValue>(oppHealth));
+	saveFile->get("OpponentMoose")->appendValue("Health", (double)opp->getHealth());
 
-	JsonValue oppHand;
-	oppHand.initArray();
-	//Make opp Hand
-	for (int i = 0; i < opp.getHand().size(); i++) {
-		cardInHand.init((float)specialToInt(opp.getHandAt(i).getSpecial()));
-		oppHand.appendChild(std::make_shared<JsonValue>(cardInHand));
+	saveFile->get("OpponentMoose")->appendArray("Hand"); //Make opponent Hand
+	for (int i = 0; i < opp->getHand().size(); i++) {
+		saveFile->get("OpponentMoose")->get("Hand")->appendValue((double)specialToInt(opp->getHandAt(i).getSpecial()));
 	}
-	oppMoose.appendChild("Hand", std::make_shared<JsonValue>(oppHand));
 
-	JsonValue oppOrder;
-	oppOrder.initArray();
-	//Make opp PlayOrder
-	for (int i = 0; i < opp.getPlayOrder().size(); i++) {
-		cardInOrder.init((float)specialToInt(opp.getPlayOrderAt(i).getSpecial()));
-		oppOrder.appendChild(std::make_shared<JsonValue>(cardInOrder));
+	saveFile->get("OpponentMoose")->appendArray("PlayOrder"); //Make opponent PlayOrder
+	for (int i = 0; i < opp->getPlayOrder().size(); i++) {
+		saveFile->get("OpponentMoose")->get("PlayOrder")->appendValue((double)specialToInt(opp->getPlayOrderAt(i).getSpecial()));
 	}
-	oppMoose.appendChild("PlayOrder", std::make_shared<JsonValue>(oppOrder));
 
-	JsonValue oppCoop;
-	oppCoop.initArray();
-	//Make opp Coop
-	for (int h = 0; h < opp.getHandPool().size(); h++) {
-		JsonValue oppCoopHand;
-		for (int i = 0; i < opp.getHandPool().at(h).size(); i++) {
-			cardInCoop.init((float)specialToInt(opp.getDeckAt(i).getSpecial()));
-			oppCoopHand.appendChild(std::make_shared<JsonValue>(cardInCoop));
-		}
-		oppCoop.appendChild(std::make_shared<JsonValue>(oppCoopHand));
+	saveFile->get("OpponentMoose")->appendArray("Coop"); //Make opponent Coop
+	for (int i = 0; i < opp->getHandPool().size(); i++) {
+		saveFile->get("OpponentMoose")->get("Coop")->appendArray();
+		saveFile->get("OpponentMoose")->get("Coop")->get(saveFile->get("OpponentMoose")->get("Coop")->size()-1)->appendValue((double)specialToInt(opp->getDeckAt(i).getSpecial()));
 	}
-	oppMoose.appendChild("Coop", std::make_shared<JsonValue>(oppCoop));
 
-	JsonValue oppDiscard;
-	oppDiscard.initArray();
-	//Make opp Discard
-	for (int i = 0; i < opp.getDiscard().size(); i++) {
-		cardInDiscard.init((float)specialToInt(opp.getDiscardAt(i).getSpecial()));
-		oppDiscard.appendChild(std::make_shared<JsonValue>(cardInDiscard));
+	saveFile->get("OpponentMoose")->appendValue("Costume", "zoose");
+
+	//Add AI
+	AIType a = ai->getType();
+	if (a == AIType::Basic) {
+		saveFile->appendValue("AI", "Basic");
 	}
-	oppMoose.appendChild("Discard", std::make_shared<JsonValue>(oppDiscard));
-
-	JsonValue oppSkin;
-	oppSkin.init("royal_moose"); //GET FROM GAME STATE
-	oppMoose.appendChild("Costume", std::make_shared<JsonValue>(oppSkin));
-
-	saveFile.appendChild("OpponentMoose", std::make_shared<JsonValue>(oppMoose));
+	else if (a == AIType::Dumb) {
+		saveFile->appendValue("AI", "Dumb");
+	}
+	else if (a == AIType::Expert) {
+		saveFile->appendValue("AI", "Expert");
+	}
+	else if (a == AIType::Intro) {
+		saveFile->appendValue("AI", "Intro");
+	}
+	else if (a == AIType::Smart) {
+		saveFile->appendValue("AI", "Smart");
+	}
+	else if (a == AIType::Starter) {
+		saveFile->appendValue("AI", "Starter");
+	}
+	else {
+		CULog("AI Type not found");
+		saveFile->appendValue("AI", "Basic");
+	}
 
 	//Add Tag
-	JsonValue levelTag;
-	levelTag.init((float)level);
-	saveFile.appendChild(std::make_shared<JsonValue>(levelTag));
+	saveFile->appendValue("Level", (double)level);
 
 	//save to file
-	JsonWriter file;
-	std::shared_ptr<JsonWriter> writer = file.alloc("saveLevel.json");
-	writer->writeJson(&saveFile);
-	writer->close();
+	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("CluckCluckMoose/assets/json/saveLevel.json"); //@TODO - Fix opening file
+	if (writer == nullptr) {
+		CULogError("writer not initialized");
+	}
+	else {
+		writer->writeJson(saveFile);
+		writer->close();
+	}
 }

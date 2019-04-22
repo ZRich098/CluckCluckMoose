@@ -31,6 +31,11 @@ protected:
 
 	std::shared_ptr<Moose> player;
 	std::shared_ptr<Moose> opp;
+
+	std::shared_ptr<AI> oppAI;
+
+	//SceneBuilder
+	std::shared_ptr<SceneBuilder1> sb;
     
     //std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
     
@@ -72,16 +77,16 @@ public:
      * @return true if the controller is initialized properly, false otherwise.
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
 
-	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose) {
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
-		return (result->init(assets, playerMoose, oppMoose) ? result : nullptr);
+		return (result->init(assets, playerMoose, oppMoose, ai) ? result : nullptr);
 	}
 
 	/**
@@ -114,6 +119,10 @@ public:
 	std::shared_ptr<Moose> getPlayer() { return player; };
 	/** Get the opponent Moose */
 	std::shared_ptr<Moose> getOpp() { return opp; };
+	/** Get the opponent AI */
+	std::shared_ptr<AI> getAI() { return oppAI; };
+
+	bool getHome() { return sb->getHome(); }
 
 #pragma mark -
 #pragma mark Mutators
@@ -129,6 +138,8 @@ public:
 	 * @param newOpp the Moose to set opp as
 	 */
 	void setOpp(Moose newOpp) { opp = make_shared<Moose>(newOpp); };
+
+	void setHome(bool val) { sb->setHome(val); }
 
 #pragma mark -
 #pragma mark Gameplay Handling

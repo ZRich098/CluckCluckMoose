@@ -7,6 +7,7 @@
 
 #include "MooseFile.h"
 #include "Moose.h"
+#include "AI.h"
 
 using namespace cugl;
 
@@ -49,6 +50,10 @@ public:
 	*/
 	std::shared_ptr<Moose> loadOpponentMoose(const std::shared_ptr<JsonValue>& json);
 
+	/** Loads the AI type from a json file
+	Returns a shared pointer to the AI */
+	AIType loadAI(const std::shared_ptr<JsonValue>& json);
+
 	/** Loads the level tag from a json file
 	Returns true if succeeds, else returns false
 	*/
@@ -59,7 +64,7 @@ public:
 	/** Saves the overall current state of the game to a json file */
 	void saveGame(int level);
 	/** Saves the current level's game state to a json file */
-	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, int level);
+	void saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, std::shared_ptr<AI> ai, int level);
 
 #pragma mark -
 #pragma mark Accessors
