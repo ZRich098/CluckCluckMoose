@@ -169,7 +169,7 @@
             "wrapT": "clamp"
         },
         "healthBar": {
-            "file": "textures/base_healthTIme_noHearts.png",
+            "file": "textures/base_no_pause.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

@@ -25,7 +25,7 @@ Chicken::Chicken(special sp) {
 		return;
 	case special::Reaper:
 		e = element::SpecialWin;
-		damage = 0;
+		//damage = 0;
 		return;
 	case special::BirdBrain:
 		e = element::Grass;

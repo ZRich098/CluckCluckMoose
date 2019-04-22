@@ -115,6 +115,8 @@ class Chicken{
 		string toString() const;
 		/** Returns true if the chicken is cycled */
 		bool const isCycled() const { return cycled; };
+		/** Returns true if the chicken is a basic type */
+		bool const isBasic() const { return (s == special::BasicFire || s == special::BasicGrass || s == special::BasicWater); };
 
 		//Modify
 		/** Sets the element of the Chicken */

@@ -78,7 +78,7 @@ public:
 
 
 	/** Helper function for playing a sound when a button is clicked*/
-	void MenuScene::playButtonSound();
+	void playButtonSound();
 
     /**
      * Getters for menu buttons
