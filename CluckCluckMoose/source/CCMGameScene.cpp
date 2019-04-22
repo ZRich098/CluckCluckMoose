@@ -302,7 +302,7 @@ void GameScene::update(float timestep) {
 		//CULog("SKIP: %d",skipState);
 	}
 
-	if (sb->getPreview() && !isPreviewing) { //replace with if Preview button is pressed
+	if (sb->getPreview() && !isPreviewing && !isClashing) { //replace with if Preview button is pressed
 		//Play the button sfx
 		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 		auto source = _assets->get<Sound>(sfx);
@@ -341,13 +341,10 @@ void GameScene::update(float timestep) {
 			sb->setPreview(false);
 		}
 		else {
-			player->clearHandToDiscard();
-			opp->clearHandToDiscard();
-			// refills before discarding to prevent specials being obtained twice in a row
+			player->eraseChickens();
+			opp->eraseChickens();
 			player->refillHand();
 			opp->refillHand();
-			player->discardStack();
-			opp->discardStack();
 
 			prevHand = player->getHand().size();
 			stackSize = 0;
