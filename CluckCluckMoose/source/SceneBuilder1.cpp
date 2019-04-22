@@ -46,9 +46,6 @@ float healthYScale;
 //Button list for pause menu
 std::vector<std::shared_ptr<Button>> pausebuttons;
 
-bool pauseRestartDown;
-bool pauseSettingsDown;
-
 //List of stamp nodes for player and opponent
 std::vector<std::shared_ptr<PolygonNode>> pStamps;
 std::vector<std::shared_ptr<PolygonNode>> oStamps;
@@ -57,6 +54,7 @@ std::vector<std::shared_ptr<PolygonNode>> oStamps;
 bool nextLevel;
 bool goHome;
 bool retry;
+bool soundToggle;
 bool hasWon;
 bool hasLost;
 
@@ -251,9 +249,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	}
 	heldButtInd = -1;
 
-	pauseRestartDown = false;
+	retry = false;
 	goHome = false;
-	pauseSettingsDown = false;
+	soundToggle = false;
 
 	_assets = assets;
 	_input.init();
@@ -599,7 +597,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
         healthCanvas->addChild(playerB);
     }
     for (int i = 0; i < 5; i++) {
-        std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(oBlock);
+        std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(pBlock);
         oppB->setAnchor(Vec2::ANCHOR_CENTER);
         oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
         oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
@@ -617,22 +615,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	oppH->setScale(HEART_SCALE);
 	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(oppH);
-	
-	//Blocks
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
-		playerB->setAnchor(Vec2::ANCHOR_CENTER);
-		playerB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-		playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
-		healthCanvas->addChild(playerB);
-	}
-	for (int i = 0; i < 5; i++) {
-		std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(pBlock);
-		oppB->setAnchor(Vec2::ANCHOR_CENTER);
-		oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-		oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
-		healthCanvas->addChild(oppB);
-	}
 	
 	//Add elemental information
 	std::shared_ptr<Texture> eltInfoText = _assets->get<Texture>("groupedElts");
@@ -680,7 +662,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
-	pausebutt->activate(50); //ensure keys are unique
+	pausebutt->activate(200); //ensure keys are unique
 
 	//Draw pause box
     std::shared_ptr<Texture> texturePauseOverlay = _assets->get<Texture>("pauseoverlay");
@@ -703,9 +685,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(SCENE_WIDTH / 4, SCENE_HEIGHT/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { pauseRestartDown = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
     pauseMenuCanvas->addChild(pauseRestart);
-	pauseRestart->activate(51); //ensure keys are unique
+	pauseRestart->activate(201); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart);
 
     std::shared_ptr<Texture> texturePauseHome = _assets->get<Texture>("pausehome");
@@ -717,19 +699,19 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseHome->setPosition(SCENE_WIDTH / 2 , SCENE_HEIGHT/2 + 50);
 	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
     pauseMenuCanvas->addChild(pauseHome);
-	pauseHome->activate(52); //ensure keys are unique
+	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome);
 
-    std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesettings");
+    std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
 	std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
 	pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
 	std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
     pauseSettings->setScale(0.65, 0.65);
     pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
     pauseSettings->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT/2 + 50);
-	pauseSettings->setListener([=](const std::string& name, bool down) { if (down) { pauseSettingsDown = true; }});
+	pauseSettings->setListener([=](const std::string& name, bool down) { if (down) { soundToggle = soundToggle ? false : true; }});
     pauseMenuCanvas->addChild(pauseSettings);
-	pauseSettings->activate(53); //ensure keys are unique
+	pauseSettings->activate(203); //ensure keys are unique
 	pausebuttons.push_back(pauseSettings);
 
     std::shared_ptr<Texture> texturePauseResume = _assets->get<Texture>("pauseresume");
@@ -745,7 +727,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		deactivatePause();
 	}});
     pauseMenuCanvas->addChild(pauseResume);
-	pauseResume->activate(54); //ensure keys are unique
+	pauseResume->activate(204); //ensure keys are unique
 	pausebuttons.push_back(pauseResume);
 
     pauseMenuCanvas->setVisible(false);
@@ -1410,7 +1392,7 @@ void SceneBuilder1::activateHand() {
 
 void SceneBuilder1::activatePause() {
 	for (int i = 0; i < 4; i++) {
-		pausebuttons[i]->activate(50 + i);
+		pausebuttons[i]->activate(201 + i);
 	}
 }
 
