@@ -34,7 +34,8 @@ protected:
 	void refillDeck();
 	void refillHandPool();
 	int numChickensWillDiePreview;
-    
+	vector <int> vecChickensClashPreview;
+
 public:
    
     
@@ -120,6 +121,15 @@ public:
 	int getNumChickensWillDiePreview() { return numChickensWillDiePreview; };
 	/** Sets the number of chickens in the moose's stack that will die if clashes were to occur with the current stacks*/
 	void setNumChickensWillDiePreview(int num) { numChickensWillDiePreview = num; };
+
+	/** Gets the vector of which chicken defeats which in clash preview*/
+	vector<int> getVecChickensClashPreview() { return vecChickensClashPreview; };
+	/** Sets the int at position pos of the vector of which chicken defeats which in clash preview to num*/
+	void setVecChickensClashPreview(int num, int pos) { vecChickensClashPreview.at(pos) = num; };
+	/** Resets the vector of which chicken defeats which in clash preview*/
+	void resetVecChickensClashPreview() { 
+		for (int i = 0; i < 5; i++) vecChickensClashPreview.at(i) = -1;
+	};
 
 	/** Get number of {fire, water, grass, other}, chickens in hand, returned as a vector of ints*/
 	vector<int> getChickenElementDistribution();

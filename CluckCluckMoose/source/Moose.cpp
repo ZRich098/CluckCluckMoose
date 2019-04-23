@@ -44,6 +44,7 @@ bool Moose::init(int h, int hSize) {
     health = h;
     handSize = hSize;
 	numChickensWillDiePreview = 0;
+	for(int i = 0; i < 5; i++) vecChickensClashPreview.push_back(-1);
     return true;
 }
 
