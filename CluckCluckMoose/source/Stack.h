@@ -106,8 +106,9 @@ public:
 	string stackString() const;
 
 	//Gameplay
-	/** Compares this Stack with another Stack and runs a clash between them once. */
-	void compare(Stack &opp);
+	/** Compares this Stack with another Stack and runs a clash between them once. 
+		returns -1 if loses, 0 if ties, and 1 if wins the current clash */
+	int compare(Stack &opp);
 
 	/** int of a stack, used for AI only*/
 	int value;

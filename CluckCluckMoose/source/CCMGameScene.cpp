@@ -351,6 +351,8 @@ void GameScene::update(float timestep) {
 
 			player->setNumChickensWillDiePreview(0);
 			opp->setNumChickensWillDiePreview(0);
+			player->resetVecChickensClashPreview();
+			opp->resetVecChickensClashPreview();
 
 			player->takeDamage(opp->getStack().getDamage());
 			opp->takeDamage(player->getStack().getDamage());
@@ -413,9 +415,33 @@ void GameScene::setNumChickensWillDiePreview() {
 	Stack p = Stack(player->getStack());
 	Stack o = Stack(opp->getStack());
 
+	int ppos = 0;
+	int opos = 0;
+
 	int size = p.getSize();
 
-	while (!p.empty() && !o.empty()) p.compare(o);
+	while (!p.empty() && !o.empty()) {
+		int result = p.compare(o);
+
+		switch (result) {
+		case -1: //opp win
+			opp->setVecChickensClashPreview(opos, ppos);
+			ppos ++;
+			break;
+		case 0: //tie
+			player->setVecChickensClashPreview(ppos, opos);
+			opp->setVecChickensClashPreview(opos, ppos);
+			ppos++;
+			opos++;
+			break;
+		case 1: //win
+			player->setVecChickensClashPreview(ppos, opos);
+			opos++;
+			break;
+		default:
+			break;
+		}
+	}
 
 	player->setNumChickensWillDiePreview(size - p.getSize());
 	opp->setNumChickensWillDiePreview(size - o.getSize());

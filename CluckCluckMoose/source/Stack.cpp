@@ -271,7 +271,7 @@ string Stack::stackString() const {
 	return ss.str();
 }
 
-void Stack::compare(Stack &opp) {
+int Stack::compare(Stack &opp) {
 	if (!empty() && !opp.empty()) {
 		int result = getBottom().compare(opp.getBottom());
 		if (result == -1)
@@ -290,8 +290,10 @@ void Stack::compare(Stack &opp) {
 			removeBottom();
 			opp.removeBottom();
 		}
+		return result;
 	}
 	else {
 		//CULog("compare called on empty stacks");
+		return -2;
 	}
 }
