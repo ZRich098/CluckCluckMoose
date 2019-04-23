@@ -19,7 +19,7 @@ void SaveController::init() {
 	opponent = nullptr;
 }
 
-bool SaveController::loadSaveGame(const std::shared_ptr<JsonValue>& json) {
+int SaveController::loadSaveGame(const std::shared_ptr<JsonValue>& json) {
 	bool success = false;
 
 	auto level = json->get(LEVEL_FIELD);
@@ -38,7 +38,7 @@ bool SaveController::loadSaveGame(const std::shared_ptr<JsonValue>& json) {
 	success = success && purchases->isArray();
 	vector<string> p = purchases->asStringArray();
 
-	return success;
+	return l;
 }
 
 std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<JsonValue>& json) { //called in onResume()

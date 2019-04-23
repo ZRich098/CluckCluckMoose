@@ -38,7 +38,7 @@ public:
 	/** Loads the player's save game from a json file
 		Returns true if succeeds, else returns false
 		*/
-	bool loadSaveGame(const std::shared_ptr<JsonValue>& json);
+	int loadSaveGame(const std::shared_ptr<JsonValue>& json);
 
 	/** Loads the Player Moose from a json file
 		Returns true if succeeds, else returns false 
