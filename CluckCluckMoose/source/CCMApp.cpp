@@ -254,7 +254,7 @@ void CCMApp::update(float timestep) {
 				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
                 _gamescene->setHome(false);
                 _gameplay[_current]->setActive(false);
-                _gameplay[_current]->dispose();
+                //_gameplay[_current]->dispose();
                 _gameplay.erase(_gameplay.begin()+_current-1);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
