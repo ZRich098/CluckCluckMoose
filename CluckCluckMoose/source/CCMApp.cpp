@@ -125,7 +125,7 @@ void CCMApp::onSuspend() {
 void CCMApp::onResume() {
 	AudioChannels::get()->resumeAll();
 	//load player's game state
-	std::shared_ptr<JsonReader> stateReader = JsonReader::allocWithAsset("json/saveState.json");
+	std::shared_ptr<JsonReader> stateReader = JsonReader::allocWithAsset("json/saveGame.json");
 	if (stateReader == nullptr) {
 		CULog("State file not found");
 	}
@@ -161,6 +161,8 @@ void CCMApp::onResume() {
 			}
 			else {
 				CULog("File loading");
+				//_gameplay[_current]->dispose();
+				_gameplay.erase(_gameplay.begin() + _current - 1);
 				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 				AIType ai = _saveLoad.loadAI(json->get("AI"));

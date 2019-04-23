@@ -173,8 +173,7 @@ void SaveController::saveGame(int level) { //called in onSuspend()
 	saveGame->appendArray("Purchases"); //@TODO Get from game state
 
 	//save to file
-	JsonWriter file;
-	std::shared_ptr<JsonWriter> writer = file.alloc("saveGame.json");
+	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("saveGame.json");
 	if (writer == nullptr) {
 		CULogError("writer not initialized");
 	}
@@ -262,7 +261,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	saveFile->appendValue("Level", (double)level);
 
 	//save to file
-	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("saveLevel.json"); //@TODO - Fix opening file
+	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("saveLevel.json");
 	if (writer == nullptr) {
 		CULogError("writer not initialized");
 	}
