@@ -140,7 +140,7 @@ void CCMApp::onResume() {
 	}
 	
 	//load last level state, if applicable
-	if (_levelscene.getLevel() != 0) {
+	if (_levelscene.getLevel() != 0 && _gamescene == nullptr) {
 		stringstream ss;
 		ss << "json/level" << _levelscene.getLevel() << ".json";
 		string fileName = ss.str();
@@ -161,8 +161,6 @@ void CCMApp::onResume() {
 			}
 			else {
 				CULog("File loading");
-				//_gameplay[_current]->dispose();
-				_gameplay.erase(_gameplay.begin() + _current - 1);
 				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 				AIType ai = _saveLoad.loadAI(json->get("AI"));
