@@ -21,8 +21,8 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
-/** length of time in frames for a clash between chickens */
-#define CLASHLENGTH 50
+/** length of time in seconds for a clash between chickens */
+#define CLASHLENGTH .50
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -50,7 +50,7 @@ int stackSize;
 int prevHand;
 
 //number of frames in between clashes
-int cooldown;
+float cooldown;
 
 //a state machine to decide whether or not to skip a player's special chicken call for animation/feedback purposes.
 //-1 is the entry state, 0 is no skip, 1 is skip player, 2 is skip opponent, 3 is the exit state
@@ -261,7 +261,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
  */
 void GameScene::update(float timestep) {
 	if (cooldown > 0) {
-		cooldown--;
+		cooldown-= timestep;
 		sb->updateGameScene(timestep);
 		return;
 	}

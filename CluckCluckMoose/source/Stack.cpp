@@ -5,7 +5,7 @@
 using namespace cugl;
 
 /** default special feedback length */
-#define SPECIALLENGTH 0
+#define SPECIALLENGTH 0.0
 
 /** values representing the states in special chicken effect, except the entry state which is handled in gamescene */
 #define NONE 0
@@ -93,7 +93,7 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 	Also, Hand and coop arent included in stack.h so Im not sure how that will work */
 
 tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
-	int cooldown;
+	float cooldown;
 
 	// lambda function, make cooldown an argument if/when it becomes necessary
 	// tuple is same as return value of method
