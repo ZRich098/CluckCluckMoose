@@ -39,8 +39,7 @@ public:
 	//Access
 	/** Get the size of the Coop*/
 	const int getSize() const { return chickens.size(); };
-	/** Returns the chicken at position pos, where 0 is next to be drawn
-		If deck is shuffled, chicken will change position */
+	/** Returns the chicken at position pos in the stack */
 	Chicken &at(int pos) { return chickens.at(pos); };
 	/** Gets the order the chickens were played on this stack
 		Does not get cleared until clear() is called*/
