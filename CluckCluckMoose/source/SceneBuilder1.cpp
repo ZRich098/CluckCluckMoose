@@ -37,6 +37,9 @@ std::vector<std::shared_ptr<Texture>> texturesOStack;
 //Track held chicken
 std::shared_ptr<Button> heldButton;
 
+//Track Stack chicken held down
+std::shared_ptr<Button> heldStack;
+
 //Track previous chicken distribution
 std::vector<int> prevDist;
 
@@ -227,10 +230,18 @@ std::vector<int> flappingFrame;
 std::vector<int> timers;
 int heldButtInd;
 
+//Screen dimensions
+float screenHeight;
+float screenWidth;
 
-bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
+
+bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum) {
 
 	root->removeAllChildren();
+
+	//Set screen size
+	screenHeight = dimen.height;
+	screenWidth = dimen.width;
 
 	playerGlobe = player;
 	oppGlobe = opp;
@@ -244,6 +255,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	prevTint = false;
 
 	heldButton = nullptr;
+	heldStack = nullptr;
+
 	for (int i = 0; i < 6; i++) {
 		timers.push_back(0);
 	}
@@ -341,6 +354,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		pstackNodes.push_back(anim);
 		texturesPStack.push_back(text);
 
+		
+
+
 		//Init type stamp nodes
 		std::shared_ptr<PolygonNode> stamp = PolygonNode::allocWithTexture(fstamp);
 		stamp->setAnchor(Vec2::ANCHOR_CENTER);
@@ -364,7 +380,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		text = textureW;
 		std::shared_ptr<AnimationNode> poly;
     
-		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
+		poly = buildChicken(text, layer, screenWidth - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
         poly->setVisible(false);
 		ostackNodes.push_back(poly);
 		texturesOStack.push_back(text);
@@ -372,7 +388,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		//Init type stamp nodes
 		std::shared_ptr<PolygonNode> stamp = PolygonNode::allocWithTexture(fstamp);
 		stamp->setAnchor(Vec2::ANCHOR_CENTER);
-		stamp->setPosition(SCENE_WIDTH - STACK_X_OFFSET - STAMP_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING) + STAMP_Y_OFFSET);
+		stamp->setPosition(screenWidth - STACK_X_OFFSET - STAMP_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING) + STAMP_Y_OFFSET);
 		stamp->setScale(STAMP_SCALE);
 		stamp->setVisible(false);
 		oStamps.push_back(stamp);
@@ -390,7 +406,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Add clash button canvas
 	clashButtonCanvas = Node::alloc();
 	layer->addChild(clashButtonCanvas);
-	clashButtonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+	clashButtonCanvas->setPosition(screenWidth / 2, 150);
 
 	//Add elt info canvas
 	eltInfoCanvas = Node::alloc();
@@ -403,7 +419,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Add button canvas
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
-	buttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+	buttonCanvas->setPosition(screenWidth / 2, 150);
 
 	//Add health canvas
 	healthCanvas = Node::alloc();
@@ -432,18 +448,31 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	buttonCanvas->removeAllChildren();
 
 	//Draw background
-	std::shared_ptr<Texture> texturebg = _assets->get<Texture>("farmbg");
+	std::shared_ptr<Texture> texturebg;
+	if (levelNum == 1) {
+		texturebg = _assets->get<Texture>("farmbg");
+	}
+	else if (levelNum == 2) {
+		texturebg = _assets->get<Texture>("forestbg");
+	}
+	else if (levelNum == 3) {
+		texturebg = _assets->get<Texture>("nuclearbg");
+	}
+	else {
+		texturebg = _assets->get<Texture>("farmbg");
+	}
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
 	background->setScale(0.7f); // Magic number to rescale asset
 	background->setAnchor(Vec2::ANCHOR_CENTER);
-	background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+	background->setPosition(screenWidth/2, screenHeight/2);
 	backCanvas->addChild(background);
 
 
 
 	//Draw player moose
-	std::shared_ptr<Texture> textureM = _assets->get<Texture>("moose");
-	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureM);
+	
+	std::shared_ptr<Texture> textureP = _assets->get<Texture>("moose");
+	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureP);
 	moose1->setScale(0.2f); // Magic number to rescale asset
 	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
 	moose1->setPosition(-MOOSE_X_OFFSET, MOOSE_HEIGHT);
@@ -451,26 +480,57 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	mooseCanvas->addChild(moose1);
 
 	//Draw opponent moose
-	std::shared_ptr<PolygonNode> moose2 = PolygonNode::allocWithTexture(textureM);
+	std::shared_ptr<PolygonNode> moose2;
+	std::shared_ptr<Texture> textureM;
+	
+	if (costume == "moose") {
+		textureM = _assets->get<Texture>("moose");
+	}
+	else if (costume == "eldritch_moose") {
+		textureM = _assets->get<Texture>("elMoose");
+	}
+	else if (costume == "christmoose") {
+		textureM = _assets->get<Texture>("chrMoose");
+	}
+	else if (costume == "farmer_moose") {
+		textureM = _assets->get<Texture>("farmMoose");
+	}
+	else {
+		textureM = _assets->get<Texture>("moose");
+	}
+
+	moose2 = PolygonNode::allocWithTexture(textureM);
 	moose2->setScale(0.2f); // Magic number to rescale asset
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
-	moose2->setPosition(SCENE_WIDTH + MOOSE_X_OFFSET, MOOSE_HEIGHT);
+	moose2->setPosition(screenWidth + MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChild(moose2);
 
 	//Draw foreground
-	std::shared_ptr<Texture> texturefg = _assets->get<Texture>("farmfg");
+	std::shared_ptr<Texture> texturefg;
+	if (levelNum == 1) {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
+	else if (levelNum == 2) {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
+	else if (levelNum == 3) {
+		texturefg = _assets->get<Texture>("nuclearfg");
+	}
+	else {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
 	foreground->setScale(0.7f); // Magic number to rescale asset
 	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
-	foreground->setPosition(SCENE_WIDTH/2, FORE_HEIGHT);
+	foreground->setPosition(screenWidth/2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
 
 	//Draw info
 	std::shared_ptr<PolygonNode> info = PolygonNode::allocWithTexture(infoF);
 	info->setScale(INFO_SCALE);
 	info->setAnchor(Vec2::ANCHOR_CENTER);
-	info->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT/2 + INFO_Y_OFFSET);
+	info->setPosition(screenWidth / 2 + INFO_X_OFFSET, screenHeight/2 + INFO_Y_OFFSET);
 	infoCanvas->addChild(info);
 	infoCanvas->setVisible(false);
 
@@ -561,7 +621,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	butt->setScale(0.4, 0.4);
 
 	butt->setAnchor(Vec2::ANCHOR_CENTER);
-	butt->setPosition(0, SCENE_HEIGHT/3);
+	butt->setPosition(0, screenHeight/3);
 	butt->setListener([=](const std::string& name, bool down) {
 		if (down) {
 			//previewSet = true;
@@ -578,14 +638,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 	//Draw initial health
 	//Scale factor * scene height makes the health bar appear in consistent locations, independent of device
-	healthYScale = (((float)(HEALTH_BAR_Y_FACTOR - 1)) / ((float)HEALTH_BAR_Y_FACTOR)) * SCENE_HEIGHT;
+	healthYScale = (((float)(HEALTH_BAR_Y_FACTOR - 1)) / ((float)HEALTH_BAR_Y_FACTOR)) * screenHeight;
 	CULog("%d", healthYScale);
 	
 	//Bar
 	std::shared_ptr<PolygonNode> hBar = PolygonNode::allocWithTexture(bar);
 	hBar->setAnchor(Vec2::ANCHOR_CENTER);
 	hBar->setScale(HBAR_SCALE);
-	hBar->setPosition(SCENE_WIDTH / 2, healthYScale);
+	hBar->setPosition(screenWidth / 2, healthYScale);
 	healthCanvas->addChild(hBar);
   
     //Blocks
@@ -593,14 +653,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
         std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
         playerB->setAnchor(Vec2::ANCHOR_CENTER);
         playerB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-        playerB->setPosition(SCENE_WIDTH / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
+        playerB->setPosition(screenWidth / 2 - BAR_DISTANCE/2 - (i*HEALTH_BLOCK_SPACING), healthYScale);
         healthCanvas->addChild(playerB);
     }
     for (int i = 0; i < 5; i++) {
         std::shared_ptr<PolygonNode> oppB = PolygonNode::allocWithTexture(pBlock);
         oppB->setAnchor(Vec2::ANCHOR_CENTER);
         oppB->setScale(BLOCK_X_SCALE, BLOCK_Y_SCALE);
-        oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
+        oppB->setPosition(screenWidth / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
         healthCanvas->addChild(oppB);
     }
   
@@ -608,12 +668,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> playerH = PolygonNode::allocWithTexture(pHeart);
 	playerH->setAnchor(Vec2::ANCHOR_CENTER);
 	playerH->setScale(HEART_SCALE);
-	playerH->setPosition(SCENE_WIDTH / 2 - HEART_X_OFFSET, healthYScale);
+	playerH->setPosition(screenWidth / 2 - HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(playerH);
 	std::shared_ptr<PolygonNode> oppH = PolygonNode::allocWithTexture(pHeart);
 	oppH->setAnchor(Vec2::ANCHOR_CENTER);
 	oppH->setScale(HEART_SCALE);
-	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, healthYScale);
+	oppH->setPosition(screenWidth / 2 + HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(oppH);
 	
 	//Add elemental information
@@ -621,7 +681,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> eltInfo = PolygonNode::allocWithTexture(eltInfoText);
 	eltInfo->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 	eltInfo->setScale(ELT_INFO_SCALE);
-	eltInfo->setPosition(SCENE_WIDTH / 2 - ELT_INFO_X_OFFSET, healthYScale - ELT_Y_OFFSET);
+	eltInfo->setPosition(screenWidth / 2 - ELT_INFO_X_OFFSET, healthYScale - ELT_Y_OFFSET);
 	eltInfoCanvas->addChild(eltInfo);
 
 	//Add numeric values (also alloc textures here)
@@ -635,15 +695,15 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> grassNum = PolygonNode::allocWithTexture(num1);
 	fireNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 	fireNum->setScale(ELT_NUM_SCALE);
-	fireNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET);
+	fireNum->setPosition(screenWidth / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET);
 	eltInfoCanvas->addChild(fireNum);
 	waterNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 	waterNum->setScale(ELT_NUM_SCALE);
-	waterNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - ELT_NUM_SPACING);
+	waterNum->setPosition(screenWidth / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - ELT_NUM_SPACING);
 	eltInfoCanvas->addChild(waterNum);
 	grassNum->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 	grassNum->setScale(ELT_NUM_SCALE);
-	grassNum->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (2*ELT_NUM_SPACING));
+	grassNum->setPosition(screenWidth / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (2*ELT_NUM_SPACING));
 	eltInfoCanvas->addChild(grassNum);
 
 	//Init the pause button
@@ -653,7 +713,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Button> pausebutt = Button::alloc(pauseid);
 	pausebutt->setScale(0.25, 0.25);
 	pausebutt->setAnchor(Vec2::ANCHOR_CENTER);
-	pausebutt->setPosition(SCENE_WIDTH/2, healthYScale);
+	pausebutt->setPosition(screenWidth/2, healthYScale);
 	pausebutt->setListener([=](const std::string& name, bool down) {
 	    if (down) {
 	        pauseMenuCanvas->setVisible(true);
@@ -668,14 +728,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     std::shared_ptr<Texture> texturePauseOverlay = _assets->get<Texture>("pauseoverlay");
     std::shared_ptr<PolygonNode> pauseOverlay = PolygonNode::allocWithTexture(texturePauseOverlay);
     pauseOverlay->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseOverlay->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT/2);
+    pauseOverlay->setPosition(screenWidth / 2, screenHeight/2);
     pauseMenuCanvas->addChild(pauseOverlay);
 
 	std::shared_ptr<Texture> texturePauseBox = _assets->get<Texture>("pausebox");
 	std::shared_ptr<PolygonNode> pauseBox = PolygonNode::allocWithTexture(texturePauseBox);
 	pauseBox->setScale(0.7, 0.7);
 	pauseBox->setAnchor(Vec2::ANCHOR_CENTER);
-	pauseBox->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT/2);
+	pauseBox->setPosition(screenWidth / 2 + INFO_X_OFFSET, screenHeight/2);
     pauseMenuCanvas->addChild(pauseBox);
 
     std::shared_ptr<Texture> texturePauseRestart = _assets->get<Texture>("pauserestart");
@@ -684,7 +744,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Button> pauseRestart = Button::alloc(pauserestartid);
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseRestart->setPosition(SCENE_WIDTH / 4, SCENE_HEIGHT/2 + 50);
+    pauseRestart->setPosition(screenWidth / 4, screenHeight/2 + 50);
 	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(201); //ensure keys are unique
@@ -696,7 +756,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Button> pauseHome = Button::alloc(pausehomeid);
     pauseHome->setScale(0.65, 0.65);
     pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseHome->setPosition(SCENE_WIDTH / 2 , SCENE_HEIGHT/2 + 50);
+    pauseHome->setPosition(screenWidth / 2 , screenHeight/2 + 50);
 	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(202); //ensure keys are unique
@@ -708,7 +768,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
     pauseSettings->setScale(0.65, 0.65);
     pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseSettings->setPosition(SCENE_WIDTH*3/4, SCENE_HEIGHT/2 + 50);
+    pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
 	pauseSettings->setListener([=](const std::string& name, bool down) { if (down) { soundToggle = soundToggle ? false : true; }});
     pauseMenuCanvas->addChild(pauseSettings);
 	pauseSettings->activate(203); //ensure keys are unique
@@ -720,7 +780,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<Button> pauseResume = Button::alloc(pauseresumeid);
     pauseResume->setScale(0.65, 0.65);
     pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseResume->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2 - INFO_Y_OFFSET);
+    pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
 	pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
 	    pauseMenuCanvas->setVisible(false);
 		activateHand(); //@TODO: freeze game state
@@ -743,25 +803,25 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> darkOverlay = PolygonNode::allocWithTexture(wlOverlay);
 	darkOverlay->setScale(0.7f); // Magic number to rescale asset
 	darkOverlay->setAnchor(Vec2::ANCHOR_CENTER);
-	darkOverlay->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2);
+	darkOverlay->setPosition(screenWidth / 2, screenHeight / 2);
 	winCanvas->addChild(darkOverlay);
 	
 	std::shared_ptr<PolygonNode> darkOverlay2 = PolygonNode::allocWithTexture(wlOverlay);
 	darkOverlay2->setScale(0.7f); // Magic number to rescale asset
 	darkOverlay2->setAnchor(Vec2::ANCHOR_CENTER);
-	darkOverlay2->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2);
+	darkOverlay2->setPosition(screenWidth / 2, screenHeight / 2);
 	loseCanvas->addChild(darkOverlay2);
 
 	std::shared_ptr<PolygonNode> winScreen = PolygonNode::allocWithTexture(victory);
 	winScreen->setScale(WIN_LOSS_SCALE); // Magic number to rescale asset
 	winScreen->setAnchor(Vec2::ANCHOR_CENTER);
-	winScreen->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET);
+	winScreen->setPosition(screenWidth / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET);
 	winCanvas->addChild(winScreen);
 
 	std::shared_ptr<PolygonNode> loseScreen = PolygonNode::allocWithTexture(defeat);
 	loseScreen->setScale(WIN_LOSS_SCALE); // Magic number to rescale asset
 	loseScreen->setAnchor(Vec2::ANCHOR_CENTER);
-	loseScreen->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET);
+	loseScreen->setPosition(screenWidth / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET);
 	loseCanvas->addChild(loseScreen);
 
 	winCanvas->setVisible(false);
@@ -805,7 +865,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
-				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(SCENE_WIDTH / 2, 150));
+				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(screenHeight / 2, 150));
 				std::shared_ptr<Texture> infoText;
 				special cel = playerGlobe->getHandAt(i).getSpecial();
 				switch (cel) {
@@ -858,7 +918,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				std::shared_ptr<PolygonNode> newPoly = PolygonNode::allocWithTexture(infoText);
 				newPoly->setScale(INFO_SCALE);
 				newPoly->setAnchor(Vec2::ANCHOR_CENTER);
-				newPoly->setPosition(SCENE_WIDTH / 2 + INFO_X_OFFSET, SCENE_HEIGHT / 2 + INFO_Y_OFFSET);
+				newPoly->setPosition(screenWidth / 2 + INFO_X_OFFSET, screenHeight / 2 + INFO_Y_OFFSET);
 				infoCanvas->swapChild(infoCanvas->getChild(0), newPoly, false);
 
 			}
@@ -1172,7 +1232,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				std::shared_ptr<PolygonNode> swapPoly = PolygonNode::allocWithTexture(text);
 				swapPoly->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 				swapPoly->setScale(ELT_NUM_SCALE);
-				swapPoly->setPosition(SCENE_WIDTH / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (i*ELT_NUM_SPACING));
+				swapPoly->setPosition(screenWidth / 2 + ELT_NUM_X_OFFSET, healthYScale - ELT_Y_OFFSET - ELT_NUM_Y_OFFSET - (i*ELT_NUM_SPACING));
 				swapPoly->setVisible(true);
 				std::shared_ptr<Node> oldChild = eltInfoCanvas->getChild(i + 1);
 				eltInfoCanvas->swapChild(oldChild, swapPoly, false);
@@ -1241,7 +1301,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			hButtL->setAnchor(Vec2::ANCHOR_CENTER);
 			hButtL->setScale(WIN_LOSS_B_SCALE);
 			hButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			hButtL->setPosition(SCENE_WIDTH / 2 + LOSS_BUTTON_X_SPACING / 2, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+			hButtL->setPosition(screenWidth / 2 + LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
 			hButtL->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					goHome = true;
@@ -1258,7 +1318,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			rButtL->setAnchor(Vec2::ANCHOR_CENTER);
 			rButtL->setScale(WIN_LOSS_B_SCALE);
 			rButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			rButtL->setPosition(SCENE_WIDTH / 2 - LOSS_BUTTON_X_SPACING / 2, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+			rButtL->setPosition(screenWidth / 2 - LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
 			rButtL->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
@@ -1280,7 +1340,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			hButt->setAnchor(Vec2::ANCHOR_CENTER);
 			hButt->setScale(WIN_LOSS_B_SCALE);
 			hButt->setAnchor(Vec2::ANCHOR_CENTER);
-			hButt->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+			hButt->setPosition(screenWidth / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
 			hButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					goHome = true;
@@ -1297,7 +1357,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			rButt->setAnchor(Vec2::ANCHOR_CENTER);
 			rButt->setScale(WIN_LOSS_B_SCALE);
 			rButt->setAnchor(Vec2::ANCHOR_CENTER);
-			rButt->setPosition(SCENE_WIDTH / 2 - WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+			rButt->setPosition(screenWidth / 2 - WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
 			rButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
@@ -1314,7 +1374,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			lButt->setAnchor(Vec2::ANCHOR_CENTER);
 			lButt->setScale(WIN_LOSS_B_SCALE);
 			lButt->setAnchor(Vec2::ANCHOR_CENTER);
-			lButt->setPosition(SCENE_WIDTH / 2 + WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+			lButt->setPosition(screenWidth / 2 + WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
 			lButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					nextLevel = true;
