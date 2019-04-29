@@ -168,7 +168,8 @@ std::shared_ptr<Texture> defeat;
 std::shared_ptr<Texture> redo;
 std::shared_ptr<Texture> nextlvl;
 
-
+//transition texture
+std::shared_ptr<Texture> smokeTrans;
 
 //Main canvas to draw stuff to
 std::shared_ptr<Node> layer;
@@ -225,6 +226,9 @@ float timeAmount = 0;
 float timeBtnFrames = 0.1;
 //std::vector<std::shared_ptr<int>> flappingFrame;
 std::vector<int> flappingFrame;
+
+std::vector<int> pSmokeFrame;
+std::vector<int> eSmokeFrame;
 
 //Input timer to determine if the player wants info or wants to play a chicken
 std::vector<int> timers;
@@ -295,6 +299,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	infoThick = _assets->get<Texture>("thickInfo");
 	infoWitch = _assets->get<Texture>("witchInfo");
 
+	smokeTrans = _assets->get<Texture>("smokeTrans");
+
 	//Get health textures
 	bar = _assets->get<Texture>("healthBar");
 	pHeart = _assets->get<Texture>("pHeart");
@@ -332,6 +338,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	for(int i =0; i< 6; i++){
         int f = 0;
 	    flappingFrame.push_back(f);
+	}
+
+	for (int i = 0; i < 5; i++) {
+		int f = -1;
+		pSmokeFrame.push_back(f);
+		eSmokeFrame.push_back(f);
 	}
 
 
@@ -1077,6 +1089,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		if (texturesPStack[i] != text) {
 
 		}
+		bool isChange = pstackNodes[i]->getTexture() != (text);
         std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
         chick->setScale(STACK_SCALE); // Magic number to rescale asset
         chick->setAnchor(Vec2::ANCHOR_CENTER);
@@ -1093,6 +1106,28 @@ void SceneBuilder1::updateGameScene(float timestep) {
         texturesPStack[i] = text;
 
         pstackNodes[i]->setFrame(thisFrame);
+
+		if (isChange) {
+			pSmokeFrame[i] = 0;
+		}
+
+
+		if (pSmokeFrame[i] >= 5) {
+			pSmokeFrame[i] = -1;
+		}
+		if (isNextFrame && pSmokeFrame[i] != -1) {
+			pSmokeFrame[i] ++;
+		}
+
+		if (pSmokeFrame[i] != -1) {
+			std::shared_ptr<AnimationNode> smoke = AnimationNode::alloc(smokeTrans, 1, 6);
+			pstackNodes[i]->addChild(smoke);
+			int fo = 6 - 1 - pSmokeFrame[i];
+			smoke->setFrame(6 - 1 - pSmokeFrame[i]);
+		}
+
+
+
 
 	}
 
@@ -1162,6 +1197,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 //			ostackNodes[i]->setTexture(text);
 //			texturesOStack[i] = text;
 		}
+		bool isChange = ostackNodes[i]->getTexture() != (text);
         std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
         chick->setScale(STACK_SCALE); // Magic number to rescale asset
         chick->setAnchor(Vec2::ANCHOR_CENTER);
@@ -1178,6 +1214,25 @@ void SceneBuilder1::updateGameScene(float timestep) {
         texturesPStack[i] = text;
 
         ostackNodes[i]->setFrame(thisFrame);
+
+		if (isChange) {
+			eSmokeFrame[i] = 0;
+		}
+
+
+		if (eSmokeFrame[i] >= 5) {
+			eSmokeFrame[i] = -1;
+		}
+		if (isNextFrame && eSmokeFrame[i] != -1) {
+			eSmokeFrame[i] ++;
+		}
+
+		if (eSmokeFrame[i] != -1) {
+			std::shared_ptr<AnimationNode> smoke = AnimationNode::alloc(smokeTrans, 1, 6);
+			ostackNodes[i]->addChild(smoke);
+			int fo = 6 - 1 - eSmokeFrame[i];
+			smoke->setFrame(6 - 1 - eSmokeFrame[i]);
+		}
 	}
 
 	//Update the info card
