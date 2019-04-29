@@ -14,6 +14,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "smokeTrans": {
+            "file": "textures/smoke_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "water": {
             "file": "textures/water_chick.png",
             "minfilter": "linear",
@@ -561,72 +568,72 @@
             "wrapT": "clamp"
         }
     },
-	"sounds": {
+    "sounds": {
         "bell": {
             "type":     "sample",
             "file":     "audio/boxing_bell.wav",
             "volume":   0.5,
-			"stream": false
+            "stream": false
         },
         "screech": {
             "type":     "sample",
             "file":     "audio/chicken_screech.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "impact": {
             "type":     "sample",
             "file":     "audio/chicken_impact.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "water": {
             "type":     "sample",
             "file":     "audio/water_impact.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "witchen": {
             "type":     "sample",
             "file":     "audio/witchen_puff.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "button_a": {
             "type":     "sample",
             "file":     "audio/button_a.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "button_b": {
             "type":     "sample",
             "file":     "audio/button_b.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "theme": {
             "type":     "sample",
             "file":     "audio/CCM_Theme.wav",
             "volume":   0.5,
-			"stream":	true
+            "stream":    true
         },
         "trailer": {
             "type":     "sample",
             "file":     "audio/CCM_Trailer.wav",
             "volume":   0.5,
-			"stream":	true
+            "stream":    true
         }
     },
-	"fonts": {
-		"felt": {
-			"file":     "fonts/MarkerFelt.ttf",
-			"size":     64
-		},
+    "fonts": {
+        "felt": {
+            "file":     "fonts/MarkerFelt.ttf",
+            "size":     64
+        },
         "sans": {
             "file":     "fonts/Roboto-Bold.ttf",
             "size":     64
         }
-	},
+    },
     "scenes": {
         "menu" : {
             "comment"   : "A scene graph of buttons to demo a layout manager",
@@ -640,10 +647,10 @@
             "children"  : {
                 
                 
-                    },
-                    "layout" : {
-                        "priority" : 1
-                    }
+            },
+            "layout" : {
+                "priority" : 1
+            }
         },
         "levelselect" : {
             "comment"   : "A scene graph of buttons to demo a layout manager",
@@ -655,8 +662,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-
-
+                
+                
             },
             "layout" : {
                 "priority" : 1
@@ -674,12 +681,12 @@
             "children"  : {
                 
                 
-                    },
-                    "layout" : {
-                        "priority" : 2
-                    }
-                }
+            },
+            "layout" : {
+                "priority" : 2
             }
         }
     }
+}
+}
 }
