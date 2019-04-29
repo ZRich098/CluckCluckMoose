@@ -37,6 +37,7 @@ int curmap;
 bool upClicked;
 bool downClicked;
 bool drawNew;
+bool nodesMade;
 
 /**
  * Initializes the controller contents, and starts the game
@@ -71,6 +72,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     upClicked = false;
     downClicked = false;
     drawNew = false;
+    nodesMade = false;
     _assets = assets;
 
     levellayer = assets->get<Node>("levelselect");
@@ -261,17 +263,19 @@ void LevelScene::deactivateButtons() {
  */
 void LevelScene::activateButtons() {
     //note: zero is the back button
-    for (int i = 0; i <= levelbuttons.size(); i++) {
-        levelbuttons[i]->activate(101 + i);
-    }
+//    for (int i = 0; i <= levelbuttons.size(); i++) {
+//        levelbuttons[i]->activate(101 + i);
+//    }
 
-//    levelbuttons[0]->activate(101);
-//    levelbuttons[1]->activate(102);
-//    levelbuttons[2]->activate(103);
-//    levelbuttons[3]->activate(104);
-//    levelbuttons[4]->activate(105);
-//    levelbuttons[5]->activate(106);
-//    levelbuttons[6]->activate(107);
+//    levelbuttons[0]-]7);
+//    }
+//    else if (curmap == 2){
+//
+//    }
+//    else{
+//
+//    }
+
 }
 
 void LevelScene::setLevel(int lev) { level = lev; }
@@ -292,7 +296,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
     circle->setPosition(posX, posY);
     circle->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
     levelbuttonCanvas->addChild(circle);
-    levelbuttons.push_back(circle);
+//    levelbuttons.push_back(circle);
 
     if (!locked && !curr) { // flags
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levelflag");
@@ -359,16 +363,17 @@ void LevelScene::drawNewBox(int cur){
 }
 
 void LevelScene::drawLevelNodes(int cur){
-//    if (curmap == 0){
+    deactivateButtons();
+    if (curmap == 0){
         buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
         buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
         buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
-//    }
-//    else if (curmap == 1){
-//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 6, true, false);
-//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 5, true, false);
-//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 4, false, true);
-////    }
+    }
+    else if (curmap == 1){
+        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, true, false);
+        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, true, false);
+        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
+    }
 ////    else if (curmap == 2){
 //        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 9, true, false);
 //        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 8, true, false);
@@ -380,4 +385,5 @@ void LevelScene::drawLevelNodes(int cur){
 //        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 10, true, false);
 //    }
 
+    nodesMade = true;
 }
