@@ -326,7 +326,7 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-<<<<<<< HEAD
+
 			if (!firstClash)
 				player->getStack().compare(opp->getStack());
 			if (!player->getStack().empty() && !opp->getStack().empty()) {
