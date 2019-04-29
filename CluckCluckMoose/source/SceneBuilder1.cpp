@@ -108,6 +108,9 @@ bool hasLost;
 #define WIN_LOSS_B_Y_OFFSET -225
 #define WIN_BUTTON_X_SPACING 140
 #define LOSS_BUTTON_X_SPACING 175
+#define CHICKEN_SHOT_ROWS 1
+#define CHICKEN_SHOT_COLS 1
+#define DEATH_ANIM_COLS 8
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -220,16 +223,32 @@ bool previewSet;
 //Tint tracking
 bool prevTint;
 
-//values for animation
+//Frame tracking for flapping animations
 int  thisFrame = 0;
 float timeAmount = 0;
 float timeBtnFrames = 0.1;
-//std::vector<std::shared_ptr<int>> flappingFrame;
+//keeps track of which frame chicken flapping is on in the hand
 std::vector<int> flappingFrame;
+
+//Frame tracking for attacking animations
+
+//the number of frames it takes for a chicken shot to reach the middle of the screen
+int middleScreenFrame = 8;
+//the frame that a chicken shot is currently at, -1 if no shot on screen
+int shotProgress = -1;
+//0 index is current player death animation frame, 1 is opponent
+std::vector<int> dyingFrame;
+//determines if the player chicken attacking is going to win
+bool playerChickenWins;
+//element of player chicken
+std::shared_ptr<element> pType;
+//element of enemy chicken
+std::shared_ptr<element> eType;
 
 //Input timer to determine if the player wants info or wants to play a chicken
 std::vector<int> timers;
 int heldButtInd;
+
 
 
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
@@ -324,10 +343,16 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
 
-	//init flapping booleans to 0
+	//init flapping ints to 0
 	for(int i =0; i< 6; i++){
         int f = 0;
 	    flappingFrame.push_back(f);
+	}
+
+	//init dying frames to -1
+	for (int i = 0; i < 2; i++) {
+		int f = -1;
+		dyingFrame.push_back(f);
 	}
 
 
@@ -782,7 +807,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 void chikDefeat(std::shared_ptr<element> playerType, std::shared_ptr<element> opponentType, int winResult) {
 	//start animation for chicken fading
 	//make child of chicken the element animation
-
+	shotProgress = 0;
+	playerChickenWins = winResult;
+	eType = playerType;
+	pType = opponentType;
 }
 
 void mooseDefeat(int healthChange) {
@@ -1137,6 +1165,48 @@ void SceneBuilder1::updateGameScene(float timestep) {
         texturesPStack[i] = text;
 
         ostackNodes[i]->setFrame(thisFrame);
+
+		if (isNextFrame) {
+			if (shotProgress != -1) {
+				//a shot has begun
+				if (shotProgress < middleScreenFrame) {
+					//change from text to the opponent element type texture
+					std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
+					ostackNodes[i]->addChild(shot);
+					chick->setPosition(50*shotProgress, 0);
+				}
+				else if (shotProgress >= middleScreenFrame) {
+					if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
+						//shot has reached the enemy chicken!
+						//animation of defeat should begin
+						dyingFrame[1]=dyingFrame[1]+1;
+						
+					}
+					std::shared_ptr<Texture> deathText;
+					switch (*eType) {
+					case element::Fire:
+						deathText = fireTrans;
+						break;
+					case element::Water:
+						deathText = waterTrans;
+						break;
+					case element::Grass:
+						deathText = grassTrans;
+						break;
+					default:
+						deathText = fireTrans;
+						break;
+					}
+					std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+					ostackNodes[i]->addChild(poof);
+				}
+				shotProgress += 1;
+				
+			}
+
+		}
+
+
 	}
 
 	//Update the info card
