@@ -21,8 +21,8 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
-/** length of time in seconds for a clash between chickens */
-#define CLASHLENGTH .50
+/** length of time in animation frames for a clash between chickens */
+#define CLASHLENGTH 8
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -42,6 +42,9 @@ using namespace cugl;
 #define ENTRY -1
 #define NONE 0
 #define EXIT 3
+
+/** number of animation frames per timestep */
+#define FRAMESPERTIME 10
 
 //stack size
 int stackSize;
@@ -261,7 +264,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
  */
 void GameScene::update(float timestep) {
 	if (cooldown > 0) {
-		cooldown-= timestep;
+		cooldown-= timestep*FRAMESPERTIME;
 		sb->updateGameScene(timestep);
 		return;
 	}
@@ -356,6 +359,7 @@ void GameScene::update(float timestep) {
 
 			player->takeDamage(opp->getStack().getDamage());
 			opp->takeDamage(player->getStack().getDamage());
+			sb.mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
@@ -422,6 +426,7 @@ void GameScene::setNumChickensWillDiePreview() {
 
 	while (!p.empty() && !o.empty()) {
 		int result = p.compare(o);
+		sb.chickDefeat(p.getBottom().getElement(), o.getBottom().getElement(), result);
 
 		switch (result) {
 		case -1: //opp win
