@@ -360,7 +360,7 @@ void GameScene::update(float timestep) {
 
 			player->takeDamage(opp->getStack().getDamage());
 			opp->takeDamage(player->getStack().getDamage());
-			sb.mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
+			sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
