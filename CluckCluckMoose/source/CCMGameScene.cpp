@@ -73,6 +73,8 @@ bool didWin;
 //bool to signify a a loseState
 bool didLose;
 
+bool attackAnimStarted;
+
 
 ////SceneBuilder
 //std::shared_ptr<SceneBuilder1> sb;
@@ -324,6 +326,7 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
+<<<<<<< HEAD
 			if (!firstClash)
 				player->getStack().compare(opp->getStack());
 			if (!player->getStack().empty() && !opp->getStack().empty()) {
@@ -333,6 +336,22 @@ void GameScene::update(float timestep) {
 			}
 			firstClash = false;
 			cooldown = CLASHLENGTH;
+			//if (attackAnimStarted  ) {
+			//	//attackAnimStarted = false;
+			//	cooldown = CLASHLENGTH;
+			//	int result = player->getStack().compareWithoutRemove(opp->getStack());
+			//	sb->chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
+
+			//	player->getStack().compare(opp->getStack());
+			//}
+			//else {
+			//	cooldown = CLASHLENGTH;
+			//	int result = player->getStack().compareWithoutRemove(opp->getStack());
+			//	sb->chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
+
+			//	attackAnimStarted = true;
+			//}
+			
 		}
 		else if (isPreviewing) {
 			//player->setStack(playerPreviewStack);
