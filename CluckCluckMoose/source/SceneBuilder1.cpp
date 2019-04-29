@@ -241,9 +241,9 @@ std::vector<int> dyingFrame;
 //determines if the player chicken attacking is going to win
 bool playerChickenWins;
 //element of player chicken
-std::shared_ptr<element> pType;
+element pType;
 //element of enemy chicken
-std::shared_ptr<element> eType;
+element eType;
 
 //Input timer to determine if the player wants info or wants to play a chicken
 std::vector<int> timers;
@@ -804,16 +804,19 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	return true;
 }
 
-void chikDefeat(std::shared_ptr<element> playerType, std::shared_ptr<element> opponentType, int winResult) {
+
+
+void SceneBuilder1::chickDefeat(element playerType, element opponentType, int winResult) {
 	//start animation for chicken fading
 	//make child of chicken the element animation
 	shotProgress = 0;
 	playerChickenWins = winResult;
 	eType = playerType;
 	pType = opponentType;
+	CULog(""+winResult);
 }
 
-void mooseDefeat(int healthChange) {
+void SceneBuilder1::mooseDefeat(int healthChange) {
 
 }
 
@@ -1167,42 +1170,42 @@ void SceneBuilder1::updateGameScene(float timestep) {
         ostackNodes[i]->setFrame(thisFrame);
 
 		if (isNextFrame) {
-			if (shotProgress != -1) {
-				//a shot has begun
-				if (shotProgress < middleScreenFrame) {
-					//change from text to the opponent element type texture
-					std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-					ostackNodes[i]->addChild(shot);
-					chick->setPosition(50*shotProgress, 0);
-				}
-				else if (shotProgress >= middleScreenFrame) {
-					if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-						//shot has reached the enemy chicken!
-						//animation of defeat should begin
-						dyingFrame[1]=dyingFrame[1]+1;
-						
-					}
-					std::shared_ptr<Texture> deathText;
-					switch (*eType) {
-					case element::Fire:
-						deathText = fireTrans;
-						break;
-					case element::Water:
-						deathText = waterTrans;
-						break;
-					case element::Grass:
-						deathText = grassTrans;
-						break;
-					default:
-						deathText = fireTrans;
-						break;
-					}
-					std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-					ostackNodes[i]->addChild(poof);
-				}
-				shotProgress += 1;
-				
-			}
+			//if (shotProgress != -1) {
+			//	//a shot has begun
+			//	if (shotProgress < middleScreenFrame) {
+			//		//change from text to the opponent element type texture
+			//		std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
+			//		ostackNodes[i]->addChild(shot);
+			//		chick->setPosition(50*shotProgress, 0);
+			//	}
+			//	else if (shotProgress >= middleScreenFrame) {
+			//		if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
+			//			//shot has reached the enemy chicken!
+			//			//animation of defeat should begin
+			//			dyingFrame[1]=dyingFrame[1]+1;
+			//			
+			//		}
+			//		std::shared_ptr<Texture> deathText;
+			//		switch (eType) {
+			//		case element::Fire:
+			//			deathText = fireTrans;
+			//			break;
+			//		case element::Water:
+			//			deathText = waterTrans;
+			//			break;
+			//		case element::Grass:
+			//			deathText = grassTrans;
+			//			break;
+			//		default:
+			//			deathText = fireTrans;
+			//			break;
+			//		}
+			//		std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+			//		ostackNodes[i]->addChild(poof);
+			//	}
+			//	shotProgress += 1;
+			//	
+			//}
 
 		}
 
@@ -1441,6 +1444,8 @@ void SceneBuilder1::updateInput(float timestep) {
 	}
 
 }
+
+
 
 //Dispose of the scene builder
 void SceneBuilder1::dispose() {

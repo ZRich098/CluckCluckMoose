@@ -359,7 +359,7 @@ void GameScene::update(float timestep) {
 
 			player->takeDamage(opp->getStack().getDamage());
 			opp->takeDamage(player->getStack().getDamage());
-			sb.mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
+			sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
@@ -426,7 +426,7 @@ void GameScene::setNumChickensWillDiePreview() {
 
 	while (!p.empty() && !o.empty()) {
 		int result = p.compare(o);
-		sb.chickDefeat(p.getBottom().getElement(), o.getBottom().getElement(), result);
+		sb->chickDefeat(p.getBottom().getElement(), o.getBottom().getElement(), result);
 
 		switch (result) {
 		case -1: //opp win
