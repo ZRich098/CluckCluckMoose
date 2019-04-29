@@ -323,7 +323,8 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			player->getStack().compare(opp->getStack());
+			int result = player->getStack().compare(opp->getStack());
+			sb.chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
 			cooldown = CLASHLENGTH;
 		}
 		else if (isPreviewing) {
@@ -426,7 +427,6 @@ void GameScene::setNumChickensWillDiePreview() {
 
 	while (!p.empty() && !o.empty()) {
 		int result = p.compare(o);
-		sb.chickDefeat(p.getBottom().getElement(), o.getBottom().getElement(), result);
 
 		switch (result) {
 		case -1: //opp win
