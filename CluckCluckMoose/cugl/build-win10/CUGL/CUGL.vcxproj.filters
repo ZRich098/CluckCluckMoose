@@ -141,9 +141,6 @@
     <Filter Include="Source Files\ai\behavior">
       <UniqueIdentifier>{436b40d8-9669-40a1-b746-a9d379047311}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\base\NewFilter1">
-      <UniqueIdentifier>{b87a2fe9-a54d-4e81-934f-af6a691960a2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\cugl\2d\cu_2d.h">
