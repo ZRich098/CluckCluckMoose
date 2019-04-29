@@ -333,7 +333,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         std::shared_ptr<Button> butt = Button::alloc(id);
         butt->setAnchor(Vec2::ANCHOR_CENTER);
         butt->setScale(0.45, 0.45);
-        butt->setPosition(posX, posY);
+        butt->setPosition(posX, posY + 10);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
 //        butt->activate(106 + lev);
