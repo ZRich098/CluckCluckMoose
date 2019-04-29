@@ -61,6 +61,7 @@ int skipState;
 
 //bool to signify a clash is in progress
 bool isClashing;
+bool firstClash;
 
 
 //bool to signify a clash preview is in progress
@@ -323,9 +324,14 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			element pEle = player->getStack().getBottom().getElement();
-			element oEle = opp->getStack().getBottom().getElement();
-			sb->chickDefeat(pEle, oEle, player->getStack().compare(opp->getStack()));
+			if (!firstClash)
+				player->getStack().compare(opp->getStack());
+			if (!player->getStack().empty() && !opp->getStack().empty()) {
+				element pEle = player->getStack().getBottom().getElement();
+				element oEle = opp->getStack().getBottom().getElement();
+				sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
+			}
+			firstClash = false;
 			cooldown = CLASHLENGTH;
 		}
 		else if (isPreviewing) {
@@ -381,6 +387,7 @@ void GameScene::update(float timestep) {
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
+		firstClash = true;
 		cooldown = CLASHLENGTH*1.5;
 
 		//Play the clashing sfx

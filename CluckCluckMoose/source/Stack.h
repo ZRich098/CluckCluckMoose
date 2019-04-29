@@ -109,6 +109,8 @@ public:
 		returns -1 if loses, 0 if ties, and 1 if wins the current clash */
 	int compare(Stack &opp);
 
+	int compareWithoutRemove(Stack &opp);
+
 	/** int of a stack, used for AI only*/
 	int value;
 
