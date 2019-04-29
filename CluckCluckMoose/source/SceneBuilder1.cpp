@@ -1310,14 +1310,14 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			{
 				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
 				ostackNodes[i]->addChild(poof);
-				poof->setFrame(dyingFrame[1]);
+				poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
 				//poof->flipHorizontal(false);
 
 				if (dyingFrame[1] > 4) {
 					poof->setScale(STACK_SCALE); // Magic number to rescale asset
 					poof->setAnchor(Vec2::ANCHOR_CENTER);
 					poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-					poof->flipHorizontal(false);
+					poof->flipHorizontal(true);
 					layer->swapChild(ostackNodes[i], poof, false);
 				}
 			}
