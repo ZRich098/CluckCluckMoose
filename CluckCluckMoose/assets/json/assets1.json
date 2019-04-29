@@ -316,21 +316,21 @@
             "wrapT": "clamp"
         },
         "elMoose": {
-            "file": "textures/eldrichMoose.png",
+            "file": "textures/eldrichMoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "chrMoose": {
-            "file": "textures/christmoose.png",
+            "file": "textures/christmoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "farmMoose": {
-            "file": "textures/farmMoose.png",
+            "file": "textures/farmMoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
