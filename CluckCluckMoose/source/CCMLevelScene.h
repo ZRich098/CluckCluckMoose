@@ -98,6 +98,9 @@ public:
      * @param curr bool; if arrow
      */
     void buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr);
+
+    void drawNewBox(int cur);
+    void drawLevelNodes(int cur);
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */

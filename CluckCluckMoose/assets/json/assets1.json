@@ -378,8 +378,29 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levelbox": {
-            "file": "textures/levelselect/base_level_select_v2.png",
+        "levelfarm": {
+            "file": "textures/levelselect/bg_lvl_farmory.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelforest": {
+            "file": "textures/levelselect/bg_lvl_forest.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelplant": {
+            "file": "textures/levelselect/bg_lvl_nuclear.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelthrone": {
+            "file": "textures/levelselect/bg_lvl_throne.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -392,36 +413,15 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levelhoof": {
-            "file": "textures/levelselect/hoof.png",
+        "levelup": {
+            "file": "textures/levelselect/arrow_up.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levelfarm": {
-            "file": "textures/levelselect/lvl_farm.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelforest": {
-            "file": "textures/levelselect/lvl_forest.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelplant": {
-            "file": "textures/levelselect/lvl_plant.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelthrone": {
-            "file": "textures/levelselect/lvl_throneRoom.png",
+        "leveldown": {
+            "file": "textures/levelselect/arrow_down.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -434,22 +434,8 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levellockboss": {
-            "file": "textures/levelselect/lock_boss.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
         "levelflag": {
-            "file": "textures/levelselect/flag_normal.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelflagboss": {
-            "file": "textures/levelselect/flag_boss.png",
+            "file": "textures/levelselect/flag_normal_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -457,6 +443,13 @@
         },
         "levelarrow": {
             "file": "textures/levelselect/arrow_currLevel.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "levelcircle": {
+            "file": "textures/levelselect/lvl_circle.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
