@@ -631,8 +631,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
                     },
                     "layout" : {
                         "priority" : 1
@@ -665,8 +665,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
                     },
                     "layout" : {
                         "priority" : 2
@@ -674,4 +674,3 @@
                 }
             }
         }
-

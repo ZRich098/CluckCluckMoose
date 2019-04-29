@@ -359,13 +359,13 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Init stack nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
-    
+
 		/* text = textureF;
 		std::shared_ptr<PolygonNode> poly;
 		poly = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
         poly->setVisible(false);
 		pstackNodes.push_back(poly); */
-    
+
 		text = textureW;
 		//this is std library for c++
 		std::shared_ptr<AnimationNode> anim;
@@ -391,13 +391,13 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//init enemy chicken nodes
 	for (int i = 0; i < 5; i++) {
 		std::shared_ptr<Texture> text;
-    
+
     /*text = textureF;
 		std::shared_ptr<PolygonNode> poly;*/
-  
+
 		text = textureW;
 		std::shared_ptr<AnimationNode> poly;
-    
+
 		poly = buildChicken(text, layer, SCENE_WIDTH - STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), false);
         poly->setVisible(false);
 		ostackNodes.push_back(poly);
@@ -569,8 +569,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 				} */
 			}
 		});
-		
-		
+
+
 		buttonCanvas->addChild(shadowNode);
 		buttonCanvas->addChild(butt);
 		//i+2 to ensure keys are unique
@@ -614,14 +614,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Scale factor * scene height makes the health bar appear in consistent locations, independent of device
 	healthYScale = (((float)(HEALTH_BAR_Y_FACTOR - 1)) / ((float)HEALTH_BAR_Y_FACTOR)) * SCENE_HEIGHT;
 	CULog("%d", healthYScale);
-	
+
 	//Bar
 	std::shared_ptr<PolygonNode> hBar = PolygonNode::allocWithTexture(bar);
 	hBar->setAnchor(Vec2::ANCHOR_CENTER);
 	hBar->setScale(HBAR_SCALE);
 	hBar->setPosition(SCENE_WIDTH / 2, healthYScale);
 	healthCanvas->addChild(hBar);
-  
+
     //Blocks
     for (int i = 0; i < 5; i++) {
         std::shared_ptr<PolygonNode> playerB = PolygonNode::allocWithTexture(pBlock);
@@ -637,7 +637,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
         oppB->setPosition(SCENE_WIDTH / 2 + BAR_DISTANCE / 2 + (i*HEALTH_BLOCK_SPACING), healthYScale);
         healthCanvas->addChild(oppB);
     }
-  
+
 	//Hearts
 	std::shared_ptr<PolygonNode> playerH = PolygonNode::allocWithTexture(pHeart);
 	playerH->setAnchor(Vec2::ANCHOR_CENTER);
@@ -649,7 +649,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	oppH->setScale(HEART_SCALE);
 	oppH->setPosition(SCENE_WIDTH / 2 + HEART_X_OFFSET, healthYScale);
 	healthCanvas->addChild(oppH);
-	
+
 	//Add elemental information
 	std::shared_ptr<Texture> eltInfoText = _assets->get<Texture>("groupedElts");
 	std::shared_ptr<PolygonNode> eltInfo = PolygonNode::allocWithTexture(eltInfoText);
@@ -779,7 +779,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	darkOverlay->setAnchor(Vec2::ANCHOR_CENTER);
 	darkOverlay->setPosition(SCENE_WIDTH / 2, SCENE_HEIGHT / 2);
 	winCanvas->addChild(darkOverlay);
-	
+
 	std::shared_ptr<PolygonNode> darkOverlay2 = PolygonNode::allocWithTexture(wlOverlay);
 	darkOverlay2->setScale(0.7f); // Magic number to rescale asset
 	darkOverlay2->setAnchor(Vec2::ANCHOR_CENTER);
@@ -1183,7 +1183,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			//			//shot has reached the enemy chicken!
 			//			//animation of defeat should begin
 			//			dyingFrame[1]=dyingFrame[1]+1;
-			//			
+			//
 			//		}
 			//		std::shared_ptr<Texture> deathText;
 			//		switch (eType) {
@@ -1204,7 +1204,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			//		ostackNodes[i]->addChild(poof);
 			//	}
 			//	shotProgress += 1;
-			//	
+			//
 			//}
 
 		}
@@ -1260,7 +1260,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				text = num4;
 			}
 			prevDist[i] = currDistI;
-			
+
 				std::shared_ptr<PolygonNode> swapPoly = PolygonNode::allocWithTexture(text);
 				swapPoly->setAnchor(Vec2::ANCHOR_TOP_CENTER);
 				swapPoly->setScale(ELT_NUM_SCALE);
@@ -1298,7 +1298,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	}
 
 	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
-		
+
 		Chicken chick = oppGlobe->getStackAt(i);
 		if (chick.isCycled()) {
 			if (chick.getElement() == element::Fire) {
