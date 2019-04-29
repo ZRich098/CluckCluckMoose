@@ -271,6 +271,33 @@ string Stack::stackString() const {
 	return ss.str();
 }
 
+int Stack::compareWithoutRemove(Stack &opp) {
+	if (!empty() && !opp.empty()) {
+		int result = getBottom().compare(opp.getBottom());
+		if (result == -1)
+		{
+			//CULog("opp win");
+			getBottom();
+		}
+		else if (result == 1)
+		{
+			//CULog("player win");
+			opp.getBottom();
+		}
+		else
+		{
+			//CULog("tie");
+			getBottom();
+			opp.getBottom();
+		}
+		return result;
+	}
+	else {
+		//CULog("compare called on empty stacks");
+		return -2;
+	}
+}
+
 int Stack::compare(Stack &opp) {
 	if (!empty() && !opp.empty()) {
 		int result = getBottom().compare(opp.getBottom());
