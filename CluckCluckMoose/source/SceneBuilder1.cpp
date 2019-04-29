@@ -165,7 +165,11 @@ std::shared_ptr<Texture> defeat;
 std::shared_ptr<Texture> redo;
 std::shared_ptr<Texture> nextlvl;
 
-
+//chicken death textures
+std::shared_ptr<Texture> smokeTrans;
+std::shared_ptr<Texture> waterTrans;
+std::shared_ptr<Texture> grassTrans;
+std::shared_ptr<Texture> fireTrans;
 
 //Main canvas to draw stuff to
 std::shared_ptr<Node> layer;
@@ -305,6 +309,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	nextlvl = _assets->get<Texture>("nextLvl");
 	defeat = _assets->get<Texture>("defeatScreen");
 
+	//get chicken death textures
+	smokeTrans = _assets->get<Texture>("smokeTrans");
+	waterTrans = _assets->get<Texture>("waterTrans");
+	fireTrans = _assets->get<Texture>("fireTrans");
+	grassTrans = _assets->get<Texture>("grassTrans");
 
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
@@ -768,6 +777,16 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	loseCanvas->setVisible(false);
 
 	return true;
+}
+
+void chikDefeat(std::shared_ptr<element> playerType, std::shared_ptr<element> opponentType, int winResult) {
+	//start animation for chicken fading
+	//make child of chicken the element animation
+
+}
+
+void mooseDefeat(int healthChange) {
+
 }
 
 std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
