@@ -141,7 +141,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, AIType::Smart);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
 
 	sb->deactivateHand();
 
@@ -196,7 +196,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
 	sb->setPreview(false);
 	sb->deactivateHand();
 
@@ -470,13 +470,11 @@ void GameScene::handEffect() {
 
 Size GameScene::computeActiveSize() const {
 	Size dimen = Application::get()->getDisplaySize();
-	float ratio1 = dimen.width / dimen.height;
-	float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
-	if (ratio1 < ratio2) {
-		dimen *= SCENE_WIDTH / dimen.width;
-	}
-	else {
-		dimen *= SCENE_HEIGHT / dimen.height;
-	}
+	//float ratio1 = dimen.width / dimen.height;
+	//float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+	
+	//dimen *= SCENE_WIDTH / dimen.width;
+
+	dimen *= SCENE_HEIGHT / dimen.height;
 	return dimen;
 }
