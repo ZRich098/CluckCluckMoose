@@ -324,7 +324,7 @@ void GameScene::update(float timestep) {
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
 			int result = player->getStack().compare(opp->getStack());
-			sb.chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
+			sb->chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
 			cooldown = CLASHLENGTH;
 		}
 		else if (isPreviewing) {
