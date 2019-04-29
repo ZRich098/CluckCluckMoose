@@ -123,7 +123,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
             backClicked = true;
             level = 0; }});
     levelbuttonCanvas->addChild(backbutt);
-    backbutt->activate(101);
+    backbutt->activate(104);
     levelbuttons.push_back(backbutt);
 
     // up button
@@ -137,7 +137,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     upbutt->setListener([=](const std::string& name, bool down) {
         if (down) { upClicked = true; }});
     levelbuttonCanvas->addChild(upbutt);
-    upbutt->activate(102);
+    upbutt->activate(105);
     levelbuttons.push_back(upbutt);
 
     // down button
@@ -151,10 +151,14 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     downbutt->setListener([=](const std::string& name, bool down) {
         if (down) { downClicked = true; }});
     levelbuttonCanvas->addChild(downbutt);
-    downbutt->activate(103);
+    downbutt->activate(106);
     levelbuttons.push_back(downbutt);
 
-    drawLevelNodes(0);
+//    drawLevelNodes(0);
+
+    buildLevelSelect(levelbuttonCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
+    buildLevelSelect(levelbuttonCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
+    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
 
     return true;
 }
@@ -264,18 +268,16 @@ void LevelScene::deactivateButtons() {
 void LevelScene::activateButtons() {
     //note: zero is the back button
 //    for (int i = 0; i <= levelbuttons.size(); i++) {
-//        levelbuttons[i]->activate(101 + i);
+//        levelbuttons[i]->activate(104 + i);
 //    }
 
-//    levelbuttons[0]-]7);
-//    }
-//    else if (curmap == 2){
-//
-//    }
-//    else{
-//
-//    }
-
+    levelbuttons[0]->activate(104);
+    levelbuttons[1]->activate(105);
+    levelbuttons[2]->activate(106);
+    levelbuttons[3]->activate(107);
+    levelbuttons[4]->activate(108);
+    levelbuttons[5]->activate(109);
+//    levelbuttons[6]->activate(107);
 }
 
 void LevelScene::setLevel(int lev) { level = lev; }
@@ -308,7 +310,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX + 15, posY + 15);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-        butt->activate(103 + lev);
+        butt->activate(106 + lev);
         levelbuttons.push_back(butt);
 //        if (scene == 0 || scene == 1){
 //            id->setVisible(true);
@@ -324,7 +326,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX, posY);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-        butt->activate(103 + lev);
+        butt->activate(106 + lev);
         levelbuttons.push_back(butt);
     }
     else { // locks
@@ -359,21 +361,20 @@ void LevelScene::drawNewBox(int cur){
     box->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
     levelbackCanvas->addChild(box);
 
-    drawLevelNodes(cur);
+//    drawLevelNodes(cur);
 }
 
 void LevelScene::drawLevelNodes(int cur){
-    deactivateButtons();
-    if (curmap == 0){
-        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
-        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
-        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
-    }
-    else if (curmap == 1){
-        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, true, false);
-        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, true, false);
-        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
-    }
+//    if (curmap == 0){
+//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
+//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
+//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
+//    }
+//    else if (curmap == 1){
+//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 6, true, false);
+//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 5, true, false);
+//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 4, false, true);
+////    }
 ////    else if (curmap == 2){
 //        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 9, true, false);
 //        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 8, true, false);
