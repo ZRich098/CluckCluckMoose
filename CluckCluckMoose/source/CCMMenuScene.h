@@ -88,6 +88,7 @@ public:
     void setPlay(bool val);
     bool getHelp();
     bool getSettings();
+    cugl::Size computeActiveSize() const;
 };
 
 #endif /* __CCM_MENU_SCENE_H__ */

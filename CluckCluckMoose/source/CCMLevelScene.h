@@ -101,6 +101,7 @@ public:
 
     void drawNewBox(int cur);
     void drawLevelNodes(int cur);
+    cugl::Size computeActiveSize() const;
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */

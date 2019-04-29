@@ -39,6 +39,10 @@ bool downClicked;
 bool drawNew;
 bool nodesMade;
 
+//Screen dimensions
+float levelscreenHeight;
+float levelscreenWidth;
+
 /**
  * Initializes the controller contents, and starts the game
  *
@@ -59,6 +63,10 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     } else if (!Scene::init(dimen)) {
         return false;
     }
+    
+    //Set screen size
+    levelscreenHeight = dimen.height;
+    levelscreenWidth = dimen.width;
 
     //Root node for scene builder
     std::shared_ptr<Node> root;
@@ -87,7 +95,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Add button canvas
     levelbuttonCanvas = Node::alloc();
     levellayer->addChild(levelbuttonCanvas);
-    levelbuttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+    levelbuttonCanvas->setPosition(levelscreenWidth / 2, 150);
 
     //reset drawing between frames
     levelbackCanvas->removeAllChildren();
@@ -96,9 +104,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.55f); // Magic number to rescale asset
+    background->setScale(0.7f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
-    background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+    background->setPosition(levelscreenWidth/2, levelscreenHeight/2);
     levelbackCanvas->addChild(background);
 
     //Draw level box
@@ -106,7 +114,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
     box->setScale(0.5f); // Magic number to rescale asset
     box->setAnchor(Vec2::ANCHOR_CENTER);
-    box->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+    box->setPosition(levelscreenWidth/2, levelscreenHeight/2);
     levelbackCanvas->addChild(box);
 
     // back button
@@ -117,7 +125,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
     backbutt->setScale(0.5, 0.5);
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    backbutt->setPosition(-SCENE_WIDTH*3/8, SCENE_HEIGHT*3/4);
+    backbutt->setPosition(-levelscreenWidth*3/8, levelscreenHeight*3/4);
     backbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             backClicked = true;
@@ -133,7 +141,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<Button> upbutt = Button::alloc(idup);
     upbutt->setAnchor(Vec2::ANCHOR_CENTER);
     upbutt->setScale(0.5, 0.5);
-    upbutt->setPosition(SCENE_WIDTH*5/16, SCENE_HEIGHT*11/16);
+    upbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight*10/16);
     upbutt->setListener([=](const std::string& name, bool down) {
         if (down) { upClicked = true; }});
     levelbuttonCanvas->addChild(upbutt);
@@ -147,18 +155,18 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<Button> downbutt = Button::alloc(iddown);
     downbutt->setAnchor(Vec2::ANCHOR_CENTER);
     downbutt->setScale(0.5, 0.5);
-    downbutt->setPosition(SCENE_WIDTH*5/16, 0);
+    downbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/8);
     downbutt->setListener([=](const std::string& name, bool down) {
         if (down) { downClicked = true; }});
     levelbuttonCanvas->addChild(downbutt);
     downbutt->activate(106);
     levelbuttons.push_back(downbutt);
 
-//    drawLevelNodes(0);
-
-    buildLevelSelect(levelbuttonCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
-    buildLevelSelect(levelbuttonCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
-    buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
+    buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 0, false, false);
+    buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 0, false, false);
+    buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 0, false, false);
+    
+    drawLevelNodes(0);
 
     return true;
 }
@@ -274,9 +282,9 @@ void LevelScene::activateButtons() {
     levelbuttons[0]->activate(104);
     levelbuttons[1]->activate(105);
     levelbuttons[2]->activate(106);
-    levelbuttons[3]->activate(107);
-    levelbuttons[4]->activate(108);
-    levelbuttons[5]->activate(109);
+    levelbuttons[3]->activate(107); // lev 0% (3x)
+    levelbuttons[4]->activate(108); // lev 2%
+    levelbuttons[5]->activate(109); // lev 1%
 //    levelbuttons[6]->activate(107);
 }
 
@@ -289,18 +297,19 @@ void LevelScene::setBack(bool val) { backClicked = val; }
  * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
  */
 void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr){
-    std::shared_ptr<Texture> textureCircle = _assets->get<Texture>("levelcircle");
-    std::shared_ptr<PolygonNode> circleBase = PolygonNode::allocWithTexture(textureCircle);
-    circleBase->setAnchor(Vec2::ANCHOR_CENTER);
-    std::shared_ptr<Button> circle = Button::alloc(circleBase);
-    circle->setAnchor(Vec2::ANCHOR_CENTER);
-    circle->setScale(0.45, 0.45);
-    circle->setPosition(posX, posY);
-    circle->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
-    levelbuttonCanvas->addChild(circle);
-//    levelbuttons.push_back(circle);
+    if (lev == 0){ // circles
+        std::shared_ptr<Texture> textureCircle = _assets->get<Texture>("levelcircle");
+        std::shared_ptr<PolygonNode> circleBase = PolygonNode::allocWithTexture(textureCircle);
+        circleBase->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> circle = Button::alloc(circleBase);
+        circle->setAnchor(Vec2::ANCHOR_CENTER);
+        circle->setScale(0.45, 0.45);
+        circle->setPosition(posX, posY);
+//        circle->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+        levelbuttonCanvas->addChild(circle);
+    }
 
-    if (!locked && !curr) { // flags
+    else if (!locked && !curr) { // flags
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levelflag");
         std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
         id->setAnchor(Vec2::ANCHOR_CENTER);
@@ -310,7 +319,8 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX + 15, posY + 15);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-        butt->activate(106 + lev);
+//        butt->activate(106 + lev);
+        butt->activate(107 + (lev % 3));
         levelbuttons.push_back(butt);
 //        if (scene == 0 || scene == 1){
 //            id->setVisible(true);
@@ -326,20 +336,23 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX, posY);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-        butt->activate(106 + lev);
+//        butt->activate(106 + lev);
+        butt->activate(107 + (lev % 3));
         levelbuttons.push_back(butt);
     }
     else { // locks
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levellock");
-        std::shared_ptr<PolygonNode> levelptr = PolygonNode::allocWithTexture(texture);
-        levelptr->setScale(0.5f); // Magic number to rescale asset
-        levelptr->setAnchor(Vec2::ANCHOR_CENTER);
-        levelptr->setPosition(posX, posY);
-        node->addChild(levelptr);
-        list.push_back(levelptr);
-//        if (scene == 1 || scene == 2){
-//            levelptr->setVisible(true);
-//        }
+        std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
+        id->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> butt = Button::alloc(id);
+        butt->setAnchor(Vec2::ANCHOR_CENTER);
+        butt->setScale(0.45, 0.45);
+        butt->setPosition(posX, posY);
+        butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+        levelbuttonCanvas->addChild(butt);
+        //        butt->activate(106 + lev);
+        butt->activate(107 + (lev % 3));
+        levelbuttons.push_back(butt);
     }
 }
 
@@ -358,33 +371,60 @@ void LevelScene::drawNewBox(int cur){
     std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
     box->setScale(0.5f); // Magic number to rescale asset
     box->setAnchor(Vec2::ANCHOR_CENTER);
-    box->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+    box->setPosition(levelscreenWidth/2, levelscreenHeight/2);
     levelbackCanvas->addChild(box);
 
-//    drawLevelNodes(cur);
+    drawLevelNodes(cur);
 }
 
 void LevelScene::drawLevelNodes(int cur){
-//    if (curmap == 0){
-//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 3, false, false);
-//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 2, false, false);
-//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 1, false, false);
-//    }
-//    else if (curmap == 1){
-//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 6, true, false);
-//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 5, true, false);
-//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 4, false, true);
-////    }
-////    else if (curmap == 2){
-//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 9, true, false);
-//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 8, true, false);
-//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 7, true, false);
-////    }
-////    else {
-//        buildLevelSelect(levelbackCanvas, -SCENE_WIDTH*4/32, SCENE_HEIGHT*40/64, levelNodes, 12, true, false);
-//        buildLevelSelect(levelbackCanvas, 0, SCENE_HEIGHT*24/64, levelNodes, 11, false, false);
-//        buildLevelSelect(levelbuttonCanvas, SCENE_WIDTH*5/32, SCENE_HEIGHT*5/64, levelNodes, 10, true, false);
-//    }
+    if (nodesMade){
+        CULog("nodes made, size of list: %d", levelbuttons.size());
+        levelbuttons[3]->setVisible(false);
+        levelbuttons[4]->setVisible(false);
+        levelbuttons[5]->setVisible(false);
+        
+        levelbuttons[3]->deactivate();
+        levelbuttons[4]->deactivate();
+        levelbuttons[5]->deactivate();
+        
+        levelbuttons.pop_back();
+        levelbuttons.pop_back();
+        levelbuttons.pop_back();
+        CULog("pop backed, size of list: %d", levelbuttons.size());
+    }
+    
+    if (curmap == 0){
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 3, false, false);
+        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 2, false, false);
+        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 1, false, false);
+    }
+    else if (curmap == 1){
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 6, false, false);
+        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 5, false, false);
+        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 4, false, true);
+    }
+    else if (curmap == 2){
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 9, true, false);
+        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 8, false, false);
+        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 7, false, false);
+    }
+    else {
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 12, true, false);
+        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 11, true, false);
+        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 10, true, false);
+    }
 
     nodesMade = true;
+}
+
+Size LevelScene::computeActiveSize() const {
+    Size dimen = Application::get()->getDisplaySize();
+    //float ratio1 = dimen.width / dimen.height;
+    //float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+    
+    //dimen *= SCENE_WIDTH / dimen.width;
+    
+    dimen *= SCENE_HEIGHT / dimen.height;
+    return dimen;
 }
