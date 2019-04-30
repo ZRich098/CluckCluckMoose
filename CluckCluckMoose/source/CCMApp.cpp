@@ -255,6 +255,7 @@ void CCMApp::update(float timestep) {
 						_gamescene = GameScene::alloc(_assets, pl, op, ai);
 						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
+						_input.init();
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 					}
@@ -269,7 +270,7 @@ void CCMApp::update(float timestep) {
                 _gamescene->setHome(false);
                 _gameplay[_current]->setActive(false);
                 //_gameplay[_current]->dispose();
-                _gameplay.erase(_gameplay.begin()+_current-1);
+                _gameplay.erase(_gameplay.begin()+_current);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
 //                _levelscene.setLevel(0);

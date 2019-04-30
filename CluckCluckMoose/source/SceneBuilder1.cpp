@@ -328,6 +328,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
 	layer->doLayout(); // This rearranges the children to fit the screen
+	layer->removeFromParent();
 	root->addChild(layer);
 
 	//Create background node
