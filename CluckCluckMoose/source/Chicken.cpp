@@ -121,6 +121,8 @@ string eString(element e) {
 		case element::LoseAll:
 		case element::Unset:
 			return "";
+        default:
+            return "";
 	}	
 }
 

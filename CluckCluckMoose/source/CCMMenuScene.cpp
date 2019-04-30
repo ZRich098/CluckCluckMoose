@@ -18,7 +18,7 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 
-#define TITLE_HEIGHT 600 //
+//#define TITLE_HEIGHT 600 //
 
 // BGM for the game
 #define MUSIC_THEME			"theme"
@@ -45,6 +45,10 @@ bool playClicked;
 bool helpClicked;
 bool settingsClicked;
 
+//Screen dimensions
+float menuscreenHeight;
+float menuscreenWidth;
+
 /**
  * Initializes the controller contents, and starts the game
  *
@@ -58,13 +62,17 @@ bool settingsClicked;
  */
 bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     // Initialize the scene to a locked width
-    Size dimen = Application::get()->getDisplaySize();
+    Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     if (assets == nullptr) {
         return false;
     } else if (!Scene::init(dimen)) {
         return false;
     }
+    
+    //Set screen size
+    menuscreenHeight = dimen.height;
+    menuscreenWidth = dimen.width;
 
     //Root node for scene builder
     std::shared_ptr<Node> root;
@@ -95,7 +103,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Add button canvas
     menubuttonCanvas = Node::alloc();
     menulayer->addChild(menubuttonCanvas);
-    menubuttonCanvas->setPosition(SCENE_WIDTH / 2, 150);
+    menubuttonCanvas->setPosition(menuscreenWidth / 2, 150);
 
     //reset drawing between frames
     menubackCanvas->removeAllChildren();
@@ -105,9 +113,9 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("menubg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.55f); // Magic number to rescale asset
+    background->setScale(0.65f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
-    background->setPosition(SCENE_WIDTH/2, SCENE_HEIGHT/2);
+    background->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     menubackCanvas->addChild(background);
 
     //Draw title
@@ -115,7 +123,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<PolygonNode> title = PolygonNode::allocWithTexture(texturetitle);
     title->setScale(0.55f); // Magic number to rescale asset
     title->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
-    title->setPosition(SCENE_WIDTH/2, TITLE_HEIGHT);
+    title->setPosition(menuscreenWidth/2, menuscreenHeight*5/8);
     titleCanvas->addChild(title);
 
     // Play button
@@ -127,7 +135,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     playbutt->setScale(0.4, 0.4);
 
     playbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    playbutt->setPosition(0, SCENE_HEIGHT/3);
+    playbutt->setPosition(0, menuscreenHeight/3);
     playbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
 			playButtonSound();
@@ -144,7 +152,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpbutt->setScale(0.4, 0.4);
 
     helpbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    helpbutt->setPosition(0, SCENE_HEIGHT/3 - 100);
+    helpbutt->setPosition(0, menuscreenHeight/3 - 100);
     helpbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
 			playButtonSound();
@@ -161,7 +169,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     settingsbutt->setScale(0.4, 0.4);
 
     settingsbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    settingsbutt->setPosition(0, SCENE_HEIGHT/3 - 200);
+    settingsbutt->setPosition(0, menuscreenHeight/3 - 200);
     settingsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
 			playButtonSound();
@@ -229,3 +237,14 @@ bool MenuScene::getPlay() { return playClicked; }
 void MenuScene::setPlay(bool val) { playClicked = val; }
 bool MenuScene::getHelp() { return helpClicked; }
 bool MenuScene::getSettings() { return settingsClicked; }
+
+Size MenuScene::computeActiveSize() const {
+    Size dimen = Application::get()->getDisplaySize();
+    //float ratio1 = dimen.width / dimen.height;
+    //float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+    
+    //dimen *= SCENE_WIDTH / dimen.width;
+    
+    dimen *= SCENE_HEIGHT / dimen.height;
+    return dimen;
+}
