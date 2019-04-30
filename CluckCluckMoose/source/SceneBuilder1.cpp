@@ -1506,13 +1506,13 @@ void SceneBuilder1::activateHand() {
 }
 
 void SceneBuilder1::activatePause() {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		pausebuttons[i]->activate(201 + i);
 	}
 }
 
 void SceneBuilder1::deactivatePause() {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		pausebuttons[i]->deactivate();
 	}
 }
