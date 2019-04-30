@@ -205,7 +205,9 @@ void CCMApp::update(float timestep) {
         _loaded = true;
         _levelscene.deactivateButtons();
     } else {
+		//CULog("updating input");
         _input.update(timestep);
+		//CULog("done updating input");
         if (_current == 0) { // if on menu scene
             if (_menuscene.getPlay()) { // play is clicked
                 _gameplay[_current]->setActive(false);
@@ -273,7 +275,7 @@ void CCMApp::update(float timestep) {
                 _gameplay.erase(_gameplay.begin()+_current);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
-//                _levelscene.setLevel(0);
+                _levelscene.setLevel(0);
             }
         }
         _gameplay[_current]->update(timestep);
