@@ -1,574 +1,574 @@
 {
-    "textures": {
-        "reds": {
-            "file": "textures/red-small.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "fire": {
-            "file": "textures/fire_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "smokeTrans": {
-            "file": "textures/smoke_trans.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "water": {
-            "file": "textures/water_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "grass": {
-            "file": "textures/grass_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "reaper": {
-            "file": "textures/reaper_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "bomb": {
-            "file": "textures/bomb_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "mirror": {
-            "file": "textures/mirror_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "ninja": {
-            "file": "textures/ninja_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "party": {
-            "file": "textures/party_fowl.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "spy": {
-            "file": "textures/spy_chick.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "thicken": {
-            "file": "textures/thicken.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "witchen": {
-            "file": "textures/witchen.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "preview": {
-            "file": "textures/btn_preview_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "fireInfo": {
-            "file": "textures/card_basic_fireChicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "waterInfo": {
-            "file": "textures/card_basic_waterChicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "grassInfo": {
-            "file": "textures/card_basic_grassChicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "spyInfo": {
-            "file": "textures/card_special_chickenSpy_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "mirrorInfo": {
-            "file": "textures/card_special_mirrorChicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "partyInfo": {
-            "file": "textures/card_special_partyFowl_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "reapInfo": {
-            "file": "textures/card_special_reaperChicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "shurInfo": {
-            "file": "textures/card_special_shuriken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "thickInfo": {
-            "file": "textures/card_special_thicken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "tickInfo": {
-            "file": "textures/card_special_ticken_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "witchInfo": {
-            "file": "textures/card_special_witchen_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "healthBar": {
-            "file": "textures/base_no_pause.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pHeart": {
-            "file": "textures/heart_player.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "oHeart": {
-            "file": "textures/heart_opponent.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pBlock": {
-            "file": "textures/tile_player.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "oBlock": {
-            "file": "textures/tile_opponent.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "moose": {
-            "file": "textures/moose.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "farmfg": {
-            "file": "textures/fg_farm_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "farmbg": {
-            "file": "textures/bg_farm_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "forestbg": {
-            "file": "textures/lvl_forest_background.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "nuclearbg": {
-            "file": "textures/lvl_nuclear_background.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "nuclearfg": {
-            "file": "textures/lvl_nuclear_overlay.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "groupedElts": {
-            "file": "textures/grouped_elements_v2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "num0": {
-            "file": "textures/num_0.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "num1": {
-            "file": "textures/num_1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "num2": {
-            "file": "textures/num_2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "num3": {
-            "file": "textures/num_3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "num4": {
-            "file": "textures/num_4.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "fireLabel": {
-            "file": "textures/stamp_fire_v2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "grassLabel": {
-            "file": "textures/stamp_grass_v2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "waterLabel": {
-            "file": "textures/stamp_water_v2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "shadow": {
-            "file": "textures/shadow.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "elMoose": {
-            "file": "textures/eldrichMoose.PNG",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "chrMoose": {
-            "file": "textures/christmoose.PNG",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "farmMoose": {
-            "file": "textures/farmMoose.PNG",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "victoryScreen": {
-            "file": "textures/base_victory_noUnlock.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "wlOverlay": {
-            "file": "textures/dark_overlay.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "defeatScreen": {
-            "file": "textures/defeat_base.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "redo": {
-            "file": "textures/btn_redo.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "homeButton": {
-            "file": "textures/btn_home.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "nextLvl": {
-            "file": "textures/btn_next.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "menubg": {
-            "file": "textures/mainmenu/bg_homescreen_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "menutitle": {
-            "file": "textures/mainmenu/title_mainTitle_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "menuplay": {
-            "file": "textures/mainmenu/btn_play_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "menuhelp": {
-            "file": "textures/mainmenu/btn_help_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "menusettings": {
-            "file": "textures/mainmenu/btn_settings_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelbg": {
-            "file": "textures/levelselect/bg_neutral_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelfarm": {
-            "file": "textures/levelselect/bg_lvl_farmory.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelforest": {
-            "file": "textures/levelselect/bg_lvl_forest.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelplant": {
-            "file": "textures/levelselect/bg_lvl_nuclear.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelthrone": {
-            "file": "textures/levelselect/bg_lvl_throne.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelback": {
-            "file": "textures/levelselect/btn_back.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelup": {
-            "file": "textures/levelselect/arrow_up.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "leveldown": {
-            "file": "textures/levelselect/arrow_down.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levellock": {
-            "file": "textures/levelselect/lock_normal.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelflag": {
-            "file": "textures/levelselect/flag_normal_v3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelarrow": {
-            "file": "textures/levelselect/arrow_currLevel.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "levelcircle": {
-            "file": "textures/levelselect/lvl_circle.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausebutton": {
-            "file": "textures/pausemenu/pause.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pauseoverlay": {
-            "file": "textures/pausemenu/dark_overlay.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausebox": {
-            "file": "textures/pausemenu/base_pause.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausehome": {
-            "file": "textures/pausemenu/btn_home.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pauserestart": {
-            "file": "textures/pausemenu/btn_restart.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pauseresume": {
-            "file": "textures/pausemenu/btn_resume.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausesettings": {
-            "file": "textures/pausemenu/btn_settings.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausesoundoff": {
-            "file": "textures/pausemenu/btn_soundOff.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "pausesoundon": {
-            "file": "textures/pausemenu/btn_soundOn.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        }
+  "textures": {
+    "reds": {
+      "file": "textures/red-small.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
     },
-    "sounds": {
+    "fire": {
+      "file": "textures/fire_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "smokeTrans": {
+      "file": "textures/smoke_trans.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "water": {
+      "file": "textures/water_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "grass": {
+      "file": "textures/grass_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "reaper": {
+      "file": "textures/reaper_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "bomb": {
+      "file": "textures/bomb_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "mirror": {
+      "file": "textures/mirror_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "ninja": {
+      "file": "textures/ninja_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "party": {
+      "file": "textures/party_fowl.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "spy": {
+      "file": "textures/spy_chick.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "thicken": {
+      "file": "textures/thicken.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "witchen": {
+      "file": "textures/witchen.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "preview": {
+      "file": "textures/btn_preview_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "fireInfo": {
+      "file": "textures/card_basic_fireChicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "waterInfo": {
+      "file": "textures/card_basic_waterChicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "grassInfo": {
+      "file": "textures/card_basic_grassChicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "spyInfo": {
+      "file": "textures/card_special_chickenSpy_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "mirrorInfo": {
+      "file": "textures/card_special_mirrorChicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "partyInfo": {
+      "file": "textures/card_special_partyFowl_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "reapInfo": {
+      "file": "textures/card_special_reaperChicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "shurInfo": {
+      "file": "textures/card_special_shuriken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "thickInfo": {
+      "file": "textures/card_special_thicken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "tickInfo": {
+      "file": "textures/card_special_ticken_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "witchInfo": {
+      "file": "textures/card_special_witchen_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "healthBar": {
+      "file": "textures/base_no_pause.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pHeart": {
+      "file": "textures/heart_player.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "oHeart": {
+      "file": "textures/heart_opponent.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pBlock": {
+      "file": "textures/tile_player.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "oBlock": {
+      "file": "textures/tile_opponent.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "moose": {
+      "file": "textures/moose.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "farmfg": {
+      "file": "textures/fg_farm_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "farmbg": {
+      "file": "textures/bg_farm_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "forestbg": {
+      "file": "textures/lvl_forest_background.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "nuclearbg": {
+      "file": "textures/lvl_nuclear_background.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "nuclearfg": {
+      "file": "textures/lvl_nuclear_overlay.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "groupedElts": {
+      "file": "textures/grouped_elements_v2.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "num0": {
+      "file": "textures/num_0.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "num1": {
+      "file": "textures/num_1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "num2": {
+      "file": "textures/num_2.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "num3": {
+      "file": "textures/num_3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "num4": {
+      "file": "textures/num_4.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "fireLabel": {
+      "file": "textures/stamp_fire_v2.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "grassLabel": {
+      "file": "textures/stamp_grass_v2.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "waterLabel": {
+      "file": "textures/stamp_water_v2.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "shadow": {
+      "file": "textures/shadow.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "elMoose": {
+      "file": "textures/eldrichMoose.PNG",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "chrMoose": {
+      "file": "textures/christmoose.PNG",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "farmMoose": {
+      "file": "textures/farmMoose.PNG",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "victoryScreen": {
+      "file": "textures/base_victory_noUnlock.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "wlOverlay": {
+      "file": "textures/dark_overlay.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "defeatScreen": {
+      "file": "textures/defeat_base.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "redo": {
+      "file": "textures/btn_redo.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "homeButton": {
+      "file": "textures/btn_home.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "nextLvl": {
+      "file": "textures/btn_next.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "menubg": {
+      "file": "textures/mainmenu/bg_homescreen_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "menutitle": {
+      "file": "textures/mainmenu/title_mainTitle_v3.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "menuplay": {
+      "file": "textures/mainmenu/btn_play_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "menuhelp": {
+      "file": "textures/mainmenu/btn_help_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "menusettings": {
+      "file": "textures/mainmenu/btn_settings_v1.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "levelbg": {
+        "file": "textures/levelselect/bg_neutral_v1.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelfarm": {
+        "file": "textures/levelselect/bg_lvl_farmory.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelforest": {
+        "file": "textures/levelselect/bg_lvl_forest.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelplant": {
+        "file": "textures/levelselect/bg_lvl_nuclear.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelthrone": {
+        "file": "textures/levelselect/bg_lvl_throne.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelback": {
+        "file": "textures/levelselect/btn_back.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelup": {
+        "file": "textures/levelselect/arrow_up.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "leveldown": {
+        "file": "textures/levelselect/arrow_down.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levellock": {
+        "file": "textures/levelselect/lock_normal.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelflag": {
+        "file": "textures/levelselect/flag_normal_v3.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelarrow": {
+        "file": "textures/levelselect/arrow_currLevel.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelcircle": {
+        "file": "textures/levelselect/lvl_circle.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "pausebutton": {
+      "file": "textures/pausemenu/pause.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pauseoverlay": {
+      "file": "textures/pausemenu/dark_overlay.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pausebox": {
+      "file": "textures/pausemenu/base_pause.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pausehome": {
+      "file": "textures/pausemenu/btn_home.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pauserestart": {
+      "file": "textures/pausemenu/btn_restart.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pauseresume": {
+      "file": "textures/pausemenu/btn_resume.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pausesettings": {
+      "file": "textures/pausemenu/btn_settings.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pausesoundoff": {
+      "file": "textures/pausemenu/btn_soundOff.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    },
+    "pausesoundon": {
+      "file": "textures/pausemenu/btn_soundOn.png",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "wrapS": "clamp",
+      "wrapT": "clamp"
+    }
+  },
+	"sounds": {
         "bell": {
             "type":     "sample",
             "file":     "audio/boxing_bell.wav",

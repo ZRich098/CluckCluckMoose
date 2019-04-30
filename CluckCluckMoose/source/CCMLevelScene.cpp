@@ -104,7 +104,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.7f); // Magic number to rescale asset
+    background->setScale(0.6f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
     background->setPosition(levelscreenWidth/2, levelscreenHeight/2);
     levelbackCanvas->addChild(background);
@@ -162,10 +162,12 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     downbutt->activate(106);
     levelbuttons.push_back(downbutt);
 
+    // Draw base circles
     buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 0, false, false);
     buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 0, false, false);
     buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 0, false, false);
     
+    // Draw farm nodes
     drawLevelNodes(0);
 
     return true;
@@ -181,28 +183,23 @@ void LevelScene::dispose() {
     Scene::dispose();
 }
 
+// This can be cleaned up lol
 void LevelScene::update(float timestep) {
     if (curmap == 0) { // farm
         if (upClicked){
-            CULog("0, up");
             curmap++;
             drawNew = true;
             upClicked = false;
         }
-        else if (downClicked){
-            CULog("0, down");
-            downClicked = false;
-        }
+        else if (downClicked){ downClicked = false; }
     }
     else if (curmap == 1) { // forest
         if (upClicked){
-            CULog("1, up");
             curmap++;
             drawNew = true;
             upClicked = false;
         }
         else if (downClicked){
-            CULog("1, down");
             curmap--;
             drawNew = true;
             downClicked = false;
@@ -210,13 +207,11 @@ void LevelScene::update(float timestep) {
     }
     else if (curmap == 2){ // plant
         if (upClicked){
-            CULog("2, up");
             curmap++;
             drawNew = true;
             upClicked = false;
         }
         else if (downClicked){
-            CULog("2, down");
             curmap--;
             drawNew = true;
             downClicked = false;
@@ -224,11 +219,9 @@ void LevelScene::update(float timestep) {
     }
     else if (curmap == 3){ //throne
         if (upClicked){
-            CULog("3, up");
             upClicked = false;
         }
         else if (downClicked){
-            CULog("3, down");
             curmap--;
             drawNew = true;
             downClicked = false;
@@ -285,7 +278,6 @@ void LevelScene::activateButtons() {
     levelbuttons[3]->activate(107); // lev 0% (3x)
     levelbuttons[4]->activate(108); // lev 2%
     levelbuttons[5]->activate(109); // lev 1%
-//    levelbuttons[6]->activate(107);
 }
 
 void LevelScene::setLevel(int lev) { level = lev; }
@@ -297,7 +289,7 @@ void LevelScene::setBack(bool val) { backClicked = val; }
  * 4/16: No current support for actual unlocking of levels, this is for playtesting 4/17
  */
 void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr){
-    if (lev == 0){ // circles
+    if (lev == 0){ // circles beneath icons
         std::shared_ptr<Texture> textureCircle = _assets->get<Texture>("levelcircle");
         std::shared_ptr<PolygonNode> circleBase = PolygonNode::allocWithTexture(textureCircle);
         circleBase->setAnchor(Vec2::ANCHOR_CENTER);
@@ -305,10 +297,8 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         circle->setAnchor(Vec2::ANCHOR_CENTER);
         circle->setScale(0.45, 0.45);
         circle->setPosition(posX, posY);
-//        circle->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(circle);
     }
-
     else if (!locked && !curr) { // flags
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levelflag");
         std::shared_ptr<PolygonNode> id = PolygonNode::allocWithTexture(texture);
@@ -319,12 +309,8 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX + 15, posY + 15);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-//        butt->activate(106 + lev);
         butt->activate(107 + (lev % 3));
         levelbuttons.push_back(butt);
-//        if (scene == 0 || scene == 1){
-//            id->setVisible(true);
-//        }
     }
     else if (curr){ // arrow
         std::shared_ptr<Texture> texture = _assets->get<Texture>("levelarrow");
@@ -336,7 +322,6 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX, posY + 10);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-//        butt->activate(106 + lev);
         butt->activate(107 + (lev % 3));
         levelbuttons.push_back(butt);
     }
@@ -350,23 +335,19 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         butt->setPosition(posX, posY);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
-        //        butt->activate(106 + lev);
         butt->activate(107 + (lev % 3));
         levelbuttons.push_back(butt);
     }
 }
 
+// draw new background level scene
 void LevelScene::drawNewBox(int cur){
-//    drawNew = false;
     std::shared_ptr<Texture> texturebox;
     if (cur == 0){ texturebox = _assets->get<Texture>("levelfarm"); }
     else if (cur == 1){ texturebox = _assets->get<Texture>("levelforest"); }
     else if (cur == 2){ texturebox = _assets->get<Texture>("levelplant"); }
     else if (cur == 3){ texturebox = _assets->get<Texture>("levelthrone"); }
-    else {
-        texturebox = _assets->get<Texture>("levelfarm");
-        CULog("Error! Current map is.. bad");
-    }
+    else { texturebox = _assets->get<Texture>("levelfarm"); }
     //Draw level box
     std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
     box->setScale(0.5f); // Magic number to rescale asset
@@ -377,9 +358,9 @@ void LevelScene::drawNewBox(int cur){
     drawLevelNodes(cur);
 }
 
+// Draws new flags/locks/arrows
 void LevelScene::drawLevelNodes(int cur){
     if (nodesMade){
-        CULog("nodes made, size of list: %d", levelbuttons.size());
         levelbuttons[3]->setVisible(false);
         levelbuttons[4]->setVisible(false);
         levelbuttons[5]->setVisible(false);
@@ -391,7 +372,6 @@ void LevelScene::drawLevelNodes(int cur){
         levelbuttons.pop_back();
         levelbuttons.pop_back();
         levelbuttons.pop_back();
-        CULog("pop backed, size of list: %d", levelbuttons.size());
     }
     
     if (curmap == 0){
@@ -414,17 +394,11 @@ void LevelScene::drawLevelNodes(int cur){
         buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 11, true, false);
         buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 10, true, false);
     }
-
     nodesMade = true;
 }
 
 Size LevelScene::computeActiveSize() const {
     Size dimen = Application::get()->getDisplaySize();
-    //float ratio1 = dimen.width / dimen.height;
-    //float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
-    
-    //dimen *= SCENE_WIDTH / dimen.width;
-    
     dimen *= SCENE_HEIGHT / dimen.height;
     return dimen;
 }

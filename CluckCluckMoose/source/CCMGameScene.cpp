@@ -59,10 +59,6 @@ int skipState;
 //bool to signify a clash is in progress
 bool isClashing;
 
-
-//bool to signify a clash preview is in progress
-bool isPreviewing;
-
 //bool to signify a a winState
 bool didWin;
 
@@ -302,7 +298,7 @@ void GameScene::update(float timestep) {
 		//CULog("SKIP: %d",skipState);
 	}
 
-	if (sb->getPreview() && !isPreviewing && !isClashing) { //replace with if Preview button is pressed
+	if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
 		//Play the button sfx
 		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 		auto source = _assets->get<Sound>(sfx);
@@ -310,11 +306,6 @@ void GameScene::update(float timestep) {
 			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
 		}
 
-		isPreviewing = true;
-
-		playerPreviewStack = player->getStack();
-		oppPreviewStack = opp->getStack();
-		isClashing = true;
 		cooldown = CLASHLENGTH;
 	}
 
@@ -322,23 +313,6 @@ void GameScene::update(float timestep) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
 			player->getStack().compare(opp->getStack());
 			cooldown = CLASHLENGTH;
-		}
-		else if (isPreviewing) {
-			//player->setStack(playerPreviewStack);
-			//opp->setStack(oppPreviewStack);
-			player->getStack().clear();
-			opp->getStack().clear();
-			for (int i = 0; i < playerPreviewStack.getSize(); i++) {
-				player->getStack().add(playerPreviewStack.at(i));
-			}
-			for (int i = 0; i < oppPreviewStack.getSize(); i++) {
-				opp->getStack().add(oppPreviewStack.at(i));
-			}
-			isPreviewing = false;
-			isClashing = false;
-			cooldown = CLASHLENGTH;
-
-			sb->setPreview(false);
 		}
 		else {
 			player->eraseChickens();
