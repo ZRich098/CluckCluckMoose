@@ -323,21 +323,21 @@
       "wrapT": "clamp"
     },
     "elMoose": {
-      "file": "textures/eldrichMoose.png",
+      "file": "textures/eldrichMoose.PNG",
       "minfilter": "linear",
       "magfilter": "linear",
       "wrapS": "clamp",
       "wrapT": "clamp"
     },
     "chrMoose": {
-      "file": "textures/christmoose.png",
+      "file": "textures/christmoose.PNG",
       "minfilter": "linear",
       "magfilter": "linear",
       "wrapS": "clamp",
       "wrapT": "clamp"
     },
     "farmMoose": {
-      "file": "textures/farmMoose.png",
+      "file": "textures/farmMoose.PNG",
       "minfilter": "linear",
       "magfilter": "linear",
       "wrapS": "clamp",
@@ -421,95 +421,88 @@
       "wrapT": "clamp"
     },
     "levelbg": {
-      "file": "textures/levelselect/bg_neutral_v1.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
-    },
-    "levelbox": {
-      "file": "textures/levelselect/base_level_select_v2.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
-    },
-    "levelback": {
-      "file": "textures/levelselect/btn_back.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
-    },
-    "levelhoof": {
-      "file": "textures/levelselect/hoof.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/bg_neutral_v1.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelfarm": {
-      "file": "textures/levelselect/lvl_farm.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/bg_lvl_farmory.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelforest": {
-      "file": "textures/levelselect/lvl_forest.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/bg_lvl_forest.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelplant": {
-      "file": "textures/levelselect/lvl_plant.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/bg_lvl_nuclear.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelthrone": {
-      "file": "textures/levelselect/lvl_throneRoom.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/bg_lvl_throne.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelback": {
+        "file": "textures/levelselect/btn_back.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelup": {
+        "file": "textures/levelselect/arrow_up.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "leveldown": {
+        "file": "textures/levelselect/arrow_down.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levellock": {
-      "file": "textures/levelselect/lock_normal.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
-    },
-    "levellockboss": {
-      "file": "textures/levelselect/lock_boss.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/lock_normal.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelflag": {
-      "file": "textures/levelselect/flag_normal.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
-    },
-    "levelflagboss": {
-      "file": "textures/levelselect/flag_boss.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/flag_normal_v3.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "levelarrow": {
-      "file": "textures/levelselect/arrow_currLevel.png",
-      "minfilter": "linear",
-      "magfilter": "linear",
-      "wrapS": "clamp",
-      "wrapT": "clamp"
+        "file": "textures/levelselect/arrow_currLevel.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
+    "levelcircle": {
+        "file": "textures/levelselect/lvl_circle.png",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     },
     "pausebutton": {
       "file": "textures/pausemenu/pause.png",
@@ -580,67 +573,67 @@
             "type":     "sample",
             "file":     "audio/boxing_bell.wav",
             "volume":   0.5,
-			"stream": false
+            "stream": false
         },
         "screech": {
             "type":     "sample",
             "file":     "audio/chicken_screech.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "impact": {
             "type":     "sample",
             "file":     "audio/chicken_impact.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "water": {
             "type":     "sample",
             "file":     "audio/water_impact.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "witchen": {
             "type":     "sample",
             "file":     "audio/witchen_puff.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "button_a": {
             "type":     "sample",
             "file":     "audio/button_a.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "button_b": {
             "type":     "sample",
             "file":     "audio/button_b.wav",
             "volume":   0.8,
-			"stream": false
+            "stream": false
         },
         "theme": {
             "type":     "sample",
             "file":     "audio/CCM_Theme.wav",
             "volume":   0.5,
-			"stream":	true
+            "stream":    true
         },
         "trailer": {
             "type":     "sample",
             "file":     "audio/CCM_Trailer.wav",
             "volume":   0.5,
-			"stream":	true
+            "stream":    true
         }
     },
-	"fonts": {
-		"felt": {
-			"file":     "fonts/MarkerFelt.ttf",
-			"size":     64
-		},
+    "fonts": {
+        "felt": {
+            "file":     "fonts/MarkerFelt.ttf",
+            "size":     64
+        },
         "sans": {
             "file":     "fonts/Roboto-Bold.ttf",
             "size":     64
         }
-	},
+    },
     "scenes": {
         "menu" : {
             "comment"   : "A scene graph of buttons to demo a layout manager",
@@ -654,10 +647,10 @@
             "children"  : {
                 
                 
-                    },
-                    "layout" : {
-                        "priority" : 1
-                    }
+            },
+            "layout" : {
+                "priority" : 1
+            }
         },
         "levelselect" : {
             "comment"   : "A scene graph of buttons to demo a layout manager",
@@ -669,8 +662,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-
-
+                
+                
             },
             "layout" : {
                 "priority" : 1
@@ -688,12 +681,12 @@
             "children"  : {
                 
                 
-                    },
-                    "layout" : {
-                        "priority" : 2
-                    }
-                }
+            },
+            "layout" : {
+                "priority" : 2
             }
         }
     }
+}
+}
 }
