@@ -104,7 +104,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-    background->setScale(0.6f); // Magic number to rescale asset
+    background->setScale(0.65f); // Magic number to rescale asset
     background->setAnchor(Vec2::ANCHOR_CENTER);
     background->setPosition(levelscreenWidth/2, levelscreenHeight/2);
     levelbackCanvas->addChild(background);
