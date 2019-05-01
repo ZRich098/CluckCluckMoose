@@ -46,9 +46,6 @@ using namespace cugl;
 //stack size
 int stackSize;
 
-//previous hand size for tracking placing a chicken
-int prevHand;
-
 //number of frames in between clashes
 int cooldown;
 
@@ -268,9 +265,10 @@ void GameScene::update(float timestep) {
 	}
 
 	sb->updateInput(timestep);
-
+	//CULog("%d, %d",prevHand, player->getHand().size());
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == ENTRY) {
+			CULog("opp playing: %d", oppAI->getPlay());
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());

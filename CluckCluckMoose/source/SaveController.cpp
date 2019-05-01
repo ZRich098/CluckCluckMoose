@@ -69,6 +69,7 @@ std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<Jso
 	string cost = costume->asString();
 
 	player = Moose::alloc(5, 6);
+	CULog("Hand size: %d, Order size: %d",hand.size(),playOrder.size());
 	player->jsonInit(h, hand, playOrder, coop, cost);
 
 	return player;

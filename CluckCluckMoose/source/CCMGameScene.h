@@ -34,6 +34,9 @@ protected:
 
 	std::shared_ptr<AI> oppAI;
 
+	//previous hand size for tracking placing a chicken
+	int prevHand;
+
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
     
@@ -131,13 +134,19 @@ public:
 	 *  
 	 * @param newPlayer the Moose to set player as 
 	 */
-	void setPlayer(Moose newPlayer) { player = make_shared<Moose>(newPlayer); };
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; prevHand = 6; };
 	/** 
 	 * Set the opponent Moose to be the given Moose
 	 *
 	 * @param newOpp the Moose to set opp as
 	 */
-	void setOpp(Moose newOpp) { opp = make_shared<Moose>(newOpp); };
+	void setOpp(std::shared_ptr<Moose> newOpp) { opp = newOpp; };
+
+	/**
+	 * Set the AI to the be the given AI type
+	 * @param newAI the AI type to set AI as
+	 */
+	void setAI(AIType newAI) { oppAI->setType(newAI); };
 
 	void setHome(bool val) { sb->setHome(val); }
 

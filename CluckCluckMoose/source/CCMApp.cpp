@@ -254,9 +254,17 @@ void CCMApp::update(float timestep) {
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 						AIType ai = _saveLoad.loadAI(json->get("AI"));
-						_gamescene = GameScene::alloc(_assets, pl, op, ai);
-						_gameplay.push_back(_gamescene);
-						_gameplay.back()->setActive(false);
+						if (_gameplay.size() < 3) {
+							_gamescene = GameScene::alloc(_assets, pl, op, ai);
+						}
+						else {
+							_gamescene->setPlayer(pl);
+							_gamescene->setOpp(op);
+							_gamescene->setAI(ai);
+							_gameplay.pop_back();
+						}
+						_gameplay.insert(_gameplay.begin() + _current, _gamescene);
+						_gameplay.at(_current)->setActive(false);
 						_input.init();
 
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
@@ -272,7 +280,7 @@ void CCMApp::update(float timestep) {
                 _gamescene->setHome(false);
                 _gameplay[_current]->setActive(false);
                 //_gameplay[_current]->dispose();
-                _gameplay.erase(_gameplay.begin()+_current);
+                //_gameplay.erase(_gameplay.begin()+_current);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
                 _levelscene.setLevel(0);

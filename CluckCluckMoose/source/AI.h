@@ -110,6 +110,13 @@ public:
 
 	/** Gets the type of the AI */
 	AIType getType() { return type; };
+
+#pragma mark -
+#pragma mark Mutators
+	/** Sets the type of the AI to be the given AI type
+	 * @param newType the type to set
+	 */
+	void setType(AIType newType) { type = newType; };
 };
 
 #endif /* __AI_H__ */
