@@ -37,6 +37,8 @@ using namespace cugl;
 #define SOUND_WITCHEN		"witchen"
 #define SOUND_BUTTON_A		"button_a"
 #define SOUND_BUTTON_B		"button_b"
+#define WIN					"win"
+#define LOSE				"lose"
 
 /** Values representing the relevant states for special chicken effect */
 #define ENTRY -1
@@ -364,12 +366,21 @@ void GameScene::update(float timestep) {
 			if (player->getHealth() <= 0) {
 				didLose = true;
 				didWin = false;
+				auto source = _assets->get<Sound>(LOSE);
+				if (!AudioChannels::get()->isActiveEffect(LOSE)) {
+					AudioChannels::get()->playEffect(LOSE, source, false, source->getVolume());
+				}
+
 				CULog("lost! lmao");
 			}
 
 			if (opp->getHealth() <= 0) {
 				didLose = false;
 				didWin = true;
+				auto source = _assets->get<Sound>(WIN);
+				if (!AudioChannels::get()->isActiveEffect(WIN)) {
+					AudioChannels::get()->playEffect(WIN, source, false, source->getVolume());
+				}
 				CULog("win");
 			}
 		}

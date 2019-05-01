@@ -569,6 +569,18 @@
             "volume":   0.8,
 			"stream": false
         },
+        "win": {
+            "type":     "sample",
+            "file":     "audio/win.wav",
+            "volume":   0.8,
+			"stream": false
+        },
+        "lose": {
+            "type":     "sample",
+            "file":     "audio/fail.wav",
+            "volume":   0.8,
+			"stream": false
+        },
         "theme": {
             "type":     "sample",
             "file":     "audio/CCM_Theme.wav",
