@@ -413,8 +413,8 @@
       "wrapS": "clamp",
       "wrapT": "clamp"
     },
-    "menusettings": {
-      "file": "textures/mainmenu/btn_settings_v1.png",
+    "menucredits": {
+      "file": "textures/mainmenu/btn_credits.png",
       "minfilter": "linear",
       "magfilter": "linear",
       "wrapS": "clamp",
@@ -566,6 +566,13 @@
       "magfilter": "linear",
       "wrapS": "clamp",
       "wrapT": "clamp"
+    },
+    "creditsbox": {
+        "file": "textures/credits/menu_credits",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
     }
   },
 	"sounds": {
