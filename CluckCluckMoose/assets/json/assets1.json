@@ -568,7 +568,7 @@
       "wrapT": "clamp"
     },
     "creditsbox": {
-        "file": "textures/credits/menu_credits",
+        "file": "textures/mainmenu/menu_credits.png",
         "minfilter": "linear",
         "magfilter": "linear",
         "wrapS": "clamp",

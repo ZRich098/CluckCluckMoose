@@ -74,7 +74,7 @@ public:
      *
      * @param timestep  The amount of time (in seconds) since the last frame
      */
-    void update(float timestep);
+    void update(float timestep) override;
 
     /**
      * Getters and setters for level select buttons
