@@ -258,6 +258,10 @@ void CCMApp::update(float timestep) {
 							_gamescene = GameScene::alloc(_assets, pl, op, ai);
 						}
 						else {
+							/*ss << getSaveDirectory() << "/saveLevel.json";
+							fileName = ss.str();
+							gameReader = JsonReader::allocWithAsset(fileName);
+							json = gameReader->readJson();*/
 							_gamescene->setPlayer(pl);
 							_gamescene->setOpp(op);
 							_gamescene->setAI(ai);
