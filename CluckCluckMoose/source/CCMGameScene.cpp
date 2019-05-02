@@ -262,11 +262,13 @@ void GameScene::update(float timestep) {
 	if (player->getOrder().size() > player->getStack().getSize() && opp->getOrder().size() > opp->getStack().getSize() && !isClashing) {
 		//CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
 		initStacks(player->getOrder(), opp->getOrder());
+		prevHand = player->getHand().size();
 	}
 
 	sb->updateInput(timestep);
-	//CULog("%d, %d",prevHand, player->getHand().size());
+	CULog("prevHand: %d, hand size: %d",prevHand, player->getHand().size());
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
+		CULog("skip state: %d", skipState);
 		if (skipState == ENTRY) {
 			CULog("opp playing: %d", oppAI->getPlay());
 			opp->addToStackFromHand(oppAI->getPlay());

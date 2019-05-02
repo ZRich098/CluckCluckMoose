@@ -69,7 +69,7 @@ std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<Jso
 	string cost = costume->asString();
 
 	player = Moose::alloc(5, 6);
-	CULog("Hand size: %d, Order size: %d",hand.size(),playOrder.size());
+	//CULog("Hand size: %d, Order size: %d",hand.size(),playOrder.size());
 	player->jsonInit(h, hand, playOrder, coop, cost);
 
 	return player;
@@ -259,7 +259,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	}
 
 	//Add Tag
-	saveFile->appendValue("Level", (double)level);
+	saveFile->appendValue("Tag", (double)level);
 
 	//save to file
 	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("saveLevel.json");

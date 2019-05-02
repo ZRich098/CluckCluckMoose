@@ -204,10 +204,6 @@ std::shared_ptr<Node> winCanvas;
 //Win screen canvas
 std::shared_ptr<Node> loseCanvas;
 
-//Players
-std::shared_ptr<Moose> playerGlobe;
-std::shared_ptr<Moose> oppGlobe;
-
 //Canvas for pause button
 std::shared_ptr<Node> pauseButtonCanvas;
 

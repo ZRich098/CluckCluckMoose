@@ -134,13 +134,13 @@ public:
 	 *  
 	 * @param newPlayer the Moose to set player as 
 	 */
-	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; prevHand = 6; };
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; sb->setPlayer(newPlayer); };
 	/** 
 	 * Set the opponent Moose to be the given Moose
 	 *
 	 * @param newOpp the Moose to set opp as
 	 */
-	void setOpp(std::shared_ptr<Moose> newOpp) { opp = newOpp; };
+	void setOpp(std::shared_ptr<Moose> newOpp) { opp = newOpp; sb->setOpp(newOpp); };
 
 	/**
 	 * Set the AI to the be the given AI type
