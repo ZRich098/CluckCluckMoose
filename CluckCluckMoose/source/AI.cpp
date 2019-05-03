@@ -31,31 +31,18 @@ int processStackDamage(Stack &you, Stack &opp) {
 }
 
 void AI::setup() {
+	player->shuffleHand();
+	hand = player->getHand();
 	switch (type) {
 		case AIType::Dumb:
-			return;
+			break;
 		case AIType::Intro:
-			player->shuffleHand();
-			hand = player->getHand();
 			stack = Stack(player->getStack());
 			break;
+		case AIType::Beginner:
 		case AIType::Basic:
-			player->shuffleHand();
-			hand = player->getHand();
-			stack = Stack(player->getStack());
-
-			oppStack = enemy->getStack().substack(stack.getSize());
-			oppHandSize = enemy->getHand().size();
-
-			stackProcessed = Stack(stack);
-			oppStackProcessed = Stack(oppStack);
-			while (!stackProcessed.empty() && !oppStackProcessed.empty()) {
-				stackProcessed.compare(oppStackProcessed);
-			}
-			break;
+		case AIType::Adept:
 		case AIType::Smart:
-			player->shuffleHand();
-			hand = player->getHand();
 			stack = Stack(player->getStack());
 
 			oppStack = enemy->getStack().substack(stack.getSize());
@@ -68,8 +55,6 @@ void AI::setup() {
 			}
 			break;
 		case AIType::Expert:
-			player->shuffleHand();
-			hand = player->getHand();
 			stack = Stack(player->getStack());
 
 			oppStack = enemy->getStack().substack(stack.getSize());
@@ -141,6 +126,18 @@ int AI::typeBonus(Chicken &c) {
 		return 2;
 }
 
+int AI::typeBonusReverse(Chicken &c) {
+	if (stack.empty()) return 0;
+
+	int result = stack.getTop().compare(c);
+	if (result == 1) //if beaten by top chicken of our stack
+		return 2;
+	else if (result == 0) //if ties
+		return -1;
+	else //if loses to top chicken of our stack
+		return 1;
+}
+
 int stackOrderingBonus(Chicken &c1, Chicken &c2) {
 	if (c2.getElement() == element::LoseAll) return -1000; //don't make plays so that bomb chicken isn't on top
 	int result = c1.compare(c2);
@@ -150,6 +147,34 @@ int stackOrderingBonus(Chicken &c1, Chicken &c2) {
 		return -2;
 	else //if loses
 		return 2;
+}
+
+int stackOrderingBonusReverse(Chicken &c1, Chicken &c2) {
+	if (c2.getElement() == element::LoseAll) return -1000; //don't make plays so that bomb chicken isn't on top
+	int result = c1.compare(c2);
+	if (result == 1) //if beats
+		return 2;
+	else if (result == 0) //if ties
+		return -2;
+	else //if loses
+		return 1;
+}
+
+int AI::beginnerPlay() {
+	int highestScore = INT_MIN;
+	int bestPlay = INT_MIN;
+
+	for (int i = 0; i < hand.size(); i++) {
+		Chicken &c = hand.at(i);
+		int score = defeatOpponentBottom(c) + typeBonusReverse(c);
+
+		if (score > highestScore) {
+			highestScore = score;
+			bestPlay = i;
+		}
+	}
+
+	return bestPlay;
 }
 
 int AI::basicPlay() {
@@ -193,6 +218,48 @@ void AI::addPermutationsToMap(map<int, Stack> &stackHashMap, vector <int> pos, S
 
 		addPermutationsToMap(stackHashMap, newPos, newStack);
 	}
+}
+
+int AI::adeptPlay() {
+	vector<int> handPos;
+	for (int i = 0; i < hand.size(); i++) handPos.push_back(i);
+
+	// Use hash map to store permutations by hash to ignore permutations that result in the same element after effects are resolved
+	map<int, Stack> stackHashMap;
+	addPermutationsToMap(stackHashMap, handPos, stack);
+
+	map<int, Stack>::iterator it = stackHashMap.begin();
+	int highestScore = INT_MIN;
+	Stack bestStack = it->second;
+	while (it != stackHashMap.end()) {
+		Stack curStack = it->second;
+		Stack oppCurStack = Stack(oppStack);
+
+		Stack curSubstack = curStack.substack(oppStack.getSize() + 1);
+
+		int score = processStackDamage(curSubstack, oppCurStack);
+
+		score *= oppStack.getSize() * 2; //Weighted by amount of chickens already on stack
+
+		for (int i = 1; i < curStack.getSize(); i++) {
+			score += stackOrderingBonusReverse(curStack.at(i), curStack.at(i - 1));
+		}
+
+		if (score > highestScore) {
+			highestScore = score;
+			bestStack = curStack;
+		}
+
+		it++;
+	}
+
+	//Search through hand for best play
+	for (int i = 0; i < hand.size(); i++) {
+		if (hand.at(i).getSpecial() == bestStack.getPlayOrder().at(stack.getSize())) return i;
+	}
+
+	CULogError("Best Play not found in hand- talk to Richard");
+	return 0;
 }
 
 int AI::smartPlay() {
@@ -272,8 +339,6 @@ int AI::expertPlay() {
 		oppHand.push_back(Chicken(special::BasicWater));
 	for (int i = 0; i < distribution.at(2); i++)
 		oppHand.push_back(Chicken(special::BasicGrass));
-	for (int i = 0; i < distribution.at(3); i++)
-		oppHand.push_back(Chicken(element::TieAll, special::Reaper));
 
 	map<int, Stack> oppStackHashMap;
 	addOppPermutationsToMap(oppStackHashMap, oppHand, oppStack);
@@ -285,21 +350,19 @@ int AI::expertPlay() {
 	while (it != stackHashMap.end()) {
 		Stack curStack = it->second;
 
-		//Score for how mant permutations beat the opponent up
+		//Score for how many permutations beat the opponent up
 		int oppScore = 0;
 		map<int, Stack>::iterator oit = oppStackHashMap.begin();
 		while (oit != oppStackHashMap.end()) {
 			oppScore += processStackDamage(curStack, oit->second);
 			oit++;
 		}
-		oppScore *= oppStack.getSize() * 2;
 
 		//Score for diversity of chicken variation within own stack
 		int orderScore = 0;
 		for (int i = 1; i < curStack.getSize(); i++) {
 			orderScore += stackOrderingBonus(curStack.at(i), curStack.at(i - 1));
 		}
-		orderScore *= oppStackHashMap.size();
 		
 		int score = oppScore + orderScore;
 
@@ -325,11 +388,15 @@ int AI::getPlay() {
 
 	switch (type) {
 		case AIType::Dumb:
-			return 0;
+			return rand() % hand.size();
 		case AIType::Intro:
 			return introPlay();
+		case AIType::Beginner:
+			return beginnerPlay();
 		case AIType::Basic:
 			return basicPlay();
+		case AIType::Adept:
+			return adeptPlay();
 		case AIType::Smart:
 			return smartPlay();
 		case AIType::Expert:
