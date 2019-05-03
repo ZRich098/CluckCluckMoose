@@ -123,9 +123,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     idback->setAnchor(Vec2::ANCHOR_CENTER);
     std::shared_ptr<Button> backbutt = Button::alloc(idback);
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    backbutt->setScale(0.5, 0.5);
+    backbutt->setScale(0.55);
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    backbutt->setPosition(-levelscreenWidth*3/8, levelscreenHeight*3/4);
+    backbutt->setPosition(-levelscreenWidth*3/8, levelscreenHeight/2 + 265);
     backbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             backClicked = true;
@@ -141,7 +141,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<Button> upbutt = Button::alloc(idup);
     upbutt->setAnchor(Vec2::ANCHOR_CENTER);
     upbutt->setScale(0.5, 0.5);
-    upbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight*10/16);
+    upbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/2 + 120);
     upbutt->setListener([=](const std::string& name, bool down) {
         if (down) { upClicked = true; }});
     levelbuttonCanvas->addChild(upbutt);
@@ -155,7 +155,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::shared_ptr<Button> downbutt = Button::alloc(iddown);
     downbutt->setAnchor(Vec2::ANCHOR_CENTER);
     downbutt->setScale(0.5, 0.5);
-    downbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/8);
+    downbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/2 - 450);
     downbutt->setListener([=](const std::string& name, bool down) {
         if (down) { downClicked = true; }});
     levelbuttonCanvas->addChild(downbutt);
@@ -163,9 +163,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     levelbuttons.push_back(downbutt); // 2
 
     // Draw base circles
-    buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 0, false, false);
-    buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 0, false, false);
-    buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 0, false, false);
+    buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 0, false, false);
+    buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 0, false, false);
+    buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 0, false, false);
     
     // Draw farm nodes
     drawLevelNodes(0);
@@ -309,7 +309,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         id->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> butt = Button::alloc(id);
         butt->setAnchor(Vec2::ANCHOR_CENTER);
-        butt->setScale(0.45, 0.45);
+        butt->setScale(0.5, 0.5);
         butt->setPosition(posX + 15, posY + 15);
         butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
         levelbuttonCanvas->addChild(butt);
@@ -379,24 +379,24 @@ void LevelScene::drawLevelNodes(int cur){
     }
     
     if (curmap == 0){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 3, false, false);
-        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 2, false, false);
-        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 1, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 3, false, false);
+        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 2, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 1, false, false);
     }
     else if (curmap == 1){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 6, false, false);
-        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 5, false, false);
-        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 4, false, true);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 6, false, false);
+        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 5, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 4, false, false);
     }
     else if (curmap == 2){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 9, true, false);
-        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 8, false, false);
-        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 7, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 9, true, false);
+        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 8, false, true);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 7, false, false);
     }
     else {
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 12, true, false);
-        buildLevelSelect(levelbuttonCanvas, 0, levelscreenHeight*25/64, levelNodes, 11, true, false);
-        buildLevelSelect(levelbuttonCanvas, levelscreenWidth*5/32, levelscreenHeight*6/64, levelNodes, 10, true, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 12, true, false);
+        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 11, true, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 10, true, false);
     }
     nodesMade = true;
 }

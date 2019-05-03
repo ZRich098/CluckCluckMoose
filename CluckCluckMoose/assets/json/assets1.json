@@ -497,6 +497,13 @@
         "wrapS": "clamp",
         "wrapT": "clamp"
     },
+    "levelanimarrow": {
+        "file": "textures/levelselect/animation_level_arrow",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "wrapS": "clamp",
+        "wrapT": "clamp"
+    },
     "levelcircle": {
         "file": "textures/levelselect/lvl_circle.png",
         "minfilter": "linear",
