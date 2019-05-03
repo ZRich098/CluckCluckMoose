@@ -205,7 +205,7 @@ void CCMApp::update(float timestep) {
         _loaded = true;
         _levelscene.deactivateButtons();
     } else {
-        _input.update(timestep);
+        //_input.update(timestep);
         if (_current == 0) { // if on menu scene
             if (_menuscene.getPlay()) { // play is clicked
                 _gameplay[_current]->setActive(false);

@@ -1593,7 +1593,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 
 void SceneBuilder1::updateInput(float timestep) {
-	_input.update(timestep);
+	//_input.update(timestep);
 	if (heldButtInd >= 0) {
 		for (int i = 0; i < 6; i++) {
 			if (i == heldButtInd) {
