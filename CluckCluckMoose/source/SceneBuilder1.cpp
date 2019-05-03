@@ -40,6 +40,9 @@ std::shared_ptr<Button> heldButton;
 //Track Stack chicken held down
 std::shared_ptr<Button> heldStack;
 
+//Track which buttons map to which cards in player hand. card x at index i is the xth card in the opponent's hand, shown by button i 
+std::vector<int> handMap;
+
 //Track previous chicken distribution
 std::vector<int> prevDist;
 
@@ -265,6 +268,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		timers.push_back(0);
 	}
 	heldButtInd = -1;
+
+	for (int i = 0; i < 6; i++) {
+		handMap.push_back(i);
+	}
 
 	retry = false;
 	goHome = false;
@@ -582,15 +589,23 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
 				heldButton = butt;
-				if (timers[i] > 30) {
+				if (timers[i] > 15) {
 					infoCanvas->setVisible(true);
 				}
 
 			}
 			if (!down) {
-				if (timers[i] < 30 && timers[i] > 1) {
-					playerGlobe->addToStackFromHand(i);
-
+				if (timers[i] < 15 && timers[i] > 1) {
+					CULog("attemptiong play");
+					playerGlobe->addToStackFromHand(handMap[i]);
+					handMap[i] = -1;
+					for (int j = i + 1; j < 6; j++) {
+						handMap[j]--;
+					}
+					for (int k = 0; k < 6; k++) {
+						CULog("Attempting print");
+						CULog("%d %d %d %d %d %d\n", handMap[0], handMap[1], handMap[2], handMap[3], handMap[4], handMap[5]);
+					}
 					//Play chicken cluck sfx
 					auto source = _assets->get<Sound>(CHICKEN_SCREECH);
 					if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
@@ -869,9 +884,15 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 	vector <Chicken> hand = playerGlobe->getHand();
 
+	if (playerGlobe->getHand().size() == 6) {
+		handMap.clear();
+		for (int i = 0; i < 6; i++) {
+			handMap.push_back(i);
+		}
+	}
 
 	for (int i = 0; i < 6; i++) {
-		if (i < hand.size()) {
+		if (handMap[i] >= 0) {
 			buttons[i]->setVisible(true);
 			buttonCanvas->getChild(2*i)->setVisible(true);
 			buttons[i]->activate(i + 2);
@@ -879,7 +900,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				heldButtInd = i;
 				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(screenHeight / 2, 150));
 				std::shared_ptr<Texture> infoText;
-				special cel = playerGlobe->getHandAt(i).getSpecial();
+				special cel = playerGlobe->getHandAt(handMap[i]).getSpecial();
 				switch (cel) {
 				case special::BasicFire:
 					infoText = infoF;
@@ -943,7 +964,14 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	}
 
 
-	for (int i = 0; i < hand.size(); i++) {
+	for (int i = 0; i < playerGlobe->getHand().size(); i++) {
+		//Find which button is mapped to this hand chicken
+		int mappedButton;
+		for (int j = 0; j < 6; j++) {
+			if (handMap[j] == i) {
+				mappedButton = j;
+			}
+		}
 		std::shared_ptr<Texture> text;
 		special cel = playerGlobe->getHandAt(i).getSpecial();
 		switch (cel) {
@@ -994,7 +1022,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			}
 		}
 
-		std::shared_ptr<Node> upchld = buttons[i]->getChild(0);
+		std::shared_ptr<Node> upchld = buttons[mappedButton]->getChild(0);
 
 		std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH,CHICKEN_FILMSTRIP_LENGTH);
 		//animates bottom chickens in coop
@@ -1018,7 +1046,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		}
 
         newUp->flipHorizontal(true);
-        buttons[i]->swapChild(upchld, newUp, false);
+        buttons[mappedButton]->swapChild(upchld, newUp, false);
 
 
 	}
