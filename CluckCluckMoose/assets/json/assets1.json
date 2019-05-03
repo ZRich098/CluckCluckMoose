@@ -393,7 +393,7 @@
             "wrapT": "clamp"
         },
         "menubg": {
-            "file": "textures/mainmenu/bg_homescreen_v1.png",
+            "file": "textures/mainmenu/bg_homescreen_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
