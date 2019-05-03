@@ -59,7 +59,7 @@ bool nextLevel;
 bool goHome;
 bool retry;
 bool soundToggle;
-//bool soundChanged;
+bool soundChanged;
 bool hasWon;
 bool hasLost;
 
@@ -272,7 +272,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	retry = false;
 	goHome = false;
 	soundToggle = false;
-//    soundChanged = false;
+    soundChanged = false;
 
 	_assets = assets;
 	_input.init();
@@ -597,7 +597,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 					//Play chicken cluck sfx
 					auto source = _assets->get<Sound>(CHICKEN_SCREECH);
-					if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
+					if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH) && !soundToggle) {
 						AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
 					}
 				}
@@ -778,6 +778,21 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome); // 1
     
+    std::shared_ptr<Texture> texturePauseResume = _assets->get<Texture>("pauseresume");
+    std::shared_ptr<PolygonNode> pauseresumeid = PolygonNode::allocWithTexture(texturePauseResume);
+    pauseresumeid->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> pauseResume = Button::alloc(pauseresumeid);
+    pauseResume->setScale(0.65, 0.65);
+    pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
+    pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
+    pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
+        pauseMenuCanvas->setVisible(false);
+        isPaused = false;
+    }});
+    pauseMenuCanvas->addChild(pauseResume);
+    pauseResume->activate(203); //ensure keys are unique
+    pausebuttons.push_back(pauseResume); // 2
+    
     std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
     std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
     pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
@@ -787,30 +802,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
     pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
         soundToggle = soundToggle ? false : true;
-        //        soundChanged = false;
+        soundChanged = false;
     }});
     pauseMenuCanvas->addChild(pauseSettings);
-    pauseSettings->activate(203); //ensure keys are unique
-    pausebuttons.push_back(pauseSettings); // 2
-    
-    std::shared_ptr<Texture> texturePauseResume = _assets->get<Texture>("pauseresume");
-    std::shared_ptr<PolygonNode> pauseresumeid = PolygonNode::allocWithTexture(texturePauseResume);
-    pauseresumeid->setAnchor(Vec2::ANCHOR_CENTER);
-    std::shared_ptr<Button> pauseResume = Button::alloc(pauseresumeid);
-    pauseResume->setScale(0.65, 0.65);
-    pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
-    pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
-    pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
-        CULog("start of resume things");
-        pauseMenuCanvas->setVisible(false);
-//        activateHand(); //@TODO: freeze game state
-//        deactivatePause();
-        isPaused = false;
-        CULog("end of resume things");
-    }});
-    pauseMenuCanvas->addChild(pauseResume);
-    pauseResume->activate(204); //ensure keys are unique
-    pausebuttons.push_back(pauseResume); // 3
+    pauseSettings->activate(204); //ensure keys are unique
+    pausebuttons.push_back(pauseSettings); // 3
 
     pauseMenuCanvas->setVisible(false);
 
@@ -868,6 +864,49 @@ void SceneBuilder1::updateGameScene(float timestep) {
     
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
+    
+    if (!soundToggle && !soundChanged){
+        pausebuttons[3]->deactivate();
+        pausebuttons.pop_back();
+        
+        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
+        std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
+        pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
+        pauseSettings->setScale(0.65, 0.65);
+        pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
+        pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
+        pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
+            soundToggle = soundToggle ? false : true;
+            soundChanged = false;
+        }});
+        pauseMenuCanvas->addChild(pauseSettings);
+        pauseSettings->activate(204); //ensure keys are unique
+        pausebuttons.push_back(pauseSettings); // 3
+        
+        soundChanged = true;
+    }
+    else if (soundToggle && !soundChanged) {
+        pausebuttons[3]->deactivate();
+        pausebuttons.pop_back();
+        
+        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundon");
+        std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
+        pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
+        std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
+        pauseSettings->setScale(0.65, 0.65);
+        pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
+        pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
+        pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
+            soundToggle = soundToggle ? false : true;
+            soundChanged = false;
+        }});
+        pauseMenuCanvas->addChild(pauseSettings);
+        pauseSettings->activate(204); //ensure keys are unique
+        pausebuttons.push_back(pauseSettings); // 3
+        
+        soundChanged = true;
+    }
     
 	timeAmount +=timestep;
 	bool isNextFrame = (timeAmount > timeBtnFrames);
@@ -1527,9 +1566,7 @@ void SceneBuilder1::activatePause() {
 
 void SceneBuilder1::deactivatePause() {
 	for (int i = 0; i < 4; i++) {
-        CULog("deactivating pausebutton[%d]", i);
 		pausebuttons[i]->deactivate();
-        CULog("done!");
 	}
 }
 
@@ -1543,4 +1580,8 @@ bool SceneBuilder1::getRedo() {
 
 bool SceneBuilder1::getNextLevel() {
 	return nextLevel;
+}
+
+bool SceneBuilder1::getSoundToggle() {
+    return soundToggle;
 }
