@@ -34,6 +34,16 @@ void AI::setup() {
 	player->shuffleHand();
 	hand = player->getHand();
 	switch (type) {
+		case AIType::Loser:
+			stack = Stack(player->getStack());
+			oppStack = Stack(enemy->getStack());
+
+			stackProcessed = Stack(stack);
+			oppStackProcessed = Stack(oppStack);
+			while (!stackProcessed.empty() && !oppStackProcessed.empty()) {
+				stackProcessed.compare(oppStackProcessed);
+			}
+			break;
 		case AIType::Dumb:
 			break;
 		case AIType::Intro:
@@ -41,7 +51,6 @@ void AI::setup() {
 			break;
 		case AIType::Beginner:
 		case AIType::Basic:
-		case AIType::Adept:
 		case AIType::Smart:
 			stack = Stack(player->getStack());
 
@@ -85,6 +94,35 @@ void AI::dispose() {
 	//typ = AIType::Dumb; // default to Dumb because it won't take a nullptr
 }
 
+int AI::loserPlay() {
+	if (oppStackProcessed.empty()) return introPlay();
+	if (stack.empty()) {
+		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
+
+		for (int i = 0; i < hand.size(); i++) {
+			if (hand.at(i).compare(tryToLoseToThis) == -1) return i;
+		}
+		return 0;
+	}
+	else {
+		//look at all plays are different than our previous play
+		special lastPlay = stack.getTop().getSpecial();
+		vector <int> secondChoices;
+
+		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
+
+		for (int i = 0; i < hand.size(); i++) {
+			if (hand.at(i).getSpecial() != lastPlay) {
+				int comparison = hand.at(i).compare(tryToLoseToThis);
+				if (comparison == -1) return i;
+				else if (comparison == 0) secondChoices.push_back(i);
+			}
+		}
+
+		return secondChoices.empty() ? 0 : secondChoices.at(rand() % secondChoices.size());
+	}
+}
+
 int AI::introPlay() {
 	//if no previous play yet, play any random card from hand
 	if (stack.empty()) return rand() % hand.size();
@@ -119,11 +157,11 @@ int AI::typeBonus(Chicken &c) {
 
 	int result = stack.getTop().compare(c);
 	if (result == 1) //if beaten by top chicken of our stack
-		return 1;
+		return 2;
 	else if (result == 0) //if ties
 		return -1;
 	else //if loses to top chicken of our stack
-		return 2;
+		return 1;
 }
 
 int AI::typeBonusReverse(Chicken &c) {
@@ -131,11 +169,11 @@ int AI::typeBonusReverse(Chicken &c) {
 
 	int result = stack.getTop().compare(c);
 	if (result == 1) //if beaten by top chicken of our stack
-		return 2;
+		return 1;
 	else if (result == 0) //if ties
 		return -1;
 	else //if loses to top chicken of our stack
-		return 1;
+		return 2;
 }
 
 int stackOrderingBonus(Chicken &c1, Chicken &c2) {
@@ -218,48 +256,6 @@ void AI::addPermutationsToMap(map<int, Stack> &stackHashMap, vector <int> pos, S
 
 		addPermutationsToMap(stackHashMap, newPos, newStack);
 	}
-}
-
-int AI::adeptPlay() {
-	vector<int> handPos;
-	for (int i = 0; i < hand.size(); i++) handPos.push_back(i);
-
-	// Use hash map to store permutations by hash to ignore permutations that result in the same element after effects are resolved
-	map<int, Stack> stackHashMap;
-	addPermutationsToMap(stackHashMap, handPos, stack);
-
-	map<int, Stack>::iterator it = stackHashMap.begin();
-	int highestScore = INT_MIN;
-	Stack bestStack = it->second;
-	while (it != stackHashMap.end()) {
-		Stack curStack = it->second;
-		Stack oppCurStack = Stack(oppStack);
-
-		Stack curSubstack = curStack.substack(oppStack.getSize() + 1);
-
-		int score = processStackDamage(curSubstack, oppCurStack);
-
-		score *= oppStack.getSize() * 2; //Weighted by amount of chickens already on stack
-
-		for (int i = 1; i < curStack.getSize(); i++) {
-			score += stackOrderingBonusReverse(curStack.at(i), curStack.at(i - 1));
-		}
-
-		if (score > highestScore) {
-			highestScore = score;
-			bestStack = curStack;
-		}
-
-		it++;
-	}
-
-	//Search through hand for best play
-	for (int i = 0; i < hand.size(); i++) {
-		if (hand.at(i).getSpecial() == bestStack.getPlayOrder().at(stack.getSize())) return i;
-	}
-
-	CULogError("Best Play not found in hand- talk to Richard");
-	return 0;
 }
 
 int AI::smartPlay() {
@@ -387,6 +383,8 @@ int AI::getPlay() {
 	setup();
 
 	switch (type) {
+		case AIType::Loser:
+			return loserPlay();
 		case AIType::Dumb:
 			return rand() % hand.size();
 		case AIType::Intro:
@@ -395,8 +393,6 @@ int AI::getPlay() {
 			return beginnerPlay();
 		case AIType::Basic:
 			return basicPlay();
-		case AIType::Adept:
-			return adeptPlay();
 		case AIType::Smart:
 			return smartPlay();
 		case AIType::Expert:

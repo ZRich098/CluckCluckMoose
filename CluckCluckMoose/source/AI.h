@@ -14,11 +14,11 @@ int stackHash(Stack s);
 void addOppPermutationsToMap(map<int, Stack> &oppMap, vector <Chicken> hand, Stack currentStack);
 
 enum class AIType {
+	Loser,			//Tries very hard to lose (but discretely)
 	Dumb,			//Plays random card
 	Intro,			//Plays random card, but different from last time
 	Beginner,		//Plays unoptimal cycle, does not care about specials
-	Basic,			//Plays unoptimal cycle, cares about specials
-	Adept,			//Plays optimal cycle, does not care about specials
+	Basic,			//Plays optimal cycle, does not care about specials
     Smart,			//Plays optimal cycle, cares about specials
 	Expert,			//Hits up that minimax tree
 };
@@ -54,10 +54,10 @@ private:
 	int typeBonusReverse(Chicken &c);
 	int defeatOpponentBottom(Chicken &c);
 
+	int loserPlay();
 	int introPlay();
 	int beginnerPlay();
 	int basicPlay();
-	int adeptPlay();
 	int smartPlay();
 	int expertPlay();
 
