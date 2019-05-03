@@ -565,16 +565,16 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> moose2;
 	std::shared_ptr<Texture> textureM;
 	
-	if (costume == "moose") {
+	if (opp->getCostume() == "moose") {
 		textureM = _assets->get<Texture>("moose");
 	}
-	else if (costume == "eldritch_moose") {
+	else if (opp->getCostume() == "eldritch_moose") {
 		textureM = _assets->get<Texture>("elMoose");
 	}
-	else if (costume == "christmoose") {
+	else if (opp->getCostume() == "christmoose") {
 		textureM = _assets->get<Texture>("chrMoose");
 	}
-	else if (costume == "farmer_moose") {
+	else if (opp->getCostume() == "farmer_moose") {
 		textureM = _assets->get<Texture>("farmMoose");
 	}
 	else {
@@ -1702,6 +1702,77 @@ void SceneBuilder1::setPreview(bool preview) {
 
 void SceneBuilder1::setHome(bool val) {
 	goHome = val;
+}
+
+void SceneBuilder1::setLevelNum(int levelNum) {
+	//Draw background
+	std::shared_ptr<Texture> texturebg;
+	if (levelNum == 1) {
+		texturebg = _assets->get<Texture>("farmbg");
+	}
+	else if (levelNum == 2) {
+		texturebg = _assets->get<Texture>("forestbg");
+	}
+	else if (levelNum == 3) {
+		texturebg = _assets->get<Texture>("nuclearbg");
+	}
+	else {
+		texturebg = _assets->get<Texture>("farmbg");
+	}
+	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
+	background->setScale(0.7f); // Magic number to rescale asset
+	background->setAnchor(Vec2::ANCHOR_CENTER);
+	background->setPosition(screenWidth / 2, screenHeight / 2);
+	backCanvas->addChild(background);
+
+	//Draw foreground
+	std::shared_ptr<Texture> texturefg;
+	if (levelNum == 1) {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
+	else if (levelNum == 2) {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
+	else if (levelNum == 3) {
+		texturefg = _assets->get<Texture>("nuclearfg");
+	}
+	else {
+		texturefg = _assets->get<Texture>("farmfg");
+	}
+	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
+	foreground->setScale(0.7f); // Magic number to rescale asset
+	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
+	foreground->setPosition(screenWidth / 2, FORE_HEIGHT);
+	frontCanvas->addChild(foreground);
+}
+
+void SceneBuilder1::setOppCost(string costume) {
+	//Draw opponent moose
+	std::shared_ptr<PolygonNode> moose2;
+	std::shared_ptr<Texture> textureM;
+
+	if (costume == "moose") {
+		textureM = _assets->get<Texture>("moose");
+	}
+	else if (costume == "eldritch_moose") {
+		textureM = _assets->get<Texture>("elMoose");
+	}
+	else if (costume == "christmoose") {
+		textureM = _assets->get<Texture>("chrMoose");
+	}
+	else if (costume == "farmer_moose") {
+		textureM = _assets->get<Texture>("farmMoose");
+	}
+	else {
+		textureM = _assets->get<Texture>("moose");
+	}
+
+	moose2 = PolygonNode::allocWithTexture(textureM);
+	moose2->setScale(0.2f); // Magic number to rescale asset
+	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
+	moose2->setPosition(screenWidth + MOOSE_X_OFFSET, MOOSE_HEIGHT);
+	moose2->flipHorizontal(true);
+	mooseCanvas->addChild(moose2);
 }
 
 void SceneBuilder1::deactivateHand() {

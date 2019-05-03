@@ -164,7 +164,7 @@ void CCMApp::onResume() {
 				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 				AIType ai = _saveLoad.loadAI(json->get("AI"));
-				_gamescene = GameScene::alloc(_assets, pl, op, ai);
+				_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
 				_gameplay.push_back(_gamescene);
 				_gameplay.back()->setActive(false);
 
@@ -250,12 +250,13 @@ void CCMApp::update(float timestep) {
 						_gameplay.back()->setActive(false);
 					}
 					else {
+						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 						if (_gameplay.size() < 3) {
 							CULog("Asset file loading");
 							std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 							std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 							AIType ai = _saveLoad.loadAI(json->get("AI"));
-							_gamescene = GameScene::alloc(_assets, pl, op, ai);
+							_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
 						}
 						else {
 							CULog("Save file loading");
@@ -267,13 +268,12 @@ void CCMApp::update(float timestep) {
 							_gamescene->setPlayer(pl);
 							_gamescene->setOpp(op);
 							_gamescene->setAI(ai);
+							_gamescene->setLevel(_levelscene.getLevel());
 							_gameplay.pop_back();
 						}
 						_gameplay.insert(_gameplay.begin() + _current, _gamescene);
 						_gameplay.at(_current)->setActive(false);
 						_input.init();
-
-						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 					}
 				}
                 _gameplay[_current]->setActive(true);

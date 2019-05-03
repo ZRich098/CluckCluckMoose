@@ -154,7 +154,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai, const int levelNum) {
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
@@ -192,7 +192,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", levelNum);
 	sb->setPreview(false);
 	sb->deactivateHand();
 

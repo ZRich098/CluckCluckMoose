@@ -80,16 +80,16 @@ public:
      * @return true if the controller is initialized properly, false otherwise.
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, int levelNum);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
 
-	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai) {
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, int levelNum) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
-		return (result->init(assets, playerMoose, oppMoose, ai) ? result : nullptr);
+		return (result->init(assets, playerMoose, oppMoose, ai, levelNum) ? result : nullptr);
 	}
 
 	/**
@@ -149,6 +149,8 @@ public:
 	void setAI(AIType newAI) { oppAI->setType(newAI); };
 
 	void setHome(bool val) { sb->setHome(val); }
+
+	void setLevel(int levelNum) { sb->setLevelNum(levelNum); };
 
 #pragma mark -
 #pragma mark Gameplay Handling

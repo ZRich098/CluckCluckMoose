@@ -72,7 +72,7 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	}*/
 
 	//not yet supported
-	//costume = cost;
+	costume = cost;
 }
 
 void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<vector<int>> handPoolArray, string cost) {
@@ -106,7 +106,7 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	}*/
 
 	//not yet supported
-	//costume = cost;
+	costume = cost;
 }
 
 
