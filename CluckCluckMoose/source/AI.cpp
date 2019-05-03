@@ -31,21 +31,12 @@ int processStackDamage(Stack &you, Stack &opp) {
 }
 
 void AI::setup() {
+	player->shuffleHand();
+	hand = player->getHand();
 	switch (type) {
-		case AIType::Dumb:
-			return;
-		case AIType::Intro:
-			player->shuffleHand();
-			hand = player->getHand();
+		case AIType::Loser:
 			stack = Stack(player->getStack());
-			break;
-		case AIType::Basic:
-			player->shuffleHand();
-			hand = player->getHand();
-			stack = Stack(player->getStack());
-
-			oppStack = enemy->getStack().substack(stack.getSize());
-			oppHandSize = enemy->getHand().size();
+			oppStack = Stack(enemy->getStack());
 
 			stackProcessed = Stack(stack);
 			oppStackProcessed = Stack(oppStack);
@@ -53,9 +44,14 @@ void AI::setup() {
 				stackProcessed.compare(oppStackProcessed);
 			}
 			break;
+		case AIType::Dumb:
+			break;
+		case AIType::Intro:
+			stack = Stack(player->getStack());
+			break;
+		case AIType::Beginner:
+		case AIType::Basic:
 		case AIType::Smart:
-			player->shuffleHand();
-			hand = player->getHand();
 			stack = Stack(player->getStack());
 
 			oppStack = enemy->getStack().substack(stack.getSize());
@@ -68,8 +64,6 @@ void AI::setup() {
 			}
 			break;
 		case AIType::Expert:
-			player->shuffleHand();
-			hand = player->getHand();
 			stack = Stack(player->getStack());
 
 			oppStack = enemy->getStack().substack(stack.getSize());
@@ -98,6 +92,35 @@ void AI::dispose() {
 	player = nullptr;
 	enemy = nullptr;
 	//typ = AIType::Dumb; // default to Dumb because it won't take a nullptr
+}
+
+int AI::loserPlay() {
+	if (oppStackProcessed.empty()) return introPlay();
+	if (stack.empty()) {
+		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
+
+		for (int i = 0; i < hand.size(); i++) {
+			if (hand.at(i).compare(tryToLoseToThis) == -1) return i;
+		}
+		return 0;
+	}
+	else {
+		//look at all plays are different than our previous play
+		special lastPlay = stack.getTop().getSpecial();
+		vector <int> secondChoices;
+
+		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
+
+		for (int i = 0; i < hand.size(); i++) {
+			if (hand.at(i).getSpecial() != lastPlay) {
+				int comparison = hand.at(i).compare(tryToLoseToThis);
+				if (comparison == -1) return i;
+				else if (comparison == 0) secondChoices.push_back(i);
+			}
+		}
+
+		return secondChoices.empty() ? 0 : secondChoices.at(rand() % secondChoices.size());
+	}
 }
 
 int AI::introPlay() {
@@ -134,6 +157,18 @@ int AI::typeBonus(Chicken &c) {
 
 	int result = stack.getTop().compare(c);
 	if (result == 1) //if beaten by top chicken of our stack
+		return 2;
+	else if (result == 0) //if ties
+		return -1;
+	else //if loses to top chicken of our stack
+		return 1;
+}
+
+int AI::typeBonusReverse(Chicken &c) {
+	if (stack.empty()) return 0;
+
+	int result = stack.getTop().compare(c);
+	if (result == 1) //if beaten by top chicken of our stack
 		return 1;
 	else if (result == 0) //if ties
 		return -1;
@@ -150,6 +185,34 @@ int stackOrderingBonus(Chicken &c1, Chicken &c2) {
 		return -2;
 	else //if loses
 		return 2;
+}
+
+int stackOrderingBonusReverse(Chicken &c1, Chicken &c2) {
+	if (c2.getElement() == element::LoseAll) return -1000; //don't make plays so that bomb chicken isn't on top
+	int result = c1.compare(c2);
+	if (result == 1) //if beats
+		return 2;
+	else if (result == 0) //if ties
+		return -2;
+	else //if loses
+		return 1;
+}
+
+int AI::beginnerPlay() {
+	int highestScore = INT_MIN;
+	int bestPlay = INT_MIN;
+
+	for (int i = 0; i < hand.size(); i++) {
+		Chicken &c = hand.at(i);
+		int score = defeatOpponentBottom(c) + typeBonusReverse(c);
+
+		if (score > highestScore) {
+			highestScore = score;
+			bestPlay = i;
+		}
+	}
+
+	return bestPlay;
 }
 
 int AI::basicPlay() {
@@ -272,8 +335,6 @@ int AI::expertPlay() {
 		oppHand.push_back(Chicken(special::BasicWater));
 	for (int i = 0; i < distribution.at(2); i++)
 		oppHand.push_back(Chicken(special::BasicGrass));
-	for (int i = 0; i < distribution.at(3); i++)
-		oppHand.push_back(Chicken(element::TieAll, special::Reaper));
 
 	map<int, Stack> oppStackHashMap;
 	addOppPermutationsToMap(oppStackHashMap, oppHand, oppStack);
@@ -285,21 +346,19 @@ int AI::expertPlay() {
 	while (it != stackHashMap.end()) {
 		Stack curStack = it->second;
 
-		//Score for how mant permutations beat the opponent up
+		//Score for how many permutations beat the opponent up
 		int oppScore = 0;
 		map<int, Stack>::iterator oit = oppStackHashMap.begin();
 		while (oit != oppStackHashMap.end()) {
 			oppScore += processStackDamage(curStack, oit->second);
 			oit++;
 		}
-		oppScore *= oppStack.getSize() * 2;
 
 		//Score for diversity of chicken variation within own stack
 		int orderScore = 0;
 		for (int i = 1; i < curStack.getSize(); i++) {
 			orderScore += stackOrderingBonus(curStack.at(i), curStack.at(i - 1));
 		}
-		orderScore *= oppStackHashMap.size();
 		
 		int score = oppScore + orderScore;
 
@@ -324,10 +383,14 @@ int AI::getPlay() {
 	setup();
 
 	switch (type) {
+		case AIType::Loser:
+			return loserPlay();
 		case AIType::Dumb:
-			return 0;
+			return rand() % hand.size();
 		case AIType::Intro:
 			return introPlay();
+		case AIType::Beginner:
+			return beginnerPlay();
 		case AIType::Basic:
 			return basicPlay();
 		case AIType::Smart:
