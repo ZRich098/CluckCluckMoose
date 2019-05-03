@@ -34,6 +34,7 @@ std::vector<std::shared_ptr<AnimationNode>> ostackNodes;
 //Texture list for determining which textures need to be replaced in the opponent stack
 std::vector<std::shared_ptr<Texture>> texturesOStack;
 
+
 //Track held chicken
 std::shared_ptr<Button> heldButton;
 
@@ -269,6 +270,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		timers.push_back(0);
 	}
 	heldButtInd = -1;
+
 
 	retry = false;
 	goHome = false;
