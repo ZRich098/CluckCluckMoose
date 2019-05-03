@@ -311,7 +311,17 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			player->getStack().compare(opp->getStack());
+			int result = player->getStack().compare(opp->getStack());
+			if (result == 1) {
+				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+			}
+			else if (result == 0) {
+				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+			}
+			else if (result == -1) {
+				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+			}
 			cooldown = CLASHLENGTH;
 		}
 		else {
