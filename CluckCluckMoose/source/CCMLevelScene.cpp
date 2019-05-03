@@ -132,7 +132,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
             level = 0; }});
     levelbuttonCanvas->addChild(backbutt);
     backbutt->activate(104);
-    levelbuttons.push_back(backbutt);
+    levelbuttons.push_back(backbutt); // 0
 
     // up button
     std::shared_ptr<Texture> textureUp = _assets->get<Texture>("levelup");
@@ -146,7 +146,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
         if (down) { upClicked = true; }});
     levelbuttonCanvas->addChild(upbutt);
     upbutt->activate(105);
-    levelbuttons.push_back(upbutt);
+    levelbuttons.push_back(upbutt); // 1
 
     // down button
     std::shared_ptr<Texture> textureDown = _assets->get<Texture>("leveldown");
@@ -160,7 +160,7 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
         if (down) { downClicked = true; }});
     levelbuttonCanvas->addChild(downbutt);
     downbutt->activate(106);
-    levelbuttons.push_back(downbutt);
+    levelbuttons.push_back(downbutt); // 2
 
     // Draw base circles
     buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight*39/64, levelNodes, 0, false, false);
@@ -186,6 +186,7 @@ void LevelScene::dispose() {
 // This can be cleaned up lol
 void LevelScene::update(float timestep) {
     if (curmap == 0) { // farm
+        levelbuttons[2]->setVisible(false);
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -194,6 +195,7 @@ void LevelScene::update(float timestep) {
         else if (downClicked){ downClicked = false; }
     }
     else if (curmap == 1) { // forest
+        levelbuttons[2]->setVisible(true);
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -206,6 +208,7 @@ void LevelScene::update(float timestep) {
         }
     }
     else if (curmap == 2){ // plant
+        levelbuttons[1]->setVisible(true);
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -218,6 +221,7 @@ void LevelScene::update(float timestep) {
         }
     }
     else if (curmap == 3){ //throne
+        levelbuttons[1]->setVisible(false);
         if (upClicked){
             upClicked = false;
         }

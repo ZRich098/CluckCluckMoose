@@ -65,6 +65,9 @@ bool didWin;
 //bool to signify a a loseState
 bool didLose;
 
+//bool to signify if sound should play
+bool isSound;
+
 
 ////SceneBuilder
 //std::shared_ptr<SceneBuilder1> sb;
@@ -256,6 +259,13 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
+    isSound = !sb->getSoundToggle(); // false if sound SHOULD PLAY
+    if (!isSound && AudioChannels::get()->currentMusic() != NULL){AudioChannels::get()->stopMusic();} // need to check it's not already stopped?
+    else if (isSound && AudioChannels::get()->currentMusic() == NULL){
+        auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+        AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+    }
+    
 	if (cooldown > 0) {
 		cooldown--;
 		sb->updateGameScene(timestep);
@@ -282,7 +292,7 @@ void GameScene::update(float timestep) {
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 			if (player->getStack().getWitchenPlayed()) {
 				auto source = _assets->get<Sound>(SOUND_WITCHEN);
-				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN)) {
+				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN) && isSound) {
 					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
 				}
 			}
@@ -302,7 +312,7 @@ void GameScene::update(float timestep) {
 		//Play the button sfx
 		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 		auto source = _assets->get<Sound>(sfx);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B) && isSound) {
 			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
 		}
 
@@ -363,7 +373,7 @@ void GameScene::update(float timestep) {
 
 		//Play the clashing sfx
 		auto source = _assets->get<Sound>(SOUND_BELL);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL)) {
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL) && isSound) {
 			AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
 		}
 	}
