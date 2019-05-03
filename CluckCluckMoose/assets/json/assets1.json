@@ -582,15 +582,7 @@
             "wrapT": "clamp"
         }
     },
-    "creditsbox": {
-        "file": "textures/credits/menu_credits.png",
-        "minfilter": "linear",
-        "magfilter": "linear",
-        "wrapS": "clamp",
-        "wrapT": "clamp"
-    }
-  },
-	"sounds": {
+	  "sounds": {
         "bell": {
             "type":     "sample",
             "file":     "audio/boxing_bell.wav",
@@ -709,6 +701,4 @@
             }
         }
     }
-}
-}
 }
