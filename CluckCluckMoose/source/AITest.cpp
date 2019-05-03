@@ -7,12 +7,16 @@ void testAll() {
 	std::shared_ptr<Moose> p1 = Moose::alloc(5, 6);
 	std::shared_ptr<Moose> p2 = Moose::alloc(5, 6);
 
+	std::shared_ptr<AI> loser1 = AI::alloc(p1, p2, AIType::Loser);
 	std::shared_ptr<AI> dumb1 = AI::alloc(p1, p2, AIType::Dumb);
 	std::shared_ptr<AI> intro1 = AI::alloc(p1, p2, AIType::Intro);
+	std::shared_ptr<AI> beginner1 = AI::alloc(p1, p2, AIType::Beginner);
 	std::shared_ptr<AI> basic1 = AI::alloc(p1, p2, AIType::Basic);
 	std::shared_ptr<AI> smart1 = AI::alloc(p1, p2, AIType::Smart);
 
+	std::shared_ptr<AI> dumb2 = AI::alloc(p2, p1, AIType::Dumb);
 	std::shared_ptr<AI> intro2 = AI::alloc(p2, p1, AIType::Intro);
+	std::shared_ptr<AI> beginner2 = AI::alloc(p2, p1, AIType::Beginner);
 	std::shared_ptr<AI> basic2 = AI::alloc(p2, p1, AIType::Basic);
 	std::shared_ptr<AI> smart2 = AI::alloc(p2, p1, AIType::Smart);
 	std::shared_ptr<AI> expert2 = AI::alloc(p2, p1, AIType::Expert);
@@ -20,32 +24,36 @@ void testAll() {
 	int NUM_GAMES = 20;
 	int p1win;
 
-	p1win = playGames(p1, dumb1, p2, intro2, NUM_GAMES);
-	CULog("Dumb vs Intro: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, dumb1, p2, basic2, NUM_GAMES);
-	CULog("Dumb vs Basic: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, dumb1, p2, smart2, NUM_GAMES);
-	CULog("Dumb vs Smart: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, dumb1, p2, expert2, NUM_GAMES);
-	CULog("Dumb vs Expert: %i to %i", p1win, NUM_GAMES - p1win);
+	p1win = playGames(p1, loser1, "Loser", p2, dumb2, "Dumb", NUM_GAMES);
+	p1win = playGames(p1, loser1, "Loser", p2, intro2, "Intro", NUM_GAMES);
+	p1win = playGames(p1, loser1, "Loser", p2, beginner2, "Beginner", NUM_GAMES);
+	p1win = playGames(p1, loser1, "Loser", p2, basic2, "Basic", NUM_GAMES);
+	p1win = playGames(p1, loser1, "Loser", p2, smart2, "Smart", NUM_GAMES);
+	//p1win = playGames(p1, loser1, "Loser", p2, expert2, "Expert", NUM_GAMES);
 
-	p1win = playGames(p1, intro1, p2, basic2, NUM_GAMES);
-	CULog("Intro vs Basic: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, intro1, p2, smart2, NUM_GAMES);
-	CULog("Intro vs Smart: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, intro1, p2, expert2, NUM_GAMES);
-	CULog("Intro vs Expert: %i to %i", p1win, NUM_GAMES - p1win);
+	p1win = playGames(p1, dumb1, "Dumb", p2, intro2, "Intro", NUM_GAMES);
+	p1win = playGames(p1, dumb1, "Dumb", p2, beginner2, "Beginner", NUM_GAMES);
+	p1win = playGames(p1, dumb1, "Dumb", p2, basic2, "Basic", NUM_GAMES);
+	p1win = playGames(p1, dumb1, "Dumb", p2, smart2, "Smart", NUM_GAMES);
+	//p1win = playGames(p1, dumb1, "Dumb", p2, expert2, "Expert", NUM_GAMES);
 
-	p1win = playGames(p1, basic1, p2, smart2, NUM_GAMES);
-	CULog("Basic vs Smart: %i to %i", p1win, NUM_GAMES - p1win);
-	p1win = playGames(p1, basic1, p2, expert2, NUM_GAMES);
-	CULog("Basic vs Expert: %i to %i", p1win, NUM_GAMES - p1win);
+	p1win = playGames(p1, intro1, "Intro", p2, beginner2, "Beginner", NUM_GAMES);
+	p1win = playGames(p1, intro1, "Intro", p2, basic2, "Basic", NUM_GAMES);
+	p1win = playGames(p1, intro1, "Intro", p2, smart2, "Smart", NUM_GAMES);
+	//p1win = playGames(p1, intro1, "Intro", p2, expert2, "Expert", NUM_GAMES);
 
-	p1win = playGames(p1, smart1, p2, expert2, NUM_GAMES);
-	CULog("Smart vs Expert: %i to %i", p1win, NUM_GAMES - p1win);
+	p1win = playGames(p1, beginner1, "Beginner", p2, basic2, "Basic", NUM_GAMES);
+	p1win = playGames(p1, beginner1, "Beginner", p2, smart2, "Smart", NUM_GAMES);
+	//p1win = playGames(p1, beginner1, "Beginner", p2, expert2, "Expert", NUM_GAMES);
+
+	p1win = playGames(p1, basic1, "Basic", p2, smart2, "Smart", NUM_GAMES);
+	//p1win = playGames(p1, basic1, "Basic", p2, expert2, "Expert", NUM_GAMES);
+
+	//p1win = playGames(p1, smart1, "Smart", p2, expert2, "Expert", NUM_GAMES);
+
 }
 
-int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, std::shared_ptr<Moose> p2, std::shared_ptr<AI> ai2, int num_games) {
+int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, string str1, std::shared_ptr<Moose> p2, std::shared_ptr<AI> ai2, string str2, int num_games) {
 	int p1win = 0;
 
 	//play num_games games
@@ -95,11 +103,11 @@ int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, std::shared_pt
 					stack2.swap(stack2.getSize() - 2, stack2.getSize() - 1);
 
 				if (s1 == special::Thicken) {
-					stack1.insert(0, stack1.getTop());
+					stack1.insert(stack1.getSize()-2, stack1.getTop());
 					stack1.removeTop();
 				}
 				if (s2 == special::Thicken) {
-					stack2.insert(0, stack2.getTop());
+					stack2.insert(stack2.getSize() - 2, stack2.getTop());
 					stack2.removeTop();
 				}
 
@@ -132,5 +140,9 @@ int playGames(std::shared_ptr<Moose> p1, std::shared_ptr<AI> ai1, std::shared_pt
 		p1->setHealth(5);
 		p2->setHealth(5);
 	}
+
+
+	CULog("%s vs %s: %i to %i", str1.c_str(), str2.c_str(), p1win, num_games - p1win);
+
 	return p1win;
 }

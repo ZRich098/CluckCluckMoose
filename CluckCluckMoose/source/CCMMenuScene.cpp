@@ -117,7 +117,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     menulayer->addChild(menubuttonCanvas);
     menubuttonCanvas->setPosition(menuscreenWidth / 2, 150);
     
-    //Create background node
+    //Create credits node
     creditsCanvas = Node::alloc();
     menulayer->addChild(creditsCanvas);
 
@@ -125,6 +125,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     menubackCanvas->removeAllChildren();
     titleCanvas->removeAllChildren();
     menubuttonCanvas->removeAllChildren();
+    creditsCanvas->removeAllChildren();
 
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("menubg");
@@ -178,15 +179,15 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     // Credits button
     std::shared_ptr<Texture> textureCredits = _assets->get<Texture>("menucredits");
-    std::shared_ptr<PolygonNode> idsettings = PolygonNode::allocWithTexture(textureCredits);
-    idsettings->setAnchor(Vec2::ANCHOR_CENTER);
-    std::shared_ptr<Button> settingsbutt = Button::alloc(idsettings);
-    settingsbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    settingsbutt->setScale(0.21, 0.21);
+    std::shared_ptr<PolygonNode> idcredits = PolygonNode::allocWithTexture(textureCredits);
+    idcredits->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> creditsbutt = Button::alloc(idcredits);
+    creditsbutt->setAnchor(Vec2::ANCHOR_CENTER);
+    creditsbutt->setScale(0.21, 0.21);
 
-    settingsbutt->setAnchor(Vec2::ANCHOR_CENTER);
-    settingsbutt->setPosition(0, menuscreenHeight/3 - 200);
-    settingsbutt->setListener([=](const std::string& name, bool down) {
+    creditsbutt->setAnchor(Vec2::ANCHOR_CENTER);
+    creditsbutt->setPosition(0, menuscreenHeight/3 - 200);
+    creditsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
 			playButtonSound();
             creditsClicked = true;
@@ -195,12 +196,12 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     menubuttonCanvas->addChild(playbutt);
     menubuttonCanvas->addChild(helpbutt);
-    menubuttonCanvas->addChild(settingsbutt);
+    menubuttonCanvas->addChild(creditsbutt);
 
     //ensure keys are unique
     playbutt->activate(100);
     helpbutt->activate(101);
-    settingsbutt->activate(102);
+    creditsbutt->activate(102);
     
     std::shared_ptr<Texture> creditsbg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> creditbackground = PolygonNode::allocWithTexture(creditsbg);
@@ -209,7 +210,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     creditbackground->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     creditsCanvas->addChild(creditbackground);
     
-    //Draw level box
+    //Draw credits box
     std::shared_ptr<Texture> texturebox = _assets->get<Texture>("creditsbox");
     std::shared_ptr<PolygonNode> box = PolygonNode::allocWithTexture(texturebox);
     box->setScale(0.5f); // Magic number to rescale asset
@@ -294,8 +295,6 @@ void MenuScene::playButtonSound() {
 
 bool MenuScene::getPlay() { return playClicked; }
 void MenuScene::setPlay(bool val) { playClicked = val; }
-//bool MenuScene::getHelp() { return helpClicked; }
-//bool MenuScene::getCredits() { return creditsClicked; }
 
 Size MenuScene::computeActiveSize() const {
     Size dimen = Application::get()->getDisplaySize();

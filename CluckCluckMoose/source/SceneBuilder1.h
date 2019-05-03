@@ -100,6 +100,8 @@ public:
 	bool getRedo();
 	//returns true if the player has pressed the next level button
 	bool getNextLevel();
+    //returns true if sound should be off
+    bool getSoundToggle();
 
 #pragma mark -
 #pragma mark Setters
@@ -111,7 +113,6 @@ public:
 	void activatePause();
 	void setHome(bool val);
 //	void setRestart(bool val);
-//	void setSettings(bool val);
 
 	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
 	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; };
