@@ -136,9 +136,13 @@ AIType SaveController::loadAI(const std::shared_ptr<JsonValue>& json) {
 		//CULog("loading Smart");
 		return AIType::Smart;
 	}
-	else if (a == "Starter") {
-		//CULog("loading Starter");
-		return AIType::Starter;
+	else if (a == "Beginner") {
+		//CULog("loading Beginner");
+		return AIType::Beginner;
+	}
+	else if (a == "Loser") {
+		//CULog("loading Loser");
+		return AIType::Loser;
 	}
 	else {
 		CULog("AI Type not found");
@@ -249,8 +253,11 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	else if (a == AIType::Smart) {
 		saveFile->appendValue("AI", "Smart");
 	}
-	else if (a == AIType::Starter) {
-		saveFile->appendValue("AI", "Starter");
+	else if (a == AIType::Beginner) {
+		saveFile->appendValue("AI", "Beginner");
+	}
+	else if (a == AIType::Loser) {
+		saveFile->appendValue("AI", "Loser");
 	}
 	else {
 		CULog("AI Type not found");

@@ -25,6 +25,12 @@
 		371BAF8A221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
 		371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
 		371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371BAF80221FCC0800EBF11E /* CCMInput.cpp */; };
+		374298632277570600DBEF96 /* AITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 374298622277570600DBEF96 /* AITest.cpp */; };
+		374298642277570600DBEF96 /* AITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 374298622277570600DBEF96 /* AITest.cpp */; };
+		374298652277570600DBEF96 /* AITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 374298622277570600DBEF96 /* AITest.cpp */; };
+		374298672277572D00DBEF96 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 374298662277572D00DBEF96 /* audio */; };
+		374298682277572D00DBEF96 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 374298662277572D00DBEF96 /* audio */; };
+		374298692277572D00DBEF96 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 374298662277572D00DBEF96 /* audio */; };
 		375831A72249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
 		375831A82249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
 		375831A92249420400413F43 /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3758319D2249420100413F43 /* Stack.cpp */; };
@@ -155,6 +161,9 @@
 		371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMGameScene.cpp; sourceTree = "<group>"; };
 		371BAF7F221FCC0800EBF11E /* CCMApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMApp.cpp; sourceTree = "<group>"; };
 		371BAF80221FCC0800EBF11E /* CCMInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMInput.cpp; sourceTree = "<group>"; };
+		374298612277570600DBEF96 /* AITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AITest.h; sourceTree = "<group>"; };
+		374298622277570600DBEF96 /* AITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AITest.cpp; sourceTree = "<group>"; };
+		374298662277572D00DBEF96 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = audio; sourceTree = "<group>"; };
 		3758319D2249420100413F43 /* Stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stack.cpp; sourceTree = "<group>"; };
 		375831A12249420100413F43 /* SceneBuilder1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneBuilder1.h; sourceTree = "<group>"; };
 		375831A22249420100413F43 /* SceneBuilder1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneBuilder1.cpp; sourceTree = "<group>"; };
@@ -297,6 +306,7 @@
 		EB2BE9B71D749870002FE78B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				374298662277572D00DBEF96 /* audio */,
 				EBFE7C041E19B496001007C2 /* json */,
 				EB2BE9BA1D7498D2002FE78B /* textures */,
 				EB2BE9B81D7498C9002FE78B /* fonts */,
@@ -409,10 +419,30 @@
 		EBBF18B11D749176008E2001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				370CB45D22275E3B00D47C32 /* AI.cpp */,
+				370CB45E22275E3B00D47C32 /* AI.h */,
+				374298622277570600DBEF96 /* AITest.cpp */,
+				374298612277570600DBEF96 /* AITest.h */,
+				371BAF7F221FCC0800EBF11E /* CCMApp.cpp */,
+				371BAF7B221FCC0800EBF11E /* CCMApp.h */,
+				371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */,
+				371BAF76221FCC0800EBF11E /* CCMGameScene.h */,
+				371BAF80221FCC0800EBF11E /* CCMInput.cpp */,
+				371BAF7A221FCC0800EBF11E /* CCMInput.h */,
 				37BAF2EF22664B460003D6E3 /* CCMLevelScene.cpp */,
 				37BAF2F322664B460003D6E3 /* CCMLevelScene.h */,
+				371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */,
+				371BAF7D221FCC0800EBF11E /* CCMLoadingScene.h */,
 				3709F2C12261159400DBBA36 /* CCMMenuScene.cpp */,
 				3709F2C52261159400DBBA36 /* CCMMenuScene.h */,
+				375E32DF221F42EB0010F98D /* Chicken.cpp */,
+				375E32DC221F42EB0010F98D /* Chicken.h */,
+				375E32DA221F42EB0010F98D /* Coop.cpp */,
+				375E32DB221F42EB0010F98D /* Coop.h */,
+				375E32D6221F42EB0010F98D /* Decks.h */,
+				EB2BE9B41D74952A002FE78B /* main.cpp */,
+				375E32DD221F42EB0010F98D /* Moose.cpp */,
+				375E32DE221F42EB0010F98D /* Moose.h */,
 				375831A32249420100413F43 /* MooseFile.h */,
 				375831A42249420100413F43 /* SaveController.cpp */,
 				375831A62249420400413F43 /* SaveController.h */,
@@ -420,24 +450,6 @@
 				375831A12249420100413F43 /* SceneBuilder1.h */,
 				3758319D2249420100413F43 /* Stack.cpp */,
 				375831A52249420200413F43 /* Stack.h */,
-				370CB45D22275E3B00D47C32 /* AI.cpp */,
-				370CB45E22275E3B00D47C32 /* AI.h */,
-				371BAF7F221FCC0800EBF11E /* CCMApp.cpp */,
-				371BAF7B221FCC0800EBF11E /* CCMApp.h */,
-				371BAF7E221FCC0800EBF11E /* CCMGameScene.cpp */,
-				371BAF76221FCC0800EBF11E /* CCMGameScene.h */,
-				371BAF80221FCC0800EBF11E /* CCMInput.cpp */,
-				371BAF7A221FCC0800EBF11E /* CCMInput.h */,
-				371BAF7C221FCC0800EBF11E /* CCMLoadingScene.cpp */,
-				371BAF7D221FCC0800EBF11E /* CCMLoadingScene.h */,
-				375E32DF221F42EB0010F98D /* Chicken.cpp */,
-				375E32DC221F42EB0010F98D /* Chicken.h */,
-				375E32DA221F42EB0010F98D /* Coop.cpp */,
-				375E32DB221F42EB0010F98D /* Coop.h */,
-				375E32D6221F42EB0010F98D /* Decks.h */,
-				375E32DD221F42EB0010F98D /* Moose.cpp */,
-				375E32DE221F42EB0010F98D /* Moose.h */,
-				EB2BE9B41D74952A002FE78B /* main.cpp */,
 			);
 			name = Source;
 			path = ../source;
@@ -513,7 +525,7 @@
 					};
 					EB74548B1D74D75C002FBAE6 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = N8U2GCPMTY;
+						DevelopmentTeam = KN5RP3KHH6;
 					};
 					EBBF18901D74904A008E2001 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -584,6 +596,7 @@
 				EB0FF6182016EFB200517030 /* Landscape.storyboard in Resources */,
 				EB0FF6192016EFB200517030 /* Portrait.storyboard in Resources */,
 				EB42669721F68F6900A9DE61 /* DeviceMargins.plist in Resources */,
+				374298692277572D00DBEF96 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +611,7 @@
 				EBFE7C051E19B496001007C2 /* json in Resources */,
 				EB7454AD1D74D846002FBAE6 /* Portrait.storyboard in Resources */,
 				EB42669621F68F6900A9DE61 /* DeviceMargins.plist in Resources */,
+				374298682277572D00DBEF96 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +621,7 @@
 			files = (
 				EBFE7C091E19B4AC001007C2 /* json in Resources */,
 				EB2BE9BB1D7498D2002FE78B /* textures in Resources */,
+				374298672277572D00DBEF96 /* audio in Resources */,
 				EB2BE9B91D7498C9002FE78B /* fonts in Resources */,
 				EBBF189B1D74904A008E2001 /* Mac.xcassets in Resources */,
 			);
@@ -626,6 +641,7 @@
 				371BAF8C221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				37BAF2F622664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				375E32E5221F42EB0010F98D /* Moose.cpp in Sources */,
+				374298652277570600DBEF96 /* AITest.cpp in Sources */,
 				370CB46422275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF86221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF83221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
@@ -647,6 +663,7 @@
 				371BAF8B221FCC0900EBF11E /* CCMInput.cpp in Sources */,
 				37BAF2F522664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				375E32E4221F42EB0010F98D /* Moose.cpp in Sources */,
+				374298642277570600DBEF96 /* AITest.cpp in Sources */,
 				370CB46322275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF85221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF82221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
@@ -668,6 +685,7 @@
 				375E32E3221F42EB0010F98D /* Moose.cpp in Sources */,
 				37BAF2F422664B460003D6E3 /* CCMLevelScene.cpp in Sources */,
 				EB2BE9B61D74952A002FE78B /* main.cpp in Sources */,
+				374298632277570600DBEF96 /* AITest.cpp in Sources */,
 				370CB46222275E3B00D47C32 /* AI.cpp in Sources */,
 				371BAF84221FCC0900EBF11E /* CCMGameScene.cpp in Sources */,
 				371BAF81221FCC0900EBF11E /* CCMLoadingScene.cpp in Sources */,
@@ -760,7 +778,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N8U2GCPMTY;
+				DEVELOPMENT_TEAM = KN5RP3KHH6;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
@@ -768,7 +786,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMooseTemp;
 				PRODUCT_NAME = "CCM (iOS)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -784,7 +802,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N8U2GCPMTY;
+				DEVELOPMENT_TEAM = KN5RP3KHH6;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/iOS-Info.plist";
@@ -792,7 +810,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMoose;
+				PRODUCT_BUNDLE_IDENTIFIER = CluckCluckMooseTemp;
 				PRODUCT_NAME = "CCM (iOS)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

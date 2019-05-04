@@ -63,17 +63,14 @@ int skipState;
 bool isClashing;
 bool firstClash;
 
-
-//bool to signify a clash preview is in progress
-bool isPreviewing;
-
 //bool to signify a a winState
 bool didWin;
 
 //bool to signify a a loseState
 bool didLose;
 
-bool attackAnimStarted;
+//bool to signify if sound should play
+bool isSound;
 
 
 ////SceneBuilder
@@ -147,7 +144,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, AIType::Smart);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
 
 	sb->deactivateHand();
 
@@ -202,7 +199,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
 	sb->setPreview(false);
 	sb->deactivateHand();
 
@@ -266,6 +263,13 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
+    isSound = !sb->getSoundToggle(); // false if sound SHOULD PLAY
+    if (!isSound && AudioChannels::get()->currentMusic() != NULL){AudioChannels::get()->stopMusic();} // need to check it's not already stopped?
+    else if (isSound && AudioChannels::get()->currentMusic() == NULL){
+        auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+        AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+    }
+    
 	if (cooldown > 0) {
 		cooldown-= timestep*FRAMESPERTIME;
 		sb->updateGameScene(timestep);
@@ -292,7 +296,7 @@ void GameScene::update(float timestep) {
 			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 			if (player->getStack().getWitchenPlayed()) {
 				auto source = _assets->get<Sound>(SOUND_WITCHEN);
-				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN)) {
+				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN) && isSound) {
 					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
 				}
 			}
@@ -308,66 +312,40 @@ void GameScene::update(float timestep) {
 		//CULog("SKIP: %d",skipState);
 	}
 
-	if (sb->getPreview() && !isPreviewing && !isClashing) { //replace with if Preview button is pressed
+	if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
 		//Play the button sfx
 		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 		auto source = _assets->get<Sound>(sfx);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B) && isSound) {
 			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
 		}
 
-		isPreviewing = true;
-
-		playerPreviewStack = player->getStack();
-		oppPreviewStack = opp->getStack();
-		isClashing = true;
 		cooldown = CLASHLENGTH;
 	}
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
 			if (!firstClash)
-				player->getStack().compare(opp->getStack());
+				int result = player->getStack().compare(opp->getStack());
 			if (!player->getStack().empty() && !opp->getStack().empty()) {
 				element pEle = player->getStack().getBottom().getElement();
 				element oEle = opp->getStack().getBottom().getElement();
 				sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
+      }
+      
+			if (result == 1) {
+				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
 			}
-			firstClash = false;
+			else if (result == 0) {
+				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+			}
+			else if (result == -1) {
+				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+			}
+      
+      firstClash = false;
 			cooldown = CLASHLENGTH;
-			//if (attackAnimStarted  ) {
-			//	//attackAnimStarted = false;
-			//	cooldown = CLASHLENGTH;
-			//	int result = player->getStack().compareWithoutRemove(opp->getStack());
-			//	sb->chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
-
-			//	player->getStack().compare(opp->getStack());
-			//}
-			//else {
-			//	cooldown = CLASHLENGTH;
-			//	int result = player->getStack().compareWithoutRemove(opp->getStack());
-			//	sb->chickDefeat(player->getStack().getBottom().getElement(), opp->getStack().getBottom().getElement(), result);
-
-			//	attackAnimStarted = true;
-			//}
-			
-		}
-		else if (isPreviewing) {
-			//player->setStack(playerPreviewStack);
-			//opp->setStack(oppPreviewStack);
-			player->getStack().clear();
-			opp->getStack().clear();
-			for (int i = 0; i < playerPreviewStack.getSize(); i++) {
-				player->getStack().add(playerPreviewStack.at(i));
-			}
-			for (int i = 0; i < oppPreviewStack.getSize(); i++) {
-				opp->getStack().add(oppPreviewStack.at(i));
-			}
-			isPreviewing = false;
-			isClashing = false;
-			cooldown = CLASHLENGTH;
-
-			sb->setPreview(false);
 		}
 		else {
 			player->eraseChickens();
@@ -410,7 +388,7 @@ void GameScene::update(float timestep) {
 
 		//Play the clashing sfx
 		auto source = _assets->get<Sound>(SOUND_BELL);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL)) {
+		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL) && isSound) {
 			AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
 		}
 	}
@@ -501,13 +479,11 @@ void GameScene::handEffect() {
 
 Size GameScene::computeActiveSize() const {
 	Size dimen = Application::get()->getDisplaySize();
-	float ratio1 = dimen.width / dimen.height;
-	float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
-	if (ratio1 < ratio2) {
-		dimen *= SCENE_WIDTH / dimen.width;
-	}
-	else {
-		dimen *= SCENE_HEIGHT / dimen.height;
-	}
+	//float ratio1 = dimen.width / dimen.height;
+	//float ratio2 = ((float)SCENE_WIDTH) / ((float)SCENE_HEIGHT);
+	
+	//dimen *= SCENE_WIDTH / dimen.width;
+
+	dimen *= SCENE_HEIGHT / dimen.height;
 	return dimen;
 }

@@ -74,7 +74,7 @@ public:
      *
      * @param timestep  The amount of time (in seconds) since the last frame
      */
-    void update(float timestep);
+    void update(float timestep) override;
 
     /**
      * Getters and setters for level select buttons
@@ -98,6 +98,10 @@ public:
      * @param curr bool; if arrow
      */
     void buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, int posY,  std::vector<std::shared_ptr<cugl::PolygonNode>> list, int lev, bool locked, bool curr);
+
+    void drawNewBox(int cur);
+    void drawLevelNodes(int cur);
+    cugl::Size computeActiveSize() const;
 };
 
 #endif /* __CCM_LEVEL_SCENE_H__ */

@@ -58,12 +58,12 @@ public:
 	 *
 	 * @return true if the controller is initialized properly, false otherwise.
 	 */
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum);
 
 	//Allocate a scene builder
-	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp) {
+	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum) {
 		std::shared_ptr<SceneBuilder1> result = std::make_shared<SceneBuilder1>();
-		return (result->init(assets, size, root, player, opp) ? result : nullptr);
+		return (result->init(assets, size, root, player, opp, costume, levelNum) ? result : nullptr);
 	}
 
 #pragma mark -
@@ -101,6 +101,8 @@ public:
 	bool getRedo();
 	//returns true if the player has pressed the next level button
 	bool getNextLevel();
+    //returns true if sound should be off
+    bool getSoundToggle();
 
 #pragma mark -
 #pragma mark Setters
@@ -112,7 +114,6 @@ public:
 	void activatePause();
 	void setHome(bool val);
 //	void setRestart(bool val);
-//	void setSettings(bool val);
 
 };
 
