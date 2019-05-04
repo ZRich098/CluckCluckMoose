@@ -69,7 +69,7 @@ public:
 #pragma mark -
 #pragma mark Scene Building Methods
 	//Build the game scene
-	void updateGameScene(float timestep);
+	void updateGameScene(float timestep, bool isClashing);
 
 	//Build an individual chicken using a texture and attach to a node.  Clear everything from the node beforehand.
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);

@@ -272,7 +272,7 @@ void GameScene::update(float timestep) {
     
 	if (cooldown > 0) {
 		cooldown-= timestep*FRAMESPERTIME;
-		sb->updateGameScene(timestep);
+		sb->updateGameScene(timestep,isClashing);
 		return;
 	}
 
@@ -324,6 +324,7 @@ void GameScene::update(float timestep) {
 	}
 
 	if (isClashing) {
+		CULog("Clashing");
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
 			if (!firstClash) {
 				int result = player->getStack().compare(opp->getStack());
@@ -393,7 +394,7 @@ void GameScene::update(float timestep) {
 		}
 	}
 	
-	sb->updateGameScene(timestep);
+	sb->updateGameScene(timestep,isClashing);
 }
 
 

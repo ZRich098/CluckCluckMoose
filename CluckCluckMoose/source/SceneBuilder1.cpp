@@ -999,7 +999,7 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 }
 
 
-void SceneBuilder1::updateGameScene(float timestep) {
+void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	if (isPaused && !pausebuttons[0]->isActive()) { activatePause(); }
 	else if (!isPaused && pausebuttons[0]->isActive()) { deactivatePause(); }
@@ -1388,7 +1388,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 		pstackNodes[i]->setFrame(thisFrame);
 
-		if (isChange) {
+		if (isChange && !isClashing) {
 			pSmokeFrame[i] = 0;
 		}
 
@@ -1558,7 +1558,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 			ostackNodes[i]->setFrame(thisFrame);
 
-			if (isChange) {
+			if (isChange && !isClashing) {
 				eSmokeFrame[i] = 0;
 			}
 
