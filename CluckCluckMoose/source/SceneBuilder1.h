@@ -73,17 +73,22 @@ public:
 #pragma mark -
 #pragma mark Scene Building Methods
 	//Build the game scene
-	void updateGameScene(float timestep);
+	void updateGameScene(float timestep, bool isClashing);
 
 	//Build an individual chicken using a texture and attach to a node.  Clear everything from the node beforehand.
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
 
+	
 
 
 #pragma mark -
 #pragma mark Input Methods
 	//Update input
 	void updateInput(float timestep);
+	//winResult -1 means player loss, 0 means tie, 1 means player win
+	void chickDefeat(element playerType, element opponentType, int winResult);
+	// positive means opponent loses health, negative means player loses health
+	void mooseDefeat(int healthChange);
 
 
 #pragma mark -

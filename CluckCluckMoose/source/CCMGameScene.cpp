@@ -21,8 +21,8 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
-/** length of time in frames for a clash between chickens */
-#define CLASHLENGTH 50
+/** length of time in animation frames for a clash between chickens */
+#define CLASHLENGTH 8
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -43,11 +43,14 @@ using namespace cugl;
 #define NONE 0
 #define EXIT 3
 
+/** number of animation frames per timestep */
+#define FRAMESPERTIME 10
+
 //stack size
 int stackSize;
 
 //number of frames in between clashes
-int cooldown;
+float cooldown;
 
 //a state machine to decide whether or not to skip a player's special chicken call for animation/feedback purposes.
 //-1 is the entry state, 0 is no skip, 1 is skip player, 2 is skip opponent, 3 is the exit state
@@ -55,6 +58,7 @@ int skipState;
 
 //bool to signify a clash is in progress
 bool isClashing;
+bool firstClash;
 
 //bool to signify a a winState
 bool didWin;
@@ -264,8 +268,8 @@ void GameScene::update(float timestep) {
     }
     
 	if (cooldown > 0) {
-		cooldown--;
-		sb->updateGameScene(timestep);
+		cooldown-= timestep*FRAMESPERTIME;
+		sb->updateGameScene(timestep,isClashing);
 		return;
 	}
 
@@ -319,18 +323,28 @@ void GameScene::update(float timestep) {
 	}
 	
 	if (isClashing) {
+		CULog("Clashing");
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			int result = player->getStack().compare(opp->getStack());
-			if (result == 1) {
-				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+			if (!firstClash) {
+				int result = player->getStack().compare(opp->getStack());
+				if (result == 1) {
+					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+				}
+				else if (result == 0) {
+					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+				}
+				else if (result == -1) {
+					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+				}
 			}
-			else if (result == 0) {
-				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
-				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+			if (!player->getStack().empty() && !opp->getStack().empty()) {
+				element pEle = player->getStack().getBottom().getElement();
+				element oEle = opp->getStack().getBottom().getElement();
+				sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
 			}
-			else if (result == -1) {
-				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
-			}
+      
+			firstClash = false;
 			cooldown = CLASHLENGTH;
 		}
 		else {
@@ -349,6 +363,7 @@ void GameScene::update(float timestep) {
 
 			player->takeDamage(opp->getStack().getDamage());
 			opp->takeDamage(player->getStack().getDamage());
+			sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
 
 			player->getStack().clear();
 			opp->getStack().clear();
@@ -368,6 +383,7 @@ void GameScene::update(float timestep) {
 		}
 	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
 		isClashing = true;
+		firstClash = true;
 		cooldown = CLASHLENGTH*1.5;
 
 		//Play the clashing sfx
@@ -377,7 +393,7 @@ void GameScene::update(float timestep) {
 		}
 	}
 	
-	sb->updateGameScene(timestep);
+	sb->updateGameScene(timestep,isClashing);
 }
 
 

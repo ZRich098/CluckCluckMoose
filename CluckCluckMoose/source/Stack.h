@@ -39,8 +39,7 @@ public:
 	//Access
 	/** Get the size of the Coop*/
 	const int getSize() const { return chickens.size(); };
-	/** Returns the chicken at position pos, where 0 is next to be drawn
-		If deck is shuffled, chicken will change position */
+	/** Returns the chicken at position pos in the stack */
 	Chicken &at(int pos) { return chickens.at(pos); };
 	/** Gets the order the chickens were played on this stack
 		Does not get cleared until clear() is called*/
@@ -109,6 +108,8 @@ public:
 	/** Compares this Stack with another Stack and runs a clash between them once. 
 		returns -1 if loses, 0 if ties, and 1 if wins the current clash */
 	int compare(Stack &opp);
+
+	int compareWithoutRemove(Stack &opp);
 
 	/** int of a stack, used for AI only*/
 	int value;

@@ -325,10 +325,14 @@ void Moose::refillHand() {
 
 void Moose::draw(int num) {
 	for (int i = 0; i < num; i++) {
-		//refill deck if empty
-		Chicken c = deck.getSpecial();
 		if (hand.size() < handSize) {
-			hand.push_back(c);
+			int random = rand() % 3;
+			if (random == 0)
+				hand.push_back(Chicken(element::Fire, special::BasicFire));
+			if (random == 1)
+				hand.push_back(Chicken(element::Grass, special::BasicGrass));
+			if (random == 2)
+				hand.push_back(Chicken(element::Water, special::BasicWater));
 		}
 	}
 }

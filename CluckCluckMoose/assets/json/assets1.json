@@ -21,6 +21,27 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "waterTrans": {
+            "file": "textures/water_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "fireTrans": {
+            "file": "textures/fire_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "grassTrans": {
+            "file": "textures/plant_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "water": {
             "file": "textures/water_chick.png",
             "minfilter": "linear",
@@ -93,6 +114,13 @@
         },
         "preview": {
             "file": "textures/btn_preview_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "clashsign": {
+            "file": "textures/tempsign.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -506,6 +534,90 @@
         },
         "levelcircle": {
             "file": "textures/levelselect/lvl_circle.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level11": {
+            "file": "textures/levelselect/nums/1-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level12": {
+            "file": "textures/levelselect/nums/1-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level13": {
+            "file": "textures/levelselect/nums/1-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level21": {
+            "file": "textures/levelselect/nums/2-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level22": {
+            "file": "textures/levelselect/nums/2-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level23": {
+            "file": "textures/levelselect/nums/2-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level31": {
+            "file": "textures/levelselect/nums/3-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level32": {
+            "file": "textures/levelselect/nums/3-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level33": {
+            "file": "textures/levelselect/nums/3-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level41": {
+            "file": "textures/levelselect/nums/4-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level42": {
+            "file": "textures/levelselect/nums/4-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level43": {
+            "file": "textures/levelselect/nums/4-3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
