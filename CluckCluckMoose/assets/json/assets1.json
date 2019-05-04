@@ -98,6 +98,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "clashsign": {
+            "file": "textures/spritesheet_fightSign.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "fireInfo": {
             "file": "textures/card_basic_fireChicken_v3.png",
             "minfilter": "linear",
@@ -569,6 +576,13 @@
         },
         "level33": {
             "file": "textures/levelselect/nums/3-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level41": {
+            "file": "textures/levelselect/nums/4-1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

@@ -949,32 +949,12 @@ void SceneBuilder1::updateGameScene(float timestep) {
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
     
-    if (!soundToggle && !soundChanged){
+    if (!soundChanged){
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
-        
-        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
-        std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
-        pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
-        std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
-        pauseSettings->setScale(0.65, 0.65);
-        pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
-        pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
-        pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
-            soundToggle = soundToggle ? false : true;
-            soundChanged = false;
-        }});
-        pauseMenuCanvas->addChild(pauseSettings);
-        pauseSettings->activate(204); //ensure keys are unique
-        pausebuttons.push_back(pauseSettings); // 3
-        
-        soundChanged = true;
-    }
-    else if (soundToggle && !soundChanged) {
-        pausebuttons[3]->deactivate();
-        pausebuttons.pop_back();
-        
-        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundon");
+        std::shared_ptr<Texture> texturePauseSettings;
+        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
+        else{ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
         std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
         pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);

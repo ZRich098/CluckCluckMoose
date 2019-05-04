@@ -354,7 +354,8 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         std::shared_ptr<PolygonNode> numpoly = PolygonNode::allocWithTexture(texturenum);
         numpoly->setScale(0.65f); // Magic number to rescale asset
         numpoly->setAnchor(Vec2::ANCHOR_CENTER);
-        numpoly->setPosition(posX + 80, posY);
+        if (num == 1) { numpoly->setPosition(posX - 80, posY); }
+        else { numpoly->setPosition(posX + 80, posY); }
         levelNumCanvas->addChild(numpoly);
     }
 }
