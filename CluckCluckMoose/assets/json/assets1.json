@@ -120,7 +120,7 @@
             "wrapT": "clamp"
         },
         "clashsign": {
-            "file": "textures/spritesheet_fightSign.png",
+            "file": "textures/tempsign.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

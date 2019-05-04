@@ -551,6 +551,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(screenWidth / 2, 150);
+    
+    //Add clash sign canvas
+    clashSignCanvas = Node::alloc();
+    layer->addChild(clashSignCanvas);
 
 	//Add health canvas
 	healthCanvas = Node::alloc();
@@ -564,10 +568,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     //Add pause menu canvas
     pauseMenuCanvas = Node::alloc();
     layer->addChild(pauseMenuCanvas);
-    
-    //Add clash sign canvas
-    clashSignCanvas = Node::alloc();
-    layer->addChild(clashSignCanvas);
 
 	//Add win/loss canvases
 	winCanvas = Node::alloc();
@@ -867,7 +867,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pausebutt->setListener([=](const std::string& name, bool down) {
 	    if (down) {
 	        pauseMenuCanvas->setVisible(true);
-//            activatePause();
             isPaused = true;
 	    }
 	});
@@ -983,7 +982,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     sign = AnimationNode::alloc(textsign,1,SIGN_FILMSTRIP_LENGTH);
     sign->setScale(1); // Magic number to rescale asset
     sign->setAnchor(Vec2::ANCHOR_CENTER);
-    sign->setPosition(screenWidth/2, screenHeight/2 + 100);
+    sign->setPosition(screenWidth/2, screenHeight/2 + 150);
     clashSignCanvas->addChild(sign);
     clashSignCanvas->setVisible(false);
 
