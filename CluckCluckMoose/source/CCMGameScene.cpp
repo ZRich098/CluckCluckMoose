@@ -22,7 +22,7 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 /** length of time in animation frames for a clash between chickens */
-#define CLASHLENGTH 10
+#define CLASHLENGTH 8
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
