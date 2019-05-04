@@ -22,7 +22,7 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 /** length of time in animation frames for a clash between chickens */
-#define CLASHLENGTH 8
+#define CLASHLENGTH 10
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -325,26 +325,26 @@ void GameScene::update(float timestep) {
 
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			if (!firstClash)
+			if (!firstClash) {
 				int result = player->getStack().compare(opp->getStack());
+				if (result == 1) {
+					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+				}
+				else if (result == 0) {
+					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+				}
+				else if (result == -1) {
+					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+				}
+			}
 			if (!player->getStack().empty() && !opp->getStack().empty()) {
 				element pEle = player->getStack().getBottom().getElement();
 				element oEle = opp->getStack().getBottom().getElement();
 				sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
-      }
-      
-			if (result == 1) {
-				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
-			}
-			else if (result == 0) {
-				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
-				opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
-			}
-			else if (result == -1) {
-				player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
 			}
       
-      firstClash = false;
+			firstClash = false;
 			cooldown = CLASHLENGTH;
 		}
 		else {

@@ -441,13 +441,6 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "menusettings": {
-            "file": "textures/mainmenu/btn_settings_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
         "menucredits": {
             "file": "textures/mainmenu/btn_credits.png",
             "minfilter": "linear",
@@ -497,13 +490,6 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levelhoof": {
-            "file": "textures/levelselect/hoof.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
         "levelup": {
             "file": "textures/levelselect/arrow_up.png",
             "minfilter": "linear",
@@ -525,22 +511,15 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
-        "levellockboss": {
-            "file": "textures/levelselect/lock_boss.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
         "levelflag": {
-            "file": "textures/levelselect/flag_normal.png",
+            "file": "textures/levelselect/flag_normal_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "levelflagboss": {
-            "file": "textures/levelselect/flag_boss.png",
+            "file": "textures/levelselect/flag_boss_v3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

@@ -178,15 +178,13 @@ std::shared_ptr<Texture> defeat;
 std::shared_ptr<Texture> redo;
 std::shared_ptr<Texture> nextlvl;
 
+//transition texture
+std::shared_ptr<Texture> smokeTrans;
 
 //chicken death textures
-std::shared_ptr<Texture> smokeTrans;
 std::shared_ptr<Texture> waterTrans;
 std::shared_ptr<Texture> grassTrans;
 std::shared_ptr<Texture> fireTrans;
-
-//transition texture
-std::shared_ptr<Texture> smokeTrans;
 
 
 //Main canvas to draw stuff to
@@ -265,9 +263,6 @@ int playerChickenWins;
 element pType;
 //element of enemy chicken
 element eType;
-
-std::vector<int> pSmokeFrame;
-std::vector<int> eSmokeFrame;
 
 
 //Input timer to determine if the player wants info or wants to play a chicken
@@ -1005,60 +1000,60 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 
 
 void SceneBuilder1::updateGameScene(float timestep) {
-    
-    if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
-    else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
-    
-    if (!soundToggle && !soundChanged){
-        pausebuttons[3]->deactivate();
-        pausebuttons.pop_back();
-        
-        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
-        std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
-        pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
-        std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
-        pauseSettings->setScale(0.65, 0.65);
-        pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
-        pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
-        pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
-            soundToggle = soundToggle ? false : true;
-            soundChanged = false;
-        }});
-        pauseMenuCanvas->addChild(pauseSettings);
-        pauseSettings->activate(204); //ensure keys are unique
-        pausebuttons.push_back(pauseSettings); // 3
-        
-        soundChanged = true;
-    }
-    else if (soundToggle && !soundChanged) {
-        pausebuttons[3]->deactivate();
-        pausebuttons.pop_back();
-        
-        std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundon");
-        std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
-        pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
-        std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
-        pauseSettings->setScale(0.65, 0.65);
-        pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
-        pauseSettings->setPosition(screenWidth*3/4, screenHeight/2 + 50);
-        pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
-            soundToggle = soundToggle ? false : true;
-            soundChanged = false;
-        }});
-        pauseMenuCanvas->addChild(pauseSettings);
-        pauseSettings->activate(204); //ensure keys are unique
-        pausebuttons.push_back(pauseSettings); // 3
-        
-        soundChanged = true;
-    }
-    
-	timeAmount +=timestep;
+
+	if (isPaused && !pausebuttons[0]->isActive()) { activatePause(); }
+	else if (!isPaused && pausebuttons[0]->isActive()) { deactivatePause(); }
+
+	if (!soundToggle && !soundChanged) {
+		pausebuttons[3]->deactivate();
+		pausebuttons.pop_back();
+
+		std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundoff");
+		std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
+		pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
+		std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
+		pauseSettings->setScale(0.65, 0.65);
+		pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
+		pauseSettings->setPosition(screenWidth * 3 / 4, screenHeight / 2 + 50);
+		pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
+			soundToggle = soundToggle ? false : true;
+			soundChanged = false;
+		}});
+		pauseMenuCanvas->addChild(pauseSettings);
+		pauseSettings->activate(204); //ensure keys are unique
+		pausebuttons.push_back(pauseSettings); // 3
+
+		soundChanged = true;
+	}
+	else if (soundToggle && !soundChanged) {
+		pausebuttons[3]->deactivate();
+		pausebuttons.pop_back();
+
+		std::shared_ptr<Texture> texturePauseSettings = _assets->get<Texture>("pausesoundon");
+		std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
+		pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
+		std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
+		pauseSettings->setScale(0.65, 0.65);
+		pauseSettings->setAnchor(Vec2::ANCHOR_CENTER);
+		pauseSettings->setPosition(screenWidth * 3 / 4, screenHeight / 2 + 50);
+		pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
+			soundToggle = soundToggle ? false : true;
+			soundChanged = false;
+		}});
+		pauseMenuCanvas->addChild(pauseSettings);
+		pauseSettings->activate(204); //ensure keys are unique
+		pausebuttons.push_back(pauseSettings); // 3
+
+		soundChanged = true;
+	}
+
+	timeAmount += timestep;
 	bool isNextFrame = (timeAmount > timeBtnFrames);
-	if(timeAmount > timeBtnFrames)
+	if (timeAmount > timeBtnFrames)
 	{
-	    isNextFrame = true;
+		isNextFrame = true;
 		timeAmount = 0;
-		if(thisFrame>=CHICKEN_FILMSTRIP_LENGTH -1)
+		if (thisFrame >= CHICKEN_FILMSTRIP_LENGTH - 1)
 			thisFrame = 0;
 		thisFrame++;
 	}
@@ -1076,7 +1071,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	for (int i = 0; i < 6; i++) {
 		if (handMap[i] >= 0) {
 			buttons[i]->setVisible(true);
-			buttonCanvas->getChild(2*i)->setVisible(true);
+			buttonCanvas->getChild(2 * i)->setVisible(true);
 			buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
@@ -1140,7 +1135,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		}
 		else {
 			buttons[i]->setVisible(false);
-			buttonCanvas->getChild(2*i)->setVisible(false);
+			buttonCanvas->getChild(2 * i)->setVisible(false);
 			buttons[i]->deactivate();
 		}
 	}
@@ -1191,7 +1186,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 		default:
 			element el;
 			if (sInfoInd > 4) {
-				el = oppGlobe->getStackAt(sInfoInd-5).getElement();
+				el = oppGlobe->getStackAt(sInfoInd - 5).getElement();
 			}
 			else {
 				el = playerGlobe->getStackAt(sInfoInd).getElement();
@@ -1280,29 +1275,29 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 		std::shared_ptr<Node> upchld = buttons[mappedButton]->getChild(0);
 
-		std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH,CHICKEN_FILMSTRIP_LENGTH);
+		std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text, 1, CHICKEN_FILMSTRIP_LENGTH, CHICKEN_FILMSTRIP_LENGTH);
 		//animates bottom chickens in coop
 		int curFrame = (flappingFrame[i]);
-//        int curFrame = 0;
-        int nextFrame = curFrame + 1;
+		//        int curFrame = 0;
+		int nextFrame = curFrame + 1;
 
-        //decides if a flapping animation should start
-		if(isNextFrame && (curFrame!=0|| std::rand()%50==0)){
+		//decides if a flapping animation should start
+		if (isNextFrame && (curFrame != 0 || std::rand() % 50 == 0)) {
 
-		    if(nextFrame >= CHICKEN_FILMSTRIP_LENGTH -1) {
-		        nextFrame = 0;
+			if (nextFrame >= CHICKEN_FILMSTRIP_LENGTH - 1) {
+				nextFrame = 0;
 
-            }
-            flappingFrame[i] = nextFrame;
-            newUp->setFrame(nextFrame);
+			}
+			flappingFrame[i] = nextFrame;
+			newUp->setFrame(nextFrame);
 		}
-		else{
-		    newUp->setFrame(nextFrame-1);
+		else {
+			newUp->setFrame(nextFrame - 1);
 
 		}
 
-        newUp->flipHorizontal(true);
-        buttons[mappedButton]->swapChild(upchld, newUp, false);
+		newUp->flipHorizontal(true);
+		buttons[mappedButton]->swapChild(upchld, newUp, false);
 
 
 	}
@@ -1323,7 +1318,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 	for (int i = 0; i < pstack.getSize(); i++) {
 		std::shared_ptr<Texture> text;
 		special cel = playerGlobe->getStackAt(i).getSpecial();
-		
+
 		switch (cel) {
 		case special::BasicFire:
 			text = textureF;
@@ -1375,23 +1370,23 @@ void SceneBuilder1::updateGameScene(float timestep) {
 
 		}
 		bool isChange = pstackNodes[i]->getTexture() != (text);
-        std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
-        chick->setScale(STACK_SCALE); // Magic number to rescale asset
-        chick->setAnchor(Vec2::ANCHOR_CENTER);
-        chick->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
-        chick->flipHorizontal(true);
+		std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text, 1, CHICKEN_FILMSTRIP_LENGTH);
+		chick->setScale(STACK_SCALE); // Magic number to rescale asset
+		chick->setAnchor(Vec2::ANCHOR_CENTER);
+		chick->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
+		chick->flipHorizontal(true);
 
 		if (prevTint && i < (playerGlobe->getNumChickensWillDiePreview())) {
 			chick->setColor(Color4(Vec4(1, 0, 0, 0.5)));
 		}
 
-		
-        layer->swapChild(pstackNodes[i], chick, false);
-        pstackNodes[i] = chick;
 
-        texturesPStack[i] = text;
+		layer->swapChild(pstackNodes[i], chick, false);
+		pstackNodes[i] = chick;
 
-        pstackNodes[i]->setFrame(thisFrame);
+		texturesPStack[i] = text;
+
+		pstackNodes[i]->setFrame(thisFrame);
 
 		if (isChange) {
 			pSmokeFrame[i] = 0;
@@ -1409,8 +1404,8 @@ void SceneBuilder1::updateGameScene(float timestep) {
 			std::shared_ptr<AnimationNode> smoke = AnimationNode::alloc(smokeTrans, 1, 6);
 			pstackNodes[i]->addChild(smoke);
 			int fo = 6 - 1 - pSmokeFrame[i];
-      smoke->setFrame(6 - 1 - pSmokeFrame[i]);
-    }
+			smoke->setFrame(6 - 1 - pSmokeFrame[i]);
+		}
 
 		//START DEATH ANIMATION HERE
 		if (i == 0) {
@@ -1435,7 +1430,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 					shotProgress += 1;
 				}
 			}
-      
+
 			std::shared_ptr<Texture> deathText;
 			switch (pType) {
 			case element::Fire:
@@ -1452,7 +1447,7 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				break;
 			}
 
-			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins <1) {
+			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins < 1) {
 				dyingFrame[0] += 1;
 				/*std::string str = std::to_string(dyingFrame[0]);
 				const char * c = str.c_str();
@@ -1475,237 +1470,237 @@ void SceneBuilder1::updateGameScene(float timestep) {
 					poof->flipHorizontal(true);
 					layer->swapChild(pstackNodes[i], poof, false);
 				}
-      }
+			}
 
-	}
-
-	Stack ostack = oppGlobe->getStack();
-
-	for (int i = 0; i < 5; i++) {
-		if (i < ostack.getSize()) {
-			ostackNodes[i]->setVisible(true);
-//            ostackNodes[i]->setFrame(thisFrame);
 		}
-		else {
-			ostackNodes[i]->setVisible(false);
-		}
-	}
 
-	for (int i = 0; i < ostack.getSize(); i++) {
-		std::shared_ptr<Texture> text;
-		special cel = oppGlobe->getStackAt(i).getSpecial();
-		switch (cel) {
-		case special::BasicFire:
-			text = textureF;
-			break;
-		case special::BasicWater:
-			text = textureW;
-			break;
-		case special::BasicGrass:
-			text = textureG;
-			break;
-		case special::Reaper:
-			text = textureReaper;
-			break;
-		case special::Bomb:
-			text = textureBomb;
-			break;
-		case special::Mirror:
-			text = textureMirror;
-			break;
-		case special::Ninja:
-			text = textureNinja;
-			break;
-		case special::PartyFowl:
-			text = textureParty;
-			break;
-		case special::Spy:
-			text = textureSpy;
-			break;
-		case special::Thicken:
-			text = textureThick;
-			break;
-		case special::Witchen:
-			text = textureWitch;
-			break;
-		default:
-			switch (oppGlobe->getStackAt(i).getElement()) {
-			case element::Fire:
+		Stack ostack = oppGlobe->getStack();
+
+		for (int i = 0; i < 5; i++) {
+			if (i < ostack.getSize()) {
+				ostackNodes[i]->setVisible(true);
+				//            ostackNodes[i]->setFrame(thisFrame);
+			}
+			else {
+				ostackNodes[i]->setVisible(false);
+			}
+		}
+
+		for (int i = 0; i < ostack.getSize(); i++) {
+			std::shared_ptr<Texture> text;
+			special cel = oppGlobe->getStackAt(i).getSpecial();
+			switch (cel) {
+			case special::BasicFire:
 				text = textureF;
 				break;
-			case element::Water:
+			case special::BasicWater:
 				text = textureW;
 				break;
-			case element::Grass:
+			case special::BasicGrass:
 				text = textureG;
 				break;
-			}
-		}
-		if (texturesOStack[i] != text) {
-//			ostackNodes[i]->setTexture(text);
-//			texturesOStack[i] = text;
-		}
-		bool isChange = ostackNodes[i]->getTexture() != (text);
-        std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text,1,CHICKEN_FILMSTRIP_LENGTH);
-        chick->setScale(STACK_SCALE); // Magic number to rescale asset
-        chick->setAnchor(Vec2::ANCHOR_CENTER);
-        chick->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-        chick->flipHorizontal(false);
-
-		if (prevTint && i < (oppGlobe->getNumChickensWillDiePreview())) {
-			chick->setColor(Color4(Vec4(1, 0, 0, 0.5)));
-		}
-
-        layer->swapChild(ostackNodes[i], chick, false);
-        ostackNodes[i] = chick;
-
-        texturesPStack[i] = text;
-
-        ostackNodes[i]->setFrame(thisFrame);
-
-		if (isChange) {
-			eSmokeFrame[i] = 0;
-		}
-
-
-		if (eSmokeFrame[i] >= 5) {
-			eSmokeFrame[i] = -1;
-		}
-		if (isNextFrame && eSmokeFrame[i] != -1) {
-			eSmokeFrame[i] ++;
-		}
-
-		if (eSmokeFrame[i] != -1) {
-			std::shared_ptr<AnimationNode> smoke = AnimationNode::alloc(smokeTrans, 1, 6);
-			ostackNodes[i]->addChild(smoke);
-			int fo = 6 - 1 - eSmokeFrame[i];
-			smoke->setFrame(6 - 1 - eSmokeFrame[i]);
-		}
-
-		//ANIMATE DEATH OVERLAY HERE
-		if(i == 0){
-
-			if (isNextFrame) {
-				if (shotProgress != -1) {
-					//a shot has begun
-
-					if (shotProgress < middleScreenFrame) {
-						//change from text to the opponent element type texture
-						/*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-						ostackNodes[i]->addChild(shot);
-						chick->setPosition(50*shotProgress, 0);*/
-					}
-					else if (shotProgress >= middleScreenFrame) {
-						if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-							//shot has reached the enemy chicken!
-							//animation of defeat should begin
-							//dyingFrame[1]=dyingFrame[1]+1;
-
-						}
-						
-					}
-					shotProgress += 1;
-
-				}
-
-			}
-
-
-
-			std::shared_ptr<Texture> deathText;
-			switch (eType) {
-			case element::Fire:
-				deathText = fireTrans;
+			case special::Reaper:
+				text = textureReaper;
 				break;
-			case element::Water:
-				deathText = waterTrans;
+			case special::Bomb:
+				text = textureBomb;
 				break;
-			case element::Grass:
-				deathText = grassTrans;
+			case special::Mirror:
+				text = textureMirror;
+				break;
+			case special::Ninja:
+				text = textureNinja;
+				break;
+			case special::PartyFowl:
+				text = textureParty;
+				break;
+			case special::Spy:
+				text = textureSpy;
+				break;
+			case special::Thicken:
+				text = textureThick;
+				break;
+			case special::Witchen:
+				text = textureWitch;
 				break;
 			default:
-				deathText = fireTrans;
-				break;
-			}
-
-			if(isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1){
-				dyingFrame[1] += 1;
-				std::string str = std::to_string(dyingFrame[1]);
-				const char * c = str.c_str();
-				CULog(c);
-				if (dyingFrame[1] >= DEATH_ANIM_COLS) {
-					dyingFrame[1] = -1;
-					shotProgress = -1;
+				switch (oppGlobe->getStackAt(i).getElement()) {
+				case element::Fire:
+					text = textureF;
+					break;
+				case element::Water:
+					text = textureW;
+					break;
+				case element::Grass:
+					text = textureG;
+					break;
 				}
 			}
-			
-			if (dyingFrame[1] > -1 && playerChickenWins > -1)
-			{
-				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-				ostackNodes[i]->addChild(poof);
-				poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
-				//poof->flipHorizontal(false);
+			if (texturesOStack[i] != text) {
+				//			ostackNodes[i]->setTexture(text);
+				//			texturesOStack[i] = text;
+			}
+			bool isChange = ostackNodes[i]->getTexture() != (text);
+			std::shared_ptr<AnimationNode> chick = AnimationNode::alloc(text, 1, CHICKEN_FILMSTRIP_LENGTH);
+			chick->setScale(STACK_SCALE); // Magic number to rescale asset
+			chick->setAnchor(Vec2::ANCHOR_CENTER);
+			chick->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
+			chick->flipHorizontal(false);
 
-				if (dyingFrame[1] > 4) {
-					poof->setScale(STACK_SCALE); // Magic number to rescale asset
-					poof->setAnchor(Vec2::ANCHOR_CENTER);
-					poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-					poof->flipHorizontal(true);
-					layer->swapChild(ostackNodes[i], poof, false);
+			if (prevTint && i < (oppGlobe->getNumChickensWillDiePreview())) {
+				chick->setColor(Color4(Vec4(1, 0, 0, 0.5)));
+			}
+
+			layer->swapChild(ostackNodes[i], chick, false);
+			ostackNodes[i] = chick;
+
+			texturesPStack[i] = text;
+
+			ostackNodes[i]->setFrame(thisFrame);
+
+			if (isChange) {
+				eSmokeFrame[i] = 0;
+			}
+
+
+			if (eSmokeFrame[i] >= 5) {
+				eSmokeFrame[i] = -1;
+			}
+			if (isNextFrame && eSmokeFrame[i] != -1) {
+				eSmokeFrame[i] ++;
+			}
+
+			if (eSmokeFrame[i] != -1) {
+				std::shared_ptr<AnimationNode> smoke = AnimationNode::alloc(smokeTrans, 1, 6);
+				ostackNodes[i]->addChild(smoke);
+				int fo = 6 - 1 - eSmokeFrame[i];
+				smoke->setFrame(6 - 1 - eSmokeFrame[i]);
+			}
+
+			//ANIMATE DEATH OVERLAY HERE
+			if (i == 0) {
+
+				if (isNextFrame) {
+					if (shotProgress != -1) {
+						//a shot has begun
+
+						if (shotProgress < middleScreenFrame) {
+							//change from text to the opponent element type texture
+							/*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
+							ostackNodes[i]->addChild(shot);
+							chick->setPosition(50*shotProgress, 0);*/
+						}
+						else if (shotProgress >= middleScreenFrame) {
+							if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
+								//shot has reached the enemy chicken!
+								//animation of defeat should begin
+								//dyingFrame[1]=dyingFrame[1]+1;
+
+							}
+
+						}
+						shotProgress += 1;
+
+					}
+
+				}
+
+
+
+				std::shared_ptr<Texture> deathText;
+				switch (eType) {
+				case element::Fire:
+					deathText = fireTrans;
+					break;
+				case element::Water:
+					deathText = waterTrans;
+					break;
+				case element::Grass:
+					deathText = grassTrans;
+					break;
+				default:
+					deathText = fireTrans;
+					break;
+				}
+
+				if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1) {
+					dyingFrame[1] += 1;
+					std::string str = std::to_string(dyingFrame[1]);
+					const char * c = str.c_str();
+					CULog(c);
+					if (dyingFrame[1] >= DEATH_ANIM_COLS) {
+						dyingFrame[1] = -1;
+						shotProgress = -1;
+					}
+				}
+
+				if (dyingFrame[1] > -1 && playerChickenWins > -1)
+				{
+					std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+					ostackNodes[i]->addChild(poof);
+					poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
+					//poof->flipHorizontal(false);
+
+					if (dyingFrame[1] > 4) {
+						poof->setScale(STACK_SCALE); // Magic number to rescale asset
+						poof->setAnchor(Vec2::ANCHOR_CENTER);
+						poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
+						poof->flipHorizontal(true);
+						layer->swapChild(ostackNodes[i], poof, false);
+					}
 				}
 			}
-		}
-    
-	}
 
-	//Update the info card
-	if (heldButton == nullptr) {
-		infoCanvas->setVisible(false);
-	}
-	else {
-		if (timers[heldButtInd] > 15) {
-			infoCanvas->setVisible(true);
 		}
-	}
 
-	//Update the opponent health bar
-	for (int i = 1; i < 6; i++) {
-		if (oppGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(11 - i);
-			child->setVisible(false);
+		//Update the info card
+		if (heldButton == nullptr) {
+			infoCanvas->setVisible(false);
 		}
-	}
-
-	//Update the player health bar
-	for (int i = 1; i < 6; i++) {
-		if (playerGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(6 - i);
-			child->setVisible(false);
+		else {
+			if (timers[heldButtInd] > 15) {
+				infoCanvas->setVisible(true);
+			}
 		}
-	}
 
-	//Update the opponent type distribution
-	for (int i = 0; i < 3; i++) {
-		int currDistI = (oppGlobe->getChickenElementDistribution())[i];
-		int prevDistI = (prevDist[i]);
-		if (currDistI != prevDistI) {
-			std::shared_ptr<Texture> text;
-			if (currDistI == 0) {
-				text = num0;
+		//Update the opponent health bar
+		for (int i = 1; i < 6; i++) {
+			if (oppGlobe->getHealth() < i) {
+				std::shared_ptr<Node> child = healthCanvas->getChild(11 - i);
+				child->setVisible(false);
 			}
-			else if (currDistI == 1) {
-				text = num1;
+		}
+
+		//Update the player health bar
+		for (int i = 1; i < 6; i++) {
+			if (playerGlobe->getHealth() < i) {
+				std::shared_ptr<Node> child = healthCanvas->getChild(6 - i);
+				child->setVisible(false);
 			}
-			else if (currDistI == 2) {
-				text = num2;
-			}
-			else if (currDistI == 3) {
-				text = num3;
-			}
-			else if (currDistI == 4) {
-				text = num4;
-			}
-			prevDist[i] = currDistI;
+		}
+
+		//Update the opponent type distribution
+		for (int i = 0; i < 3; i++) {
+			int currDistI = (oppGlobe->getChickenElementDistribution())[i];
+			int prevDistI = (prevDist[i]);
+			if (currDistI != prevDistI) {
+				std::shared_ptr<Texture> text;
+				if (currDistI == 0) {
+					text = num0;
+				}
+				else if (currDistI == 1) {
+					text = num1;
+				}
+				else if (currDistI == 2) {
+					text = num2;
+				}
+				else if (currDistI == 3) {
+					text = num3;
+				}
+				else if (currDistI == 4) {
+					text = num4;
+				}
+				prevDist[i] = currDistI;
 
 				std::shared_ptr<PolygonNode> swapPoly = PolygonNode::allocWithTexture(text);
 				swapPoly->setAnchor(Vec2::ANCHOR_TOP_CENTER);
@@ -1714,158 +1709,159 @@ void SceneBuilder1::updateGameScene(float timestep) {
 				swapPoly->setVisible(true);
 				std::shared_ptr<Node> oldChild = eltInfoCanvas->getChild(i + 1);
 				eltInfoCanvas->swapChild(oldChild, swapPoly, false);
+			}
 		}
-	}
 
-	//update stamps
+		//update stamps
 
-	for (int i = 0; i < playerGlobe->getStack().getSize(); i++) {
-		Chicken chick = playerGlobe->getStackAt(i);
-		if (chick.isCycled()) {
-			if (chick.getElement() == element::Fire) {
-				pStamps[i]->setTexture(fstamp);
-				pStamps[i]->setVisible(true);
-			}
-			else if (chick.getElement() == element::Water) {
-				pStamps[i]->setTexture(wstamp);
-				pStamps[i]->setVisible(true);
-			}
-			else if (chick.getElement() == element::Grass) {
-				pStamps[i]->setTexture(gstamp);
-				pStamps[i]->setVisible(true);
+		for (int i = 0; i < playerGlobe->getStack().getSize(); i++) {
+			Chicken chick = playerGlobe->getStackAt(i);
+			if (chick.isCycled()) {
+				if (chick.getElement() == element::Fire) {
+					pStamps[i]->setTexture(fstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else if (chick.getElement() == element::Water) {
+					pStamps[i]->setTexture(wstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else if (chick.getElement() == element::Grass) {
+					pStamps[i]->setTexture(gstamp);
+					pStamps[i]->setVisible(true);
+				}
+				else {
+
+				}
 			}
 			else {
-
+				pStamps[i]->setVisible(false);
 			}
 		}
-		else {
-			pStamps[i]->setVisible(false);
-		}
-	}
 
-	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
+		for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
 
-		Chicken chick = oppGlobe->getStackAt(i);
-		if (chick.isCycled()) {
-			if (chick.getElement() == element::Fire) {
-				oStamps[i]->setTexture(fstamp);
-				oStamps[i]->setVisible(true);
-			}
-			else if (chick.getElement() == element::Water) {
-				oStamps[i]->setTexture(wstamp);
-				oStamps[i]->setVisible(true);
-			}
-			else if (chick.getElement() == element::Grass) {
-				oStamps[i]->setTexture(gstamp);
-				oStamps[i]->setVisible(true);
+			Chicken chick = oppGlobe->getStackAt(i);
+			if (chick.isCycled()) {
+				if (chick.getElement() == element::Fire) {
+					oStamps[i]->setTexture(fstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else if (chick.getElement() == element::Water) {
+					oStamps[i]->setTexture(wstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else if (chick.getElement() == element::Grass) {
+					oStamps[i]->setTexture(gstamp);
+					oStamps[i]->setVisible(true);
+				}
+				else {
+
+				}
 			}
 			else {
-
+				oStamps[i]->setVisible(false);
 			}
 		}
+
+		//Update win and loss screens
+		if (playerGlobe->getHealth() < 1) {
+			loseCanvas->setVisible(true);
+			if (!hasLost) {
+				//Create the loss home button
+				std::shared_ptr<PolygonNode> homePolyL = PolygonNode::allocWithTexture(homeButton);
+				homePolyL->setAnchor(Vec2::ANCHOR_CENTER);
+				std::shared_ptr<Button> hButtL = Button::alloc(homePolyL);
+				hButtL->setAnchor(Vec2::ANCHOR_CENTER);
+				hButtL->setScale(WIN_LOSS_B_SCALE);
+				hButtL->setAnchor(Vec2::ANCHOR_CENTER);
+				hButtL->setPosition(screenWidth / 2 + LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+				hButtL->setListener([=](const std::string& name, bool down) {
+					if (down) {
+						goHome = true;
+					}
+				});
+				loseCanvas->addChild(hButtL);
+				//ensure keys are unique
+				hButtL->activate(53);
+
+				//Create the loss redo button
+				std::shared_ptr<PolygonNode> redoPolyL = PolygonNode::allocWithTexture(redo);
+				redoPolyL->setAnchor(Vec2::ANCHOR_CENTER);
+				std::shared_ptr<Button> rButtL = Button::alloc(redoPolyL);
+				rButtL->setAnchor(Vec2::ANCHOR_CENTER);
+				rButtL->setScale(WIN_LOSS_B_SCALE);
+				rButtL->setAnchor(Vec2::ANCHOR_CENTER);
+				rButtL->setPosition(screenWidth / 2 - LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+				rButtL->setListener([=](const std::string& name, bool down) {
+					if (down) {
+						retry = true;
+					}
+				});
+				loseCanvas->addChild(rButtL);
+				//ensure keys are unique
+				rButtL->activate(54);
+			}
+			hasLost = true;
+		}
+		else if (oppGlobe->getHealth() < 1) {
+			winCanvas->setVisible(true);
+			if (!hasWon) {
+				//Init the win home button
+				std::shared_ptr<PolygonNode> homePoly = PolygonNode::allocWithTexture(homeButton);
+				homePoly->setAnchor(Vec2::ANCHOR_CENTER);
+				std::shared_ptr<Button> hButt = Button::alloc(homePoly);
+				hButt->setAnchor(Vec2::ANCHOR_CENTER);
+				hButt->setScale(WIN_LOSS_B_SCALE);
+				hButt->setAnchor(Vec2::ANCHOR_CENTER);
+				hButt->setPosition(screenWidth / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+				hButt->setListener([=](const std::string& name, bool down) {
+					if (down) {
+						goHome = true;
+					}
+				});
+				winCanvas->addChild(hButt);
+				//ensure keys are unique
+				hButt->activate(50);
+
+				//Init the win redo button
+				std::shared_ptr<PolygonNode> redoPoly = PolygonNode::allocWithTexture(redo);
+				redoPoly->setAnchor(Vec2::ANCHOR_CENTER);
+				std::shared_ptr<Button> rButt = Button::alloc(redoPoly);
+				rButt->setAnchor(Vec2::ANCHOR_CENTER);
+				rButt->setScale(WIN_LOSS_B_SCALE);
+				rButt->setAnchor(Vec2::ANCHOR_CENTER);
+				rButt->setPosition(screenWidth / 2 - WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+				rButt->setListener([=](const std::string& name, bool down) {
+					if (down) {
+						retry = true;
+					}
+				});
+				winCanvas->addChild(rButt);
+				//ensure keys are unique
+				rButt->activate(51);
+
+				//Init the win next level button
+				std::shared_ptr<PolygonNode> levelPoly = PolygonNode::allocWithTexture(nextlvl);
+				levelPoly->setAnchor(Vec2::ANCHOR_CENTER);
+				std::shared_ptr<Button> lButt = Button::alloc(levelPoly);
+				lButt->setAnchor(Vec2::ANCHOR_CENTER);
+				lButt->setScale(WIN_LOSS_B_SCALE);
+				lButt->setAnchor(Vec2::ANCHOR_CENTER);
+				lButt->setPosition(screenWidth / 2 + WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
+				lButt->setListener([=](const std::string& name, bool down) {
+					if (down) {
+						nextLevel = true;
+					}
+				});
+				winCanvas->addChild(lButt);
+				//ensure keys are unique
+				lButt->activate(52);
+			}
+			hasWon = true;
+		}
 		else {
-			oStamps[i]->setVisible(false);
+
 		}
-	}
-
-	//Update win and loss screens
-	if (playerGlobe->getHealth() < 1) {
-		loseCanvas->setVisible(true);
-		if (!hasLost) {
-			//Create the loss home button
-			std::shared_ptr<PolygonNode> homePolyL = PolygonNode::allocWithTexture(homeButton);
-			homePolyL->setAnchor(Vec2::ANCHOR_CENTER);
-			std::shared_ptr<Button> hButtL = Button::alloc(homePolyL);
-			hButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			hButtL->setScale(WIN_LOSS_B_SCALE);
-			hButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			hButtL->setPosition(screenWidth / 2 + LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
-			hButtL->setListener([=](const std::string& name, bool down) {
-				if (down) {
-					goHome = true;
-				}
-			});
-			loseCanvas->addChild(hButtL);
-			//ensure keys are unique
-			hButtL->activate(53);
-
-			//Create the loss redo button
-			std::shared_ptr<PolygonNode> redoPolyL = PolygonNode::allocWithTexture(redo);
-			redoPolyL->setAnchor(Vec2::ANCHOR_CENTER);
-			std::shared_ptr<Button> rButtL = Button::alloc(redoPolyL);
-			rButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			rButtL->setScale(WIN_LOSS_B_SCALE);
-			rButtL->setAnchor(Vec2::ANCHOR_CENTER);
-			rButtL->setPosition(screenWidth / 2 - LOSS_BUTTON_X_SPACING / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
-			rButtL->setListener([=](const std::string& name, bool down) {
-				if (down) {
-					retry = true;
-				}
-			});
-			loseCanvas->addChild(rButtL);
-			//ensure keys are unique
-			rButtL->activate(54);
-		}
-		hasLost = true;
-	}
-	else if (oppGlobe->getHealth() < 1) {
-		winCanvas->setVisible(true);
-		if (!hasWon) {
-			//Init the win home button
-			std::shared_ptr<PolygonNode> homePoly = PolygonNode::allocWithTexture(homeButton);
-			homePoly->setAnchor(Vec2::ANCHOR_CENTER);
-			std::shared_ptr<Button> hButt = Button::alloc(homePoly);
-			hButt->setAnchor(Vec2::ANCHOR_CENTER);
-			hButt->setScale(WIN_LOSS_B_SCALE);
-			hButt->setAnchor(Vec2::ANCHOR_CENTER);
-			hButt->setPosition(screenWidth / 2, screenHeight / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
-			hButt->setListener([=](const std::string& name, bool down) {
-				if (down) {
-					goHome = true;
-				}
-			});
-			winCanvas->addChild(hButt);
-			//ensure keys are unique
-			hButt->activate(50);
-
-			//Init the win redo button
-			std::shared_ptr<PolygonNode> redoPoly = PolygonNode::allocWithTexture(redo);
-			redoPoly->setAnchor(Vec2::ANCHOR_CENTER);
-			std::shared_ptr<Button> rButt = Button::alloc(redoPoly);
-			rButt->setAnchor(Vec2::ANCHOR_CENTER);
-			rButt->setScale(WIN_LOSS_B_SCALE);
-			rButt->setAnchor(Vec2::ANCHOR_CENTER);
-			rButt->setPosition(screenWidth / 2 - WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
-			rButt->setListener([=](const std::string& name, bool down) {
-				if (down) {
-					retry = true;
-				}
-			});
-			winCanvas->addChild(rButt);
-			//ensure keys are unique
-			rButt->activate(51);
-
-			//Init the win next level button
-			std::shared_ptr<PolygonNode> levelPoly = PolygonNode::allocWithTexture(nextlvl);
-			levelPoly->setAnchor(Vec2::ANCHOR_CENTER);
-			std::shared_ptr<Button> lButt = Button::alloc(levelPoly);
-			lButt->setAnchor(Vec2::ANCHOR_CENTER);
-			lButt->setScale(WIN_LOSS_B_SCALE);
-			lButt->setAnchor(Vec2::ANCHOR_CENTER);
-			lButt->setPosition(screenWidth / 2 + WIN_BUTTON_X_SPACING, SCENE_HEIGHT / 2 + WIN_LOSS_Y_OFFSET + WIN_LOSS_B_Y_OFFSET);
-			lButt->setListener([=](const std::string& name, bool down) {
-				if (down) {
-					nextLevel = true;
-				}
-			});
-			winCanvas->addChild(lButt);
-			//ensure keys are unique
-			lButt->activate(52);
-		}
-		hasWon = true;
-	}
-	else {
-
 	}
 }
 
