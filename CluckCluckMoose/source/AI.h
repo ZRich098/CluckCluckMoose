@@ -114,6 +114,23 @@ public:
 
 	/** Gets the type of the AI */
 	AIType getType() { return type; };
+
+#pragma mark -
+#pragma mark Mutators
+	/** Sets the player for the AI to reference 
+	 * @param newPlayer the player to set
+	 */
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; setup(); };
+
+	/** Sets the opp for the AI to reference
+	 * @param newOpp the opp to set
+	 */
+	void setOpp(std::shared_ptr<Moose> newOpp) { enemy = newOpp; setup(); };
+
+	/** Sets the type of the AI to be the given AI type
+	 * @param newType the type to set
+	 */
+	void setType(AIType newType) { type = newType; };
 };
 
 #endif /* __AI_H__ */

@@ -34,6 +34,9 @@ protected:
 
 	std::shared_ptr<AI> oppAI;
 
+	//previous hand size for tracking placing a chicken
+	int prevHand;
+
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
     
@@ -77,16 +80,16 @@ public:
      * @return true if the controller is initialized properly, false otherwise.
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, int levelNum);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
     }
 
-	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai) {
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, int levelNum) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
-		return (result->init(assets, playerMoose, oppMoose, ai) ? result : nullptr);
+		return (result->init(assets, playerMoose, oppMoose, ai, levelNum) ? result : nullptr);
 	}
 
 	/**
@@ -131,15 +134,23 @@ public:
 	 *  
 	 * @param newPlayer the Moose to set player as 
 	 */
-	void setPlayer(Moose newPlayer) { player = make_shared<Moose>(newPlayer); };
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; sb->setPlayer(newPlayer); };
 	/** 
 	 * Set the opponent Moose to be the given Moose
 	 *
 	 * @param newOpp the Moose to set opp as
 	 */
-	void setOpp(Moose newOpp) { opp = make_shared<Moose>(newOpp); };
+	void setOpp(std::shared_ptr<Moose> newOpp) { opp = newOpp; sb->setOpp(newOpp); };
+
+	/**
+	 * Set the AI to the be the given AI type
+	 * @param newAI the AI type to set AI as
+	 */
+	void setAI(std::shared_ptr<Moose> newPlayer, std::shared_ptr<Moose> newOpp, AIType newAI) { oppAI->setPlayer(newPlayer); oppAI->setOpp(newOpp); oppAI->setType(newAI); };
 
 	void setHome(bool val) { sb->setHome(val); }
+
+	void setLevel(int levelNum) { sb->setLevelNum(levelNum); };
 
 #pragma mark -
 #pragma mark Gameplay Handling

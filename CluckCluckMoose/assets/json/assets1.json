@@ -694,7 +694,7 @@
             "wrapT": "clamp"
         }
     },
-	"sounds": {
+	  "sounds": {
         "bell": {
             "type":     "sample",
             "file":     "audio/boxing_bell.wav",
@@ -813,6 +813,4 @@
             }
         }
     }
-}
-}
 }

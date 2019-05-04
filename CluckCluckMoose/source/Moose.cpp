@@ -72,7 +72,7 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	}*/
 
 	//not yet supported
-	//costume = cost;
+	costume = cost;
 }
 
 void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, vector<vector<int>> handPoolArray, string cost) {
@@ -106,7 +106,7 @@ void Moose::jsonInit(int h, vector<int> handArray, vector<int> playOrderArray, v
 	}*/
 
 	//not yet supported
-	//costume = cost;
+	costume = cost;
 }
 
 
@@ -167,9 +167,11 @@ vector<int> Moose::getChickenElementDistribution() {
 #pragma mark Stack
 
 void Moose::addToStackFromHand(int pos) {
+	//CULog("playing at pos: %d", pos);
 	//CULog("playing %s", hand.at(pos).toString().c_str());
 	stack.add(hand.at(pos));
 	hand.erase(hand.begin() + pos);
+	//CULog("new hand size: %d", hand.size());
 	playOrder.push_back(getStack().getTop());
 }
 
@@ -278,6 +280,7 @@ void Moose::clearHandToDiscard() {
 void Moose::refillHand() {
 	//Draw from deck while there are still chickens in the deck and hand is not full
 	if (hand.size() == 0) {
+		//CULog("refilling basics");
 		hand.push_back(Chicken(element::Fire, special::BasicFire));
 		hand.push_back(Chicken(element::Grass, special::BasicGrass));
 		hand.push_back(Chicken(element::Water, special::BasicWater));
@@ -285,6 +288,7 @@ void Moose::refillHand() {
 	random_shuffle(hand.begin(),hand.end());
 	//Uses hands that are given if one is available
 	if (handPool.size() != 0) {
+		//CULog("refilling with handPool");
 		random_shuffle(handPool.begin(), handPool.end());
 		for (Chicken i : handPool.front()) {
 			hand.push_back(i);
@@ -292,6 +296,7 @@ void Moose::refillHand() {
 	}
 	//Uses the pool system otherwise
 	else {
+		//CULog("refilling with pool");
 		int specialNum = 0;
 		while (hand.size() < handSize) {
 			//If deck is empty for whatever reason, draw random basic
@@ -315,6 +320,7 @@ void Moose::refillHand() {
 		//refillDeck();
 		//deck.shuffle();
 	}
+	//CULog("%s", handString().c_str());
 }
 
 void Moose::draw(int num) {

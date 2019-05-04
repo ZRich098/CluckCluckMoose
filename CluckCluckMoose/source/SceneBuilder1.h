@@ -18,6 +18,10 @@ protected:
 
 	CCMInput _input;
 
+	//Players
+	std::shared_ptr<Moose> playerGlobe;
+	std::shared_ptr<Moose> oppGlobe;
+
 	std::shared_ptr<cugl::Node> selectedChicken;
 
 	bool previewSet;
@@ -115,6 +119,11 @@ public:
 	void setHome(bool val);
 //	void setRestart(bool val);
 
+	void setLevelNum(int level);
+	void setOppCost(string costume);
+
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
+	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; };
 };
 
 
