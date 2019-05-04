@@ -511,6 +511,83 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "level11": {
+            "file": "textures/levelselect/nums/1-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level12": {
+            "file": "textures/levelselect/nums/1-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level13": {
+            "file": "textures/levelselect/nums/1-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level21": {
+            "file": "textures/levelselect/nums/2-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level22": {
+            "file": "textures/levelselect/nums/2-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level23": {
+            "file": "textures/levelselect/nums/2-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level31": {
+            "file": "textures/levelselect/nums/3-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level32": {
+            "file": "textures/levelselect/nums/3-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level33": {
+            "file": "textures/levelselect/nums/3-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level42": {
+            "file": "textures/levelselect/nums/4-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "level43": {
+            "file": "textures/levelselect/nums/4-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "pausebutton": {
             "file": "textures/pausemenu/pause.png",
             "minfilter": "linear",
