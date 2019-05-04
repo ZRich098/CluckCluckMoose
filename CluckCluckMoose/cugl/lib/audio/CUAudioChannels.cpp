@@ -256,7 +256,7 @@ void AudioChannels::removeKey(std::string key) {
  */
 std::shared_ptr<AudioFader> AudioChannels::wrapInstance(const std::shared_ptr<Sound>& asset) {
     CUAssertLog(asset->getChannels() <= 2, "Sound asset has more than 2 channels");
-	//CULog("sound rate %i", asset->getRate());
+		//CULog("sound rate %i", asset->getRate());
     CUAssertLog(asset->getRate() == _mixer->getRate(), "Sound asset is not encoded at %d Hz",_mixer->getRate());
     
     std::shared_ptr<AudioFader> fader = nullptr;

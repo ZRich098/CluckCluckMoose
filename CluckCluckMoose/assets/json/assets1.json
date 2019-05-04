@@ -21,6 +21,27 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "waterTrans": {
+            "file": "textures/water_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "fireTrans": {
+            "file": "textures/fire_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "grassTrans": {
+            "file": "textures/plant_trans.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "water": {
             "file": "textures/water_chick.png",
             "minfilter": "linear",
@@ -93,13 +114,6 @@
         },
         "preview": {
             "file": "textures/btn_preview_v1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS": "clamp",
-            "wrapT": "clamp"
-        },
-        "clashsign": {
-            "file": "textures/spritesheet_fightSign.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
