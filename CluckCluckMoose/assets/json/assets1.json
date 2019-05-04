@@ -119,6 +119,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "clashsign": {
+            "file": "textures/spritesheet_fightSign.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "fireInfo": {
             "file": "textures/card_basic_fireChicken_v3.png",
             "minfilter": "linear",
