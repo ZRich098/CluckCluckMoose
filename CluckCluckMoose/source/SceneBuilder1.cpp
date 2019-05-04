@@ -17,6 +17,8 @@ using namespace cugl;
 
 std::shared_ptr<AssetManager> _assets;
 
+//std::shared_ptr<CCMInput> _input;
+
 //Button list for player hand
 std::vector<std::shared_ptr<Button>> buttons;
 std::vector<std::shared_ptr<AnimationNode>> buttonTextures;
@@ -113,6 +115,9 @@ bool hasLost;
 #define WIN_LOSS_B_Y_OFFSET -225
 #define WIN_BUTTON_X_SPACING 140
 #define LOSS_BUTTON_X_SPACING 175
+
+#define PLACING_X_BOUND 200
+#define PLACING_Y_BOUND 500
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -244,9 +249,11 @@ float screenHeight;
 float screenWidth;
 
 
-bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum) {
+bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, std::shared_ptr<CCMInput> input) {
 
 	root->removeAllChildren();
+
+	_input = input;
 
 	//Set screen size
 	screenHeight = dimen.height;
@@ -277,7 +284,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	soundToggle = false;
 
 	_assets = assets;
-	_input.init();
 
 	// Get chicken textures.
 	textureF = _assets->get<Texture>("fire");
@@ -646,15 +652,17 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 			butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
 			shadowNode->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING - SHADOW_OFFSET);
 		}
-		if (_input.isActive()) {
-			//CULog("active");
-		}
+		/*if (_input->isActive()) {
+			CULog("active");
+		} */
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
 				heldButton = butt;
 				if (timers[i] > 15) {
 					infoCanvas->setVisible(true);
 				}
+				//CULog("Chicken trying to go to %d %d", _input->getSelection().x, _input->getSelection().y);
+				//butt->setPosition(layer->screenToNodeCoords(_input.getSelection()));
 
 			}
 			if (!down) {
@@ -1615,7 +1623,7 @@ void SceneBuilder1::updateInput(float timestep) {
 //Dispose of the scene builder
 void SceneBuilder1::dispose() {
 	_assets = nullptr;
-	_input.dispose();
+	//_input->dispose();
 	//_buttons.clear();
 }
 

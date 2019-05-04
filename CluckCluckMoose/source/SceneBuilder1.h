@@ -16,7 +16,7 @@ protected:
 	/** The asset manager for this scene builder. */
 	std::shared_ptr<cugl::AssetManager> _assets;
 
-	CCMInput _input;
+	std::shared_ptr<CCMInput> _input;
 
 	std::shared_ptr<cugl::Node> selectedChicken;
 
@@ -58,12 +58,12 @@ public:
 	 *
 	 * @return true if the controller is initialized properly, false otherwise.
 	 */
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, std::shared_ptr<CCMInput> input);
 
 	//Allocate a scene builder
-	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum) {
+	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, std::shared_ptr<CCMInput> input) {
 		std::shared_ptr<SceneBuilder1> result = std::make_shared<SceneBuilder1>();
-		return (result->init(assets, size, root, player, opp, costume, levelNum) ? result : nullptr);
+		return (result->init(assets, size, root, player, opp, costume, levelNum, input) ? result : nullptr);
 	}
 
 #pragma mark -

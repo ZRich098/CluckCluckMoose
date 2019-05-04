@@ -77,6 +77,9 @@ std::shared_ptr<Moose> player;
 std::shared_ptr<Moose> opp;
 
 std::shared_ptr<AI> oppAI;
+
+std::shared_ptr<CCMInput> input;
+
 //Preview Stacks
 //Player Stack
 Stack playerPreviewStack;
@@ -137,7 +140,11 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, AIType::Smart);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	
+	
+	input->init();
+
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3, input);
 
 	sb->deactivateHand();
 
@@ -192,7 +199,9 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	
+
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3, input);
 	sb->setPreview(false);
 	sb->deactivateHand();
 

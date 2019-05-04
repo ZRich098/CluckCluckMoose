@@ -202,6 +202,10 @@ public:
 	 */
 	void mouseDraggedCB(const cugl::MouseEvent& event, const cugl::Vec2& previous, bool focus);
 
+	cugl::Vec2 getTouchPos() {
+		return _dtouch;
+	}
+
 };
 
 #endif /* __CCM_INPUT_H__ */
