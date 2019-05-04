@@ -96,7 +96,7 @@ bool AudioChannels::init(Uint32 channels) {
     _capacity = channels;
 
     // Assume that manager has already started
-    _output = AudioManager::get()->openOutput();
+    _output = AudioManager::get()->openOutput(); //RD: Here
     _mixer  = AudioMixer::alloc(_capacity+1,_output->getChannels(),
                                 _output->getRate(),_output->getCapacity());
 
@@ -256,6 +256,7 @@ void AudioChannels::removeKey(std::string key) {
  */
 std::shared_ptr<AudioFader> AudioChannels::wrapInstance(const std::shared_ptr<Sound>& asset) {
     CUAssertLog(asset->getChannels() <= 2, "Sound asset has more than 2 channels");
+		//CULog("sound rate %i", asset->getRate());
     CUAssertLog(asset->getRate() == _mixer->getRate(), "Sound asset is not encoded at %d Hz",_mixer->getRate());
     
     std::shared_ptr<AudioFader> fader = nullptr;
