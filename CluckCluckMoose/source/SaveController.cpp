@@ -1,6 +1,6 @@
 #include <cugl/assets/CUJsonLoader.h>
 #include "SaveController.h"
-
+#include <sstream>
 ;
 
 SaveController::SaveController() : Asset(),
@@ -232,7 +232,9 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	saveFile->get("OpponentMoose")->appendArray("Coop"); //Make opponent Coop
 	for (int i = 0; i < opp->getHandPool().size(); i++) {
 		saveFile->get("OpponentMoose")->get("Coop")->appendArray();
-		saveFile->get("OpponentMoose")->get("Coop")->get(saveFile->get("OpponentMoose")->get("Coop")->size()-1)->appendValue((double)specialToInt(opp->getDeckAt(i).getSpecial()));
+		for (int j = 0; j < opp->getHandPoolAt(i).size(); j++) {
+			saveFile->get("OpponentMoose")->get("Coop")->get(saveFile->get("OpponentMoose")->get("Coop")->size() - 1)->appendValue((double)specialToInt(opp->getHandPoolAt(i).at(j).getSpecial()));
+		}
 	}
 
 	saveFile->get("OpponentMoose")->appendValue("Costume", "zoose");

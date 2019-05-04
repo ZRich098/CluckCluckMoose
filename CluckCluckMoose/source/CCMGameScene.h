@@ -146,7 +146,7 @@ public:
 	 * Set the AI to the be the given AI type
 	 * @param newAI the AI type to set AI as
 	 */
-	void setAI(AIType newAI) { oppAI->setType(newAI); };
+	void setAI(std::shared_ptr<Moose> newPlayer, std::shared_ptr<Moose> newOpp, AIType newAI) { oppAI->setPlayer(newPlayer); oppAI->setOpp(newOpp); oppAI->setType(newAI); };
 
 	void setHome(bool val) { sb->setHome(val); }
 

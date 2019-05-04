@@ -267,7 +267,7 @@ void CCMApp::update(float timestep) {
 							AIType ai = _saveLoad.loadAI(json->get("AI"));
 							_gamescene->setPlayer(pl);
 							_gamescene->setOpp(op);
-							_gamescene->setAI(ai);
+							_gamescene->setAI(op, pl, ai);
 							_gamescene->setLevel(_levelscene.getLevel());
 							_gameplay.pop_back();
 						}

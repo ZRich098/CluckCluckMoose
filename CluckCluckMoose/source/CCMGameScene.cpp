@@ -279,6 +279,7 @@ void GameScene::update(float timestep) {
 	
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == ENTRY) {
+			//CULog("opp playing");
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
