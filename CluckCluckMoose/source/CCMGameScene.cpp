@@ -244,7 +244,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 
 		++pl;
 		++op;
-		stackSize++;
+		//stackSize++;
 	}
 }
 
@@ -276,11 +276,9 @@ void GameScene::update(float timestep) {
 	}
 
 	sb->updateInput(timestep);
-	CULog("prevHand: %d, hand size: %d",prevHand, player->getHand().size());
+	
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
-		CULog("skip state: %d", skipState);
 		if (skipState == ENTRY) {
-			CULog("opp playing: %d", oppAI->getPlay());
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
@@ -318,7 +316,7 @@ void GameScene::update(float timestep) {
 
 		cooldown = CLASHLENGTH;
 	}
-
+	
 	if (isClashing) {
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
 			int result = player->getStack().compare(opp->getStack());
