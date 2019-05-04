@@ -1,6 +1,5 @@
 #include <cugl/assets/CUJsonLoader.h>
 #include "SaveController.h"
-#include <sstream>
 ;
 
 SaveController::SaveController() : Asset(),
