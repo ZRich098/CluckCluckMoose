@@ -719,9 +719,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 			if (!down) {
 				if (timers[i] < INFO_DELAY && timers[i] > 1) {
 
+					playerGlobe->addToStackFromHand(handMap[i]);
+
 					special chickType = playerGlobe->getHandAt(handMap[i]).getSpecial();
 					if (chickType != special::Spy) {
-						playerGlobe->addToStackFromHand(handMap[i]);
 						handMap[i] = -1;
 						for (int j = i + 1; j < 6; j++) {
 							handMap[j]--;
