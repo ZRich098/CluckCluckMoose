@@ -49,9 +49,6 @@ using namespace cugl;
 //stack size
 int stackSize;
 
-//previous hand size for tracking placing a chicken
-int prevHand;
-
 //number of frames in between clashes
 float cooldown;
 
@@ -161,7 +158,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai, const int levelNum) {
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
@@ -199,7 +196,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", levelNum);
 	sb->setPreview(false);
 	sb->deactivateHand();
 
@@ -251,7 +248,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 
 		++pl;
 		++op;
-		stackSize++;
+		//stackSize++;
 	}
 }
 
@@ -279,12 +276,14 @@ void GameScene::update(float timestep) {
 	if (player->getOrder().size() > player->getStack().getSize() && opp->getOrder().size() > opp->getStack().getSize() && !isClashing) {
 		//CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
 		initStacks(player->getOrder(), opp->getOrder());
+		prevHand = player->getHand().size();
 	}
 
 	sb->updateInput(timestep);
-
+	
 	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
 		if (skipState == ENTRY) {
+			//CULog("opp playing");
 			opp->addToStackFromHand(oppAI->getPlay());
 
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
@@ -322,7 +321,7 @@ void GameScene::update(float timestep) {
 
 		cooldown = CLASHLENGTH;
 	}
-
+	
 	if (isClashing) {
 		CULog("Clashing");
 		if (!player->getStack().empty() && !opp->getStack().empty()) {
