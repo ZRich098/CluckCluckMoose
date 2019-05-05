@@ -589,7 +589,7 @@
             "wrapT": "clamp"
         },
         "levelflag": {
-            "file": "textures/levelselect/flag_normal_v3.png",
+            "file": "textures/levelselect/flag_normal_v4.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

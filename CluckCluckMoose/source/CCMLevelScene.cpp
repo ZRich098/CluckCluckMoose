@@ -171,8 +171,12 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     levelbuttons.push_back(downbutt); // 2
 
     // Draw base circles
-    buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 0, false, false);
-    buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 0, false, false);
+	float posX1 = -levelscreenWidth * 4 / 32;
+	float posY1 = levelscreenHeight / 2 + 100;
+	float posX2 = 15;
+	float posY2 = levelscreenHeight / 2 - 90;
+	buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 0, false, false);
+	buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 0, false, false);
     buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 0, false, false);
     
     // Draw farm nodes
@@ -389,6 +393,10 @@ void LevelScene::drawNewBox(int cur){
 
 // Draws new flags/locks/arrows
 void LevelScene::drawLevelNodes(int cur){
+	float posX1 = -levelscreenWidth * 4 / 32;
+	float posY1 = levelscreenHeight / 2 + 100;
+	float posX2 = 15;
+	float posY2 = levelscreenHeight / 2 - 90;
     if (nodesMade && levelbuttons.size() == 6){
         CULog("levelbuttons size: %d", levelbuttons.size());
         for (int i = 5; i >= 3; i--) {
@@ -401,23 +409,23 @@ void LevelScene::drawLevelNodes(int cur){
     }
     
     if (curmap == 0){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 3, false, false);
-        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 2, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 3, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 2, false, false);
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 1, false, false);
     }
     else if (curmap == 1){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 6, false, false);
-        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 5, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 6, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 5, false, false);
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 4, false, false);
     }
     else if (curmap == 2){
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 9, true, false);
-        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 8, false, true);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 9, true, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 8, false, true);
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 7, false, false);
     }
     else { // curmap == 3
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 + 120, levelNodes, 12, true, false);
-        buildLevelSelect(levelbuttonCanvas, 25, levelscreenHeight/2 - 70, levelNodes, 11, true, false);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 12, true, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 11, true, false);
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 10, true, false);
     }
     nodesMade = true;
