@@ -239,7 +239,7 @@
             "wrapT": "clamp"
         },
         "moose": {
-            "file": "textures/moose.png",
+            "file": "textures/mooseCostumes/moose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -254,6 +254,13 @@
         },
         "farmbg": {
             "file": "textures/bg_farm_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "forestfg": {
+            "file": "textures/lvl_forest_overlay.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -358,21 +365,84 @@
             "wrapT": "clamp"
         },
         "elMoose": {
-            "file": "textures/eldrichMoose.PNG",
+            "file": "textures/mooseCostumes/eldritchMoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "chrMoose": {
-            "file": "textures/christmoose.PNG",
+            "file": "textures/mooseCostumes/christmoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
         "farmMoose": {
-            "file": "textures/farmMoose.PNG",
+            "file": "textures/mooseCostumes/farmMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "branchy": {
+            "file": "textures/mooseCostumes/branchy.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "cafMoose": {
+            "file": "textures/mooseCostumes/caffeineMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "cosMoose": {
+            "file": "textures/mooseCostumes/cosmicMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "emMoose": {
+            "file": "textures/mooseCostumes/emeraldMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "kingMoose": {
+            "file": "textures/mooseCostumes/kingMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "oldMoose": {
+            "file": "textures/mooseCostumes/oldMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "rogMoose": {
+            "file": "textures/mooseCostumes/rogueMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tenMoose": {
+            "file": "textures/mooseCostumes/tentaMoose.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "vapMoose": {
+            "file": "textures/mooseCostumes/vaporMoose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
