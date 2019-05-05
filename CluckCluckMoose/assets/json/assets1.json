@@ -239,7 +239,7 @@
             "wrapT": "clamp"
         },
         "moose": {
-            "file": "textures/mooseCostumes/moose.png",
+            "file": "textures/mooseCostumes/moose.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
