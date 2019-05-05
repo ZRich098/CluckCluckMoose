@@ -122,6 +122,7 @@ bool hasLost;
 #define CHICKEN_SHOT_ROWS 1
 #define CHICKEN_SHOT_COLS 1
 #define DEATH_ANIM_COLS 8
+#define INFO_DELAY 15
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -710,19 +711,21 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
 				heldButton = butt;
-				if (timers[i] > 15) {
+				if (timers[i] > INFO_DELAY) {
 					infoCanvas->setVisible(true);
 				}
 
 			}
 			if (!down) {
-				if (timers[i] < 15 && timers[i] > 1) {
+				if (timers[i] < INFO_DELAY && timers[i] > 1) {
 
-					
-					playerGlobe->addToStackFromHand(handMap[i]);
-					handMap[i] = -1;
-					for (int j = i + 1; j < 6; j++) {
-						handMap[j]--;
+					special chickType = playerGlobe->getHandAt(handMap[i]).getSpecial();
+					if (chickType != special::Spy) {
+						playerGlobe->addToStackFromHand(handMap[i]);
+						handMap[i] = -1;
+						for (int j = i + 1; j < 6; j++) {
+							handMap[j]--;
+						}
 					}
 					
 
