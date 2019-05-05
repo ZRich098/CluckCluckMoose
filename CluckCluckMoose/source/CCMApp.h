@@ -63,6 +63,8 @@ protected:
 	/** The controller for saving and loading states */
 	SaveController _saveLoad;
 
+	int lastLevel;
+
 
 public:
 #pragma mark Constructors

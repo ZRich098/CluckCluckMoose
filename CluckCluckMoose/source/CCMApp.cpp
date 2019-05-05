@@ -58,6 +58,8 @@ void CCMApp::onStartup() {
 
     _input.init();
 
+	lastLevel = 1;
+
     Application::onStartup(); // YOU MUST END with call to parent
 }
 
@@ -252,29 +254,28 @@ void CCMApp::update(float timestep) {
 					else {
 						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
 						bool newLevel = false;
-						std::shared_ptr<JsonReader> saveReader = JsonReader::alloc("saveLevel.json");
-						if (saveReader != nullptr) {
-							std::shared_ptr<JsonValue> saveJson = saveReader->readJson();
-							if (_saveLoad.loadLevelTag(saveJson->get("Tag")) != _levelscene.getLevel()) {
-								CULog("loaded level: %d, saved level: %d", _levelscene.getLevel(), _saveLoad.loadLevelTag(saveJson->get("Tag")));
-								newLevel = true;
-							}
+						if (lastLevel != _levelscene.getLevel()) {
+							CULog("loaded level: %d, last level: %d", _levelscene.getLevel(), lastLevel);
+							newLevel = true;
+							lastLevel = _levelscene.getLevel();
 						}
-						if (_gameplay.size() < 3 || newLevel) {
+						if (_gameplay.size() < 3) {
+							CULog("Initial asset file loading");
+							std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+							std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+							AIType ai = _saveLoad.loadAI(json->get("AI"));
+							_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
+						}
+						else if (newLevel) {
 							CULog("Asset file loading");
 							std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 							std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 							AIType ai = _saveLoad.loadAI(json->get("AI"));
-							if (newLevel) {
-								_gamescene->setPlayer(pl);
-								_gamescene->setOpp(op);
-								_gamescene->setAI(op, pl, ai);
-								_gamescene->setLevel(_levelscene.getLevel());
-								_gameplay.pop_back();
-							}
-							else {
-								_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
-							}
+							_gamescene->setPlayer(pl);
+							_gamescene->setOpp(op);
+							_gamescene->setAI(op, pl, ai);
+							_gamescene->setLevel(_levelscene.getLevel());
+							_gameplay.pop_back();
 						}
 						else {
 							CULog("Save file loading");
@@ -301,6 +302,7 @@ void CCMApp::update(float timestep) {
             if (_gamescene->getHome()) { //@TODO: save current level
 				//CULog("%s", getSaveDirectory().c_str());
 				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
+				lastLevel = _levelscene.getLevel();
                 _gamescene->setHome(false);
                 _gameplay[_current]->setActive(false);
                 //_gameplay[_current]->dispose();
