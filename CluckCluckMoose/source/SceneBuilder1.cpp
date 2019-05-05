@@ -76,16 +76,16 @@ bool hasLost;
 #define SCENE_HEIGHT 1024
 
 //Drawing constants
-#define MOOSE_HEIGHT 275
+#define MOOSE_HEIGHT 300
 #define FORE_HEIGHT 125
-#define MOOSE_X_OFFSET 50
+#define MOOSE_X_OFFSET 25
 #define HAND_SCALE 0.5f
 #define STACK_SCALE 0.5f
 #define BUTTON_X_SPACING 175
 #define BUTTON_X_OFFSET 0
-#define BUTTON_Y_SPACING 100
-#define BUTTON_Y_OFFSET -75
-#define STACK_X_OFFSET 75
+#define BUTTON_Y_SPACING 90
+#define BUTTON_Y_OFFSET -55
+#define STACK_X_OFFSET 100
 #define STACK_Y_OFFSET 550
 #define STACK_Y_SPACING 75
 #define INFO_X_OFFSET 7
@@ -123,6 +123,7 @@ bool hasLost;
 #define CHICKEN_SHOT_COLS 1
 #define DEATH_ANIM_COLS 8
 #define INFO_DELAY 15
+#define MOOSE_SCALE 0.5f
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -606,7 +607,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	
 	std::shared_ptr<Texture> textureP = _assets->get<Texture>("moose");
 	std::shared_ptr<PolygonNode> moose1 = PolygonNode::allocWithTexture(textureP);
-	moose1->setScale(0.2f); // Magic number to rescale asset
+	moose1->setScale(MOOSE_SCALE); // Magic number to rescale asset
 	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
 	moose1->setPosition(-MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose1->flipHorizontal(false);
@@ -616,13 +617,40 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	std::shared_ptr<PolygonNode> moose2;
 	std::shared_ptr<Texture> textureM;
 	
-	if (opp->getCostume() == "moose") {
+	if (opp->getCostume() == "basic_moose") {
 		textureM = _assets->get<Texture>("moose");
 	}
 	else if (opp->getCostume() == "eldritch_moose") {
 		textureM = _assets->get<Texture>("elMoose");
 	}
-	else if (opp->getCostume() == "christmoose") {
+	else if (opp->getCostume() == "branchy") {
+		textureM = _assets->get<Texture>("branchy");
+	}
+	else if (opp->getCostume() == "caffeine_moose") {
+		textureM = _assets->get<Texture>("cafMoose");
+	}
+	else if (opp->getCostume() == "camo_moose") {
+		textureM = _assets->get<Texture>("emMoose");
+	}
+	else if (opp->getCostume() == "elder_moose") {
+		textureM = _assets->get<Texture>("oldMoose");
+	}
+	else if (opp->getCostume() == "moose_majesty") {
+		textureM = _assets->get<Texture>("kingMoose");
+	}
+	else if (opp->getCostume() == "moosesassin") {
+		textureM = _assets->get<Texture>("rogMoose");
+	}
+	else if (opp->getCostume() == "nebula_moose") {
+		textureM = _assets->get<Texture>("cosMoose");
+	}
+	else if (opp->getCostume() == "tentamoose") {
+		textureM = _assets->get<Texture>("tenMoose");
+	}
+	else if (opp->getCostume() == "vaporwave_moose") {
+		textureM = _assets->get<Texture>("vapMoose");
+	}
+	else if (opp->getCostume() == "chrismoose") {
 		textureM = _assets->get<Texture>("chrMoose");
 	}
 	else if (opp->getCostume() == "farmer_moose") {
@@ -633,7 +661,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	}
 
 	moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.2f); // Magic number to rescale asset
+	moose2->setScale(MOOSE_SCALE); // Magic number to rescale asset
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
 	moose2->setPosition(screenWidth + MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose2->flipHorizontal(true);
@@ -645,7 +673,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		texturefg = _assets->get<Texture>("farmfg");
 	}
 	else if (levelNum == 2) {
-		texturefg = _assets->get<Texture>("farmfg");
+		texturefg = _assets->get<Texture>("forestfg");
 	}
 	else if (levelNum == 3) {
 		texturefg = _assets->get<Texture>("nuclearfg");
@@ -1797,6 +1825,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			hButtL->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					goHome = true;
+					loseCanvas->setVisible(false);
 				}
 			});
 			loseCanvas->addChild(hButtL);
@@ -1814,6 +1843,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			rButtL->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
+					loseCanvas->setVisible(false);
+
 				}
 			});
 			loseCanvas->addChild(rButtL);
@@ -1836,6 +1867,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			hButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					goHome = true;
+					winCanvas->setVisible(false);
+
 				}
 			});
 			winCanvas->addChild(hButt);
@@ -1853,6 +1886,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			rButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					retry = true;
+					winCanvas->setVisible(false);
 				}
 			});
 			winCanvas->addChild(rButt);
@@ -1870,6 +1904,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			lButt->setListener([=](const std::string& name, bool down) {
 				if (down) {
 					nextLevel = true;
+					winCanvas->setVisible(false);
 				}
 			});
 			winCanvas->addChild(lButt);
