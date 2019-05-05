@@ -391,7 +391,7 @@ void LevelScene::drawNewBox(int cur){
 void LevelScene::drawLevelNodes(int cur){
     if (nodesMade && levelbuttons.size() == 6){
         CULog("levelbuttons size: %d", levelbuttons.size());
-        for (int i = 3; i <= 5; i++) {
+        for (int i = 5; i >= 3; i--) {
             CULog("for i %d, ilevelbuttons size: %d",i, levelbuttons.size());
             levelbuttons[i]->setVisible(false);
             levelbuttons[i]->deactivate();
