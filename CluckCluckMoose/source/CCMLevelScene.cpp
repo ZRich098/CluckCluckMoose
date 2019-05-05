@@ -389,21 +389,15 @@ void LevelScene::drawNewBox(int cur){
 
 // Draws new flags/locks/arrows
 void LevelScene::drawLevelNodes(int cur){
-    if (nodesMade){
-//        for (int i = 3; i <= 5; i++) {
-//            levelbuttons[i]->setVisible(false);
-//            levelbuttons[i]->deactivate();
-//            levelbuttons.pop_back();
-//        }
-        levelbuttons[3]->setVisible(false);
-        levelbuttons[3]->deactivate();
-        levelbuttons.pop_back();
-        levelbuttons[4]->setVisible(false);
-        levelbuttons[4]->deactivate();
-        levelbuttons.pop_back();
-        levelbuttons[5]->setVisible(false);
-        levelbuttons[5]->deactivate();
-        levelbuttons.pop_back();
+    if (nodesMade && levelbuttons.size() == 6){
+        CULog("levelbuttons size: %d", levelbuttons.size());
+        for (int i = 3; i <= 5; i++) {
+            CULog("for i %d, ilevelbuttons size: %d",i, levelbuttons.size());
+            levelbuttons[i]->setVisible(false);
+            levelbuttons[i]->deactivate();
+            levelbuttons.pop_back();
+        }
+        CULog("levelbuttons size after pop_back: %d", levelbuttons.size());
     }
     
     if (curmap == 0){
