@@ -278,9 +278,15 @@ void LevelScene::deactivateButtons() {
  * Activates buttons to allow for seamless scene changes
  */
 void LevelScene::activateButtons() {
-    for (int i = 0; i <= 5; i++) {
-        levelbuttons[i]->activate(104 + i);
-    }
+//    for (int i = 0; i <= 5; i++) {
+//        levelbuttons[i]->activate(104 + i);
+//    }
+    levelbuttons[0]->activate(104);
+    levelbuttons[1]->activate(105);
+    levelbuttons[2]->activate(106);
+    levelbuttons[3]->activate(107);
+    levelbuttons[4]->activate(108);
+    levelbuttons[5]->activate(109);
 }
 
 void LevelScene::setLevel(int lev) { level = lev; }
@@ -383,12 +389,15 @@ void LevelScene::drawNewBox(int cur){
 
 // Draws new flags/locks/arrows
 void LevelScene::drawLevelNodes(int cur){
-    if (nodesMade){
-        for (int i = 3; i <= 5; i++) {
+    if (nodesMade && levelbuttons.size() == 6){
+        CULog("levelbuttons size: %d", levelbuttons.size());
+        for (int i = 5; i >= 3; i--) {
+            CULog("for i %d, ilevelbuttons size: %d",i, levelbuttons.size());
             levelbuttons[i]->setVisible(false);
             levelbuttons[i]->deactivate();
             levelbuttons.pop_back();
         }
+        CULog("levelbuttons size after pop_back: %d", levelbuttons.size());
     }
     
     if (curmap == 0){
