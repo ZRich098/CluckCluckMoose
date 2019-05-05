@@ -977,9 +977,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     
     textsign = _assets->get<Texture>("clashsign");
     sign = AnimationNode::alloc(textsign,1,SIGN_FILMSTRIP_LENGTH);
-    sign->setScale(1); // Magic number to rescale asset
+    sign->setScale(1.7); // Magic number to rescale asset
     sign->setAnchor(Vec2::ANCHOR_CENTER);
-    sign->setPosition(screenWidth/2, screenHeight/2 + 150);
+    sign->setPosition(screenWidth/2, healthYScale - 300);
     clashSignCanvas->addChild(sign);
     clashSignCanvas->setVisible(false);
 
