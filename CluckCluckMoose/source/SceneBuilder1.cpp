@@ -1712,17 +1712,23 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	//Update the opponent health bar
 	for (int i = 1; i < 6; i++) {
+		std::shared_ptr<Node> child = healthCanvas->getChild(11 - i);
 		if (oppGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(11 - i);
 			child->setVisible(false);
+		}
+		else {
+			child->setVisible(true);
 		}
 	}
 
 	//Update the player health bar
 	for (int i = 1; i < 6; i++) {
+		std::shared_ptr<Node> child = healthCanvas->getChild(6 - i);
 		if (playerGlobe->getHealth() < i) {
-			std::shared_ptr<Node> child = healthCanvas->getChild(6 - i);
 			child->setVisible(false);
+		}
+		else {
+			child->setVisible(true);
 		}
 	}
 
