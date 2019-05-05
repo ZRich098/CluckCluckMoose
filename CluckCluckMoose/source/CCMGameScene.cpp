@@ -46,9 +46,6 @@ using namespace cugl;
 /** number of animation frames per timestep */
 #define FRAMESPERTIME 10
 
-//stack size
-int stackSize;
-
 //number of frames in between clashes
 float cooldown;
 

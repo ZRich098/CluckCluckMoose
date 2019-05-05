@@ -37,6 +37,9 @@ protected:
 	//previous hand size for tracking placing a chicken
 	int prevHand;
 
+	//stack size
+	int stackSize;
+
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
     
@@ -134,7 +137,7 @@ public:
 	 *  
 	 * @param newPlayer the Moose to set player as 
 	 */
-	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; sb->setPlayer(newPlayer); };
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; sb->setPlayer(newPlayer); prevHand = player->getHand().size(); stackSize = player->getStack().getSize(); };
 	/** 
 	 * Set the opponent Moose to be the given Moose
 	 *
