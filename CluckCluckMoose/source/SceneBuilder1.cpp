@@ -611,7 +611,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	moose1->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
 	moose1->setPosition(-MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose1->flipHorizontal(false);
-	mooseCanvas->addChild(moose1);
+	mooseCanvas->addChildWithName(moose1, "player_moose");
 
 	//Draw opponent moose
 	std::shared_ptr<PolygonNode> moose2;
@@ -665,7 +665,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
 	moose2->setPosition(screenWidth + MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose2->flipHorizontal(true);
-	mooseCanvas->addChild(moose2);
+	mooseCanvas->addChildWithName(moose2, "opp_moose");
 
 	//Draw foreground
 	std::shared_ptr<Texture> texturefg;
@@ -2008,6 +2008,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 }
 
 void SceneBuilder1::setOppCost(string costume) {
+	mooseCanvas->removeChildByName("opp_moose");
 	//Draw opponent moose
 	std::shared_ptr<PolygonNode> moose2;
 	std::shared_ptr<Texture> textureM;
@@ -2029,11 +2030,11 @@ void SceneBuilder1::setOppCost(string costume) {
 	}
 
 	moose2 = PolygonNode::allocWithTexture(textureM);
-	moose2->setScale(0.2f); // Magic number to rescale asset
+	moose2->setScale(MOOSE_SCALE); // Magic number to rescale asset
 	moose2->setAnchor(Vec2::ANCHOR_BOTTOM_RIGHT);
 	moose2->setPosition(screenWidth + MOOSE_X_OFFSET, MOOSE_HEIGHT);
 	moose2->flipHorizontal(true);
-	mooseCanvas->addChild(moose2);
+	mooseCanvas->addChildWithName(moose2, "opp_moose");
 }
 
 void SceneBuilder1::deactivateHand() {
