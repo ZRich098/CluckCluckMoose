@@ -583,17 +583,17 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 	//Draw background
 	std::shared_ptr<Texture> texturebg;
-	if (levelNum == 1) {
+	if (levelNum < 4) {
 		texturebg = _assets->get<Texture>("farmbg");
 	}
-	else if (levelNum == 2) {
+	else if (levelNum < 7) {
 		texturebg = _assets->get<Texture>("forestbg");
 	}
-	else if (levelNum == 3) {
+	else if (levelNum < 10) {
 		texturebg = _assets->get<Texture>("nuclearbg");
 	}
 	else {
-		texturebg = _assets->get<Texture>("farmbg");
+		texturebg = _assets->get<Texture>("thronebg");
 	}
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
 	background->setScale(0.7f); // Magic number to rescale asset
@@ -620,7 +620,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	if (opp->getCostume() == "basic_moose") {
 		textureM = _assets->get<Texture>("moose");
 	}
-	else if (opp->getCostume() == "eldritch_moose") {
+	else if (opp->getCostume() == "eldrich_moose") {
 		textureM = _assets->get<Texture>("elMoose");
 	}
 	else if (opp->getCostume() == "branchy") {
@@ -629,7 +629,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	else if (opp->getCostume() == "caffeine_moose") {
 		textureM = _assets->get<Texture>("cafMoose");
 	}
-	else if (opp->getCostume() == "camo_moose") {
+	else if (opp->getCostume() == "emerald_moose") {
 		textureM = _assets->get<Texture>("emMoose");
 	}
 	else if (opp->getCostume() == "elder_moose") {
@@ -647,7 +647,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	else if (opp->getCostume() == "tentamoose") {
 		textureM = _assets->get<Texture>("tenMoose");
 	}
-	else if (opp->getCostume() == "vaporwave_moose") {
+	else if (opp->getCostume() == "moosewave") {
 		textureM = _assets->get<Texture>("vapMoose");
 	}
 	else if (opp->getCostume() == "chrismoose") {
@@ -669,17 +669,17 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 	//Draw foreground
 	std::shared_ptr<Texture> texturefg;
-	if (levelNum == 1) {
+	if (levelNum < 4) {
 		texturefg = _assets->get<Texture>("farmfg");
 	}
-	else if (levelNum == 2) {
+	else if (levelNum < 7) {
 		texturefg = _assets->get<Texture>("forestfg");
 	}
-	else if (levelNum == 3) {
+	else if (levelNum < 10) {
 		texturefg = _assets->get<Texture>("nuclearfg");
 	}
 	else {
-		texturefg = _assets->get<Texture>("farmfg");
+		texturefg = _assets->get<Texture>("thronefg");
 	}
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
 	foreground->setScale(0.7f); // Magic number to rescale asset
@@ -1966,17 +1966,17 @@ void SceneBuilder1::setHome(bool val) {
 void SceneBuilder1::setLevelNum(int levelNum) {
 	//Draw background
 	std::shared_ptr<Texture> texturebg;
-	if (levelNum == 1) {
+	if (levelNum < 4) {
 		texturebg = _assets->get<Texture>("farmbg");
 	}
-	else if (levelNum == 2) {
+	else if (levelNum < 7) {
 		texturebg = _assets->get<Texture>("forestbg");
 	}
-	else if (levelNum == 3) {
+	else if (levelNum < 10) {
 		texturebg = _assets->get<Texture>("nuclearbg");
 	}
 	else {
-		texturebg = _assets->get<Texture>("farmbg");
+		texturebg = _assets->get<Texture>("thronebg");
 	}
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
 	background->setScale(0.7f); // Magic number to rescale asset
@@ -1986,17 +1986,17 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 
 	//Draw foreground
 	std::shared_ptr<Texture> texturefg;
-	if (levelNum == 1) {
+	if (levelNum < 4) {
 		texturefg = _assets->get<Texture>("farmfg");
 	}
-	else if (levelNum == 2) {
+	else if (levelNum < 7) {
 		texturefg = _assets->get<Texture>("farmfg");
 	}
-	else if (levelNum == 3) {
+	else if (levelNum < 10) {
 		texturefg = _assets->get<Texture>("nuclearfg");
 	}
 	else {
-		texturefg = _assets->get<Texture>("farmfg");
+		texturefg = _assets->get<Texture>("thronefg");
 	}
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
 	foreground->setScale(0.7f); // Magic number to rescale asset
