@@ -123,7 +123,7 @@ public:
 	void setOppCost(string costume);
 
 	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
-	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; };
+	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; setOppCost(newOpp->getCostume()); };
 };
 
 

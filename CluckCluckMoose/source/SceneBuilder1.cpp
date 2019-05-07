@@ -1964,6 +1964,8 @@ void SceneBuilder1::setHome(bool val) {
 }
 
 void SceneBuilder1::setLevelNum(int levelNum) {
+	backCanvas->removeAllChildren();
+	frontCanvas->removeAllChildren();
 	//Draw background
 	std::shared_ptr<Texture> texturebg;
 	if (levelNum < 4) {
