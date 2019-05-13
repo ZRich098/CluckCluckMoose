@@ -13,7 +13,7 @@
 using namespace cugl;
 
 /** The ID for the button listener */
-#define LISTENER_ID 3
+#define LISTENER_ID 100
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
@@ -159,6 +159,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
             playClicked = true;
         }
     });
+	_buttons.emplace("play", playbutt);
 
     // Help button
     std::shared_ptr<Texture> textureHelp = _assets->get<Texture>("menuhelp");
@@ -176,6 +177,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
             helpClicked = true;
         }
     });
+	_buttons.emplace("help", helpbutt);
 
     // Credits button
     std::shared_ptr<Texture> textureCredits = _assets->get<Texture>("menucredits");
@@ -193,6 +195,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
             creditsClicked = true;
         }
     });
+	_buttons.emplace("credits", creditsbutt);
 
     menubuttonCanvas->addChild(playbutt);
     menubuttonCanvas->addChild(helpbutt);
@@ -232,6 +235,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     creditsCanvas->addChild(backbutt);
     backbutt->activate(103);
     creditsbuttons.push_back(backbutt);
+	_buttons.emplace("back", backbutt);
     
     creditsCanvas->setVisible(false);
     creditsbuttons[0]->deactivate();

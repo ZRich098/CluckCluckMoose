@@ -1973,6 +1973,10 @@ void SceneBuilder1::setHome(bool val) {
 }
 
 void SceneBuilder1::setLevelNum(int levelNum) {
+	hasWon = false;
+	hasLost = false;
+	isPaused = false;
+
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
 	//Draw background

@@ -247,7 +247,7 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 
 		++pl;
 		++op;
-		//stackSize++;
+		stackSize++;
 	}
 }
 
@@ -276,6 +276,7 @@ void GameScene::update(float timestep) {
 		//CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
 		initStacks(player->getOrder(), opp->getOrder());
 		prevHand = player->getHand().size();
+		//CULog("stackSize: %d", stackSize);
 	}
 
 	sb->updateInput(timestep);
@@ -391,6 +392,7 @@ void GameScene::update(float timestep) {
 			}
 		}
 		else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
+			CULog(sb->getPaused() ? "true" : "false");
 			isClashing = true;
 			firstClash = true;
 			cooldown = CLASHLENGTH * 1.5;
