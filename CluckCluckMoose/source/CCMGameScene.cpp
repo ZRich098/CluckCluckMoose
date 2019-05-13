@@ -266,7 +266,7 @@ void GameScene::update(float timestep) {
         AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
     }
     
-	if (cooldown > 0) {
+	if (cooldown > 0 && !sb->getPaused()) {
 		cooldown-= timestep*FRAMESPERTIME;
 		sb->updateGameScene(timestep,isClashing);
 		return;
@@ -280,121 +280,126 @@ void GameScene::update(float timestep) {
 
 	sb->updateInput(timestep);
 	
-	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
-		if (skipState == ENTRY) {
-			//CULog("opp playing");
-			opp->addToStackFromHand(oppAI->getPlay());
+	if (!sb->getPaused()) {
+		if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
+			if (skipState == ENTRY) {
+				//CULog("opp playing");
+				opp->addToStackFromHand(oppAI->getPlay());
 
-			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
-			//CULog("PLAY %s", test.toString().c_str());
-			skipState = NONE; // Gets the state machine out of the entry state
+				//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
+				//CULog("PLAY %s", test.toString().c_str());
+				skipState = NONE; // Gets the state machine out of the entry state
 
-			if (specialChanges(player->getStack(),opp->getStack())) {
-				cooldown = SPECIALDELAY;
-				CULog("Called");
-				return;
+				if (specialChanges(player->getStack(), opp->getStack())) {
+					cooldown = SPECIALDELAY;
+					CULog("Called");
+					return;
+				}
 			}
-		}
-		if (skipState != EXIT)
-			// Resolves the special chicken effects
-			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
+			if (skipState != EXIT)
+				// Resolves the special chicken effects
+				tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 			if (player->getStack().getWitchenPlayed()) {
 				auto source = _assets->get<Sound>(SOUND_WITCHEN);
 				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN) && isSound) {
 					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
 				}
 			}
-		if (skipState == EXIT) {
-			// Resolves special chickens that affect the hands
-			handEffect();
-			prevHand--;
-			stackSize++;
-			skipState = ENTRY; // Returns the state machine to the entry state
+			if (skipState == EXIT) {
+				// Resolves special chickens that affect the hands
+				handEffect();
+				prevHand--;
+				stackSize++;
+				skipState = ENTRY; // Returns the state machine to the entry state
+			}
+
+			setNumChickensWillDiePreview();
+			//CULog("SKIP: %d",skipState);
 		}
 
-		setNumChickensWillDiePreview();
-		//CULog("SKIP: %d",skipState);
-	}
-
-	if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
-		//Play the button sfx
-		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
-		auto source = _assets->get<Sound>(sfx);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B) && isSound) {
-			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
-		}
-
-		cooldown = CLASHLENGTH;
-	}
-	
-	if (isClashing) {
-		CULog("Clashing");
-		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			if (!firstClash) {
-				int result = player->getStack().compare(opp->getStack());
-				if (result == 1) {
-					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
-				}
-				else if (result == 0) {
-					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
-					opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
-				}
-				else if (result == -1) {
-					player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
-				}
+		if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
+			//Play the button sfx
+			string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+			auto source = _assets->get<Sound>(sfx);
+			if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B) && isSound) {
+				AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
 			}
-			if (!player->getStack().empty() && !opp->getStack().empty()) {
-				element pEle = player->getStack().getBottom().getElement();
-				element oEle = opp->getStack().getBottom().getElement();
-				sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
-			}
-      
-			firstClash = false;
+
 			cooldown = CLASHLENGTH;
 		}
-		else {
-			player->eraseChickens();
-			opp->eraseChickens();
-			player->refillHand();
-			opp->refillHand();
 
-			prevHand = player->getHand().size();
-			stackSize = 0;
+		if (isClashing) {
+			CULog("Clashing");
+			if (!player->getStack().empty() && !opp->getStack().empty()) {
+				if (!firstClash) {
+					int result = player->getStack().compare(opp->getStack());
+					if (result == 1) {
+						opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+					}
+					else if (result == 0) {
+						player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+						opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+					}
+					else if (result == -1) {
+						player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+					}
+				}
+				if (!player->getStack().empty() && !opp->getStack().empty()) {
+					element pEle = player->getStack().getBottom().getElement();
+					element oEle = opp->getStack().getBottom().getElement();
+					sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
+				}
 
-			player->setNumChickensWillDiePreview(0);
-			opp->setNumChickensWillDiePreview(0);
-			player->resetVecChickensClashPreview();
-			opp->resetVecChickensClashPreview();
-
-			player->takeDamage(opp->getStack().getDamage());
-			opp->takeDamage(player->getStack().getDamage());
-			sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
-
-			player->getStack().clear();
-			opp->getStack().clear();
-			isClashing = false;
-
-			if (player->getHealth() <= 0) {
-				didLose = true;
-				didWin = false;
-				CULog("lost! lmao");
+				firstClash = false;
+				cooldown = CLASHLENGTH;
 			}
+			else {
+				player->eraseChickens();
+				opp->eraseChickens();
+				player->refillHand();
+				opp->refillHand();
 
-			if (opp->getHealth() <= 0) {
-				didLose = false;
-				didWin = true;
-				CULog("win");
+				prevHand = player->getHand().size();
+				stackSize = 0;
+
+				player->setNumChickensWillDiePreview(0);
+				opp->setNumChickensWillDiePreview(0);
+				player->resetVecChickensClashPreview();
+				opp->resetVecChickensClashPreview();
+
+				player->takeDamage(opp->getStack().getDamage());
+				opp->takeDamage(player->getStack().getDamage());
+				sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
+
+				player->getStack().clear();
+				opp->getStack().clear();
+				isClashing = false;
+
+				if (player->getHealth() <= 0) {
+					didLose = true;
+					didWin = false;
+					CULog("lost! lmao");
+					sb->deactivateHand();
+				}
+
+				if (opp->getHealth() <= 0) {
+					didLose = false;
+					didWin = true;
+					CULog("win");
+					sb->deactivateHand();
+				}
 			}
 		}
-	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
-		isClashing = true;
-		firstClash = true;
-		cooldown = CLASHLENGTH*1.5;
+		else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
+			isClashing = true;
+			firstClash = true;
+			cooldown = CLASHLENGTH * 1.5;
 
-		//Play the clashing sfx
-		auto source = _assets->get<Sound>(SOUND_BELL);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL) && isSound) {
-			AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
+			//Play the clashing sfx
+			auto source = _assets->get<Sound>(SOUND_BELL);
+			if (!AudioChannels::get()->isActiveEffect(SOUND_BELL) && isSound) {
+				AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
+			}
 		}
 	}
 	

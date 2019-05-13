@@ -108,6 +108,9 @@ public:
     //returns true if sound should be off
     bool getSoundToggle();
 
+	//returns true if the pause menu is turned on
+	bool getPaused();
+
 #pragma mark -
 #pragma mark Setters
 	//sets previewSet to the given value
