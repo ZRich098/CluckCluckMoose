@@ -596,7 +596,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		texturebg = _assets->get<Texture>("thronebg");
 	}
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-	background->setScale(0.7f); // Magic number to rescale asset
+	background->setScale(0.65f); // Magic number to rescale asset
 	background->setAnchor(Vec2::ANCHOR_CENTER);
 	background->setPosition(screenWidth/2, screenHeight/2);
 	backCanvas->addChild(background);
@@ -682,7 +682,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		texturefg = _assets->get<Texture>("thronefg");
 	}
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
-	foreground->setScale(0.7f); // Magic number to rescale asset
+	foreground->setScale(0.65f); // Magic number to rescale asset
 	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
 	foreground->setPosition(screenWidth/2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
@@ -1008,9 +1008,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     
     textsign = _assets->get<Texture>("clashsign");
     sign = AnimationNode::alloc(textsign,1,SIGN_FILMSTRIP_LENGTH);
-    sign->setScale(1.7); // Magic number to rescale asset
+    sign->setScale(1.2); // Magic number to rescale asset
     sign->setAnchor(Vec2::ANCHOR_CENTER);
-    sign->setPosition(screenWidth/2, healthYScale - 300);
+    sign->setPosition(screenWidth/2, healthYScale - 150);
     clashSignCanvas->addChild(sign);
     clashSignCanvas->setVisible(false);
 
@@ -1048,22 +1048,6 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 
 
 void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
-    if (isClashing && !signDone){
-        clashSignCanvas->setVisible(true);
-        if (signframe >= SIGN_FILMSTRIP_LENGTH - 1){
-            signDone = true;
-            clashSignCanvas->setVisible(false);
-        }
-        signCount--;
-        if (signCount % 5 == 0){ signframe++; }
-        sign->setFrame(signframe);
-    }
-    if (!isClashing && signDone){
-        signDone = false;
-        signCount = 500;
-        signframe = 1;
-    }
-    
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
     
@@ -1815,6 +1799,23 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			oStamps[i]->setVisible(false);
 		}
 	}
+    
+    if (isClashing && !signDone){
+        clashSignCanvas->setVisible(true);
+        if (signframe >= SIGN_FILMSTRIP_LENGTH - 1){
+            signDone = true;
+            clashSignCanvas->setVisible(false);
+        }
+        signCount--;
+        if (signCount % 5 == 0){ signframe++; }
+        sign->setFrame(signframe);
+        return;
+    }
+    if (!isClashing && signDone){
+        signDone = false;
+        signCount = 500;
+        signframe = 1;
+    }
 
 	//Update win and loss screens
 	if (playerGlobe->getHealth() < 1) {
@@ -1981,7 +1982,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 		texturebg = _assets->get<Texture>("thronebg");
 	}
 	std::shared_ptr<PolygonNode> background = PolygonNode::allocWithTexture(texturebg);
-	background->setScale(0.7f); // Magic number to rescale asset
+	background->setScale(0.65f); // Magic number to rescale asset
 	background->setAnchor(Vec2::ANCHOR_CENTER);
 	background->setPosition(screenWidth / 2, screenHeight / 2);
 	backCanvas->addChild(background);
@@ -2001,7 +2002,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 		texturefg = _assets->get<Texture>("thronefg");
 	}
 	std::shared_ptr<PolygonNode> foreground = PolygonNode::allocWithTexture(texturefg);
-	foreground->setScale(0.7f); // Magic number to rescale asset
+	foreground->setScale(0.65f); // Magic number to rescale asset
 	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
 	foreground->setPosition(screenWidth / 2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
