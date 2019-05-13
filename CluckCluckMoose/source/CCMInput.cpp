@@ -20,7 +20,7 @@ using namespace cugl;
 #pragma mark Input Constants
 
 /** The key for the event handlers */
-#define LISTENER_KEY        1
+#define LISTENER_KEY        250
 
 
 

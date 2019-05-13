@@ -34,6 +34,7 @@ protected:
 
 	std::shared_ptr<AI> oppAI;
 
+
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
     
