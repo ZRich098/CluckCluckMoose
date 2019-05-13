@@ -392,7 +392,7 @@ void GameScene::update(float timestep) {
 			}
 		}
 		else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
-			CULog(sb->getPaused() ? "true" : "false");
+			//CULog(sb->getPaused() ? "true" : "false");
 			isClashing = true;
 			firstClash = true;
 			cooldown = CLASHLENGTH * 1.5;
