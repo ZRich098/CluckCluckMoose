@@ -23,6 +23,8 @@ using namespace cugl;
 #define SCENE_HEIGHT 1024
 /** length of time in animation frames for a clash between chickens */
 #define CLASHLENGTH 8
+/** length of time in animation frames before a special chicken effect plays */
+#define SPECIALDELAY 8
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -286,6 +288,12 @@ void GameScene::update(float timestep) {
 			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 			//CULog("PLAY %s", test.toString().c_str());
 			skipState = NONE; // Gets the state machine out of the entry state
+
+			if (specialChanges(player->getStack(),opp->getStack())) {
+				cooldown = SPECIALDELAY;
+				CULog("Called");
+				return;
+			}
 		}
 		if (skipState != EXIT)
 			// Resolves the special chicken effects
@@ -472,6 +480,15 @@ void GameScene::handEffect() {
 	}
 	if (oLast == special::Spy)
 		opp->draw();
+}
+
+bool GameScene::specialChanges(Stack p, Stack o) {
+	int tempState = NONE;
+	while (tempState != EXIT) {
+		tie(tempState, std::ignore) = p.specialChickenEffect(o, tempState);
+	}
+
+	return (p.stackString() != player->getStack().stackString() || o.stackString() != opp->getStack().stackString());
 }
 
 Size GameScene::computeActiveSize() const {
