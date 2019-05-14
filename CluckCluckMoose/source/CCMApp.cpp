@@ -315,6 +315,28 @@ void CCMApp::update(float timestep) {
                 _menuscene.activateButtons();
                 _levelscene.setLevel(0);
             }
+			else if (_gamescene->getRedo() || _gamescene->getNextLevel()) {
+				CULog("Asset file loading");
+				if (_gamescene->getNextLevel()) {
+					_levelscene.setLevel(_levelscene.getLevel() + 1);
+				}
+				stringstream ss;
+				ss << "json/level" << _levelscene.getLevel() << ".json";
+				string fileName = ss.str();
+				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
+				std::shared_ptr<JsonValue> json = gameReader->readJson();
+				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+				AIType ai = _saveLoad.loadAI(json->get("AI"));
+				_gamescene->setPlayer(pl);
+				_gamescene->setOpp(op);
+				_gamescene->setAI(op, pl, ai);
+				_gamescene->setLevel(_levelscene.getLevel());
+				_gameplay.pop_back();
+				_gameplay.insert(_gameplay.begin() + _current, _gamescene);
+				_gameplay.at(_current)->setActive(false);
+				_input.init();
+			}
         }
         _gameplay[_current]->update(timestep);
     }
