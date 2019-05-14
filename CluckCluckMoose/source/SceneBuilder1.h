@@ -119,6 +119,10 @@ public:
 	void activateHand();
 	void deactivatePause();
 	void activatePause();
+    void deactivateWin();
+    void activateWin();
+    void deactivateLose();
+    void activateLose();
 	void setHome(bool val);
 //	void setRestart(bool val);
 
