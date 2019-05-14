@@ -54,6 +54,12 @@ float healthYScale;
 //Button list for pause menu
 std::vector<std::shared_ptr<Button>> pausebuttons;
 
+//Button list for win menu
+std::vector<std::shared_ptr<Button>> winbuttons;
+
+//Button list for lose menu
+std::vector<std::shared_ptr<Button>> losebuttons;
+
 //List of stamp nodes for player and opponent
 std::vector<std::shared_ptr<PolygonNode>> pStamps;
 std::vector<std::shared_ptr<PolygonNode>> oStamps;
@@ -1842,6 +1848,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			loseCanvas->addChild(hButtL);
 			//ensure keys are unique
 			hButtL->activate(53);
+            losebuttons.push_back(hButtL); // 0
 
 			//Create the loss redo button
 			std::shared_ptr<PolygonNode> redoPolyL = PolygonNode::allocWithTexture(redo);
@@ -1855,12 +1862,12 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					loseCanvas->setVisible(false);
-
 				}
 			});
 			loseCanvas->addChild(rButtL);
 			//ensure keys are unique
 			rButtL->activate(54);
+            losebuttons.push_back(rButtL); // 1
 		}
 		hasLost = true;
 		deactivateHand();
@@ -1880,12 +1887,12 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					winCanvas->setVisible(false);
-
 				}
 			});
 			winCanvas->addChild(hButt);
 			//ensure keys are unique
 			hButt->activate(50);
+            winbuttons.push_back(hButt); // 0
 
 			//Init the win redo button
 			std::shared_ptr<PolygonNode> redoPoly = PolygonNode::allocWithTexture(redo);
@@ -1904,6 +1911,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			winCanvas->addChild(rButt);
 			//ensure keys are unique
 			rButt->activate(51);
+            winbuttons.push_back(rButt); // 1
 
 			//Init the win next level button
 			std::shared_ptr<PolygonNode> levelPoly = PolygonNode::allocWithTexture(nextlvl);
@@ -1922,6 +1930,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			winCanvas->addChild(lButt);
 			//ensure keys are unique
 			lButt->activate(52);
+            winbuttons.push_back(lButt); // 2
 		}
 		hasWon = true;
 		deactivateHand();
@@ -2047,11 +2056,12 @@ void SceneBuilder1::setOppCost(string costume) {
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChildWithName(moose2, "opp_moose");
     
-	if (retry || goHome || nextLevel || !isPaused) { deactivatePause(); };
-    
-//    if (retry or goHome){
-//        isPaused = false;
-//    }
+	if (retry || goHome || nextLevel || !isPaused) {
+        deactivatePause();
+        deactivateWin();
+        deactivateLose();
+    };
+
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -2086,6 +2096,34 @@ void SceneBuilder1::deactivatePause() {
 		pausebuttons[i]->deactivate();
 	}
     isPaused = false;
+}
+
+void SceneBuilder1::activateWin() {
+    winCanvas->setVisible(true);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->activate(50 + i);
+    }
+}
+
+void SceneBuilder1::deactivateWin() {
+    winCanvas->setVisible(false);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->deactivate();
+    }
+}
+
+void SceneBuilder1::activateLose() {
+    loseCanvas->setVisible(true);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->activate(53 + i);
+    }
+}
+
+void SceneBuilder1::deactivateLose() {
+    loseCanvas->setVisible(false);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->deactivate();
+    }
 }
 
 bool SceneBuilder1::getHome() {
