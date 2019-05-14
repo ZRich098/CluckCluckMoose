@@ -89,6 +89,9 @@ public:
     void setPlay(bool val);
     void activateHelp();
     void deactivateHelp();
+    void activateButtons();
+    void deactivateButtons();
+
     cugl::Size computeActiveSize() const;
 };
 

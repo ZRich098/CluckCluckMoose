@@ -212,6 +212,7 @@ void CCMApp::update(float timestep) {
 		//CULog("done updating input");
         if (_current == 0) { // if on menu scene
             if (_menuscene.getPlay()) { // play is clicked
+                _menuscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 1; // to level select
                 _gameplay[_current]->setActive(true);
@@ -231,7 +232,7 @@ void CCMApp::update(float timestep) {
                 _levelscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 2;
-
+                
 				//load level, if able
 				stringstream ss;
 				ss << "json/level" << _levelscene.getLevel() << ".json";
@@ -296,6 +297,7 @@ void CCMApp::update(float timestep) {
 					}
 				}
                 _gameplay[_current]->setActive(true);
+                _gamescene->deactivatePause();
             }
         }
         else if (_current == 2) { // in game scene
@@ -304,11 +306,13 @@ void CCMApp::update(float timestep) {
 				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
 				lastLevel = _levelscene.getLevel();
                 _gamescene->setHome(false);
+                _gamescene->deactivatePause();
                 _gameplay[_current]->setActive(false);
                 //_gameplay[_current]->dispose();
                 //_gameplay.erase(_gameplay.begin()+_current);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
+                _menuscene.activateButtons();
                 _levelscene.setLevel(0);
             }
         }

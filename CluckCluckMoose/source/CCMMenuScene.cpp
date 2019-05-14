@@ -51,6 +51,9 @@ std::vector<std::shared_ptr<Button>> creditsbuttons;
 // List for help buttons
 std::vector<std::shared_ptr<Button>> helpbuttons;
 
+// List for non-credits buttons
+std::vector<std::shared_ptr<Button>> menubuttons;
+
 
 //Preview tracking
 bool playClicked;
@@ -219,8 +222,11 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     //ensure keys are unique
     playbutt->activate(100);
+    menubuttons.push_back(playbutt); // 0
     helpbutt->activate(101);
+    menubuttons.push_back(helpbutt); // 1
     creditsbutt->activate(102);
+    menubuttons.push_back(creditsbutt); // 2
     
     std::shared_ptr<Texture> creditsbg = _assets->get<Texture>("levelbg");
     std::shared_ptr<PolygonNode> creditbackground = PolygonNode::allocWithTexture(creditsbg);
@@ -342,11 +348,13 @@ void MenuScene::update(float timestep) {
     }
     if (creditsClicked){
         creditsClicked = false;
+        deactivateButtons();
         creditsCanvas->setVisible(true);
         creditsbuttons[0]->activate(103);
     }
-    if (creditsBackClicked){
+    else if (creditsBackClicked){
         creditsBackClicked = false;
+        activateButtons();
         creditsCanvas->setVisible(false);
         creditsbuttons[0]->deactivate();
     }
@@ -403,6 +411,20 @@ void MenuScene::playButtonSound() {
 	if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
 		AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
 	}
+}
+
+void MenuScene::activateButtons() {
+//    pauseMenuCanvas->setVisible(true);
+    for (int i = 0; i < menubuttons.size(); i++) {
+        menubuttons[i]->activate(100 + i);
+    }
+}
+
+void MenuScene::deactivateButtons() {
+//    pauseMenuCanvas->setVisible(false);
+    for (int i = 0; i < menubuttons.size(); i++) {
+        menubuttons[i]->deactivate();
+    }
 }
 
 bool MenuScene::getPlay() { return playClicked; }
