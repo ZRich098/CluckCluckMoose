@@ -39,18 +39,28 @@ std::shared_ptr<Node> titleCanvas;
 //Canvas for credits
 std::shared_ptr<Node> creditsCanvas;
 
+//Canvas for credits
+std::shared_ptr<Node> helpCanvas;
+
 //Canvas for buttons
 std::shared_ptr<Node> menubuttonCanvas;
 
 // List for credits buttons
 std::vector<std::shared_ptr<Button>> creditsbuttons;
 
+// List for help buttons
+std::vector<std::shared_ptr<Button>> helpbuttons;
+
 
 //Preview tracking
 bool playClicked;
 bool helpClicked;
+bool helpRightClicked;
+bool helpLeftClicked;
+bool helpBackClicked;
 bool creditsClicked;
 bool creditsBackClicked;
+int page; // help page #
 
 //Screen dimensions
 float menuscreenHeight;
@@ -101,8 +111,12 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     
     playClicked = false;
     helpClicked = false;
+    helpRightClicked = false;
+    helpLeftClicked = false;
+    helpBackClicked = false;
     creditsClicked = false;
     creditsBackClicked = false;
+    page = 1;
 
     //Create background node
     menubackCanvas = Node::alloc();
@@ -120,12 +134,17 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Create credits node
     creditsCanvas = Node::alloc();
     menulayer->addChild(creditsCanvas);
+    
+    //Create help node
+    helpCanvas = Node::alloc();
+    menulayer->addChild(helpCanvas);
 
     //reset drawing between frames
     menubackCanvas->removeAllChildren();
     titleCanvas->removeAllChildren();
     menubuttonCanvas->removeAllChildren();
     creditsCanvas->removeAllChildren();
+    helpCanvas->removeAllChildren();
 
     //Draw background
     std::shared_ptr<Texture> texturebg = _assets->get<Texture>("menubg");
@@ -218,7 +237,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     box->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     creditsCanvas->addChild(box);
     
-    // back button
+    // credits back button
     std::shared_ptr<Texture> textureBack = _assets->get<Texture>("levelback");
     std::shared_ptr<PolygonNode> idback = PolygonNode::allocWithTexture(textureBack);
     idback->setAnchor(Vec2::ANCHOR_CENTER);
@@ -235,6 +254,72 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     
     creditsCanvas->setVisible(false);
     creditsbuttons[0]->deactivate();
+    
+    // help bg
+    std::shared_ptr<Texture> helpbg = _assets->get<Texture>("helpbg");
+    std::shared_ptr<PolygonNode> helpbackground = PolygonNode::allocWithTexture(helpbg);
+    helpbackground->setScale(0.65f); // Magic number to rescale asset
+    helpbackground->setAnchor(Vec2::ANCHOR_CENTER);
+    helpbackground->setPosition(menuscreenWidth/2, menuscreenHeight/2);
+    helpCanvas->addChild(helpbackground);
+    
+    //Draw help 1
+    std::shared_ptr<Texture> texturehelp = _assets->get<Texture>("help1");
+    std::shared_ptr<PolygonNode> help = PolygonNode::allocWithTexture(texturehelp);
+    help->setScale(0.5f); // Magic number to rescale asset
+    help->setAnchor(Vec2::ANCHOR_CENTER);
+    help->setPosition(menuscreenWidth/2, menuscreenHeight/2);
+    helpCanvas->addChild(help);
+    
+    // next button
+    std::shared_ptr<Texture> texthelpright = _assets->get<Texture>("helpright");
+    std::shared_ptr<PolygonNode> idhelpright = PolygonNode::allocWithTexture(texthelpright);
+    idhelpright->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> helpright = Button::alloc(idhelpright);
+    helpright->setAnchor(Vec2::ANCHOR_CENTER);
+    helpright->setScale(0.5, 0.5);
+    helpright->setAnchor(Vec2::ANCHOR_CENTER);
+    helpright->setPosition(menuscreenWidth/2 + 75, menuscreenHeight/2 - 375);
+    helpright->setListener([=](const std::string& name, bool down) {
+        if (down) { helpRightClicked = true; }});
+    helpCanvas->addChild(helpright);
+    helpright->activate(120);
+    helpbuttons.push_back(helpright); // 0
+    
+    // prev button
+    std::shared_ptr<Texture> texthelpleft = _assets->get<Texture>("helpleft");
+    std::shared_ptr<PolygonNode> idhelpleft = PolygonNode::allocWithTexture(texthelpleft);
+    idhelpleft->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> helpleft = Button::alloc(idhelpleft);
+    helpleft->setAnchor(Vec2::ANCHOR_CENTER);
+    helpleft->setScale(0.5, 0.5);
+    helpleft->setAnchor(Vec2::ANCHOR_CENTER);
+    helpleft->setPosition(menuscreenWidth/2 - 75, menuscreenHeight/2 - 375);
+    helpleft->setListener([=](const std::string& name, bool down) {
+        if (down) { helpLeftClicked = true; }});
+    helpCanvas->addChild(helpleft);
+    helpleft->activate(121);
+    helpbuttons.push_back(helpleft); // 1
+    
+    // help back button
+    std::shared_ptr<Texture> texthelpback = _assets->get<Texture>("levelback");
+    std::shared_ptr<PolygonNode> idhelpback = PolygonNode::allocWithTexture(texthelpback);
+    idhelpback->setAnchor(Vec2::ANCHOR_CENTER);
+    std::shared_ptr<Button> helpback = Button::alloc(idhelpback);
+    helpback->setAnchor(Vec2::ANCHOR_CENTER);
+    helpback->setScale(0.5, 0.5);
+    helpback->setAnchor(Vec2::ANCHOR_CENTER);
+    helpback->setPosition(menuscreenWidth/8, menuscreenHeight*7/8);
+    helpback->setListener([=](const std::string& name, bool down) {
+        if (down) {helpBackClicked = true;}});
+    helpCanvas->addChild(helpback);
+    helpback->activate(122);
+    helpbuttons.push_back(helpback); // 2
+    
+    helpCanvas->setVisible(false);
+    helpbuttons[0]->deactivate();
+    helpbuttons[1]->deactivate();
+    helpbuttons[2]->deactivate();
 
     return true;
 }
@@ -264,6 +349,33 @@ void MenuScene::update(float timestep) {
         creditsBackClicked = false;
         creditsCanvas->setVisible(false);
         creditsbuttons[0]->deactivate();
+    }
+    if (helpClicked){
+        helpClicked = false;
+        activateHelp();
+    }
+    if (helpBackClicked){
+        helpBackClicked = false;
+        deactivateHelp();
+    }
+    if (helpRightClicked || helpLeftClicked){
+        if (page < 5 && helpRightClicked) { page++; }
+        if (page > 1 && helpLeftClicked) { page--; }
+        if (helpRightClicked) { helpRightClicked = false; }
+        if (helpLeftClicked) { helpLeftClicked = false; }
+        
+        stringstream ssnum;
+        ssnum << "help" << page;
+        string helppage = ssnum.str();
+        
+        CULog("help page %d", page);
+        
+        std::shared_ptr<Texture> texturehelp = _assets->get<Texture>(helppage);
+        std::shared_ptr<PolygonNode> help = PolygonNode::allocWithTexture(texturehelp);
+        help->setScale(0.5f); // Magic number to rescale asset
+        help->setAnchor(Vec2::ANCHOR_CENTER);
+        help->setPosition(menuscreenWidth/2, menuscreenHeight/2);
+        helpCanvas->addChild(help);
     }
 }
 
@@ -295,6 +407,21 @@ void MenuScene::playButtonSound() {
 
 bool MenuScene::getPlay() { return playClicked; }
 void MenuScene::setPlay(bool val) { playClicked = val; }
+
+void MenuScene::activateHelp() {
+    helpCanvas->setVisible(true);
+    for (int i = 0; i < helpbuttons.size(); i++) {
+        helpbuttons[i]->activate(120 + i);
+    }
+}
+
+void MenuScene::deactivateHelp() {
+    helpCanvas->setVisible(false);
+    for (int i = 0; i < helpbuttons.size(); i++) {
+        helpbuttons[i]->deactivate();
+    }
+}
+
 
 Size MenuScene::computeActiveSize() const {
     Size dimen = Application::get()->getDisplaySize();

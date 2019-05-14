@@ -7,6 +7,7 @@
 
 #include <cugl/cugl.h>
 #include <unordered_map>
+#include <sstream>
 
 /**
  * A scene for demoing a layout manager
@@ -86,6 +87,8 @@ public:
      */
     bool getPlay();
     void setPlay(bool val);
+    void activateHelp();
+    void deactivateHelp();
     cugl::Size computeActiveSize() const;
 };
 
