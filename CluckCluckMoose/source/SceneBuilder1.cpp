@@ -1709,6 +1709,9 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	hasWon = false;
 	hasLost = false;
 	isPaused = false;
+	retry = false;
+	goHome = false;
+	nextLevel = false;
 
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
@@ -1759,13 +1762,40 @@ void SceneBuilder1::setOppCost(string costume) {
 	std::shared_ptr<PolygonNode> moose2;
 	std::shared_ptr<Texture> textureM;
 
-	if (costume == "moose") {
+	if (costume == "basic_moose") {
 		textureM = _assets->get<Texture>("moose");
 	}
-	else if (costume == "eldritch_moose") {
+	else if (costume == "eldrich_moose") {
 		textureM = _assets->get<Texture>("elMoose");
 	}
-	else if (costume == "christmoose") {
+	else if (costume == "branchy") {
+		textureM = _assets->get<Texture>("branchy");
+	}
+	else if (costume == "caffeine_moose") {
+		textureM = _assets->get<Texture>("cafMoose");
+	}
+	else if (costume == "emerald_moose") {
+		textureM = _assets->get<Texture>("emMoose");
+	}
+	else if (costume == "elder_moose") {
+		textureM = _assets->get<Texture>("oldMoose");
+	}
+	else if (costume == "moose_majesty") {
+		textureM = _assets->get<Texture>("kingMoose");
+	}
+	else if (costume == "moosesassin") {
+		textureM = _assets->get<Texture>("rogMoose");
+	}
+	else if (costume == "nebula_moose") {
+		textureM = _assets->get<Texture>("cosMoose");
+	}
+	else if (costume == "tentamoose") {
+		textureM = _assets->get<Texture>("tenMoose");
+	}
+	else if (costume == "moosewave") {
+		textureM = _assets->get<Texture>("vapMoose");
+	}
+	else if (costume == "chrismoose") {
 		textureM = _assets->get<Texture>("chrMoose");
 	}
 	else if (costume == "farmer_moose") {
