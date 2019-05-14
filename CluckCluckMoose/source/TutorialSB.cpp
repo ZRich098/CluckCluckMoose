@@ -378,6 +378,19 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 	infoCanvas->addChild(info);
 	infoCanvas->setVisible(false);
 
+	//Init Tutorial glows
+	grasslightcanvas = AnimationNode::alloc(grasslight, 1, GRASS_FILMSTRIP_LENGTH, GRASS_FILMSTRIP_LENGTH);
+	grasslightcanvas->setAnchor(Vec2::ANCHOR_CENTER);
+	grasslightcanvas->setPosition(BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
+	grasslightcanvas->setScale(HAND_SCALE, HAND_SCALE);
+	buttonCanvas->addChild(grasslightcanvas); //child 0
+
+	spylightcanvas = AnimationNode::alloc(spylight, 1, SPY_FILMSTRIP_LENGTH, SPY_FILMSTRIP_LENGTH);
+	spylightcanvas->setAnchor(Vec2::ANCHOR_CENTER);
+	spylightcanvas->setPosition(BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
+	spylightcanvas->setScale(HAND_SCALE, HAND_SCALE);
+	buttonCanvas->addChild(spylightcanvas); //child 1
+	spylightcanvas->setVisible(false);
 
 	//Init appropriately sized buttons
 	for (int i = 0; i < 6; i++) {
@@ -442,7 +455,8 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 							handMap[j]--;
 						}
 
-						if (playerGlobe->getStack().getSize() == 5 && step == 6) {
+						if ((playerGlobe->getStack().getSize() == 5 && step == 6)
+							|| (playerGlobe->getStack().getSize() == 0 && step == 8)) {
 							advanceTutorial();
 						}
 
@@ -477,7 +491,8 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 							handMap[j]--;
 						}
 
-						if (playerGlobe->getStack().getSize() == 5 && step == 6) {
+						if ((playerGlobe->getStack().getSize() == 5 && step == 6)
+							|| (playerGlobe->getStack().getSize() == 0 && step == 8)) {
 							advanceTutorial();
 						}
 
@@ -503,20 +518,6 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 		texturesHand.push_back(text);
 
 	}
-
-	//Init Tutorial glows
-	grasslightcanvas = AnimationNode::alloc(grasslight, 1, GRASS_FILMSTRIP_LENGTH, GRASS_FILMSTRIP_LENGTH);
-	grasslightcanvas->setAnchor(Vec2::ANCHOR_CENTER);
-	grasslightcanvas->setPosition(BUTTON_X_OFFSET, BUTTON_Y_OFFSET);
-	grasslightcanvas->setScale(HAND_SCALE, HAND_SCALE);
-	buttonCanvas->addChild(grasslightcanvas); //child 12
-
-	spylightcanvas = AnimationNode::alloc(spylight, 1, SPY_FILMSTRIP_LENGTH, SPY_FILMSTRIP_LENGTH);
-	spylightcanvas->setAnchor(Vec2::ANCHOR_CENTER);
-	spylightcanvas->setPosition(BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
-	spylightcanvas->setScale(HAND_SCALE, HAND_SCALE);
-	buttonCanvas->addChild(spylightcanvas); //child 13
-	spylightcanvas->setVisible(false);
 
 	//Disable all but grass chicken for tutorial step 0
 	for (int i = 0; i < 6; i++) {
@@ -876,7 +877,7 @@ void TutorialSB::updateGameScene(float timestep) {
 	if (step == 0) { //only grass chicken
 		for (int i = 0; i < 6; i++) {
 			buttons[i]->setVisible(true);
-			buttonCanvas->getChild(2 * i)->setVisible(true);
+			buttonCanvas->getChild(2 * i + 2)->setVisible(true);
 			if (i == 1) buttons[i]->activate(i + 2);
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
@@ -890,7 +891,7 @@ void TutorialSB::updateGameScene(float timestep) {
 		for (int i = 0; i < 6; i++) {
 			if (handMap[i] >= 0) {
 				buttons[i]->setVisible(true);
-				buttonCanvas->getChild(2 * i)->setVisible(true);
+				buttonCanvas->getChild(2 * i + 2)->setVisible(true);
 				if (i == 4) buttons[i]->activate(i + 2);
 				if (buttons[i] == heldButton) {
 					heldButtInd = i;
@@ -910,7 +911,7 @@ void TutorialSB::updateGameScene(float timestep) {
 			}
 			else {
 				buttons[i]->setVisible(false);
-				buttonCanvas->getChild(2 * i)->setVisible(false);
+				buttonCanvas->getChild(2 * i + 2)->setVisible(false);
 				buttons[i]->deactivate();
 			}
 
@@ -920,7 +921,7 @@ void TutorialSB::updateGameScene(float timestep) {
 		for (int i = 0; i < 6; i++) {
 			if (handMap[i] >= 0) {
 				buttons[i]->setVisible(true);
-				buttonCanvas->getChild(2 * i)->setVisible(true);
+				buttonCanvas->getChild(2 * i + 2)->setVisible(true);
 				if (buttons[i] == heldButton) {
 					heldButtInd = i;
 					std::shared_ptr<PolygonNode> newPoly = PolygonNode::allocWithTexture(infoG);
@@ -930,7 +931,7 @@ void TutorialSB::updateGameScene(float timestep) {
 			}
 			else {
 				buttons[i]->setVisible(false);
-				buttonCanvas->getChild(2 * i)->setVisible(false);
+				buttonCanvas->getChild(2 * i + 2)->setVisible(false);
 				buttons[i]->deactivate();
 			}
 		}
