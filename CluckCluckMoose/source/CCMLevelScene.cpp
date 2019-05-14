@@ -398,14 +398,11 @@ void LevelScene::drawLevelNodes(int cur){
 	float posX2 = 15;
 	float posY2 = levelscreenHeight / 2 - 90;
     if (nodesMade && levelbuttons.size() == 6){
-        CULog("levelbuttons size: %d", levelbuttons.size());
         for (int i = 5; i >= 3; i--) {
-            CULog("for i %d, ilevelbuttons size: %d",i, levelbuttons.size());
             levelbuttons[i]->setVisible(false);
             levelbuttons[i]->deactivate();
             levelbuttons.pop_back();
         }
-        CULog("levelbuttons size after pop_back: %d", levelbuttons.size());
     }
     
     if (curmap == 0){

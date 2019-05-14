@@ -1843,7 +1843,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					loseCanvas->setVisible(false);
-                    CULog("lose home");
 				}
 			});
 			loseCanvas->addChild(hButtL);
@@ -1863,7 +1862,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					loseCanvas->setVisible(false);
-                    CULog("lose retry");
 				}
 			});
 			loseCanvas->addChild(rButtL);
@@ -1889,7 +1887,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					winCanvas->setVisible(false);
-                    CULog("win home");
 				}
 			});
 			winCanvas->addChild(hButt);
@@ -1909,7 +1906,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					winCanvas->setVisible(false);
-                    CULog("win retry");
 				}
 			});
 			winCanvas->addChild(rButt);
@@ -1929,7 +1925,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					nextLevel = true;
 					winCanvas->setVisible(false);
-                    CULog("win next");
 				}
 			});
 			winCanvas->addChild(lButt);
