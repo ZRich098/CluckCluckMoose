@@ -853,7 +853,7 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 	return true;
 }
 
-void TutorialSB::updateGameScene(float timestep) {
+void TutorialSB::updateGameScene(float timestep, bool isClashing) {
 	timeAmount += timestep;
 	bool isNextFrame = (timeAmount > timeBtnFrames);
 	if (timeAmount > timeBtnFrames)

@@ -96,6 +96,7 @@ void AI::dispose() {
 }
 
 int AI::loserPlay() {
+	hand = player->getHand();
 	if (oppStackProcessed.empty()) return introPlay();
 	if (stack.empty()) {
 		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
@@ -111,7 +112,7 @@ int AI::loserPlay() {
 		vector <int> secondChoices;
 
 		Chicken tryToLoseToThis = oppStackProcessed.getBottom();
-
+		//CULog("Hand size: %d", hand.size());
 		for (int i = 0; i < hand.size(); i++) {
 			if (hand.at(i).getSpecial() != lastPlay) {
 				int comparison = hand.at(i).compare(tryToLoseToThis);

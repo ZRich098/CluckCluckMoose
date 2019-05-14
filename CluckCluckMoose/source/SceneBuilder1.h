@@ -23,16 +23,16 @@ using namespace cugl;
 #define SCENE_HEIGHT 1024
 
 //Drawing constants
-#define MOOSE_HEIGHT 275
+#define MOOSE_HEIGHT 300
 #define FORE_HEIGHT 125
-#define MOOSE_X_OFFSET 50
+#define MOOSE_X_OFFSET 25
 #define HAND_SCALE 0.5f
 #define STACK_SCALE 0.5f
 #define BUTTON_X_SPACING 175
 #define BUTTON_X_OFFSET 0
-#define BUTTON_Y_SPACING 100
-#define BUTTON_Y_OFFSET -75
-#define STACK_X_OFFSET 75
+#define BUTTON_Y_SPACING 90
+#define BUTTON_Y_OFFSET -55
+#define STACK_X_OFFSET 100
 #define STACK_Y_OFFSET 550
 #define STACK_Y_SPACING 75
 #define INFO_X_OFFSET 7
@@ -43,6 +43,7 @@ using namespace cugl;
 #define HEART_X_OFFSET 180
 #define BAR_DISTANCE 90
 #define CHICKEN_FILMSTRIP_LENGTH 8
+#define SIGN_FILMSTRIP_LENGTH 28
 #define HEART_SCALE 0.4
 #define BLOCK_X_SCALE 0.3
 #define BLOCK_Y_SCALE 0.3
@@ -65,6 +66,11 @@ using namespace cugl;
 #define WIN_LOSS_B_Y_OFFSET -225
 #define WIN_BUTTON_X_SPACING 140
 #define LOSS_BUTTON_X_SPACING 175
+#define CHICKEN_SHOT_ROWS 1
+#define CHICKEN_SHOT_COLS 1
+#define DEATH_ANIM_COLS 8
+#define INFO_DELAY 15
+#define MOOSE_SCALE 0.5f
 
 class SceneBuilder1 {
 protected:
@@ -110,10 +116,12 @@ protected:
 	std::vector<std::shared_ptr<PolygonNode>> oStamps;
 
 	//Control variables for menu navigation
+	bool isPaused;
 	bool nextLevel;
 	bool goHome;
 	bool retry;
 	bool soundToggle;
+	bool soundChanged;
 	bool hasWon;
 	bool hasLost;
 
@@ -176,6 +184,12 @@ protected:
 	//transition texture
 	std::shared_ptr<Texture> smokeTrans;
 
+	//chicken death textures
+	std::shared_ptr<Texture> waterTrans;
+	std::shared_ptr<Texture> grassTrans;
+	std::shared_ptr<Texture> fireTrans;
+
+
 	//Main canvas to draw stuff to
 	std::shared_ptr<Node> layer;
 
@@ -212,15 +226,13 @@ protected:
 	//Win screen canvas
 	std::shared_ptr<Node> loseCanvas;
 
-	//Players
-	std::shared_ptr<Moose> playerGlobe;
-	std::shared_ptr<Moose> oppGlobe;
-
 	//Canvas for pause button
 	std::shared_ptr<Node> pauseButtonCanvas;
 
 	//Canvas for misc. UI (i.e. pause)
 	std::shared_ptr<Node> pauseMenuCanvas;
+
+	std::shared_ptr<Node> clashSignCanvas;
 
 
 	//Preview tracking
@@ -228,19 +240,41 @@ protected:
 	//Tint tracking
 	bool prevTint;
 
-	//values for animation
+	//Frame tracking for flapping animations
 	int  thisFrame = 0;
 	float timeAmount = 0;
-	float timeBtnFrames = 0.1f;
-	//std::vector<std::shared_ptr<int>> flappingFrame;
+	float timeBtnFrames = 0.1;
+	//keeps track of which frame chicken flapping is on in the hand
 	std::vector<int> flappingFrame;
 
+
+	//Frame tracking for attacking animations
+
+	//the number of frames it takes for a chicken shot to reach the middle of the screen
+	int middleScreenFrame = 8;
+	//the frame that a chicken shot is currently at, -1 if no shot on screen
+	int shotProgress = -1;
+	//0 index is current player death animation frame, 1 is opponent
+	std::vector<int> dyingFrame;
 	std::vector<int> pSmokeFrame;
 	std::vector<int> eSmokeFrame;
+	//determines if the player chicken attacking is going to win
+	int playerChickenWins;
+	//element of player chicken
+	element pType;
+	//element of enemy chicken
+	element eType;
+
 
 	//Input timer to determine if the player wants info or wants to play a chicken
 	std::vector<int> timers;
 	int heldButtInd;
+
+	int signframe = 1;
+	int signCount = 500;
+	bool signDone = false;
+	std::shared_ptr<Texture> textsign;
+	std::shared_ptr<AnimationNode> sign;
 
 	//Screen dimensions
 	float screenHeight;
@@ -250,6 +284,10 @@ protected:
 	std::shared_ptr<cugl::AssetManager> _assets;
 
 	CCMInput _input;
+
+	//Players
+	std::shared_ptr<Moose> playerGlobe;
+	std::shared_ptr<Moose> oppGlobe;
 
 	std::shared_ptr<cugl::Node> selectedChicken;
 
@@ -300,10 +338,11 @@ public:
 #pragma mark -
 #pragma mark Scene Building Methods
 	//Build the game scene
-	virtual void updateGameScene(float timestep);
+	virtual void updateGameScene(float timestep, bool isClashing);
 
 	//Build an individual chicken using a texture and attach to a node.  Clear everything from the node beforehand.
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
+
 
 
 
@@ -311,6 +350,10 @@ public:
 #pragma mark Input Methods
 	//Update input
 	void updateInput(float timestep);
+	//winResult -1 means player loss, 0 means tie, 1 means player win
+	void chickDefeat(element playerType, element opponentType, int winResult);
+	// positive means opponent loses health, negative means player loses health
+	void mooseDefeat(int healthChange);
 
 
 #pragma mark -
@@ -320,13 +363,18 @@ public:
 //	bool getHome() { return goHome; }
 //	bool getRestart() { return pauseRestartDown; }
 //	bool getSettings() { return pauseSettingsDown; }
-	
+
 	//returns true if the layer has pressed the go home button
 	bool getHome();
 	//returns true if the player has pressed the retry button
 	bool getRedo();
 	//returns true if the player has pressed the next level button
 	bool getNextLevel();
+    //returns true if sound should be off
+    bool getSoundToggle();
+
+	//returns true if the pause menu is turned on
+	bool getPaused();
 
 #pragma mark -
 #pragma mark Setters
@@ -338,8 +386,12 @@ public:
 	void activatePause();
 	void setHome(bool val);
 //	void setRestart(bool val);
-//	void setSettings(bool val);
 
+	void setLevelNum(int level);
+	void setOppCost(string costume);
+
+	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
+	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; setOppCost(newOpp->getCostume()); };
 };
 
 

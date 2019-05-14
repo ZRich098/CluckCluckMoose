@@ -5,12 +5,11 @@
 using namespace cugl;
 
 /** default special feedback length */
-#define SPECIALLENGTH 0
+#define SPECIALLENGTH 6.0
 
 /** values representing the states in special chicken effect, except the entry state which is handled in gamescene */
 #define NONE 0
-#define PLAYER 1
-#define OPP 2
+#define SELF 1
 #define EXIT 3
 
 Stack::Stack() {
@@ -93,26 +92,10 @@ void Stack::changeChickenInStackDamage(int d, int pos) {
 	Also, Hand and coop arent included in stack.h so Im not sure how that will work */
 
 tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
-	int cooldown;
-
-	// lambda function, make cooldown an argument if/when it becomes necessary
-	// tuple is same as return value of method
-	auto setSkip = [](int state, int v) { return make_tuple((state == NONE ? v : EXIT), SPECIALLENGTH); };
-
 	// Note that this method of skipping WILL cause issues in the event
 	// that there is a special chicken that occurs after a ninja chicken
-	special s1 = special::BasicFire;
-	special s2 = special::BasicFire;
-	if (skipState == 0) {
-		s1 = getTop().getSpecial();
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 1) {
-		s2 = opp.getTop().getSpecial();
-	}
-	else if (skipState == 2) {
-		s1 = getTop().getSpecial();
-	}
+	special s1 = getTop().getSpecial();
+	special s2 = opp.getTop().getSpecial();
 
 	//CULog("\n%s", stackString().c_str());
 	// Reaper, Bomb, and Basics are all represented by element and damage and do not need special effects
@@ -121,83 +104,67 @@ tuple<int,int> Stack::specialChickenEffect(Stack &opp, int skipState) {
 		//CULog("resolving Party");
 		s1 == special::PartyFowl ? partyHelper(opp.getTop()) : partyHelper(getTop());
 
-		return setSkip(skipState, EXIT);
+		return make_tuple(EXIT, 0);
 	}
 
 	if (s1 == special::Mirror && s2 == special::Mirror) {
 		getTop().setChicken(element::Grass, special::BasicGrass);
 		opp.getTop().setChicken(element::Grass, special::BasicGrass);
-		return setSkip(skipState, EXIT);
+		return make_tuple(EXIT, 0);
 	}
 	else if (s1 == special::Mirror) {
 		//CULog("player mirror");
 		s1 = s2;
 		getTop().setChicken(opp.getTop().getElement(), opp.getTop().getSpecial(), opp.getTop().getDamage());
-		return setSkip(skipState, NONE);
+		return make_tuple(NONE, SPECIALLENGTH);
 	}
 	else if (s2 == special::Mirror) {
 		//CULog("opp mirror");
 		s2 = s1;
 		opp.getTop().setChicken(getTop().getElement(), getTop().getSpecial(), getTop().getDamage());
-		return setSkip(skipState, NONE);
+		return make_tuple(NONE, SPECIALLENGTH);
 	}
 
-	//potentially TODO special::Peek
+	if (skipState != SELF && (s1 == special::Witchen || s2 == special::Witchen || s1 == special::Thicken || s2 == special::Thicken)) {
+		bool play = false;
+		bool op = false;
+		if (s1 == special::Witchen && getSize() >= 2) {
+			witchenPlayed = true;
+			at(getSize() - 2).cycle();
+			play = true;
+		}
+		if (s2 == special::Witchen && opp.getSize() >= 2) {
+			witchenPlayed = true;
+			opp.at(opp.getSize() - 2).cycle();
+			op = true;
+		}
 
-	if (s1 == special::Witchen && getSize() >= 2) {
-		witchenPlayed = true;
-		at(getSize() - 2).cycle();
-		return setSkip(skipState, PLAYER);
-	}
-	if (s2 == special::Witchen && opp.getSize() >= 2) {
-		witchenPlayed = true;
-		opp.at(opp.getSize() - 2).cycle();
-		return setSkip(skipState, OPP);
-	}
-
-	if (s1 == special::Thicken && getSize() >= 2) {
-		swap(getSize() - 2, getSize() - 1);
-		return setSkip(skipState, PLAYER);
-	}
-	if (s2 == special::Thicken && opp.getSize() >= 2) {
-		opp.swap(opp.getSize() - 2, opp.getSize() - 1);
-		return setSkip(skipState, OPP);
-	}
-
-	/*if (s1 == special::Thicken) {
-		insert(0, getTop());
-		removeTop();
-		return setSkip(skipState, PLAYER);
-	}
-	if (s2 == special::Thicken) {
-		opp.insert(0, opp.getTop());
-		opp.removeTop();
-		return setSkip(skipState, OPP);
-	}*/
-
-	//TODO special::Hide
-
-	//potentially TODO special::Extra
-
-	if (s1 == special::Spy) {
-		//Can be made from here
-	}
-	if (s2 == special::Spy) {
-		//see above
+		if (s1 == special::Thicken && getSize() >= 2) {
+			swap(getSize() - 2, getSize() - 1);
+			play = true;
+		}
+		if (s2 == special::Thicken && opp.getSize() >= 2) {
+			opp.swap(opp.getSize() - 2, opp.getSize() - 1);
+			op = true;
+		}
+		if (play&&op || s1 != special::Ninja || s2 != special::Ninja)
+			return make_tuple(EXIT, 0);
+		else
+			return make_tuple(SELF,SPECIALLENGTH);
 	}
 
 	if (s1 == special::Ninja && s2 == special::Ninja) {
 		swap(0, getSize() - 1);
 		opp.swap(0, opp.getSize() - 1);
-		return setSkip(skipState, EXIT);
+		return make_tuple(EXIT, 0);
 	}
 	else if (s1 == special::Ninja) {
 		opp.swap(0, opp.getSize() - 1);
-		return setSkip(skipState, EXIT);
+		return make_tuple(EXIT, 0);
 	}
 	else if (s2 == special::Ninja) {
 		swap(0, getSize() - 1);
-		return setSkip(skipState, EXIT);
+		return make_tuple(EXIT, 0);
 	}
 
 	//CULog("\n%s", stackString().c_str());
@@ -269,6 +236,33 @@ string Stack::stackString() const {
 	}
 
 	return ss.str();
+}
+
+int Stack::compareWithoutRemove(Stack &opp) {
+	if (!empty() && !opp.empty()) {
+		int result = getBottom().compare(opp.getBottom());
+		if (result == -1)
+		{
+			//CULog("opp win");
+			getBottom();
+		}
+		else if (result == 1)
+		{
+			//CULog("player win");
+			opp.getBottom();
+		}
+		else
+		{
+			//CULog("tie");
+			getBottom();
+			opp.getBottom();
+		}
+		return result;
+	}
+	else {
+		//CULog("compare called on empty stacks");
+		return -2;
+	}
 }
 
 int Stack::compare(Stack &opp) {

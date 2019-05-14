@@ -3,7 +3,7 @@
   "PlayerMoose":
  {
 
-    "Health": 5,
+    "Health": 3,
 
     "Hand": [],
 
@@ -12,35 +12,25 @@
     "Coop": [
 
       1,
-
+      1,
+      1,
+      1,
+      1,
       2,
-
-      0,
-
-      1,
-
       2,
-
-      0,
-
-      1,
-
-      1,
-
-      1,
-      1,
-      1
+      2,
+      0
 
 
     ],
 
-    "Costume": "zoose"
+    "Costume": "player"
 
   },
 
   "OpponentMoose": {
 
-    "Health": 5,
+    "Health": 3,
 
     "Hand": [],
 
@@ -50,7 +40,7 @@
 
       [
 
-        1,
+        2,
 
         2,
 
@@ -94,25 +84,11 @@
 
         1
 
-      ],
-      [
-
-        1,
-
-        1,
-
-        2
-
-      ],
-      [
-        2,
-        2,
-        0
       ]
 
     ],
 
-    "Costume": "royal_moose"
+    "Costume": "farmer_moose"
 
   },
   "AI": "Loser",

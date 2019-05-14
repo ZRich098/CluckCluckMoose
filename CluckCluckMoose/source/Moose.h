@@ -35,6 +35,7 @@ protected:
 	void refillHandPool();
 	int numChickensWillDiePreview;
 	vector <int> vecChickensClashPreview;
+	string costume;
 
 public:
    
@@ -116,6 +117,8 @@ public:
 	Chicken getDiscardAt(int pos) { return discard.at(pos); };
 	/** Get the current health of the Moose*/
 	int getHealth() { return health; };
+	/** Get the current costume of the Moose*/
+	string getCostume() { return costume; };
 
 	/** Gets the number of chickens in the moose's stack that will die if clashes were to occur with the current stacks*/
 	int getNumChickensWillDiePreview() { return numChickensWillDiePreview; };

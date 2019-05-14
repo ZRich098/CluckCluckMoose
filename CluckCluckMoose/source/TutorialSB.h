@@ -88,7 +88,7 @@ public:
 	}
 
 	//Build the game scene
-	void updateGameScene(float timestep);
+	void updateGameScene(float timestep, bool isClashing);
 
 	//Advance the tutorial 
 	void advanceTutorial();

@@ -23,8 +23,10 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
-/** length of time in frames for a clash between chickens */
-#define CLASHLENGTH 50
+/** length of time in animation frames for a clash between chickens */
+#define CLASHLENGTH 8
+/** length of time in animation frames before a special chicken effect plays */
+#define SPECIALDELAY 8
 /** maximum size of chicken stack */
 #define MAXSTACKSIZE 5
 
@@ -45,14 +47,11 @@ using namespace cugl;
 #define NONE 0
 #define EXIT 3
 
-//stack size
-int stackSize;
-
-//previous hand size for tracking placing a chicken
-int prevHand;
+/** number of animation frames per timestep */
+#define FRAMESPERTIME 10
 
 //number of frames in between clashes
-int cooldown;
+float cooldown;
 
 //a state machine to decide whether or not to skip a player's special chicken call for animation/feedback purposes.
 //-1 is the entry state, 0 is no skip, 1 is skip player, 2 is skip opponent, 3 is the exit state
@@ -60,12 +59,16 @@ int skipState;
 
 //bool to signify a clash is in progress
 bool isClashing;
+bool firstClash;
 
 //bool to signify a a winState
 bool didWin;
 
 //bool to signify a a loseState
 bool didLose;
+
+//bool to signify if sound should play
+bool isSound;
 
 
 ////SceneBuilder
@@ -157,7 +160,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai, const int levelNum) {
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
@@ -195,7 +198,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", levelNum);
 	sb->setPreview(false);
 	sb->deactivateHand();
 
@@ -302,109 +305,153 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void GameScene::update(float timestep) {
-	if (cooldown > 0) {
-		cooldown--;
-		sb->updateGameScene(timestep);
+    isSound = !sb->getSoundToggle(); // false if sound SHOULD PLAY
+    if (!isSound && AudioChannels::get()->currentMusic() != NULL){AudioChannels::get()->stopMusic();} // need to check it's not already stopped?
+    else if (isSound && AudioChannels::get()->currentMusic() == NULL){
+        auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+        AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+    }
+    
+	if (cooldown > 0 && !sb->getPaused()) {
+		cooldown-= timestep*FRAMESPERTIME;
+		sb->updateGameScene(timestep,isClashing);
 		return;
 	}
 
 	if (player->getOrder().size() > player->getStack().getSize() && opp->getOrder().size() > opp->getStack().getSize() && !isClashing) {
 		//CULog("playerOrder size: %d, oppOrder size: %d, calling initStacks", player->getPlayOrder().size(), opp->getPlayOrder().size());
 		initStacks(player->getOrder(), opp->getOrder());
+		prevHand = player->getHand().size();
+		//CULog("stackSize: %d", stackSize);
 	}
 
 	sb->updateInput(timestep);
+	
+	if (!sb->getPaused()) {
+		if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
+			if (skipState == ENTRY) {
+				//CULog("opp playing");
+				opp->addToStackFromHand(oppAI->getPlay());
 
-	if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
-		if (skipState == ENTRY) {
-			opp->addToStackFromHand(oppAI->getPlay());
+				//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
+				//CULog("PLAY %s", test.toString().c_str());
+				skipState = NONE; // Gets the state machine out of the entry state
 
-			//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
-			//CULog("PLAY %s", test.toString().c_str());
-			skipState = NONE; // Gets the state machine out of the entry state
-		}
-		if (skipState != EXIT)
-			// Resolves the special chicken effects
-			tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
+				if (specialChanges(player->getStack(), opp->getStack())) {
+					cooldown = SPECIALDELAY;
+					CULog("Called");
+					return;
+				}
+			}
+			if (skipState != EXIT)
+				// Resolves the special chicken effects
+				tie(skipState, cooldown) = player->getStack().specialChickenEffect(opp->getStack(), skipState);
 			if (player->getStack().getWitchenPlayed()) {
 				auto source = _assets->get<Sound>(SOUND_WITCHEN);
-				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN)) {
+				if (!AudioChannels::get()->isActiveEffect(SOUND_WITCHEN) && isSound) {
 					AudioChannels::get()->playEffect(SOUND_WITCHEN, source, false, source->getVolume());
 				}
 			}
-		if (skipState == EXIT) {
-			// Resolves special chickens that affect the hands
-			handEffect();
-			prevHand--;
-			stackSize++;
-			skipState = ENTRY; // Returns the state machine to the entry state
+			if (skipState == EXIT) {
+				// Resolves special chickens that affect the hands
+				handEffect();
+				prevHand--;
+				stackSize++;
+				skipState = ENTRY; // Returns the state machine to the entry state
+			}
+
+			setNumChickensWillDiePreview();
+			//CULog("SKIP: %d",skipState);
 		}
 
-		setNumChickensWillDiePreview();
-		//CULog("SKIP: %d",skipState);
-	}
+		if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
+			//Play the button sfx
+			string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+			auto source = _assets->get<Sound>(sfx);
+			if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B) && isSound) {
+				AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+			}
 
-	if (sb->getPreview() && !isClashing) { //replace with if Preview button is pressed
-		//Play the button sfx
-		string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
-		auto source = _assets->get<Sound>(sfx);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
-			AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
-		}
-
-		cooldown = CLASHLENGTH;
-	}
-
-	if (isClashing) {
-		if (!player->getStack().empty() && !opp->getStack().empty()) {
-			player->getStack().compare(opp->getStack());
 			cooldown = CLASHLENGTH;
 		}
-		else {
-			player->eraseChickens();
-			opp->eraseChickens();
-			player->refillHand();
-			opp->refillHand();
 
-			prevHand = player->getHand().size();
-			stackSize = 0;
+		if (isClashing) {
+			CULog("Clashing");
+			if (!player->getStack().empty() && !opp->getStack().empty()) {
+				if (!firstClash) {
+					int result = player->getStack().compare(opp->getStack());
+					if (result == 1) {
+						opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+					}
+					else if (result == 0) {
+						player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+						opp->setNumChickensWillDiePreview(opp->getNumChickensWillDiePreview() - 1);
+					}
+					else if (result == -1) {
+						player->setNumChickensWillDiePreview(player->getNumChickensWillDiePreview() - 1);
+					}
+				}
+				if (!player->getStack().empty() && !opp->getStack().empty()) {
+					element pEle = player->getStack().getBottom().getElement();
+					element oEle = opp->getStack().getBottom().getElement();
+					sb->chickDefeat(pEle, oEle, player->getStack().compareWithoutRemove(opp->getStack()));
+				}
 
-			player->setNumChickensWillDiePreview(0);
-			opp->setNumChickensWillDiePreview(0);
-			player->resetVecChickensClashPreview();
-			opp->resetVecChickensClashPreview();
-
-			player->takeDamage(opp->getStack().getDamage());
-			opp->takeDamage(player->getStack().getDamage());
-
-			player->getStack().clear();
-			opp->getStack().clear();
-			isClashing = false;
-
-			if (player->getHealth() <= 0) {
-				didLose = true;
-				didWin = false;
-				CULog("lost! lmao");
+				firstClash = false;
+				cooldown = CLASHLENGTH;
 			}
+			else {
+				player->eraseChickens();
+				opp->eraseChickens();
+				player->refillHand();
+				opp->refillHand();
 
-			if (opp->getHealth() <= 0) {
-				didLose = false;
-				didWin = true;
-				CULog("win");
+				prevHand = player->getHand().size();
+				stackSize = 0;
+
+				player->setNumChickensWillDiePreview(0);
+				opp->setNumChickensWillDiePreview(0);
+				player->resetVecChickensClashPreview();
+				opp->resetVecChickensClashPreview();
+
+				player->takeDamage(opp->getStack().getDamage());
+				opp->takeDamage(player->getStack().getDamage());
+				sb->mooseDefeat(player->getStack().getDamage() - opp->getStack().getDamage());
+
+				player->getStack().clear();
+				opp->getStack().clear();
+				isClashing = false;
+
+				if (player->getHealth() <= 0) {
+					didLose = true;
+					didWin = false;
+					CULog("lost! lmao");
+					sb->deactivateHand();
+				}
+
+				if (opp->getHealth() <= 0) {
+					didLose = false;
+					didWin = true;
+					CULog("win");
+					sb->deactivateHand();
+				}
 			}
 		}
-	} else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
-		isClashing = true;
-		cooldown = CLASHLENGTH*1.5;
+		else if (stackSize == MAXSTACKSIZE) { // Called before a clash to let the finished stacks be drawn
+			//CULog(sb->getPaused() ? "true" : "false");
+			isClashing = true;
+			firstClash = true;
+			cooldown = CLASHLENGTH * 1.5;
 
-		//Play the clashing sfx
-		auto source = _assets->get<Sound>(SOUND_BELL);
-		if (!AudioChannels::get()->isActiveEffect(SOUND_BELL)) {
-			AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
+			//Play the clashing sfx
+			auto source = _assets->get<Sound>(SOUND_BELL);
+			if (!AudioChannels::get()->isActiveEffect(SOUND_BELL) && isSound) {
+				AudioChannels::get()->playEffect(SOUND_BELL, source, false, source->getVolume());
+			}
 		}
 	}
 	
-	sb->updateGameScene(timestep);
+	sb->updateGameScene(timestep,isClashing);
 }
 
 
@@ -486,6 +533,15 @@ void GameScene::handEffect() {
 	}
 	if (oLast == special::Spy)
 		opp->draw();
+}
+
+bool GameScene::specialChanges(Stack p, Stack o) {
+	int tempState = NONE;
+	while (tempState != EXIT) {
+		tie(tempState, std::ignore) = p.specialChickenEffect(o, tempState);
+	}
+
+	return (p.stackString() != player->getStack().stackString() || o.stackString() != opp->getStack().stackString());
 }
 
 Size GameScene::computeActiveSize() const {

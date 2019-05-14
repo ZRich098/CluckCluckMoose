@@ -58,6 +58,8 @@ void CCMApp::onStartup() {
 
     _input.init();
 
+	lastLevel = 1;
+
     Application::onStartup(); // YOU MUST END with call to parent
 }
 
@@ -138,7 +140,7 @@ void CCMApp::onResume() {
 			_levelscene.setLevel(_saveLoad.loadSaveGame(json));
 		}
 	}
-	
+
 	//load last level state, if applicable
 	if (_levelscene.getLevel() > 1 && _gamescene == nullptr) {
 		stringstream ss;
@@ -164,7 +166,7 @@ void CCMApp::onResume() {
 				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 				AIType ai = _saveLoad.loadAI(json->get("AI"));
-				_gamescene = GameScene::alloc(_assets, pl, op, ai);
+				_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
 				_gameplay.push_back(_gamescene);
 				_gameplay.back()->setActive(false);
 
@@ -205,9 +207,12 @@ void CCMApp::update(float timestep) {
         _loaded = true;
         _levelscene.deactivateButtons();
     } else {
+		//CULog("updating input");
         _input.update(timestep);
+		//CULog("done updating input");
         if (_current == 0) { // if on menu scene
             if (_menuscene.getPlay()) { // play is clicked
+                _menuscene.deactivateButtons();
                 _gameplay[_current]->setActive(false);
                 _current = 1; // to level select
                 _gameplay[_current]->setActive(true);
@@ -222,27 +227,18 @@ void CCMApp::update(float timestep) {
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
                 _levelscene.setBack(false);
-            } 
+            }
             else if (_levelscene.getLevel() != 0) { // level chosen
-				if (_levelscene.getLevel() == 1) { //if tutorial
-					_levelscene.deactivateButtons();
-					_gameplay[_current]->setActive(false);
-					_current = 2;
+				_levelscene.deactivateButtons();
+				_gameplay[_current]->setActive(false);
+				_current = 2;
 
+				if (_levelscene.getLevel() == 1) { //if tutorial
 					std::shared_ptr<TutorialMoose> pl = TutorialMoose::alloc(2, 6, true);
 					std::shared_ptr<TutorialMoose> op = TutorialMoose::alloc(2, 6, false);
 					_gamescene = GameScene::tutorialAlloc(_assets, pl, op);
-
-					_gameplay.push_back(_gamescene);
-					_gameplay.back()->setActive(false);
-
-					_levelscene.setLevel(1);
-					_gameplay[_current]->setActive(true);
-				} else {
-					_levelscene.deactivateButtons();
-					_gameplay[_current]->setActive(false);
-					_current = 2;
-
+				}
+				else {
 					//load level, if able
 					stringstream ss;
 					ss << "json/level" << _levelscene.getLevel() << ".json";
@@ -263,18 +259,51 @@ void CCMApp::update(float timestep) {
 							_gameplay.back()->setActive(false);
 						}
 						else {
-							CULog("File loading");
-							std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-							std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-							AIType ai = _saveLoad.loadAI(json->get("AI"));
-							_gamescene = GameScene::alloc(_assets, pl, op, ai);
-							_gameplay.push_back(_gamescene);
-							_gameplay.back()->setActive(false);
-
 							_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
+							bool newLevel = false;
+							if (lastLevel != _levelscene.getLevel()) {
+								CULog("loaded level: %d, last level: %d", _levelscene.getLevel(), lastLevel);
+								newLevel = true;
+								lastLevel = _levelscene.getLevel();
+							}
+							if (_gameplay.size() < 3) {
+								CULog("Initial asset file loading");
+								std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+								std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+								AIType ai = _saveLoad.loadAI(json->get("AI"));
+								_gamescene = GameScene::alloc(_assets, pl, op, ai, _levelscene.getLevel());
+							}
+							else if (newLevel) {
+								CULog("Asset file loading");
+								std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+								std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+								AIType ai = _saveLoad.loadAI(json->get("AI"));
+								_gamescene->setPlayer(pl);
+								_gamescene->setOpp(op);
+								_gamescene->setAI(op, pl, ai);
+								_gamescene->setLevel(_levelscene.getLevel());
+								_gameplay.pop_back();
+							}
+							else {
+								CULog("Save file loading");
+								gameReader = JsonReader::alloc("saveLevel.json");
+								json = gameReader->readJson();
+								std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+								std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+								AIType ai = _saveLoad.loadAI(json->get("AI"));
+								_gamescene->setPlayer(pl);
+								_gamescene->setOpp(op);
+								_gamescene->setAI(op, pl, ai);
+								_gamescene->setLevel(_levelscene.getLevel());
+								_gameplay.pop_back();
+							}
+							_gameplay.insert(_gameplay.begin() + _current, _gamescene);
+							_gameplay.at(_current)->setActive(false);
+							_input.init();
 						}
 					}
 					_gameplay[_current]->setActive(true);
+					_gamescene->deactivatePause();
 				}
             }
         }
@@ -282,13 +311,16 @@ void CCMApp::update(float timestep) {
             if (_gamescene->getHome()) { //@TODO: save current level
 				//CULog("%s", getSaveDirectory().c_str());
 				_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(), _levelscene.getLevel());
+				lastLevel = _levelscene.getLevel();
                 _gamescene->setHome(false);
+                _gamescene->deactivatePause();
                 _gameplay[_current]->setActive(false);
                 //_gameplay[_current]->dispose();
-                _gameplay.erase(_gameplay.begin()+_current-1);
+                //_gameplay.erase(_gameplay.begin()+_current);
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
-//                _levelscene.setLevel(0);
+                _menuscene.activateButtons();
+                _levelscene.setLevel(0);
             }
         }
         _gameplay[_current]->update(timestep);

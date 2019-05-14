@@ -1,6 +1,5 @@
 #include <cugl/assets/CUJsonLoader.h>
 #include "SaveController.h"
-
 ;
 
 SaveController::SaveController() : Asset(),
@@ -69,6 +68,7 @@ std::shared_ptr<Moose> SaveController::loadPlayerMoose(const std::shared_ptr<Jso
 	string cost = costume->asString();
 
 	player = Moose::alloc(5, 6);
+	//CULog("Hand size: %d, Order size: %d",hand.size(),playOrder.size());
 	player->jsonInit(h, hand, playOrder, coop, cost);
 
 	return player;
@@ -237,7 +237,9 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	saveFile->get("OpponentMoose")->appendArray("Coop"); //Make opponent Coop
 	for (int i = 0; i < opp->getHandPool().size(); i++) {
 		saveFile->get("OpponentMoose")->get("Coop")->appendArray();
-		saveFile->get("OpponentMoose")->get("Coop")->get(saveFile->get("OpponentMoose")->get("Coop")->size()-1)->appendValue((double)specialToInt(opp->getDeckAt(i).getSpecial()));
+		for (int j = 0; j < opp->getHandPoolAt(i).size(); j++) {
+			saveFile->get("OpponentMoose")->get("Coop")->get(saveFile->get("OpponentMoose")->get("Coop")->size() - 1)->appendValue((double)specialToInt(opp->getHandPoolAt(i).at(j).getSpecial()));
+		}
 	}
 
 	saveFile->get("OpponentMoose")->appendValue("Costume", "zoose");
@@ -274,7 +276,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 	}
 
 	//Add Tag
-	saveFile->appendValue("Level", (double)level);
+	saveFile->appendValue("Tag", (double)level);
 
 	//save to file
 	std::shared_ptr<JsonWriter> writer = JsonWriter::alloc("saveLevel.json");
