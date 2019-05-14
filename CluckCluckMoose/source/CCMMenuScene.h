@@ -86,6 +86,8 @@ public:
      */
     bool getPlay();
     void setPlay(bool val);
+    void activateButtons();
+    void deactivateButtons();
     cugl::Size computeActiveSize() const;
 };
 
