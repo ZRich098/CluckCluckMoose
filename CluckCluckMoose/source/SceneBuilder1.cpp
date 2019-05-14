@@ -893,7 +893,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pausebutt->setAnchor(Vec2::ANCHOR_CENTER);
 	pausebutt->setPosition(screenWidth/2, healthYScale);
 	pausebutt->setListener([=](const std::string& name, bool down) {
-	    if (down) {
+	    if (down && !hasWon && !hasLost) {
 	        pauseMenuCanvas->setVisible(true);
             isPaused = true;
 	    }
@@ -1072,16 +1072,20 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         soundChanged = true;
     }
     
-	timeAmount +=timestep;
-	bool isNextFrame = (timeAmount > timeBtnFrames);
-	if (timeAmount > timeBtnFrames)
-	{
-		isNextFrame = true;
-		timeAmount = 0;
-		if (thisFrame >= CHICKEN_FILMSTRIP_LENGTH - 1)
-			thisFrame = 0;
-		thisFrame++;
+	bool isNextFrame = false;
+	if (!isPaused) {
+		timeAmount += timestep;
+		isNextFrame = (timeAmount > timeBtnFrames);
+		if (timeAmount > timeBtnFrames)
+		{
+			isNextFrame = true;
+			timeAmount = 0;
+			if (thisFrame >= CHICKEN_FILMSTRIP_LENGTH - 1)
+				thisFrame = 0;
+			thisFrame++;
+		}
 	}
+	
 
 
 	vector <Chicken> hand = playerGlobe->getHand();
@@ -1097,7 +1101,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		if (handMap[i] >= 0) {
 			buttons[i]->setVisible(true);
 			buttonCanvas->getChild(2 * i)->setVisible(true);
-			buttons[i]->activate(i + 2);
+			if (!isPaused && !hasWon && !hasLost) {
+				buttons[i]->activate(i + 2);
+			}
 			if (buttons[i] == heldButton) {
 				heldButtInd = i;
 				//buttons[i]->setPosition(layer->screenToNodeCoords(_input.getCurTouch()) - Vec2(screenHeight / 2, 150));
@@ -1165,7 +1171,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 	}
 
-	if (sInfoInd != -1) {
+	if (sInfoInd != -1 && !isPaused && !hasWon && !hasLost) {
 		std::shared_ptr<Texture> sInfoText;
 		special cel;
 		if (sInfoInd > 4) {
@@ -1798,7 +1804,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 	}
     
-    if (isClashing && !signDone){
+    if (isClashing && !signDone && !isPaused){
         clashSignCanvas->setVisible(true);
         if (signframe >= SIGN_FILMSTRIP_LENGTH - 1){
             signDone = true;
@@ -1857,6 +1863,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			rButtL->activate(54);
 		}
 		hasLost = true;
+		deactivateHand();
 	}
 	else if (oppGlobe->getHealth() < 1) {
 		winCanvas->setVisible(true);
@@ -1917,6 +1924,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			lButt->activate(52);
 		}
 		hasWon = true;
+		deactivateHand();
 	}
 	else {
 
@@ -1963,6 +1971,10 @@ void SceneBuilder1::setHome(bool val) {
 }
 
 void SceneBuilder1::setLevelNum(int levelNum) {
+	hasWon = false;
+	hasLost = false;
+	isPaused = false;
+
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
 	//Draw background
@@ -2035,7 +2047,7 @@ void SceneBuilder1::setOppCost(string costume) {
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChildWithName(moose2, "opp_moose");
     
-    if (retry or goHome or nextLevel or !isPaused) { deactivatePause(); }
+	if (retry || goHome || nextLevel || !isPaused) { deactivatePause(); };
     
 //    if (retry or goHome){
 //        isPaused = false;
@@ -2046,10 +2058,8 @@ void SceneBuilder1::deactivateHand() {
 	vector <Chicken> hand = playerGlobe->getHand();
 
 	for (int i = 0; i < 6; i++) {
-		if (i < hand.size()) {
-			buttons[i]->setVisible(false);
-			buttons[i]->deactivate();
-		}
+		//buttons[i]->setVisible(false);
+		buttons[i]->deactivate();
 	}
 }
 
@@ -2057,14 +2067,13 @@ void SceneBuilder1::activateHand() {
 	vector <Chicken> hand = playerGlobe->getHand();
 
 	for (int i = 0; i < 6; i++) {
-		if (i < hand.size()) {
-			buttons[i]->setVisible(true);
-			buttons[i]->activate(i + 2);
-		}
+		buttons[i]->setVisible(true);
+		buttons[i]->activate(i + 2);
 	}
 }
 
 void SceneBuilder1::activatePause() {
+	deactivateHand();
     pauseMenuCanvas->setVisible(true);
 	for (int i = 0; i < 4; i++) {
 		pausebuttons[i]->activate(201 + i);
@@ -2095,3 +2104,6 @@ bool SceneBuilder1::getSoundToggle() {
     return soundToggle;
 }
 
+bool SceneBuilder1::getPaused() {
+	return isPaused;
+}
