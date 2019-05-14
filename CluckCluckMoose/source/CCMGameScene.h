@@ -34,6 +34,8 @@ protected:
 
 	std::shared_ptr<AI> oppAI;
 
+	CCMInput _input;
+
 
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
@@ -77,17 +79,17 @@ public:
      *
      * @return true if the controller is initialized properly, false otherwise.
      */
-    bool init(const std::shared_ptr<cugl::AssetManager>& assets);
-	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
+    bool init(const std::shared_ptr<cugl::AssetManager>& assets, CCMInput input);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, CCMInput input);
     
-    static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
+    static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, CCMInput input) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
-        return (result->init(assets) ? result : nullptr);
+        return (result->init(assets, input) ? result : nullptr);
     }
 
-	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai) {
+	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, CCMInput input) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
-		return (result->init(assets, playerMoose, oppMoose, ai) ? result : nullptr);
+		return (result->init(assets, playerMoose, oppMoose, ai, input) ? result : nullptr);
 	}
 
 	/**

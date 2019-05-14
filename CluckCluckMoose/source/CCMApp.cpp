@@ -56,6 +56,8 @@ void CCMApp::onStartup() {
     // Que up the other assets
     _assets->loadDirectoryAsync("json/assets1.json",nullptr);
 
+
+	_input = CCMInput();
     _input.init();
 
     Application::onStartup(); // YOU MUST END with call to parent
@@ -147,7 +149,7 @@ void CCMApp::onResume() {
 		std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
 		if (gameReader == nullptr) {
 			CULog("json/level%d.json file not found", _levelscene.getLevel());
-			_gamescene = GameScene::alloc(_assets);
+			_gamescene = GameScene::alloc(_assets, _input);
 			_gameplay.push_back(_gamescene);
 			_gameplay.back()->setActive(false);
 		}
@@ -155,7 +157,7 @@ void CCMApp::onResume() {
 			std::shared_ptr<JsonValue> json = gameReader->readJson();
 			if (json == nullptr) {
 				CULog("Failed to load level file");
-				_gamescene = GameScene::alloc(_assets);
+				_gamescene = GameScene::alloc(_assets, _input);
 				_gameplay.push_back(_gamescene);
 				_gameplay.back()->setActive(false);
 			}
@@ -164,7 +166,7 @@ void CCMApp::onResume() {
 				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 				AIType ai = _saveLoad.loadAI(json->get("AI"));
-				_gamescene = GameScene::alloc(_assets, pl, op, ai);
+				_gamescene = GameScene::alloc(_assets, pl, op, ai, _input);
 				_gameplay.push_back(_gamescene);
 				_gameplay.back()->setActive(false);
 
@@ -235,7 +237,7 @@ void CCMApp::update(float timestep) {
 				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
 				if (gameReader == nullptr) {
 					CULog("json/level%d.json file not found", _levelscene.getLevel());
-					_gamescene = GameScene::alloc(_assets);
+					_gamescene = GameScene::alloc(_assets, _input);
 					_gameplay.push_back(_gamescene);
 					_gameplay.back()->setActive(false);
 				}
@@ -243,7 +245,7 @@ void CCMApp::update(float timestep) {
 					std::shared_ptr<JsonValue> json = gameReader->readJson();
 					if (json == nullptr) {
 						CULog("Failed to load level file");
-						_gamescene = GameScene::alloc(_assets);
+						_gamescene = GameScene::alloc(_assets, _input);
 						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 					}
@@ -252,7 +254,7 @@ void CCMApp::update(float timestep) {
 						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
 						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
 						AIType ai = _saveLoad.loadAI(json->get("AI"));
-						_gamescene = GameScene::alloc(_assets, pl, op, ai);
+						_gamescene = GameScene::alloc(_assets, pl, op, ai, _input);
 						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 

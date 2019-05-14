@@ -78,7 +78,7 @@ std::shared_ptr<Moose> opp;
 
 std::shared_ptr<AI> oppAI;
 
-std::shared_ptr<CCMInput> input;
+//CCMInput input;
 
 //Preview Stacks
 //Player Stack
@@ -103,7 +103,7 @@ Stack oppPreviewStack;
  *
  * @return true if the controller is initialized properly, false otherwise.
  */
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, CCMInput input) {
     // Initialize the scene to a locked width
     Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -142,9 +142,9 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 	oppAI = AI::alloc(opp, player, AIType::Smart);
 	
 	
-	input->init();
-
-	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3, input);
+	//input->init();
+	_input = input;
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3, _input);
 
 	sb->deactivateHand();
 
@@ -161,9 +161,10 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 
 }
 
-bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai) {
+bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai, CCMInput input) {
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
+	
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
 	if (assets == nullptr) {
 		return false;
@@ -199,6 +200,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
+	_input = input;
 	
 
 	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "christmoose", 3, input);

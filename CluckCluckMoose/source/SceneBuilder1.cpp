@@ -249,7 +249,7 @@ float screenHeight;
 float screenWidth;
 
 
-bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, std::shared_ptr<CCMInput> input) {
+bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, CCMInput input) {
 
 	root->removeAllChildren();
 
@@ -652,17 +652,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 			butt->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING);
 			shadowNode->setPosition((i - 4) * BUTTON_X_SPACING + BUTTON_X_OFFSET, BUTTON_Y_OFFSET + BUTTON_Y_SPACING - SHADOW_OFFSET);
 		}
-		/*if (_input->isActive()) {
-			CULog("active");
-		} */
 		butt->setListener([=](const std::string& name, bool down) {
 			if (down) {
 				heldButton = butt;
 				if (timers[i] > 15) {
 					infoCanvas->setVisible(true);
 				}
-				//CULog("Chicken trying to go to %d %d", _input->getSelection().x, _input->getSelection().y);
-				//butt->setPosition(layer->screenToNodeCoords(_input.getSelection()));
+				CULog("Chicken trying to go to %d %d", _input.getSelection().x, _input.getSelection().y);
+				butt->setPosition(layer->screenToNodeCoords(_input.getSelection()));
 
 			}
 			if (!down) {
@@ -935,6 +932,7 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 void SceneBuilder1::updateGameScene(float timestep) {
 	timeAmount +=timestep;
 	bool isNextFrame = (timeAmount > timeBtnFrames);
+	
 	if(timeAmount > timeBtnFrames)
 	{
 	    isNextFrame = true;
