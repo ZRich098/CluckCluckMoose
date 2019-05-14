@@ -2047,7 +2047,7 @@ void SceneBuilder1::setOppCost(string costume) {
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChildWithName(moose2, "opp_moose");
     
-    if (retry or goHome or nextLevel or !isPaused) { deactivatePause(); }
+	if (retry || goHome || nextLevel || !isPaused) { deactivatePause(); };
     
 //    if (retry or goHome){
 //        isPaused = false;
