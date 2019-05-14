@@ -235,7 +235,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     creditsCanvas->addChild(backbutt);
     backbutt->activate(103);
     creditsbuttons.push_back(backbutt);
-	_buttons.emplace("back", backbutt);
+	//_buttons.emplace("back", backbutt);
     
     creditsCanvas->setVisible(false);
     creditsbuttons[0]->deactivate();
