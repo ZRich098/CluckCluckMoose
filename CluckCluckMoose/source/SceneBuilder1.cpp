@@ -1974,6 +1974,9 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	hasWon = false;
 	hasLost = false;
 	isPaused = false;
+	retry = false;
+	goHome = false;
+	nextLevel = false;
 
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();

@@ -128,7 +128,9 @@ public:
 	/** Get the opponent AI */
 	std::shared_ptr<AI> getAI() { return oppAI; };
 
-	bool getHome() { return sb->getHome(); }
+	bool getHome() { return sb->getHome(); };
+	bool getRedo() { return sb->getRedo(); };
+	bool getNextLevel() { return sb->getNextLevel(); };
 
 #pragma mark -
 #pragma mark Mutators
