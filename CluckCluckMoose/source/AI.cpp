@@ -386,9 +386,11 @@ int AI::tutorialPlay() {
 	if (turn == 0) { //Play water chicken on first turn
 		for (int i = 0; i < hand.size(); i++)
 			if (hand.at(i).getSpecial() == special::BasicWater) return i;
+		return 0;
 	} else if (turn == 1) { //Play grass chicken on second turn
 		for (int i = 0; i < hand.size(); i++)
 			if (hand.at(i).getSpecial() == special::BasicGrass) return i;
+		return 0;
 	} else {
 		return loserPlay();
 	}

@@ -107,7 +107,7 @@ void CCMApp::onSuspend() {
 	//save player's game state
 	_saveLoad.saveGame(4); //@TODO - Replace with call to highest active level
 	//save current level state, if applicable
-	if (_levelscene.getLevel() != 0) {
+	if (_levelscene.getLevel() > 1) {
 		_saveLoad.saveLevel(_gamescene->getPlayer(), _gamescene->getOpp(), _gamescene->getAI(),  _levelscene.getLevel());
 	}
 }
@@ -140,7 +140,7 @@ void CCMApp::onResume() {
 	}
 	
 	//load last level state, if applicable
-	if (_levelscene.getLevel() != 0 && _gamescene == nullptr) {
+	if (_levelscene.getLevel() > 1 && _gamescene == nullptr) {
 		stringstream ss;
 		ss << "json/level" << _levelscene.getLevel() << ".json";
 		string fileName = ss.str();
@@ -222,44 +222,60 @@ void CCMApp::update(float timestep) {
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
                 _levelscene.setBack(false);
-            }
+            } 
             else if (_levelscene.getLevel() != 0) { // level chosen
-                _levelscene.deactivateButtons();
-                _gameplay[_current]->setActive(false);
-                _current = 2;
+				if (_levelscene.getLevel() == 1) { //if tutorial
+					_levelscene.deactivateButtons();
+					_gameplay[_current]->setActive(false);
+					_current = 2;
 
-				//load level, if able
-				stringstream ss;
-				ss << "json/level" << _levelscene.getLevel() << ".json";
-				string fileName = ss.str();
-				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
-				if (gameReader == nullptr) {
-					CULog("json/level%d.json file not found", _levelscene.getLevel());
-					_gamescene = GameScene::alloc(_assets);
+					std::shared_ptr<TutorialMoose> pl = TutorialMoose::alloc(2, 6, true);
+					std::shared_ptr<TutorialMoose> op = TutorialMoose::alloc(2, 6, false);
+					_gamescene = GameScene::tutorialAlloc(_assets, pl, op);
+
 					_gameplay.push_back(_gamescene);
 					_gameplay.back()->setActive(false);
-				}
-				else {
-					std::shared_ptr<JsonValue> json = gameReader->readJson();
-					if (json == nullptr) {
-						CULog("Failed to load level file");
+
+					_levelscene.setLevel(1);
+					_gameplay[_current]->setActive(true);
+				} else {
+					_levelscene.deactivateButtons();
+					_gameplay[_current]->setActive(false);
+					_current = 2;
+
+					//load level, if able
+					stringstream ss;
+					ss << "json/level" << _levelscene.getLevel() << ".json";
+					string fileName = ss.str();
+					std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
+					if (gameReader == nullptr) {
+						CULog("json/level%d.json file not found", _levelscene.getLevel());
 						_gamescene = GameScene::alloc(_assets);
 						_gameplay.push_back(_gamescene);
 						_gameplay.back()->setActive(false);
 					}
 					else {
-						CULog("File loading");
-						std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-						std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-						AIType ai = _saveLoad.loadAI(json->get("AI"));
-						_gamescene = GameScene::alloc(_assets, pl, op, ai);
-						_gameplay.push_back(_gamescene);
-						_gameplay.back()->setActive(false);
+						std::shared_ptr<JsonValue> json = gameReader->readJson();
+						if (json == nullptr) {
+							CULog("Failed to load level file");
+							_gamescene = GameScene::alloc(_assets);
+							_gameplay.push_back(_gamescene);
+							_gameplay.back()->setActive(false);
+						}
+						else {
+							CULog("File loading");
+							std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+							std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+							AIType ai = _saveLoad.loadAI(json->get("AI"));
+							_gamescene = GameScene::alloc(_assets, pl, op, ai);
+							_gameplay.push_back(_gamescene);
+							_gameplay.back()->setActive(false);
 
-						_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
+							_levelscene.setLevel(_saveLoad.loadLevelTag(json->get("Tag")));
+						}
 					}
+					_gameplay[_current]->setActive(true);
 				}
-                _gameplay[_current]->setActive(true);
             }
         }
         else if (_current == 2) { // in game scene

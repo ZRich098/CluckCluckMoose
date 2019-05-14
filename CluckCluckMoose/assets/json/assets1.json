@@ -580,6 +580,69 @@
             "magfilter": "linear",
             "wrapS": "clamp",
             "wrapT": "clamp"
+        },
+        "tutor_1": {
+            "file": "textures/tutorial/tutorial_1_animation_drag.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_2": {
+            "file": "textures/tutorial/tutorial_2_static_elements.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_3": {
+            "file": "textures/tutorial/tutorial_3_static_element_distribution.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_4": {
+            "file": "textures/tutorial/tutorial_4_static_cardInfo.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_5": {
+            "file": "textures/tutorial/tutorial_5_static_continue_stack.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_6": {
+            "file": "textures/tutorial/tutorial_6_animation_clash.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_7": {
+            "file": "textures/tutorial/tutorial_7_static_finish.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_grass": {
+            "file": "textures/tutorial/animation_grass_chicken_glowing_empty.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "tutor_spy": {
+            "file": "textures/tutorial/animation_spy_chicken_glowing_empty.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
         }
     },
 	"sounds": {

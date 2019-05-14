@@ -10,7 +10,9 @@
 //
 #include "CCMGameScene.h"
 #include "SceneBuilder1.h"
+#include "TutorialSB.h"
 #include "Moose.h"
+#include "TutorialMoose.h"
 #include "AI.h"
 
 using namespace cugl;
@@ -101,6 +103,7 @@ Stack oppPreviewStack;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
+
     // Initialize the scene to a locked width
     Size dimen = computeActiveSize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -206,7 +209,50 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	// XNA nostalgia
 	Application::get()->setClearColor(Color4f::CORNFLOWER);
 	return true;
+}
 
+bool GameScene::tutorinit(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai) {
+	// Initialize the scene to a locked width
+	Size dimen = computeActiveSize();
+	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
+	if (assets == nullptr) {
+		return false;
+	}
+	else if (!Scene::init(dimen)) {
+		return false;
+	}
+	_assets = assets;
+
+	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+
+	//Root node the drawer can build off of
+	root = Node::alloc();
+	addChild(root);
+
+	//Initialize stack sizes
+	stackSize = 0;
+
+	//Initialize skip state
+	skipState = ENTRY;
+
+	//Initialize moose
+	player = playerMoose;
+	opp = oppMoose;
+	player->refillHand();
+	opp->refillHand();
+	prevHand = player->getHand().size();
+
+	oppAI = AI::alloc(opp, player, ai);
+	sb = TutorialSB::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	sb->setPreview(false);
+	sb->deactivateHand();
+
+	setActive(_active);
+
+	// XNA nostalgia
+	Application::get()->setClearColor(Color4f::CORNFLOWER);
+	return true;
 }
 
 

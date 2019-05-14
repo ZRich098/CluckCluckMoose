@@ -17,6 +17,7 @@
 
 #include "CCMInput.h"
 #include "Moose.h"
+#include "TutorialMoose.h"
 #include "AI.h"
 #include "SceneBuilder1.h"
 //#include "unistd.h"
@@ -78,6 +79,7 @@ public:
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
 	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
+	bool tutorinit(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
     
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
@@ -87,6 +89,11 @@ public:
 	static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
 		return (result->init(assets, playerMoose, oppMoose, ai) ? result : nullptr);
+	}
+
+	static std::shared_ptr<GameScene> tutorialAlloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<TutorialMoose> playerMoose, std::shared_ptr<TutorialMoose> oppMoose) {
+		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
+		return (result->tutorinit(assets, playerMoose, oppMoose, AIType::Tutorial) ? result : nullptr);
 	}
 
 	/**

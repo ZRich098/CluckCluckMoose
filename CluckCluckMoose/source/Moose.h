@@ -164,12 +164,12 @@ public:
 	/** Clears the hand of all Chickens */
 	void clearHandToDiscard();
 	/** Refills the hand with Chickens from the Coop */
-	void refillHand();
+	virtual void refillHand();
 	/** Shuffles the hand into a random order*/
 	void shuffleHand() { random_shuffle(hand.begin(), hand.end()); };
 	/** Draws num card from the Coop and adds it to the hand 
 		Discards any cards drawn over the hand size (straight to discard pile)*/
-	void draw(int num = 1);
+	virtual void draw(int num = 1);
 
 	//Health
 	/** Set the current health of the Moose*/
