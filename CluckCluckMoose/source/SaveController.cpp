@@ -211,7 +211,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 		saveFile->get("PlayerMoose")->get("Coop")->appendValue((double)specialToInt(player->getDeckAt(i).getSpecial()));
 	}
 
-	saveFile->get("PlayerMoose")->appendValue("Costume", "zoose");
+	saveFile->get("PlayerMoose")->appendValue("Costume", player->getCostume());
 
 	//Add OppMoose (Health, Hand, PlayOrder, Coop, Discard, Skin)
 	saveFile->appendObject("OpponentMoose");
@@ -236,7 +236,7 @@ void SaveController::saveLevel(std::shared_ptr<Moose> player, std::shared_ptr<Mo
 		}
 	}
 
-	saveFile->get("OpponentMoose")->appendValue("Costume", "zoose");
+	saveFile->get("OpponentMoose")->appendValue("Costume", opp->getCostume());
 
 	//Add AI
 	AIType a = ai->getType();
