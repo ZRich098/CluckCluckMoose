@@ -946,11 +946,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setScale(0.65, 0.65);
     pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
     pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
-    pauseResume->setListener([=](const std::string& name, bool down) { if (down) {
-//        pauseMenuCanvas->setVisible(false);
-        isPaused = false;
-        CULog("resume pressed");
-    }});
+    pauseResume->setListener([=](const std::string& name, bool down) { if (down) { isPaused = false; }});
     pauseMenuCanvas->addChild(pauseResume);
     pauseResume->activate(203); //ensure keys are unique
     pausebuttons.push_back(pauseResume); // 2
@@ -1013,6 +1009,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     sign->setPosition(screenWidth/2, healthYScale - 150);
     clashSignCanvas->addChild(sign);
     clashSignCanvas->setVisible(false);
+    
+    deactivatePause();
 
 	return true;
 }
@@ -1051,7 +1049,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
     
-    if (!soundChanged){
+    if (!soundChanged && isPaused){
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
         std::shared_ptr<Texture> texturePauseSettings;
@@ -2039,10 +2037,9 @@ void SceneBuilder1::setOppCost(string costume) {
     
     if (retry or goHome or nextLevel or !isPaused) { deactivatePause(); }
     
-    if (retry or goHome){
-        isPaused = false;
-        //        deactivatePause();
-    }
+//    if (retry or goHome){
+//        isPaused = false;
+//    }
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -2079,6 +2076,7 @@ void SceneBuilder1::deactivatePause() {
 	for (int i = 0; i < 4; i++) {
 		pausebuttons[i]->deactivate();
 	}
+    isPaused = false;
 }
 
 bool SceneBuilder1::getHome() {
