@@ -842,7 +842,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	tutbutton7->setAnchor(Vec2::ANCHOR_MIDDLE_LEFT);
 	tutbutton7->setScale(screenWidth / tutbutton7->getWidth(), screenWidth / tutbutton7->getWidth());
 	tutbutton7->setListener([=](const std::string& name, bool down) {
-		if (step == 9) {
+		if (step == 10) {
 			if (down) {
 				tutbuttonpressed = true;
 			}
@@ -2335,8 +2335,8 @@ bool SceneBuilder1::getHome() {
 
 bool SceneBuilder1::getRedo() {
 	if (isTutor && retry) {
-		exitTutorial();
-		step = 0;
+		setTutorial();
+		return false;
 	}
 	return retry;
 }
