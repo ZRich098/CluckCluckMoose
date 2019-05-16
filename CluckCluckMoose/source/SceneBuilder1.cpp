@@ -2381,7 +2381,6 @@ void SceneBuilder1::advanceTutorial() {
 		tutbutton3->setVisible(false);
 		tutcanvas4->setVisible(true);
 		spylightcanvas->setVisible(true);
-		buttons[4]->activate(6);
 	}
 	else if (step == 4) {
 		//Bug with hand map and spy rip
@@ -2390,10 +2389,9 @@ void SceneBuilder1::advanceTutorial() {
 		spylightcanvas->setVisible(false);
 	}
 	else if (step == 5){
-		//6. spy card let go. stop highlighting spy. 
+		//6. spy card let go. stop highlighting spy. show tutorial 5
 		tutbutton5->setVisible(true);
 		tutbutton5->activate(405);
-		buttons[4]->deactivate();
 	}
 	else if (step == 6) {
 		//6. Tutorial 5 tapped.Stop showing tutorial 5. Wait till stack size reaches 5
@@ -2449,11 +2447,11 @@ void SceneBuilder1::exitTutorial() {
 	spylightcanvas->setVisible(false);
 	tutcanvas1->setVisible(false);
 	tutcanvas2->setVisible(false);
-	tutcanvas3->setVisible(false);
+	tutbutton3->setVisible(false);
 	tutcanvas4->setVisible(false);
-	tutcanvas5->setVisible(false);
-	tutcanvas6->setVisible(false);
-	tutcanvas7->setVisible(false);
+	tutbutton5->setVisible(false);
+	tutbutton6->setVisible(false);
+	tutbutton7->setVisible(false);
 
 	tutbutton3->deactivate();
 	tutbutton5->deactivate();
