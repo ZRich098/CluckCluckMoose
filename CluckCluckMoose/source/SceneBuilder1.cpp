@@ -481,6 +481,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	grasslightcanvas->setPosition(BUTTON_X_OFFSET, BUTTON_Y_OFFSET - GRASSLIGHT_OFFSET);
 	grasslightcanvas->setScale(HAND_SCALE, HAND_SCALE);
 	buttonCanvas->addChild(grasslightcanvas); //child 0
+	grasslightcanvas->setVisible(isTutor);
 
 	spylightcanvas = AnimationNode::alloc(spylight, 1, SPY_FILMSTRIP_LENGTH, SPY_FILMSTRIP_LENGTH);
 	spylightcanvas->setAnchor(Vec2::ANCHOR_CENTER);
@@ -673,11 +674,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		if (down) {
 			//previewSet = true;
 			prevTint = true;
-			if (tutor && step == 1) advanceTutorial();
+			if (isTutor && step == 1) advanceTutorial();
 		}
 		if (!down) {
 			prevTint = false;
-			if (tutor && step == 2) advanceTutorial();
+			if (isTutor && step == 2) advanceTutorial();
 		}
 	});
 
