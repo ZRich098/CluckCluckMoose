@@ -2335,8 +2335,7 @@ bool SceneBuilder1::getHome() {
 
 bool SceneBuilder1::getRedo() {
 	if (isTutor && retry) {
-		setTutorial();
-		return false;
+		exitTutorial();
 	}
 	return retry;
 }

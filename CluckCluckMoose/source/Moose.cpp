@@ -284,6 +284,9 @@ void Moose::clearHandToDiscard() {
 
 void Moose::refillHand() {
 	if (isTutor) {
+		if (hand.size() > 0) {
+			hand.clear();
+		}
 		if (isPlayer) {
 			hand.push_back(Chicken(element::Fire, special::BasicFire));
 			hand.push_back(Chicken(element::Grass, special::BasicGrass));

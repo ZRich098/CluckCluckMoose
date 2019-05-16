@@ -346,22 +346,38 @@ void CCMApp::update(float timestep) {
 				if (_gamescene->getNextLevel()) {
 					_levelscene.setLevel(_levelscene.getLevel() + 1);
 				}
-				stringstream ss;
-				ss << "json/level" << _levelscene.getLevel() << ".json";
-				string fileName = ss.str();
-				std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
-				std::shared_ptr<JsonValue> json = gameReader->readJson();
-				std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
-				std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
-				AIType ai = _saveLoad.loadAI(json->get("AI"));
-				_gamescene->setPlayer(pl);
-				_gamescene->setOpp(op);
-				_gamescene->setAI(op, pl, ai);
-				_gamescene->setLevel(_levelscene.getLevel());
-				_gameplay.pop_back();
-				_gameplay.insert(_gameplay.begin() + _current, _gamescene);
-				_gameplay.at(_current)->setActive(false);
-				_input.init();
+
+				if (_levelscene.getLevel() == 1) { //redo tutorial
+					std::shared_ptr<Moose> pl = Moose::alloc(5, 6, true, true);
+					std::shared_ptr<Moose> op = Moose::alloc(5, 6, true, false);
+					_gamescene->setPlayer(pl);
+					_gamescene->setOpp(op);
+					_gamescene->setAI(op, pl, AIType::Tutorial);
+					_gamescene->setTutorial();
+					_gameplay.pop_back();
+					_gameplay.push_back(_gamescene);
+					_gameplay[_current]->setActive(true);
+					_gamescene->deactivatePause();
+					_input.init();
+				}
+				else {
+					stringstream ss;
+					ss << "json/level" << _levelscene.getLevel() << ".json";
+					string fileName = ss.str();
+					std::shared_ptr<JsonReader> gameReader = JsonReader::allocWithAsset(fileName);
+					std::shared_ptr<JsonValue> json = gameReader->readJson();
+					std::shared_ptr<Moose> pl = _saveLoad.loadPlayerMoose(json->get("PlayerMoose"));
+					std::shared_ptr<Moose> op = _saveLoad.loadOpponentMoose(json->get("OpponentMoose"));
+					AIType ai = _saveLoad.loadAI(json->get("AI"));
+					_gamescene->setPlayer(pl);
+					_gamescene->setOpp(op);
+					_gamescene->setAI(op, pl, ai);
+					_gamescene->setLevel(_levelscene.getLevel());
+					_gameplay.pop_back();
+					_gameplay.insert(_gameplay.begin() + _current, _gamescene);
+					_gameplay.at(_current)->setActive(false);
+					_input.init();
+				}
 			}
         }
         _gameplay[_current]->update(timestep);
