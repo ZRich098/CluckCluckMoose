@@ -121,9 +121,11 @@ bool hasLost;
 #define LOSS_BUTTON_X_SPACING 175
 #define CHICKEN_SHOT_ROWS 1
 #define CHICKEN_SHOT_COLS 1
+#define STILL_SIGN_TIME 1.5
 #define DEATH_ANIM_COLS 8
 #define INFO_DELAY 15
 #define MOOSE_SCALE 0.5f
+#define BULLET_SPEED 100
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -183,6 +185,11 @@ std::shared_ptr<Texture> nextlvl;
 
 //transition texture
 std::shared_ptr<Texture> smokeTrans;
+
+//projectile texture
+std::shared_ptr<Texture> fireShot;
+std::shared_ptr<Texture> waterShot;
+std::shared_ptr<Texture> grassShot;
 
 //chicken death textures
 std::shared_ptr<Texture> waterTrans;
@@ -250,15 +257,17 @@ std::vector<int> flappingFrame;
 
 //Frame tracking for attacking animations
 
-//the number of frames it takes for a chicken shot to reach the middle of the screen
-int middleScreenFrame = 8;
+//the world position of the middle of the screen
+int middleScreen = 0;
 //the frame that a chicken shot is currently at, -1 if no shot on screen
-int shotProgress = -1;
+int pShotProgress = -1;
+int eShotProgress = -1;
+
 //0 index is current player death animation frame, 1 is opponent
 std::vector<int> dyingFrame;
 std::vector<int> pSmokeFrame;
 std::vector<int> eSmokeFrame;
-//determines if the player chicken attacking is going to win
+//-1 means player loss, 0 means tie, 1 means player win
 int playerChickenWins;
 //element of player chicken
 element pType;
@@ -271,7 +280,7 @@ std::vector<int> timers;
 int heldButtInd;
 
 int signframe = 1;
-int signCount = 500;
+int signCount = STILL_SIGN_TIME;
 bool signDone = false;
 std::shared_ptr<Texture> textsign;
 std::shared_ptr<AnimationNode> sign;
@@ -288,6 +297,8 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Set screen size
 	screenHeight = dimen.height;
 	screenWidth = dimen.width;
+
+	middleScreen = screenWidth / 2;
 
 	playerGlobe = player;
 	oppGlobe = opp;
@@ -378,6 +389,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	waterTrans = _assets->get<Texture>("waterTrans");
 	fireTrans = _assets->get<Texture>("fireTrans");
 	grassTrans = _assets->get<Texture>("grassTrans");
+
+	waterShot = _assets->get<Texture>("projectiles");
+	fireShot = _assets->get<Texture>("projectiles");
+	grassShot = _assets->get<Texture>("projectiles");
 
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
@@ -1020,13 +1035,14 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 void SceneBuilder1::chickDefeat(element playerType, element opponentType, int winResult) {
 	//start animation for chicken fading
 	//make child of chicken the element animation
-	shotProgress = 0;
+	pShotProgress = 0;
+	eShotProgress = 0;
 	playerChickenWins = winResult;
 	eType = playerType;
 	pType = opponentType;
 	CULog("somedefeat");
-	dyingFrame[1] = 0;
-	dyingFrame[0] = 0;
+	/*dyingFrame[1] = 0;
+	dyingFrame[0] = 0;*/
 }
 
 void SceneBuilder1::mooseDefeat(int healthChange) {
@@ -1439,73 +1455,113 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 
 		//START DEATH ANIMATION HERE
-        if (signDone){
-            if (i == 0) {
+        
+		//shot starts here
+		if (pShotProgress != -1 && i == 0) {
 
-                if (isNextFrame) {
-                    if (shotProgress != -1) {
-                        //a shot has begun
+			int elemFrame = 0;
+			std::shared_ptr<Texture> shot;
+			switch (eType) {
+			case element::Fire:
+				shot = fireShot;
+				elemFrame = 2;
+				break;
+			case element::Water:
+				shot = waterShot;
+				elemFrame = 1;
+				break;
+			case element::Grass:
+				shot = grassShot;
+				elemFrame = 0;
+				break;
+			default:
+				shot = fireShot;
+				elemFrame = 2;
+				break;
+			}
 
-                        if (shotProgress < middleScreenFrame) {
-                            //change from text to the opponent element type texture
-                            /*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-                            ostackNodes[i]->addChild(shot);
-                            chick->setPosition(50*shotProgress, 0);*/
-                        }
-                        else if (shotProgress >= middleScreenFrame) {
-                            if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-                                //shot has reached the enemy chicken!
-                                //animation of defeat should begin
-                                //dyingFrame[1]=dyingFrame[1]+1;
-                            }
-                        }
-                        shotProgress += 1;
-                    }
-                }
+			std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
+			pstackNodes[i]->addChild(projec);
+			projec->setScale(0.6);
+			projec->setFrame(elemFrame);
 
-                std::shared_ptr<Texture> deathText;
-                switch (pType) {
-                case element::Fire:
-                    deathText = fireTrans;
-                    break;
-                case element::Water:
-                    deathText = waterTrans;
-                    break;
-                case element::Grass:
-                    deathText = grassTrans;
-                    break;
-                default:
-                    deathText = fireTrans;
-                    break;
-                }
+			middleScreen = pstackNodes[i]->getWorldPosition().x + (ostackNodes[i]->getWorldPosition().x - pstackNodes[i]->getWorldPosition().x)/2 ;
 
-                if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins < 1) {
-                    dyingFrame[0] += 1;
-                    /*std::string str = std::to_string(dyingFrame[0]);
-                    const char * c = str.c_str();
-                    CULog(c);*/
-                    if (dyingFrame[0] >= DEATH_ANIM_COLS) {
-                        dyingFrame[0] = -1;
-                        shotProgress = -1;
-                    }
-                }
+			//a shot has begun
+			int shotX = BULLET_SPEED * pShotProgress + pstackNodes[i]->getWidth() * 2;
+			projec->setPosition(shotX, pstackNodes[0]->getHeight());
 
-                if (dyingFrame[0] > -1 && playerChickenWins < 1) {
-                    std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-                    pstackNodes[i]->addChild(poof);
-                    poof->setFrame(dyingFrame[0]);
-                    //poof->flipHorizontal(false);
-                    if (dyingFrame[0] > 4) {
-                        poof->setScale(STACK_SCALE); // Magic number to rescale asset
-                        poof->setAnchor(Vec2::ANCHOR_CENTER);
-                        poof->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
-                        poof->flipHorizontal(true);
-                        layer->swapChild(pstackNodes[i], poof, false);
-                    }
-                }
+			if (pShotProgress > 3) {
+				dyingFrame[1] = 0;
+				dyingFrame[0] = 0;
+				pShotProgress = -1;
+				eShotProgress = -1;
+			}
 
-            }
-        }
+			//keep drawing past middle of the screen 
+			//if (shotX < middleScreen || ((playerChickenWins > -1) && projec->getWorldPosition().x <= ostackNodes[i]->getWorldPosition().x)) {
+			//	// 
+
+			//}
+			//else {
+			//	if (playerChickenWins > -1)
+			//		dyingFrame[1] = 0;
+			//	pShotProgress = -1;
+			//}
+
+			if (isNextFrame && pShotProgress != -1) {
+
+				pShotProgress += 1;
+			}
+		}
+
+		if (i == 0) {
+			std::shared_ptr<Texture> deathText;
+			switch (pType) {
+			case element::Fire:
+				deathText = fireTrans;
+				break;
+			case element::Water:
+				deathText = waterTrans;
+				break;
+			case element::Grass:
+				deathText = grassTrans;
+				break;
+			default:
+				deathText = fireTrans;
+				break;
+			}
+
+			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins < 1) {
+				dyingFrame[0] += 1;
+				/*std::string str = std::to_string(dyingFrame[0]);
+				const char * c = str.c_str();
+				CULog(c);*/
+				if (dyingFrame[0] >= DEATH_ANIM_COLS) {
+					dyingFrame[0] = -1;
+
+				}
+			}
+
+			if (dyingFrame[0] > -1 && playerChickenWins < 1) {
+				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+				pstackNodes[i]->addChild(poof);
+				poof->setFrame(dyingFrame[0]);
+				//poof->flipHorizontal(false);
+				if (dyingFrame[0] > 4) {
+					poof->setScale(STACK_SCALE); // Magic number to rescale asset
+					poof->setAnchor(Vec2::ANCHOR_CENTER);
+					poof->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
+					poof->flipHorizontal(true);
+					layer->swapChild(pstackNodes[i], poof, false);
+				}
+			}
+		}
+
+		
+
+		
+        
 	}
 	Stack ostack = oppGlobe->getStack();
 
@@ -1610,82 +1666,106 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			smoke->setFrame(6 - 1 - eSmokeFrame[i]);
 		}
 
-        if (signDone) {
-            //ANIMATE DEATH OVERLAY HERE
-            if (i == 0) {
+		if (i == 0) {
 
-                if (isNextFrame) {
-                    if (shotProgress != -1) {
-                        //a shot has begun
+			if (pShotProgress != -1) {
 
-                        if (shotProgress < middleScreenFrame) {
-                            //change from text to the opponent element type texture
-                            /*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-                            ostackNodes[i]->addChild(shot);
-                            chick->setPosition(50*shotProgress, 0);*/
-                        }
-                        else if (shotProgress >= middleScreenFrame) {
-                            if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-                                //shot has reached the enemy chicken!
-                                //animation of defeat should begin
-                                //dyingFrame[1]=dyingFrame[1]+1;
+				int elemFrame = 0;
+				std::shared_ptr<Texture> shot;
+				switch (pType) {
+				case element::Fire:
+					shot = fireShot;
+					elemFrame = 2;
+					break;
+				case element::Water:
+					shot = waterShot;
+					elemFrame = 1;
+					break;
+				case element::Grass:
+					shot = grassShot;
+					elemFrame = 0;
+					break;
+				default:
+					shot = fireShot;
+					elemFrame = 2;
+					break;
+				}
 
-                            }
-
-                        }
-                        shotProgress += 1;
-
-                    }
-
-                }
+				std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
+				ostackNodes[i]->addChild(projec);
+				projec->setFrame(elemFrame);
+				projec->setScale(0.6);
 
 
+				//a shot has begun
+				int shotX = -BULLET_SPEED * eShotProgress;
+				projec->setPosition(shotX, ostackNodes[i]->getHeight());
+				projec->flipHorizontal(true);
 
-                std::shared_ptr<Texture> deathText;
-                switch (eType) {
-                case element::Fire:
-                    deathText = fireTrans;
-                    break;
-                case element::Water:
-                    deathText = waterTrans;
-                    break;
-                case element::Grass:
-                    deathText = grassTrans;
-                    break;
-                default:
-                    deathText = fireTrans;
-                    break;
-                }
+				//keep drawing past middle of the screen 
+				/*if (projec->getWorldPosition().x > middleScreen || ((playerChickenWins < 1) && projec->getWorldPosition().x > pstackNodes[i]->getWorldPosition().x)) {
+					
 
-                if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1) {
-                    dyingFrame[1] += 1;
-                    std::string str = std::to_string(dyingFrame[1]);
-                    const char * c = str.c_str();
-    //				CULog(c);
-                    if (dyingFrame[1] >= DEATH_ANIM_COLS) {
-                        dyingFrame[1] = -1;
-                        shotProgress = -1;
-                    }
-                }
+				}
+				else {
+					if (playerChickenWins < 1)
+						dyingFrame[0] = 0;
+					eShotProgress = -1;
+				}*/
 
-                if (dyingFrame[1] > -1 && playerChickenWins > -1)
-                {
-                    std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-                    ostackNodes[i]->addChild(poof);
-                    poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
-                    //poof->flipHorizontal(false);
+				if (isNextFrame  && eShotProgress != -1) {
 
-                    if (dyingFrame[1] > 4) {
-                        poof->setScale(STACK_SCALE); // Magic number to rescale asset
-                        poof->setAnchor(Vec2::ANCHOR_CENTER);
-                        poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-                        poof->flipHorizontal(true);
-                        layer->swapChild(ostackNodes[i], poof, false);
-                    }
-                }
-            }
-        }
 
+					eShotProgress += 1;
+				}
+
+			}
+
+			
+
+			std::shared_ptr<Texture> deathText;
+			switch (eType) {
+			case element::Fire:
+				deathText = fireTrans;
+				break;
+			case element::Water:
+				deathText = waterTrans;
+				break;
+			case element::Grass:
+				deathText = grassTrans;
+				break;
+			default:
+				deathText = fireTrans;
+				break;
+			}
+
+			if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins < 1) {
+				dyingFrame[1] += 1;
+				/*std::string str = std::to_string(dyingFrame[0]);
+				const char * c = str.c_str();
+				CULog(c);*/
+				if (dyingFrame[1] >= DEATH_ANIM_COLS) {
+					dyingFrame[1] = -1;
+
+				}
+			}
+
+			if (dyingFrame[1] > -1 && playerChickenWins < 1) {
+				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+				ostackNodes[i]->addChild(poof);
+				poof->setFrame(dyingFrame[1]);
+				poof->flipHorizontal(true);
+				//poof->flipHorizontal(false);
+				if (dyingFrame[1] > 4) {
+					poof->setScale(STACK_SCALE); // Magic number to rescale asset
+					poof->setAnchor(Vec2::ANCHOR_CENTER);
+					poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
+					//poof->flipHorizontal(true);
+					layer->swapChild(ostackNodes[i], poof, false);
+				}
+			}
+
+		}
 	}
 
 	//Update the info card
@@ -1810,16 +1890,28 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
             signDone = true;
             clashSignCanvas->setVisible(false);
         }
-        signCount--;
-        if (signCount % 5 == 0){ signframe++; }
+        signCount-= timestep;
+        //if (STILL_SIGN_TIME - signCount < (signframe*2.0/(SIGN_FILMSTRIP_LENGTH)) ){ signframe++; }
+		if (isNextFrame) {
+			signframe++;
+		}
         sign->setFrame(signframe);
         return;
     }
     if (!isClashing && signDone){
         signDone = false;
-        signCount = 500;
+        signCount = STILL_SIGN_TIME;
         signframe = 1;
     }
+
+	if (signCount <= 0 ) {
+		signDone = true;
+	}
+
+	if (signDone) {
+		signCount = STILL_SIGN_TIME;
+		clashSignCanvas->setVisible(false);
+	}
 
 	//Update win and loss screens
 	if (playerGlobe->getHealth() < 1) {
