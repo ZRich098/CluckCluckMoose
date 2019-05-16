@@ -281,7 +281,8 @@ protected:
 	int step;
 	//check to see if buttons in tutorial are pressed
 	bool tutbuttonpressed = false;
-	int tutorialstoredplay;
+	int tutorialcountingvariable = 0;
+	int tutorialstoredclashcard;
 
 	//Preview tracking
 	bool previewSet;

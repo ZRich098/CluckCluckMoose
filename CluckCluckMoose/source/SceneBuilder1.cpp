@@ -535,7 +535,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 							}
 
 							if (playerGlobe->getStack().getSize() == 4 && step == 7) {
-								tutorialstoredplay = i;
+								tutorialstoredclashcard = i;
 								advanceTutorial();
 								return;
 							}
@@ -569,7 +569,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 					if (!down) {
 						if (timers[i] < 15 && timers[i] > 1) {
 							if (playerGlobe->getStack().getSize() == 4 && step == 7) {
-								tutorialstoredplay = i;
+								tutorialstoredclashcard = i;
 								advanceTutorial();
 								return;
 							}
@@ -1117,7 +1117,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				}
 			}
 		}
-		else if (step < 7) {
+		else if (step != 7) {
 			for (int i = 0; i < 6; i++) {
 				if (handMap[i] >= 0) {
 					buttons[i]->setVisible(true);
@@ -1132,8 +1132,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				else {
 					buttons[i]->setVisible(false);
 					buttonCanvas->getChild(i)->setVisible(false);
-					buttons[i]->deactivate();
 				}
+				buttons[i]->deactivate();
 			}
 		}
 		else {
@@ -1826,9 +1826,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			tutcanvas1->setFrame(next);
 		}
 		if (tutcanvas6->isVisible() && isNextFrame) {
-			int next = tutcanvas6->getFrame() + 1;
-			if (next == TUTOR6_LENGTH) next = 0;
-			tutcanvas6->setFrame(next);
+			tutorialcountingvariable++;
+			if (tutorialcountingvariable > 8) {
+				tutorialcountingvariable = 0;
+				int next = tutcanvas6->getFrame() + 1;
+				if (next == TUTOR6_LENGTH) next = 0;
+				tutcanvas6->setFrame(next);
+			}
 		}
 	}
 
@@ -2125,7 +2129,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	isTutor = false;
 	step = -1;
 	tutbuttonpressed = false;
-	tutorialstoredplay = -1;
+	tutorialstoredclashcard = -1;
 
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
@@ -2186,7 +2190,7 @@ void SceneBuilder1::setTutorial() {
 	isTutor = true;
 	step = 0;
 	tutbuttonpressed = false;
-	tutorialstoredplay = -1;
+	tutorialstoredclashcard = -1;
 
 	backCanvas->removeAllChildren();
 	frontCanvas->removeAllChildren();
@@ -2407,15 +2411,15 @@ void SceneBuilder1::advanceTutorial() {
 		//8. Tutorial 6 tapped. stop showing tutorial 6. start clash. Wait for clash animation to end.
 		tutbutton6->setVisible(false);
 
-		special chickType = playerGlobe->getHandAt(handMap[tutorialstoredplay]).getSpecial();
-		playerGlobe->addToStackFromHand(handMap[tutorialstoredplay]);
+		special chickType = playerGlobe->getHandAt(handMap[tutorialstoredclashcard]).getSpecial();
+		playerGlobe->addToStackFromHand(handMap[tutorialstoredclashcard]);
 		if (chickType != special::Spy) {
-			handMap[tutorialstoredplay] = -1;
-			for (int j = tutorialstoredplay + 1; j < 6; j++) {
+			handMap[tutorialstoredclashcard] = -1;
+			for (int j = tutorialstoredclashcard + 1; j < 6; j++) {
 				handMap[j]--;
 			}
 		}
-		tutorialstoredplay = -1;
+		tutorialstoredclashcard = -1;
 
 		//Play chicken cluck sfx
 		auto source = _assets->get<Sound>(CHICKEN_SCREECH);
@@ -2455,5 +2459,4 @@ void SceneBuilder1::exitTutorial() {
 	tutbutton5->deactivate();
 	tutbutton6->deactivate();
 	tutbutton7->deactivate();
-
 }
