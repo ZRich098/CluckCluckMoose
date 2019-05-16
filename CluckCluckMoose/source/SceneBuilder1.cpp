@@ -2402,6 +2402,7 @@ void SceneBuilder1::advanceTutorial() {
 		heldButton = nullptr;
 		heldButtInd = -1;
 
+		tutcanvas6->setFrame(0);
 		tutbutton6->setVisible(true);
 		tutbutton6->activate(406);
 	}
