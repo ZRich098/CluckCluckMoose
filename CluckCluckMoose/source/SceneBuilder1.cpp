@@ -1019,7 +1019,6 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 
 
 void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
-	CULog("tut step %i", step);
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
     
@@ -2356,7 +2355,7 @@ void SceneBuilder1::advanceTutorial() {
 		CULogError("advanceTutorial called outside Tutorial");
 	}
 
-	CULog("advanceTutorial called at step %i, is now step %i", step, step + 1);
+	//CULog("advanceTutorial called at step %i, is now step %i", step, step + 1);
 	// 0. Begin Tutorial : show tutor 1 and highlight grass chicken.Disable all chicken buttons but grass.
 	if (step == 0) {
 		//1. Grass chicken dragged to stack, stop highlighting it.  Stop showing tutorial 1. Show tutorial 2.
