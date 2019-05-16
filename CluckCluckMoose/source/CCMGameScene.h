@@ -163,6 +163,8 @@ public:
 
 	void setLevel(int levelNum) { sb->setLevelNum(levelNum); };
 
+	void setTutorial() { sb->setTutorial(); };
+
     void deactivatePause() {sb->deactivatePause(); };
 
     void activatePause() {sb->activatePause(); };

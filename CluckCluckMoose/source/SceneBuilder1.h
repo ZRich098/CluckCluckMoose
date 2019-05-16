@@ -239,6 +239,10 @@ protected:
 
 	std::shared_ptr<Node> clashSignCanvas;
 
+
+	//Canvas for Tutorial
+	std::shared_ptr<Node> tutorialCanvas;
+
 	//Tutorial Chicken Highlights
 	std::shared_ptr<Texture> spylight;
 	std::shared_ptr<Texture> grasslight;
@@ -371,7 +375,7 @@ public:
 	 *
 	 * @return true if the controller is initialized properly, false otherwise.
 	 */
-	virtual bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool isTutor = false);
+	bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool isTutor = false);
 
 	//Allocate a scene builder
 	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool isTutorial = false) {
@@ -379,10 +383,13 @@ public:
 		return (result->init(assets, size, root, player, opp, costume, levelNum, isTutorial) ? result : nullptr);
 	}
 
+	/** resets the tutorial*/
+	void exitTutorial();
+
 #pragma mark -
 #pragma mark Scene Building Methods
 	//Build the game scene
-	virtual void updateGameScene(float timestep, bool isClashing);
+	void updateGameScene(float timestep, bool isClashing);
 
 	//Build an individual chicken using a texture and attach to a node.  Clear everything from the node beforehand.
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
@@ -432,6 +439,7 @@ public:
 //	void setRestart(bool val);
 
 	void setLevelNum(int level);
+	void setTutorial();
 	void setOppCost(string costume);
 
 	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
