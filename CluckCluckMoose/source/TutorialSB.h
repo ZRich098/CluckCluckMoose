@@ -6,27 +6,8 @@
 using namespace cugl;
 
 //Drawing constants
-#define GRASS_FILMSTRIP_LENGTH 13
-#define SPY_FILMSTRIP_LENGTH 16
-#define TUTOR1_LENGTH 17
-#define TUTOR6_LENGTH 10
 
-/* 
-	Tutorial Steps
 
-	0. Begin Tutorial: show tutor 1 and highlight grass chicken.  Disable all chicken buttons but grass.
-	1. Grass chicken dragged to stack, stop highlighting it.  Stop showing tutorial 1. Show tutorial 2.
-	2. Preview pressed.  Stop showing tutorial 2.
-	3. Preview let go.  Show tutorial 3.  
-	4. Tutorial 3 pressed.  Stop showing tutorial 3.  Show tutorial 4.  Highlight spy Chicken.  
-	5. Spy card seen. Stop showing Tutorial 4.  stop highlighting spy. 
-	6. Spy card let go. Show tutorial 5.  
-	7. Tutorial 5 tapped.  Stop showing tutorial 5. Wait till stack size reaches 5
-	8. Stack size reached 5.  Show tutorial 6.  
-	9. Tutorial 6 tapped.  stop showing tutorial 6.  Wait for clash animation to end.
-	10. Showing Tutorial 7. 
-	11. Tutorial 7 tapped.  ending tutorial.  
-*/
 class TutorialSB : public SceneBuilder1 {
 protected:
 	//What step the tutorial is currently on
@@ -91,7 +72,6 @@ public:
 	void updateGameScene(float timestep, bool isClashing);
 
 	//Advance the tutorial 
-	void advanceTutorial();
 };
 
 

@@ -430,11 +430,11 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 				if (down) {
 					heldButton = butt;
 					if (timers[i] > 15) {
-						infoCanvas->setVisible(true);
 						if (step == 4) {
 							tutbuttonpressed = true;
 							advanceTutorial();
 						}
+						infoCanvas->setVisible(true);
 					}
 				}
 				if (!down) {
@@ -449,10 +449,13 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 					}
 					if (timers[i] < 15 && timers[i] > 1) {
 						if (step == 0) advanceTutorial();
+						special chickType = playerGlobe->getHandAt(handMap[i]).getSpecial();
 						playerGlobe->addToStackFromHand(handMap[i]);
-						handMap[i] = -1;
-						for (int j = i + 1; j < 6; j++) {
-							handMap[j]--;
+						if (chickType != special::Spy) {
+							handMap[i] = -1;
+							for (int j = i + 1; j < 6; j++) {
+								handMap[j]--;
+							}
 						}
 
 						if ((playerGlobe->getStack().getSize() == 5 && step == 6)
@@ -484,11 +487,13 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 				if (!down) {
 					if (timers[i] < 15 && timers[i] > 1) {
 
-
+						special chickType = playerGlobe->getHandAt(handMap[i]).getSpecial();
 						playerGlobe->addToStackFromHand(handMap[i]);
-						handMap[i] = -1;
-						for (int j = i + 1; j < 6; j++) {
-							handMap[j]--;
+						if (chickType != special::Spy) {
+							handMap[i] = -1;
+							for (int j = i + 1; j < 6; j++) {
+								handMap[j]--;
+							}
 						}
 
 						if ((playerGlobe->getStack().getSize() == 5 && step == 6)
@@ -631,7 +636,7 @@ bool TutorialSB::init(const std::shared_ptr<cugl::AssetManager>& assets, const S
 	//Init the tutorial buttons
 	tutcanvas1 = AnimationNode::alloc(tutor1, 1, TUTOR1_LENGTH, TUTOR1_LENGTH);
 	tutcanvas1->setAnchor(Vec2::ANCHOR_TOP_RIGHT);
-	tutcanvas1->setScale(0.65f,0.65f);
+	tutcanvas1->setScale(screenWidth / tutcanvas1->getWidth() / 1.5f, screenWidth / tutcanvas1->getWidth() / 1.5f);
 	layer->addChild(tutcanvas1);
 
 
@@ -892,22 +897,26 @@ void TutorialSB::updateGameScene(float timestep, bool isClashing) {
 			if (handMap[i] >= 0) {
 				buttons[i]->setVisible(true);
 				buttonCanvas->getChild(2 * i + 2)->setVisible(true);
-				if (i == 4) buttons[i]->activate(i + 2);
-				if (buttons[i] == heldButton) {
-					heldButtInd = i;
-					if (i == 4) {
+				if (i == 4) {
+					buttons[i]->activate(i + 2);
+					if (buttons[i] == heldButton) {
+						heldButtInd = i;
 						std::shared_ptr<PolygonNode> newPoly = PolygonNode::allocWithTexture(infoSpy);
 						newPoly->setScale(INFO_SCALE);
 						newPoly->setAnchor(Vec2::ANCHOR_CENTER);
 						newPoly->setPosition(screenWidth / 2 + INFO_X_OFFSET, screenHeight / 2 + INFO_Y_OFFSET);
 						infoCanvas->swapChild(infoCanvas->getChild(0), newPoly, false);
 					}
-					else {
+				}
+				else {
+					if (buttons[i] == heldButton) {
+						heldButtInd = i;
 						std::shared_ptr<PolygonNode> newPoly = PolygonNode::allocWithTexture(infoG);
 						newPoly->setVisible(false);
 						infoCanvas->swapChild(infoCanvas->getChild(0), newPoly, false);
 					}
 				}
+				
 			}
 			else {
 				buttons[i]->setVisible(false);

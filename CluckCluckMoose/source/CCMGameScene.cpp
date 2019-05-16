@@ -10,9 +10,7 @@
 //
 #include "CCMGameScene.h"
 #include "SceneBuilder1.h"
-#include "TutorialSB.h"
 #include "Moose.h"
-#include "TutorialMoose.h"
 #include "AI.h"
 
 using namespace cugl;
@@ -247,7 +245,7 @@ bool GameScene::tutorinit(const std::shared_ptr<AssetManager>& assets, const std
 	prevHand = player->getHand().size();
 
 	oppAI = AI::alloc(opp, player, ai);
-	sb = TutorialSB::alloc(assets, dimen, root, player, opp, "christmoose", 3);
+	sb = SceneBuilder1::alloc(assets, dimen, root, player, opp, "basic_moose", 3, true);
 	sb->setPreview(false);
 	sb->deactivateHand();
 

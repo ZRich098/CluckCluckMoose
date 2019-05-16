@@ -9,7 +9,6 @@
 
 #include "CCMInput.h"
 #include "Moose.h"
-#include "TutorialMoose.h"
 
 using namespace cugl;
 
@@ -71,6 +70,12 @@ using namespace cugl;
 #define DEATH_ANIM_COLS 8
 #define INFO_DELAY 15
 #define MOOSE_SCALE 0.5f
+#define GRASS_FILMSTRIP_LENGTH 13
+#define SPY_FILMSTRIP_LENGTH 16
+#define GRASSLIGHT_OFFSET 12
+#define SPYLIGHT_OFFSET 6
+#define TUTOR1_LENGTH 13
+#define TUTOR6_LENGTH 10
 
 class SceneBuilder1 {
 protected:
@@ -234,6 +239,45 @@ protected:
 
 	std::shared_ptr<Node> clashSignCanvas;
 
+	//Tutorial Chicken Highlights
+	std::shared_ptr<Texture> spylight;
+	std::shared_ptr<Texture> grasslight;
+
+	//Tutorials
+	std::shared_ptr<Texture> tutor1;
+	std::shared_ptr<Texture> tutor2;
+	std::shared_ptr<Texture> tutor3;
+	std::shared_ptr<Texture> tutor4;
+	std::shared_ptr<Texture> tutor5;
+	std::shared_ptr<Texture> tutor6;
+	std::shared_ptr<Texture> tutor7;
+
+	//Tutorial Hightlight Canvases
+	std::shared_ptr<AnimationNode> grasslightcanvas;
+	std::shared_ptr<AnimationNode> spylightcanvas;
+
+	//Tutorial Canvases
+	std::shared_ptr<AnimationNode> tutcanvas1;
+	std::shared_ptr<Node> tutcanvas2;
+	std::shared_ptr<Node> tutcanvas3;
+	std::shared_ptr<Node> tutcanvas4;
+	std::shared_ptr<Node> tutcanvas5;
+	std::shared_ptr<AnimationNode> tutcanvas6;
+	std::shared_ptr<Node> tutcanvas7;
+
+	//Tutorial Buttons
+	std::shared_ptr<Button> tutbutton3;
+	std::shared_ptr<Button> tutbutton5;
+	std::shared_ptr<Button> tutbutton6;
+	std::shared_ptr<Button> tutbutton7;
+
+	//Whether the level is the tutorial
+	bool isTutor;
+	//What step the tutorial is currently on
+	int step;
+	//check to see if buttons in tutorial are pressed
+	bool tutbuttonpressed = false;
+	int tutorialstoredplay;
 
 	//Preview tracking
 	bool previewSet;
@@ -327,12 +371,12 @@ public:
 	 *
 	 * @return true if the controller is initialized properly, false otherwise.
 	 */
-	virtual bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum);
+	virtual bool init(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, const std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool isTutor = false);
 
 	//Allocate a scene builder
-	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum) {
+	static std::shared_ptr<SceneBuilder1> alloc(const std::shared_ptr<cugl::AssetManager>& assets, const cugl::Size size, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool isTutorial = false) {
 		std::shared_ptr<SceneBuilder1> result = std::make_shared<SceneBuilder1>();
-		return (result->init(assets, size, root, player, opp, costume, levelNum) ? result : nullptr);
+		return (result->init(assets, size, root, player, opp, costume, levelNum, isTutorial) ? result : nullptr);
 	}
 
 #pragma mark -
@@ -392,6 +436,26 @@ public:
 
 	void setPlayer(std::shared_ptr<Moose> newPlayer) { playerGlobe = newPlayer; };
 	void setOpp(std::shared_ptr<Moose> newOpp) { oppGlobe = newOpp; setOppCost(newOpp->getCostume()); };
+
+
+	//Tutorial SceneBuilding
+	/*
+	Tutorial Steps
+
+	0. Begin Tutorial: show tutor 1 and highlight grass chicken.  Disable all chicken buttons but grass.
+	1. Grass chicken dragged to stack, stop highlighting it.  Stop showing tutorial 1. Show tutorial 2.
+	2. Preview pressed.  Stop showing tutorial 2.
+	3. Preview let go.  Show tutorial 3.
+	4. Tutorial 3 pressed.  Stop showing tutorial 3.  Show tutorial 4.  Highlight spy Chicken.
+	5. Spy card seen. Stop showing Tutorial 4.  stop highlighting spy. Show tutorial 5.
+	6. Tutorial 5 tapped.  Stop showing tutorial 5. Wait till stack size reaches 5
+	7. Stack size reached 5.  Show tutorial 6.
+	8. Tutorial 6 tapped.  stop showing tutorial 6.  Wait for clash animation to end.
+	9. Showing Tutorial 7.
+	10. Tutorial 7 tapped.  ending tutorial.
+	*/
+	//Advance a step in the tutorial, see above
+	void advanceTutorial();
 };
 
 

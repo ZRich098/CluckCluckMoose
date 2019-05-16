@@ -40,11 +40,16 @@ void Moose::refillHandPool() {
  *
  * @return  true if the Moose is initialized properly, false otherwise.
  */
-bool Moose::init(int h, int hSize) {
-    health = h;
-    handSize = hSize;
+bool Moose::init(int h, int hSize, bool tutor, bool player) {
+	health = h;
+	handSize = hSize;
 	numChickensWillDiePreview = 0;
-	for(int i = 0; i < 5; i++) vecChickensClashPreview.push_back(-1);
+	isTutor = tutor;
+	for (int i = 0; i < 5; i++) vecChickensClashPreview.push_back(-1);
+	if (tutor) {
+		isPlayer = player;
+		costume = "basic_moose";
+	}
     return true;
 }
 
@@ -278,6 +283,26 @@ void Moose::clearHandToDiscard() {
 }
 
 void Moose::refillHand() {
+	if (isTutor) {
+		if (isPlayer) {
+			hand.push_back(Chicken(element::Fire, special::BasicFire));
+			hand.push_back(Chicken(element::Grass, special::BasicGrass));
+			hand.push_back(Chicken(element::Water, special::BasicWater));
+			hand.push_back(Chicken(element::Grass, special::BasicGrass));
+			hand.push_back(Chicken(special::Spy));
+			hand.push_back(Chicken(special::Spy));
+			return;
+		}
+		else {
+			hand.push_back(Chicken(element::Fire, special::BasicFire));
+			hand.push_back(Chicken(element::Grass, special::BasicGrass));
+			hand.push_back(Chicken(element::Water, special::BasicWater));
+			hand.push_back(Chicken(element::Fire, special::BasicFire));
+			hand.push_back(Chicken(special::Spy));
+			hand.push_back(Chicken(special::Spy));
+			return;
+		}
+	}
 	//Draw from deck while there are still chickens in the deck and hand is not full
 	if (hand.size() == 0) {
 		//CULog("refilling basics");
@@ -324,6 +349,20 @@ void Moose::refillHand() {
 }
 
 void Moose::draw(int num) {
+	if (isTutor) {
+		//CULog("tutorial drawing %i", num);
+		for (int i = 0; i < num; i++) {
+			switch (rand() % 3) {
+			case 0:
+				hand.push_back(Chicken(element::Fire, special::BasicFire));
+			case 1:
+				hand.push_back(Chicken(element::Grass, special::BasicGrass));
+			default:
+				hand.push_back(Chicken(element::Water, special::BasicWater));
+			}
+		}
+		return;
+	}
 	for (int i = 0; i < num; i++) {
 		if (hand.size() < handSize) {
 			int random = rand() % 3;

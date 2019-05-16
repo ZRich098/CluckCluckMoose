@@ -37,6 +37,10 @@ protected:
 	vector <int> vecChickensClashPreview;
 	string costume;
 
+
+	//for tutorial
+	bool isTutor;
+	bool isPlayer;
 public:
    
     
@@ -64,7 +68,7 @@ public:
      *
      * @return  true if the obstacle is initialized properly, false otherwise.
      */
-    virtual bool init(int h, int hSize);
+    bool init(int h, int hSize, bool isTutor = false, bool isPlayer = false);
 
 	/**
 	 * Initializes the moose with json style arguments
@@ -79,9 +83,9 @@ public:
      *
      * @return a newly allocated moose
      */
-    static std::shared_ptr<Moose> alloc(int h, int hSize) {
+    static std::shared_ptr<Moose> alloc(int h, int hSize, bool isTutor = false, bool p = false) {
         std::shared_ptr<Moose> result = std::make_shared<Moose>();
-        return (result->init(h,hSize) ? result : nullptr);
+		return (result->init(h, hSize, isTutor, p) ? result : nullptr);
     }
     
 #pragma mark -
@@ -167,12 +171,12 @@ public:
 	/** Clears the hand of all Chickens */
 	void clearHandToDiscard();
 	/** Refills the hand with Chickens from the Coop */
-	virtual void refillHand();
+	void refillHand();
 	/** Shuffles the hand into a random order*/
 	void shuffleHand() { random_shuffle(hand.begin(), hand.end()); };
 	/** Draws num card from the Coop and adds it to the hand 
 		Discards any cards drawn over the hand size (straight to discard pile)*/
-	virtual void draw(int num = 1);
+	void draw(int num = 1);
 
 	//Health
 	/** Set the current health of the Moose*/

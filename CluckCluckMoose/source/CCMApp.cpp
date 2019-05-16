@@ -234,8 +234,8 @@ void CCMApp::update(float timestep) {
 				_current = 2;
 
 				if (_levelscene.getLevel() == 1) { //if tutorial
-					std::shared_ptr<TutorialMoose> pl = TutorialMoose::alloc(2, 6, true);
-					std::shared_ptr<TutorialMoose> op = TutorialMoose::alloc(2, 6, false);
+					std::shared_ptr<Moose> pl = Moose::alloc(5, 6, true, true);
+					std::shared_ptr<Moose> op = Moose::alloc(5, 6, true, false);
 					_gamescene = GameScene::tutorialAlloc(_assets, pl, op);
 					_gameplay.push_back(_gamescene);
 					_gameplay.back()->setActive(false);

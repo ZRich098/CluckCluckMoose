@@ -37,12 +37,6 @@
     <ClCompile Include="..\..\source\CCMLevelScene.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\TutorialMoose.cpp">
-      <Filter>Tutorial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\TutorialSB.cpp">
-      <Filter>Tutorial</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\AITest.cpp">
       <Filter>AI</Filter>
     </ClCompile>
@@ -91,12 +85,6 @@
     <ClInclude Include="..\..\source\CCMLevelScene.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\TutorialMoose.h">
-      <Filter>Tutorial</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\TutorialSB.h">
-      <Filter>Tutorial</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\AITest.h">
       <Filter>AI</Filter>
     </ClInclude>
@@ -116,9 +104,6 @@
     </Filter>
     <Filter Include="AI">
       <UniqueIdentifier>{3d1645aa-5c5d-4cca-ab4c-bdded998f97f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tutorial">
-      <UniqueIdentifier>{a26a512a-568e-4dd5-816e-93df71033f7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

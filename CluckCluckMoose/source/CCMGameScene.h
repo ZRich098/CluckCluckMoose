@@ -17,7 +17,6 @@
 
 #include "CCMInput.h"
 #include "Moose.h"
-#include "TutorialMoose.h"
 #include "AI.h"
 #include "SceneBuilder1.h"
 //#include "unistd.h"
@@ -97,7 +96,7 @@ public:
 		return (result->init(assets, playerMoose, oppMoose, ai, levelNum) ? result : nullptr);
 	}
 
-	static std::shared_ptr<GameScene> tutorialAlloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<TutorialMoose> playerMoose, std::shared_ptr<TutorialMoose> oppMoose) {
+	static std::shared_ptr<GameScene> tutorialAlloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose) {
 		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
 		return (result->tutorinit(assets, playerMoose, oppMoose, AIType::Tutorial) ? result : nullptr);
 	}

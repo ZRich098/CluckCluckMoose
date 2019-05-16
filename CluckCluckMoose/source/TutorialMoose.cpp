@@ -18,12 +18,7 @@ using namespace std;
  * @return  true if the Moose is initialized properly, false otherwise.
  */
 bool TutorialMoose::init(int h, int hSize, bool player) {
-	isPlayer = player;
-	health = h;
-	handSize = hSize;
-	numChickensWillDiePreview = 0;
-	for (int i = 0; i < 5; i++) vecChickensClashPreview.push_back(-1);
-	return true;
+	
 }
 
 

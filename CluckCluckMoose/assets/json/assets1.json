@@ -778,7 +778,7 @@
             "wrapT": "clamp"
         },
         "tutor_1": {
-            "file": "textures/tutorial/tutorial_1_animation_drag.png",
+            "file": "textures/tutorial/tutorial_1_animation_tap.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
