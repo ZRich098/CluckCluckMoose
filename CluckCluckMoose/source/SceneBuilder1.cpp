@@ -2128,6 +2128,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	goHome = false;
 	nextLevel = false;
 	isTutor = false;
+	sInfoInd = -1;
 	step = -1;
 	tutbuttonpressed = false;
 	tutorialstoredclashcard = -1;
@@ -2189,6 +2190,7 @@ void SceneBuilder1::setTutorial() {
 	goHome = false;
 	nextLevel = false;
 	isTutor = true;
+	sInfoInd = -1;
 	step = 0;
 	tutbuttonpressed = false;
 	tutorialstoredclashcard = -1;
