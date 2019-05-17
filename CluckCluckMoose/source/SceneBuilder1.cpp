@@ -110,11 +110,11 @@ bool newAwk;
 #define BLOCK_X_SCALE 0.3
 #define BLOCK_Y_SCALE 0.3
 #define HBAR_SCALE 0.25
-#define ELT_Y_OFFSET 75
+#define ELT_Y_OFFSET 55
 #define ELT_INFO_SCALE 0.7
-#define ELT_INFO_X_OFFSET 30
+#define ELT_INFO_X_OFFSET -3
 #define ELT_NUM_X_OFFSET 40
-#define ELT_NUM_Y_OFFSET 5
+#define ELT_NUM_Y_OFFSET 40
 #define ELT_NUM_SCALE 0.7
 #define ELT_NUM_SPACING 50
 #define SHADOW_SCALE 0.6
