@@ -42,9 +42,9 @@ protected:
 
 	//SceneBuilder
 	std::shared_ptr<SceneBuilder1> sb;
-    
+
     //std::unordered_map<std::string,std::shared_ptr<cugl::Button>> _buttons;
-    
+
 public:
 #pragma mark -
 #pragma mark Constructors
@@ -55,7 +55,7 @@ public:
      * This allows us to use a controller without a heap pointer.
      */
     GameScene() {}
-    
+
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      *
@@ -63,14 +63,14 @@ public:
      * static resources, like the input controller.
      */
     ~GameScene() { dispose(); }
-    
+
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      */
     virtual void dispose() override;
 
 
-    
+
     /**
      * Initializes the controller contents, and starts the game
      *
@@ -84,7 +84,8 @@ public:
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
 	bool init(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai, int levelNum);
-    
+	bool tutorinit(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose, AIType ai);
+
     static std::shared_ptr<GameScene> alloc(const std::shared_ptr<cugl::AssetManager>& assets) {
         std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
         return (result->init(assets) ? result : nullptr);
@@ -95,6 +96,11 @@ public:
 		return (result->init(assets, playerMoose, oppMoose, ai, levelNum) ? result : nullptr);
 	}
 
+	static std::shared_ptr<GameScene> tutorialAlloc(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<Moose> playerMoose, std::shared_ptr<Moose> oppMoose) {
+		std::shared_ptr<GameScene> result = std::make_shared<GameScene>();
+		return (result->tutorinit(assets, playerMoose, oppMoose, AIType::Tutorial) ? result : nullptr);
+	}
+
 	/**
 	 * Returns the active screen size of this scene.
 	 *
@@ -102,7 +108,7 @@ public:
 	 * ratios
 	 */
 	cugl::Size computeActiveSize() const;
-    
+
     /**
      * Sets whether the scene is currently active
      *
@@ -135,13 +141,13 @@ public:
 
 #pragma mark -
 #pragma mark Mutators
-	/** 
+	/**
 	 * Set the player Moose to be the given Moose
-	 *  
-	 * @param newPlayer the Moose to set player as 
+	 *
+	 * @param newPlayer the Moose to set player as
 	 */
 	void setPlayer(std::shared_ptr<Moose> newPlayer) { player = newPlayer; sb->setPlayer(newPlayer); prevHand = player->getHand().size(); stackSize = player->getStack().getSize(); };
-	/** 
+	/**
 	 * Set the opponent Moose to be the given Moose
 	 *
 	 * @param newOpp the Moose to set opp as
@@ -157,9 +163,11 @@ public:
     void setHome(bool val) { sb->setHome(val); };
 
 	void setLevel(int levelNum) { sb->setLevelNum(levelNum); };
-    
+
+	void setTutorial() { sb->setTutorial(); prevHand = player->getHand().size(); };
+
     void deactivatePause() {sb->deactivatePause(); };
-    
+
     void activatePause() {sb->activatePause(); };
 
 #pragma mark -

@@ -34,6 +34,7 @@ void AI::setup() {
 	player->shuffleHand();
 	hand = player->getHand();
 	switch (type) {
+		case AIType::Tutorial:
 		case AIType::Loser:
 			stack = Stack(player->getStack());
 			oppStack = Stack(enemy->getStack());
@@ -380,6 +381,22 @@ int AI::expertPlay() {
 	return 0;
 }
 
+int AI::tutorialPlay() {
+	int turn = stack.getSize();
+
+	if (turn == 0) { //Play water chicken on first turn
+		for (int i = 0; i < hand.size(); i++)
+			if (hand.at(i).getSpecial() == special::BasicWater) return i;
+		return 0;
+	} else if (turn == 1) { //Play grass chicken on second turn
+		for (int i = 0; i < hand.size(); i++)
+			if (hand.at(i).getSpecial() == special::BasicGrass) return i;
+		return 0;
+	} else {
+		return loserPlay();
+	}
+}
+
 int AI::getPlay() {
 	setup();
 
@@ -398,6 +415,9 @@ int AI::getPlay() {
 			return smartPlay();
 		case AIType::Expert:
 			return expertPlay();
+
+		case AIType::Tutorial:
+			return tutorialPlay();
 
 		default:
 			CULogError("Unknown AI Type");

@@ -21,6 +21,8 @@ enum class AIType {
 	Basic,			//Plays optimal cycle, does not care about specials
     Smart,			//Plays optimal cycle, cares about specials
 	Expert,			//Hits up that minimax tree
+
+	Tutorial,		//For the Tutorial Only
 };
 
 
@@ -60,6 +62,8 @@ private:
 	int basicPlay();
 	int smartPlay();
 	int expertPlay();
+
+	int tutorialPlay();
 
 protected:
 	std::shared_ptr<Moose> player; //renamed bc 'self' was registering as keyword
