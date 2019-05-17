@@ -54,7 +54,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	for (int i = 0; i < 6; i++) {
 		handMap.push_back(i);
 	}
-
+	for (int i = 0; i < 6; i++) {
+		revHandMap.push_back(i);
+	}
 	retry = false;
 	goHome = false;
 	soundToggle = false;
@@ -1379,8 +1381,10 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	for (int i = 0; i < playerGlobe->getHand().size(); i++) {
 		//Find which button is mapped to this hand chicken
-		int mappedButton = playerGlobe->getHand().size() - 1;
+		int mappedButton;
+		CULog("Finding %d th card", i);
 		for (int j = 0; j < 6; j++) {
+			CULog("%d", handMap[j]);
 			if (handMap[j] == i) {
 				mappedButton = j;
 			}
@@ -2414,12 +2418,12 @@ void SceneBuilder1::advanceTutorial() {
 
 		special chickType = playerGlobe->getHandAt(handMap[tutorialstoredclashcard]).getSpecial();
 		playerGlobe->addToStackFromHand(handMap[tutorialstoredclashcard]);
-		if (chickType != special::Spy) {
+		/*if (chickType != special::Spy) {
 			handMap[tutorialstoredclashcard] = -1;
 			for (int j = tutorialstoredclashcard + 1; j < 6; j++) {
 				handMap[j]--;
 			}
-		}
+		} */
 		tutorialstoredclashcard = -1;
 
 		//Play chicken cluck sfx

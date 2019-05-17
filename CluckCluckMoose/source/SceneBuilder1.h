@@ -106,6 +106,8 @@ protected:
 
 	//Track which buttons map to which cards in player hand. card x at index i is the xth card in the opponent's hand, shown by button i 
 	std::vector<int> handMap;
+	//Reverse index array of hand map.  Button x is showing card i at index i
+	std::vector<int> revHandMap;
 
 	//Track previous chicken distribution
 	std::vector<int> prevDist;

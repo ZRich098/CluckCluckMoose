@@ -69,6 +69,7 @@ bool didLose;
 bool isSound;
 
 
+
 ////SceneBuilder
 //std::shared_ptr<SceneBuilder1> sb;
 
@@ -104,6 +105,8 @@ Stack oppPreviewStack;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
+	//Player has not drawn
+
 
     // Initialize the scene to a locked width
     Size dimen = computeActiveSize();
@@ -159,6 +162,8 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
 }
 
 bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::shared_ptr<Moose> playerMoose, const std::shared_ptr<Moose> oppMoose, const AIType ai, const int levelNum) {
+	//Player has not drawn
+	
 	// Initialize the scene to a locked width
 	Size dimen = computeActiveSize();
 	dimen *= SCENE_WIDTH / dimen.width; // Lock the game to a reasonable resolution
@@ -326,7 +331,7 @@ void GameScene::update(float timestep) {
 	sb->updateInput(timestep);
 	
 	if (!sb->getPaused()) {
-		if (prevHand > player->getHand().size() && !isClashing) { // Replace with if chicken is dragged to play area
+		if ((prevHand > player->getHand().size()) && !isClashing) { // Replace with if chicken is dragged to play area
 			if (skipState == ENTRY) {
 				//CULog("opp playing");
 				opp->addToStackFromHand(oppAI->getPlay());

@@ -355,13 +355,14 @@ void Moose::draw(int num) {
 	if (isTutor) {
 		//CULog("tutorial drawing %i", num);
 		for (int i = 0; i < num; i++) {
-			switch (rand() % 3) {
-			case 0:
-				hand.push_back(Chicken(element::Fire, special::BasicFire));
-			case 1:
-				hand.push_back(Chicken(element::Grass, special::BasicGrass));
-			default:
-				hand.push_back(Chicken(element::Water, special::BasicWater));
+			if (hand.size() < handSize) {
+				int random = rand() % 3;
+				if (random == 0)
+					hand.push_back(Chicken(element::Fire, special::BasicFire));
+				if (random == 1)
+					hand.push_back(Chicken(element::Grass, special::BasicGrass));
+				if (random == 2)
+					hand.push_back(Chicken(element::Water, special::BasicWater));
 			}
 		}
 		return;
