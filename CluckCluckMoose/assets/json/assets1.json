@@ -855,7 +855,7 @@
             "wrapT": "clamp"
         },
         "help2": {
-            "file": "textures/helpmenu/help_pg2_tap_animation",
+            "file": "textures/helpmenu/help_pg2_tap_animation.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
