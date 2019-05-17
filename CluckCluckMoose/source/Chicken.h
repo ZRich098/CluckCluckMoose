@@ -84,7 +84,7 @@ class Chicken{
 		element e;
 		special s;
 		int damage;
-		bool cycled = false;
+		bool cycled;
 	public:
 		//Constructors
 		/** Creates a standard chicken card of special s */
@@ -94,12 +94,14 @@ class Chicken{
 			e = el;
 			s = sp;
 			damage = d;
+			cycled = false;
 		}
 		/** Copy Constructor */
 		Chicken(const Chicken& c) {
 			e = c.e;
 			s = c.s;
 			damage = c.damage;
+			cycled = c.cycled;
 		}
 		/** Destroys the Chicken */
 		~Chicken();
