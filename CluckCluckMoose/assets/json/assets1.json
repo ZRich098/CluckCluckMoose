@@ -8,7 +8,7 @@
             "wrapT": "clamp"
         },
         "projectiles": {
-            "file": "textures/projectiles.png",
+            "file": "textures/projectiles.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
