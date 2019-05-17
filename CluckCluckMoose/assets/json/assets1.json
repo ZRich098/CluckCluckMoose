@@ -7,6 +7,20 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "projectiles": {
+            "file": "textures/projectiles.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "minus": {
+            "file": "textures/num_-.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "fire": {
             "file": "textures/fire_chick.png",
             "minfilter": "linear",
@@ -911,8 +925,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 1
@@ -928,8 +942,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 1
@@ -945,8 +959,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 2
