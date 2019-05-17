@@ -138,6 +138,9 @@ protected:
 	bool hasWon;
 	bool hasLost;
 
+	//Number level
+	int _levelNum;
+
 	//Chicken Textures
 	std::shared_ptr<Texture> textureF;
 	std::shared_ptr<Texture> textureW;
@@ -436,6 +439,9 @@ public:
 
 	//returns true if the pause menu is turned on
 	bool getPaused();
+
+	//returns the levelNum
+	bool getLevelNum() { return _levelNum; };
 
 #pragma mark -
 #pragma mark Setters

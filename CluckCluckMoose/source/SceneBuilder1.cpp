@@ -2682,6 +2682,24 @@ void SceneBuilder1::setHome(bool val) {
 }
 
 void SceneBuilder1::setLevelNum(int levelNum) {
+	_levelNum = levelNum;
+	AudioChannels::get()->stopMusic();
+	auto game_music = _assets->get<Sound>("farmMusic");
+	if (levelNum < 4) {
+		game_music = _assets->get<Sound>("farmMusic");
+	}
+	else if (levelNum < 7) {
+		game_music = _assets->get<Sound>("forestMusic");
+	}
+	else if (levelNum < 10) {
+		game_music = _assets->get<Sound>("nuclearMusic");
+	}
+	else {
+		game_music = _assets->get<Sound>("throneMusic");
+		//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+		AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+	}
+
 	hasWon = false;
 	hasLost = false;
 	isPaused = false;
