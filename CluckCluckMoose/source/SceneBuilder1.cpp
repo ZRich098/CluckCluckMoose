@@ -440,9 +440,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	backCanvas = Node::alloc();
 	layer->addChild(backCanvas);
     
-    //Add clash sign canvas
-    clashSignCanvas = Node::alloc();
-    layer->addChild(clashSignCanvas);
+    //Add clash button canvas
+    clashButtonCanvas = Node::alloc();
+    layer->addChild(clashButtonCanvas);
+    clashButtonCanvas->setPosition(screenWidth / 2, 150);
 
 	//init flapping ints to 0
 	for(int i =0; i< 6; i++){
@@ -581,12 +582,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Create foreground node
 	frontCanvas = Node::alloc();
 	layer->addChild(frontCanvas);
-
-	//Add clash button canvas
-	clashButtonCanvas = Node::alloc();
-	layer->addChild(clashButtonCanvas);
-	clashButtonCanvas->setPosition(screenWidth / 2, 150);
-
+    
 	//Add elt info canvas
 	eltInfoCanvas = Node::alloc();
 	layer->addChild(eltInfoCanvas);
@@ -604,6 +600,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	buttonCanvas = Node::alloc();
 	layer->addChild(buttonCanvas);
 	buttonCanvas->setPosition(screenWidth / 2, 150);
+    
+    //Add clash sign canvas
+    clashSignCanvas = Node::alloc();
+    layer->addChild(clashSignCanvas);
 
 	//Add health canvas
 	healthCanvas = Node::alloc();
