@@ -102,7 +102,13 @@ public:
 	/** Get the current hand of the Moose*/
 	vector <Chicken> getHand() { return hand; };
 	/** Get the Chicken at position pos in the hand of the Moose*/
-	Chicken getHandAt(int pos) { return hand.at(pos); };
+	Chicken getHandAt(int pos) { 
+			if(pos < hand.size())
+				return hand.at(pos); 
+			else {
+				return Chicken::Chicken(special::Spy);
+			}
+		};
 	/** Get the current play order of the Moose */
 	vector <Chicken> getPlayOrder() { return playOrder; };
 	/** Get the Chicken at position pos in the play order of the Moose */

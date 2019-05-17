@@ -545,9 +545,10 @@ void GameScene::setNumChickensWillDiePreview() {
 }
 
 void GameScene::handEffect() {
+
 	special pLast = player->getOrder().back().getSpecial();
 	special oLast = opp->getOrder().back().getSpecial();
-
+	
 	if (pLast == special::PartyFowl || oLast == special::PartyFowl)
 		return;
 
@@ -556,7 +557,7 @@ void GameScene::handEffect() {
 	if (oLast == special::Mirror)
 		oLast = pLast;
 
-	if (pLast == special::Spy) {
+	if (pLast == special::Spy && oLast != special::PartyFowl) {
 		player->draw();
 		//please for the love of god fix this later
 		prevHand++;

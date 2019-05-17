@@ -507,7 +507,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		stamp->setScale(STAMP_SCALE);
 		stamp->setVisible(false);
 		pStamps.push_back(stamp);
-		layer->addChild(stamp);
+		layer->addChildWithTag(stamp, 3);
 	}
 
 	//Placeholder Text for stack buttons
@@ -563,7 +563,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		stamp->setScale(STAMP_SCALE);
 		stamp->setVisible(false);
 		oStamps.push_back(stamp);
-		layer->addChild(stamp);
+		layer->addChildWithTag(stamp,4);
 	}
 
 	//Init opponent stack info buttons
@@ -2463,7 +2463,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	for (int i = 0; i < playerGlobe->getStack().getSize(); i++) {
 		Chicken chick = playerGlobe->getStackAt(i);
-		if (chick.isCycled()) {
+		if (chick.isCycled() && (i != 0 || (dyingFrame[0] < 4 && dyingFrame[0] > -2))) {
 			if (chick.getElement() == element::Fire) {
 				pStamps[i]->setTexture(fstamp);
 				pStamps[i]->setVisible(true);
@@ -2488,7 +2488,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 	for (int i = 0; i < oppGlobe->getStack().getSize(); i++) {
 
 		Chicken chick = oppGlobe->getStackAt(i);
-		if (chick.isCycled()) {
+		if (chick.isCycled() &&  (i!=0|| (dyingFrame[1] < 4 && dyingFrame[1] > -2))) {
 			if (chick.getElement() == element::Fire) {
 				oStamps[i]->setTexture(fstamp);
 				oStamps[i]->setVisible(true);
