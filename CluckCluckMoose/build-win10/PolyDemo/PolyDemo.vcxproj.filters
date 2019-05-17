@@ -34,11 +34,11 @@
     <ClCompile Include="..\..\source\AI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\AITest.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\CCMLevelScene.cpp">
       <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\AITest.cpp">
+      <Filter>AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,11 +82,11 @@
     <ClInclude Include="..\..\source\AI.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\AITest.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\CCMLevelScene.h">
       <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\AITest.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
