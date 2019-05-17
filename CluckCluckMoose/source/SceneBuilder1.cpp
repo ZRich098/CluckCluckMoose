@@ -87,7 +87,7 @@ bool hasLost;
 #define BUTTON_Y_OFFSET -55
 #define STACK_X_OFFSET 100
 #define STACK_Y_OFFSET 550
-#define STACK_Y_SPACING 75
+#define STACK_Y_SPACING 72
 #define INFO_X_OFFSET 7
 #define INFO_Y_OFFSET 100
 #define INFO_SCALE 0.5
