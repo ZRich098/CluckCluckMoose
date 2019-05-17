@@ -1419,6 +1419,26 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
             soundToggle = soundToggle ? false : true;
             soundChanged = false;
+			
+			if (AudioChannels::get()->currentMusic() != NULL) { AudioChannels::get()->stopMusic(); }
+			auto game_music = _assets->get<Sound>("farmMusic");
+			if (_levelNum < 4) {
+				game_music = _assets->get<Sound>("farmMusic");
+			}
+			else if (_levelNum < 7) {
+				game_music = _assets->get<Sound>("forestMusic");
+			}
+			else if (_levelNum < 10) {
+				game_music = _assets->get<Sound>("nuclearMusic");
+			}
+			else {
+				game_music = _assets->get<Sound>("throneMusic");
+				//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+
+			}
+			if (!soundToggle) {
+				AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+			}
         }});
         pauseMenuCanvas->addChild(pauseSettings);
         pauseSettings->activate(204); //ensure keys are unique
