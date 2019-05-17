@@ -1444,6 +1444,23 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	}
 
+	//check for fake buttons in your coop
+
+	for (int i = 0; i < 6; i++) {
+		if (handMap[i] >= 0) {
+			special cel = playerGlobe->getHandAt(handMap[i]).getSpecial();
+			if(cel == special::PartridgePilferer)
+			{
+				//delete this card!
+				buttons[i]->setVisible(false);
+				buttonCanvas->getChild(i)->setVisible(false);
+				buttons[i]->deactivate();
+				handMap[i] = -1;
+			}
+		}
+	}
+			
+
 
 	//change mooses if taking damage;
 	std::shared_ptr<Node> eMoose = mooseCanvas->getChildByName("opp_moose");
@@ -1727,6 +1744,14 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 					case special::BasicFire:
 						infoText = infoF;
 						break;
+					case special::PartridgePilferer:
+					{
+						//delete this card!
+						buttons[i]->setVisible(false);
+						buttonCanvas->getChild(i)->setVisible(false);
+						buttons[i]->deactivate();
+						handMap[i] = -1;
+					}
 					case special::BasicWater:
 						infoText = infoW;
 						break;
