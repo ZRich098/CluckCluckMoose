@@ -2697,8 +2697,9 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	else {
 		game_music = _assets->get<Sound>("throneMusic");
 		//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
-		AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+		
 	}
+	AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
 
 	hasWon = false;
 	hasLost = false;

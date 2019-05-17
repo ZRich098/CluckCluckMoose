@@ -961,18 +961,6 @@
             "volume": 0.8,
             "stream": false
         },
-        "theme": {
-            "type": "sample",
-            "file": "audio/CCM_Theme.wav",
-            "volume": 0.5,
-            "stream": true
-        },
-        "trailer": {
-            "type": "sample",
-            "file": "audio/CCM_Trailer.wav",
-            "volume": 0.5,
-            "stream": true
-        },
         "farmMusic": {
             "type": "sample",
             "file": "audio/CCM_Farm_Final_48k.wav",
