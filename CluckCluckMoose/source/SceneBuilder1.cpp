@@ -1395,8 +1395,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
         std::shared_ptr<Texture> texturePauseSettings;
-        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
-        else{ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
+        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
+        else{ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
         std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
         pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
@@ -2683,7 +2683,7 @@ void SceneBuilder1::setHome(bool val) {
 
 void SceneBuilder1::setLevelNum(int levelNum) {
 	_levelNum = levelNum;
-	AudioChannels::get()->stopMusic();
+	if (AudioChannels::get()->currentMusic() != NULL) { AudioChannels::get()->stopMusic(); }
 	auto game_music = _assets->get<Sound>("farmMusic");
 	if (levelNum < 4) {
 		game_music = _assets->get<Sound>("farmMusic");
@@ -2699,7 +2699,9 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 		//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 		
 	}
-	AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+	if (!soundToggle) {
+		AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+	}
 
 	hasWon = false;
 	hasLost = false;
