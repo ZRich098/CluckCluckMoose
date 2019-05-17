@@ -163,7 +163,7 @@ public:
 
 	void setLevel(int levelNum) { sb->setLevelNum(levelNum); };
 
-	void setTutorial() { sb->setTutorial(); };
+	void setTutorial() { sb->setTutorial(); prevHand = player->getHand().size(); };
 
     void deactivatePause() {sb->deactivatePause(); };
 
