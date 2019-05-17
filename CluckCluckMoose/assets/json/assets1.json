@@ -217,6 +217,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "newBadge": {
+            "file": "textures/lbl_new_chicken.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "healthBar": {
             "file": "textures/base_no_pause.png",
             "minfilter": "linear",
