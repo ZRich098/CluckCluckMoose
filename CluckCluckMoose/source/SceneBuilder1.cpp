@@ -126,7 +126,7 @@ bool hasLost;
 #define INFO_DELAY 15
 #define MOOSE_SCALE 0.5f
 #define BULLET_SPEED 100
-#define MOOSE_DAMAGE_TIME 4 //number of frames a moose shows its damage
+#define MOOSE_DAMAGE_TIME 8 //number of frames a moose shows its damage
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -260,6 +260,7 @@ bool oLose = false; //true if opponent moose takes damage
 bool pLose = false; //true if player moose takes damage
 int damageTaken = 0;
 int tintedTime = 0; //timer for how long a moose stays tinted
+
 
 
 //Frame tracking for attacking animations
@@ -443,7 +444,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		text = textureW;
 		//this is std library for c++
 		std::shared_ptr<AnimationNode> anim;
-		//get changed to animation nodes EMMMAAA
 		anim = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
 		anim->setVisible(false);
 		pstackNodes.push_back(anim);
@@ -1144,8 +1144,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		else if (damageTaken == 4) {
 			dText = num4;
 		}
-		std::shared_ptr<PolygonNode> minus = PolygonNode::allocWithTexture(numMinus);
-		std::shared_ptr<PolygonNode> damageNum = PolygonNode::allocWithTexture(dText);
+		std::shared_ptr<Node> minus = PolygonNode::allocWithTexture(numMinus);
+		std::shared_ptr<Node> damageNum = PolygonNode::allocWithTexture(dText);
 
 
 		if (isNextFrame) {
@@ -1164,14 +1164,21 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			eMoose->setColor(Color4f::RED);
 			pMoose->setColor(Color4f::WHITE);
 			//start drawing subtraction text
-			eMoose->removeChildByTag(1);
-			eMoose->addChildWithTag(damageNum,1);
-			eMoose->addChildWithTag(minus, 1);
+			if (eMoose->getChildCount() == 0) {
+				eMoose->addChildWithTag(damageNum, 1);
+				eMoose->addChildWithTag(minus, 2);
+			}
+			else {
+				damageNum = eMoose->getChildByTag(1);
+				minus = eMoose->getChildByTag(2);
+			}
+			//eMoose->removeChildByTag(1);
 			
 			
+			eMoose->setPosition(screenWidth + MOOSE_X_OFFSET , eMoose->getPositionY());
 
-			minus->setPosition(pMoose->getWidth() / 4, pMoose->getHeight() * 2 + 50 +vmove);
-			damageNum->setPosition(eMoose->getWidth() / 4 + minus->getWidth(), eMoose->getHeight()*2 + 50 +  vmove);
+			minus->setPosition( pMoose->getWidth() / 4, pMoose->getHeight() * 2 + 50 +vmove);
+			damageNum->setPosition( eMoose->getWidth() / 4 + minus->getWidth(), eMoose->getHeight()*2 + 50 +  vmove);
 			
 
 		}
@@ -1179,12 +1186,19 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			pMoose->setColor(Color4f::RED);
 			eMoose->setColor(Color4f::WHITE);
 			
-			pMoose->removeChildByTag(1);
+			if (pMoose->getChildCount() == 0) {
+				pMoose->addChildWithTag(damageNum, 1);
+				pMoose->addChildWithTag(minus, 2);
+			}
+			else {
+				damageNum = pMoose->getChildByTag(1);
+				minus = pMoose->getChildByTag(2);
+			};
+			
+			pMoose->setPosition(-MOOSE_X_OFFSET , pMoose->getPositionY());
 
-			pMoose->addChildWithTag(minus, 1);
-			pMoose->addChildWithTag(damageNum,1);
-			minus->setPosition(pMoose->getWidth()*3 / 4, pMoose->getHeight()*2 + 50 +  vmove);
-			damageNum->setPosition(pMoose->getWidth() * 3 / 4 + minus->getWidth(), pMoose->getHeight() * 2 + 50 + vmove);
+			minus->setPosition( pMoose->getWidth()*3 / 4, pMoose->getHeight()*2 + 50 +  vmove);
+			damageNum->setPosition( pMoose->getWidth() * 3 / 4 + minus->getWidth(), pMoose->getHeight() * 2 + 50 + vmove);
 		}
 		
 		
@@ -1198,7 +1212,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		eMoose->setColor(Color4f::WHITE);
 		pMoose->setColor(Color4f::WHITE);
 		eMoose->removeChildByTag(1);
+		eMoose->removeChildByTag(2);
 		pMoose->removeChildByTag(1);
+		pMoose->removeChildByTag(2);
+		
+
+		pMoose->setPosition(-MOOSE_X_OFFSET , pMoose->getPositionY());
+		eMoose->setPosition(screenWidth + MOOSE_X_OFFSET, eMoose->getPositionY());
 
 	}
 	
@@ -1557,7 +1577,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 		//START DEATH ANIMATION HERE
 		if(i ==0)
-		CULog("%d", dyingFrame[0]);
 		//shot starts here
 		if (pShotProgress != -1 && i == 0) {
 
@@ -1606,17 +1625,6 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				pShotProgress = -1;
 				eShotProgress = -1;
 			}
-
-			//keep drawing past middle of the screen 
-			//if (shotX < middleScreen || ((playerChickenWins > -1) && projec->getWorldPosition().x <= ostackNodes[i]->getWorldPosition().x)) {
-			//	// 
-
-			//}
-			//else {
-			//	if (playerChickenWins > -1)
-			//		dyingFrame[1] = 0;
-			//	pShotProgress = -1;
-			//}
 
 			if (isNextFrame && pShotProgress != -1) {
 
