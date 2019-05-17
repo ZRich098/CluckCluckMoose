@@ -362,6 +362,7 @@ void GameScene::update(float timestep) {
 			if (skipState == ENTRY) {
 				//CULog("opp playing");
 				opp->addToStackFromHand(oppAI->getPlay());
+				handEffect();
 
 				//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 				//CULog("PLAY %s", test.toString().c_str());
@@ -384,7 +385,6 @@ void GameScene::update(float timestep) {
 			}
 			if (skipState == EXIT) {
 				// Resolves special chickens that affect the hands
-				handEffect();
 				prevHand--;
 				stackSize++;
 				skipState = ENTRY; // Returns the state machine to the entry state
