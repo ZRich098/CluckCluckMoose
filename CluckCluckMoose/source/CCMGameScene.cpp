@@ -362,6 +362,7 @@ void GameScene::update(float timestep) {
 			if (skipState == ENTRY) {
 				//CULog("opp playing");
 				opp->addToStackFromHand(oppAI->getPlay());
+				handEffect();
 
 				//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 				//CULog("PLAY %s", test.toString().c_str());
@@ -384,7 +385,6 @@ void GameScene::update(float timestep) {
 			}
 			if (skipState == EXIT) {
 				// Resolves special chickens that affect the hands
-				handEffect();
 				prevHand--;
 				stackSize++;
 				skipState = ENTRY; // Returns the state machine to the entry state
@@ -545,9 +545,10 @@ void GameScene::setNumChickensWillDiePreview() {
 }
 
 void GameScene::handEffect() {
+
 	special pLast = player->getOrder().back().getSpecial();
 	special oLast = opp->getOrder().back().getSpecial();
-
+	
 	if (pLast == special::PartyFowl || oLast == special::PartyFowl)
 		return;
 
@@ -556,7 +557,7 @@ void GameScene::handEffect() {
 	if (oLast == special::Mirror)
 		oLast = pLast;
 
-	if (pLast == special::Spy) {
+	if (pLast == special::Spy && oLast != special::PartyFowl) {
 		player->draw();
 		//please for the love of god fix this later
 		prevHand++;
