@@ -10,6 +10,7 @@
 #include "CCMInput.h"
 #include "Moose.h"
 
+
 using namespace cugl;
 
 /** Sfx for the game*/
@@ -76,6 +77,11 @@ using namespace cugl;
 #define SPYLIGHT_OFFSET 6
 #define TUTOR1_LENGTH 13
 #define TUTOR6_LENGTH 10
+
+// Sfx for the game
+#define SOUND_BUTTON_A        "button_a"
+#define SOUND_BUTTON_B        "button_b"
+
 
 class SceneBuilder1 {
 protected:
@@ -398,6 +404,7 @@ public:
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
 
 
+    void playButtonSound(int sound);
 
 
 #pragma mark -
@@ -438,6 +445,10 @@ public:
 	void activateHand();
 	void deactivatePause();
 	void activatePause();
+    void deactivateWin();
+    void activateWin();
+    void deactivateLose();
+    void activateLose();
 	void setHome(bool val);
 //	void setRestart(bool val);
 
