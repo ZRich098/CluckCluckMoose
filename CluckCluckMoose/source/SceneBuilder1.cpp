@@ -902,6 +902,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    if (down && !hasWon && !hasLost) {
 	        pauseMenuCanvas->setVisible(true);
             isPaused = true;
+            playButtonSound(0);
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
@@ -928,7 +929,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(screenWidth / 4, screenHeight/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            retry = true;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(201); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart); // 0
@@ -940,7 +945,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseHome->setScale(0.65, 0.65);
     pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
     pauseHome->setPosition(screenWidth / 2 , screenHeight/2 + 50);
-	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
+	pauseHome->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            goHome = true;
+            playButtonSound(1);
+        }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome); // 1
@@ -952,7 +961,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setScale(0.65, 0.65);
     pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
     pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
-    pauseResume->setListener([=](const std::string& name, bool down) { if (down) { isPaused = false; }});
+    pauseResume->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            isPaused = false;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseResume);
     pauseResume->activate(203); //ensure keys are unique
     pausebuttons.push_back(pauseResume); // 2
@@ -967,12 +980,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
         soundToggle = soundToggle ? false : true;
         soundChanged = false;
+        playButtonSound(1);
     }});
     pauseMenuCanvas->addChild(pauseSettings);
     pauseSettings->activate(204); //ensure keys are unique
     pausebuttons.push_back(pauseSettings); // 3
 
-//    pauseMenuCanvas->setVisible(false);
 	deactivatePause();
 
 	//Initialize distribution
@@ -2092,6 +2105,16 @@ void SceneBuilder1::setOppCost(string costume) {
         deactivateLose();
     };
 
+}
+
+void SceneBuilder1::playButtonSound(int sound) {
+    //Play the button sfx
+    // 0 is A, 1 is B
+    string sfx = sound ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+    auto source = _assets->get<Sound>(sfx);
+    if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+        AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+    }
 }
 
 void SceneBuilder1::deactivateHand() {

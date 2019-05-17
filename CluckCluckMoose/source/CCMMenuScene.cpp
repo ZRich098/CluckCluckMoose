@@ -135,8 +135,6 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpBackClicked = false;
     creditsClicked = false;
     creditsBackClicked = false;
-//    page = 1;
-//    helpframe = 1;
 
     //Create background node
     menubackCanvas = Node::alloc();
@@ -212,7 +210,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     playbutt->setPosition(0, menuscreenHeight/3);
     playbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
-			playButtonSound();
+			playButtonSound(0);
             playClicked = true;
         }
     });
@@ -229,7 +227,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpbutt->setPosition(0, menuscreenHeight/3 - 100);
     helpbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
-			playButtonSound();
+			playButtonSound(0);
             helpClicked = true;
         }
     });
@@ -246,7 +244,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     creditsbutt->setPosition(0, menuscreenHeight/3 - 200);
     creditsbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
-			playButtonSound();
+			playButtonSound(0);
             creditsClicked = true;
         }
     });
@@ -288,7 +286,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     backbutt->setAnchor(Vec2::ANCHOR_CENTER);
     backbutt->setPosition(menuscreenWidth/8, menuscreenHeight*7/8);
     backbutt->setListener([=](const std::string& name, bool down) {
-        if (down) {creditsBackClicked = true;}});
+        if (down) {
+            creditsBackClicked = true;
+            playButtonSound(1);
+        }});
     creditsCanvas->addChild(backbutt);
     backbutt->activate(103);
     creditsbuttons.push_back(backbutt);
@@ -308,7 +309,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw help 1
     std::shared_ptr<Texture> texturehelp = _assets->get<Texture>("help1");
     std::shared_ptr<PolygonNode> help = PolygonNode::allocWithTexture(texturehelp);
-    help->setScale(0.5f); // Magic number to rescale asset
+    help->setScale(1.125f);
     help->setAnchor(Vec2::ANCHOR_CENTER);
     help->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     helpCanvas1->addChild(help);
@@ -316,8 +317,8 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     texturehelp2 = _assets->get<Texture>("help2");
     help2 = AnimationNode::alloc(texturehelp2,1,16);
-//    help2->setScale(0.5f); // Magic number to rescale asset
     help2->setAnchor(Vec2::ANCHOR_CENTER);
+    help2->setScale(1.125f);
     help2->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     helpCanvas2->addChild(help2);
     helpCanvas2->setVisible(false);
@@ -325,16 +326,16 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     
     texturehelp3 = _assets->get<Texture>("help3");
     help3 = AnimationNode::alloc(texturehelp3,1,8);
-    help3->setScale(0.5f); // Magic number to rescale asset
     help3->setAnchor(Vec2::ANCHOR_CENTER);
+    help3->setScale(1.125f);
     help3->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     helpCanvas3->addChild(help3);
     helpCanvas3->setVisible(false);
     
     texturehelp4 = _assets->get<Texture>("help4");
     help4 = AnimationNode::alloc(texturehelp4,1,10);
-    help4->setScale(0.5f); // Magic number to rescale asset
     help4->setAnchor(Vec2::ANCHOR_CENTER);
+    help4->setScale(1.125f);
     help4->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     helpCanvas4->addChild(help4);
     helpCanvas4->setVisible(false);
@@ -342,8 +343,8 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //Draw help 5
     texturehelp = _assets->get<Texture>("help5");
     help = PolygonNode::allocWithTexture(texturehelp);
-    help->setScale(0.5f); // Magic number to rescale asset
     help->setAnchor(Vec2::ANCHOR_CENTER);
+    help->setScale(1.125f);
     help->setPosition(menuscreenWidth/2, menuscreenHeight/2);
     helpCanvas5->addChild(help);
     helpCanvas5->setVisible(false);
@@ -358,7 +359,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpright->setAnchor(Vec2::ANCHOR_CENTER);
     helpright->setPosition(menuscreenWidth/2 + 75, menuscreenHeight/2 - 375);
     helpright->setListener([=](const std::string& name, bool down) {
-        if (down) { helpRightClicked = true; }});
+        if (down) {
+            helpRightClicked = true;
+            playButtonSound(0);
+        }});
     helpButtCanvas->addChild(helpright);
     helpright->activate(120);
     helpbuttons.push_back(helpright); // 0
@@ -373,7 +377,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpleft->setAnchor(Vec2::ANCHOR_CENTER);
     helpleft->setPosition(menuscreenWidth/2 - 75, menuscreenHeight/2 - 375);
     helpleft->setListener([=](const std::string& name, bool down) {
-        if (down) { helpLeftClicked = true; }});
+        if (down) {
+            helpLeftClicked = true;
+            playButtonSound(1);
+        }});
     helpButtCanvas->addChild(helpleft);
     helpleft->activate(121);
     helpbuttons.push_back(helpleft); // 1
@@ -388,7 +395,10 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpback->setAnchor(Vec2::ANCHOR_CENTER);
     helpback->setPosition(menuscreenWidth/8, menuscreenHeight*7/8);
     helpback->setListener([=](const std::string& name, bool down) {
-        if (down) {helpBackClicked = true;}});
+        if (down) {
+            helpBackClicked = true;
+            playButtonSound(1);
+        }});
     helpButtCanvas->addChild(helpback);
     helpback->activate(122);
     helpbuttons.push_back(helpback); // 2
@@ -537,9 +547,10 @@ void MenuScene::setActive(bool value) {
     }
 }
 
-void MenuScene::playButtonSound() {
+void MenuScene::playButtonSound(int sound) {
 	//Play the button sfx
-	string sfx = rand() % 2 ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+    // 0 is A, 1 is B
+    string sfx = sound ? SOUND_BUTTON_A : SOUND_BUTTON_B;
 	auto source = _assets->get<Sound>(sfx);
 	if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
 		AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());

@@ -11,6 +11,10 @@
 #include "CCMInput.h"
 #include "Moose.h"
 
+// Sfx for the game
+#define SOUND_BUTTON_A        "button_a"
+#define SOUND_BUTTON_B        "button_b"
+
 class SceneBuilder1 {
 protected:
 	/** The asset manager for this scene builder. */
@@ -78,7 +82,7 @@ public:
 	//Build an individual chicken using a texture and attach to a node.  Clear everything from the node beforehand.
 	std::shared_ptr<cugl::AnimationNode> buildChicken(std::shared_ptr<cugl::Texture> texture, std::shared_ptr<cugl::Node> node, int posX, int posY, bool flip);
 
-	
+    void playButtonSound(int sound);
 
 
 #pragma mark -
