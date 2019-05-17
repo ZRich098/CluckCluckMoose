@@ -444,8 +444,10 @@ void MenuScene::update(float timestep) {
         deactivateButtons();
         activateHelp();
         page = 1;
-        helpbuttons[1]->deactivate();
-        helpbuttons[1]->setVisible(false);
+        if (helpbuttons[1]->isActive()){
+            helpbuttons[1]->deactivate();
+            helpbuttons[1]->setVisible(false);
+        }
     }
     if (helpBackClicked){
         helpBackClicked = false;
@@ -475,6 +477,8 @@ void MenuScene::update(float timestep) {
             if (page == 1){
                 helpCanvas1->setVisible(false);
                 helpCanvas2->setVisible(true);
+                helpbuttons[1]->activate(121);
+                helpbuttons[1]->setVisible(true);
             }
             if (page == 2){
                 helpCanvas2->setVisible(false);
@@ -487,12 +491,16 @@ void MenuScene::update(float timestep) {
             if (page == 4){
                 helpCanvas4->setVisible(false);
                 helpCanvas5->setVisible(true);
+                helpbuttons[0]->deactivate();
+                helpbuttons[0]->setVisible(false);
             }
         }
         if (helpLeftClicked){
             if (page == 2){
                 helpCanvas2->setVisible(false);
                 helpCanvas1->setVisible(true);
+                helpbuttons[1]->deactivate();
+                helpbuttons[1]->setVisible(false);
             }
             if (page == 3){
                 helpCanvas3->setVisible(false);
@@ -505,6 +513,8 @@ void MenuScene::update(float timestep) {
             if (page == 5){
                 helpCanvas5->setVisible(false);
                 helpCanvas4->setVisible(true);
+                helpbuttons[0]->activate(120);
+                helpbuttons[0]->setVisible(true);
             }
         }
         if (page < 5 && helpRightClicked) { page++; }
@@ -512,23 +522,6 @@ void MenuScene::update(float timestep) {
         if (helpRightClicked) { helpRightClicked = false; }
         if (helpLeftClicked) { helpLeftClicked = false; }
     }
-    if (page == 1){
-        helpbuttons[1]->deactivate();
-        helpbuttons[1]->setVisible(false);
-    }
-    if (page == 2){
-        helpbuttons[1]->activate(121);
-        helpbuttons[1]->setVisible(true);
-    }
-    if (page == 5){
-        helpbuttons[0]->deactivate();
-        helpbuttons[0]->setVisible(false);
-    }
-    if (page == 4){
-        helpbuttons[0]->activate(120);
-        helpbuttons[0]->setVisible(true);
-    }
-    
 }
 
 /**
