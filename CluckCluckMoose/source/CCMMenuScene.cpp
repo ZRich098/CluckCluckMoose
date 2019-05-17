@@ -77,7 +77,7 @@ bool helpLeftClicked;
 bool helpBackClicked;
 bool creditsClicked;
 bool creditsBackClicked;
-int page; // help page #
+int page = 1; // help page #
 int helpframe = 0;
 int helpcount = 500;
 
@@ -445,6 +445,7 @@ void MenuScene::update(float timestep) {
         activateHelp();
         helpbuttons[1]->deactivate();
         helpbuttons[1]->setVisible(false);
+        page = 1;
     }
     if (helpBackClicked){
         helpBackClicked = false;
