@@ -54,6 +54,12 @@ float healthYScale;
 //Button list for pause menu
 std::vector<std::shared_ptr<Button>> pausebuttons;
 
+//Button list for win menu
+std::vector<std::shared_ptr<Button>> winbuttons;
+
+//Button list for lose menu
+std::vector<std::shared_ptr<Button>> losebuttons;
+
 //List of stamp nodes for player and opponent
 std::vector<std::shared_ptr<PolygonNode>> pStamps;
 std::vector<std::shared_ptr<PolygonNode>> oStamps;
@@ -919,6 +925,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    if (down && !hasWon && !hasLost) {
 	        pauseMenuCanvas->setVisible(true);
             isPaused = true;
+            playButtonSound(0);
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
@@ -945,7 +952,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(screenWidth / 4, screenHeight/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            retry = true;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(201); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart); // 0
@@ -957,7 +968,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseHome->setScale(0.65, 0.65);
     pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
     pauseHome->setPosition(screenWidth / 2 , screenHeight/2 + 50);
-	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
+	pauseHome->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            goHome = true;
+            playButtonSound(1);
+        }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome); // 1
@@ -969,7 +984,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setScale(0.65, 0.65);
     pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
     pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
-    pauseResume->setListener([=](const std::string& name, bool down) { if (down) { isPaused = false; }});
+    pauseResume->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            isPaused = false;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseResume);
     pauseResume->activate(203); //ensure keys are unique
     pausebuttons.push_back(pauseResume); // 2
@@ -984,12 +1003,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
         soundToggle = soundToggle ? false : true;
         soundChanged = false;
+        playButtonSound(1);
     }});
     pauseMenuCanvas->addChild(pauseSettings);
     pauseSettings->activate(204); //ensure keys are unique
     pausebuttons.push_back(pauseSettings); // 3
 
-//    pauseMenuCanvas->setVisible(false);
 	deactivatePause();
 
 	//Initialize distribution
@@ -1576,7 +1595,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 
 		//START DEATH ANIMATION HERE
-		if(i ==0)
+	
 		//shot starts here
 		if (pShotProgress != -1 && i == 0) {
 
@@ -2028,7 +2047,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 	}
 
 	//Update win and loss screens
-	if (playerGlobe->getHealth() < 1) {
+	if (playerGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("player_moose")->getColor() == Color4f::WHITE) {
 		loseCanvas->setVisible(true);
 		if (!hasLost) {
 			//Create the loss home button
@@ -2043,11 +2062,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					loseCanvas->setVisible(false);
+                    playButtonSound(1);
 				}
 			});
 			loseCanvas->addChild(hButtL);
 			//ensure keys are unique
 			hButtL->activate(53);
+            losebuttons.push_back(hButtL); // 0
 
 			//Create the loss redo button
 			std::shared_ptr<PolygonNode> redoPolyL = PolygonNode::allocWithTexture(redo);
@@ -2061,17 +2082,18 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					loseCanvas->setVisible(false);
-
+                    playButtonSound(0);
 				}
 			});
 			loseCanvas->addChild(rButtL);
 			//ensure keys are unique
 			rButtL->activate(54);
+            losebuttons.push_back(rButtL); // 1
 		}
 		hasLost = true;
 		deactivateHand();
 	}
-	else if (oppGlobe->getHealth() < 1) {
+	else if (oppGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("opp_moose")->getColor() == Color4f::WHITE) {
 		winCanvas->setVisible(true);
 		if (!hasWon) {
 			//Init the win home button
@@ -2086,12 +2108,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					winCanvas->setVisible(false);
-
+                    playButtonSound(1);
 				}
 			});
 			winCanvas->addChild(hButt);
 			//ensure keys are unique
 			hButt->activate(50);
+            winbuttons.push_back(hButt); // 0
 
 			//Init the win redo button
 			std::shared_ptr<PolygonNode> redoPoly = PolygonNode::allocWithTexture(redo);
@@ -2105,11 +2128,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					winCanvas->setVisible(false);
+                    playButtonSound(0);
 				}
 			});
 			winCanvas->addChild(rButt);
 			//ensure keys are unique
 			rButt->activate(51);
+            winbuttons.push_back(rButt); // 1
 
 			//Init the win next level button
 			std::shared_ptr<PolygonNode> levelPoly = PolygonNode::allocWithTexture(nextlvl);
@@ -2123,11 +2148,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					nextLevel = true;
 					winCanvas->setVisible(false);
+                    playButtonSound(0);
 				}
 			});
 			winCanvas->addChild(lButt);
 			//ensure keys are unique
 			lButt->activate(52);
+            winbuttons.push_back(lButt); // 2
 		}
 		hasWon = true;
 		deactivateHand();
@@ -2283,11 +2310,22 @@ void SceneBuilder1::setOppCost(string costume) {
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChildWithName(moose2, "opp_moose");
     
-	if (retry || goHome || nextLevel || !isPaused) { deactivatePause(); };
-    
-//    if (retry or goHome){
-//        isPaused = false;
-//    }
+	if (retry || goHome || nextLevel || !isPaused) {
+        deactivatePause();
+        deactivateWin();
+        deactivateLose();
+    };
+
+}
+
+void SceneBuilder1::playButtonSound(int sound) {
+    //Play the button sfx
+    // 0 is A, 1 is B
+    string sfx = sound ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+    auto source = _assets->get<Sound>(sfx);
+    if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+        AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+    }
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -2322,6 +2360,36 @@ void SceneBuilder1::deactivatePause() {
 		pausebuttons[i]->deactivate();
 	}
     isPaused = false;
+}
+
+void SceneBuilder1::activateWin() {
+    winCanvas->setVisible(true);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->activate(50 + i);
+    }
+}
+
+void SceneBuilder1::deactivateWin() {
+    winCanvas->setVisible(false);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->deactivate();
+    }
+    hasWon = false;
+}
+
+void SceneBuilder1::activateLose() {
+    loseCanvas->setVisible(true);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->activate(53 + i);
+    }
+}
+
+void SceneBuilder1::deactivateLose() {
+    loseCanvas->setVisible(false);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->deactivate();
+    }
+    hasLost = false;
 }
 
 bool SceneBuilder1::getHome() {
