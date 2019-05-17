@@ -443,9 +443,9 @@ void MenuScene::update(float timestep) {
         helpClicked = false;
         deactivateButtons();
         activateHelp();
+        page = 1;
         helpbuttons[1]->deactivate();
         helpbuttons[1]->setVisible(false);
-        page = 1;
     }
     if (helpBackClicked){
         helpBackClicked = false;
