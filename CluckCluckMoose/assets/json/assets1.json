@@ -8,7 +8,7 @@
             "wrapT": "clamp"
         },
         "projectiles": {
-            "file": "textures/projectiles.png",
+            "file": "textures/projectiles.PNG",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -786,6 +786,62 @@
         },
         "creditsbox": {
             "file": "textures/mainmenu/menu_credits.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "helpleft": {
+            "file": "textures/helpmenu/arrow_left.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "helpright": {
+            "file": "textures/helpmenu/arrow_right.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "helpbg": {
+            "file": "textures/helpmenu/bg_neutral_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help1": {
+            "file": "textures/helpmenu/help_pg1_distribution.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help2": {
+            "file": "textures/helpmenu/help_pg2_drag_animation.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help3": {
+            "file": "textures/helpmenu/help_pg3_preview_animation.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help4": {
+            "file": "textures/helpmenu/help_pg4_clash_animation.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help5": {
+            "file": "textures/helpmenu/help_pg5_health.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",

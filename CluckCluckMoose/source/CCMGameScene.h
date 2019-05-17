@@ -131,6 +131,7 @@ public:
 	bool getHome() { return sb->getHome(); };
 	bool getRedo() { return sb->getRedo(); };
 	bool getNextLevel() { return sb->getNextLevel(); };
+    bool getSoundToggle() { return sb->getSoundToggle(); };
 
 #pragma mark -
 #pragma mark Mutators
