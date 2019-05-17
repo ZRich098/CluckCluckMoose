@@ -316,7 +316,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpCanvas1->setVisible(false);
 
     texturehelp2 = _assets->get<Texture>("help2");
-    help2 = AnimationNode::alloc(texturehelp2,1,16);
+    help2 = AnimationNode::alloc(texturehelp2,1,14);
     help2->setAnchor(Vec2::ANCHOR_CENTER);
     help2->setScale(1.125f);
     help2->setPosition(menuscreenWidth/2, menuscreenHeight/2);
@@ -459,7 +459,7 @@ void MenuScene::update(float timestep) {
     }
     if (page == 2 || page == 3 || page == 4){ // animations
         int filmstrip_len = 8;
-        if (page == 2) { filmstrip_len = 16; }
+        if (page == 2) { filmstrip_len = 14; }
         else if (page == 3) { filmstrip_len = 8; }
         else if (page == 4) { filmstrip_len = 10; }
         if (helpframe >= filmstrip_len - 1){ helpframe = 0; }
