@@ -448,6 +448,9 @@ void MenuScene::update(float timestep) {
             helpbuttons[1]->deactivate();
             helpbuttons[1]->setVisible(false);
         }
+		if (!helpbuttons[0]->isVisible()) {
+			helpbuttons[0]->setVisible(true);
+		}
     }
     if (helpBackClicked){
         helpBackClicked = false;
