@@ -311,6 +311,8 @@ bool signDone = false;
 std::shared_ptr<Texture> textsign;
 std::shared_ptr<AnimationNode> sign;
 
+std::shared_ptr<Sound> game_music;
+
 //Screen dimensions
 float screenHeight;
 float screenWidth;
@@ -868,7 +870,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 							//Play chicken cluck sfx
 							auto source = _assets->get<Sound>(CHICKEN_SCREECH);
-							if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
+							if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH) && !soundToggle) {
 								AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
 							}
 						}
@@ -902,7 +904,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 
 							//Play chicken cluck sfx
 							auto source = _assets->get<Sound>(CHICKEN_SCREECH);
-							if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
+							if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH) && !soundToggle) {
 								AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
 							}
 						}
@@ -1006,7 +1008,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Draw initial health
 	//Scale factor * scene height makes the health bar appear in consistent locations, independent of device
 	healthYScale = (((float)(HEALTH_BAR_Y_FACTOR - 1)) / ((float)HEALTH_BAR_Y_FACTOR)) * screenHeight;
-	CULog("%d", healthYScale);
+//    CULog("%d", healthYScale);
 
 	//Bar
 	std::shared_ptr<PolygonNode> hBar = PolygonNode::allocWithTexture(bar);
@@ -1188,7 +1190,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    if (down && !hasWon && !hasLost) {
 	        pauseMenuCanvas->setVisible(true);
             isPaused = true;
-            playButtonSound(0);
+            if (!soundToggle){
+                playButtonSound(0);
+            }
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
@@ -1218,7 +1222,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pauseRestart->setListener([=](const std::string& name, bool down) {
         if (down) {
             retry = true;
-            playButtonSound(0);
+            if (!soundToggle){
+                playButtonSound(0);
+            }
         }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(201); //ensure keys are unique
@@ -1234,7 +1240,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	pauseHome->setListener([=](const std::string& name, bool down) {
         if (down) {
             goHome = true;
-            playButtonSound(1);
+            if (!soundToggle){
+                playButtonSound(1);
+            }
         }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(202); //ensure keys are unique
@@ -1250,7 +1258,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setListener([=](const std::string& name, bool down) {
         if (down) {
             isPaused = false;
-            playButtonSound(0);
+            if (!soundToggle){
+                playButtonSound(0);
+            }
         }});
     pauseMenuCanvas->addChild(pauseResume);
     pauseResume->activate(203); //ensure keys are unique
@@ -1266,7 +1276,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
         soundToggle = soundToggle ? false : true;
         soundChanged = false;
-        playButtonSound(1);
+        if (!soundToggle){
+            playButtonSound(1);
+        }
     }});
     pauseMenuCanvas->addChild(pauseSettings);
     pauseSettings->activate(204); //ensure keys are unique
@@ -1388,10 +1400,12 @@ std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Textu
 
 
 void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
+//    CULog("soundToggle: %d", soundToggle);
     if (isPaused && !pausebuttons[0]->isActive()){ activatePause(); }
     else if (!isPaused && pausebuttons[0]->isActive()){ deactivatePause(); }
     
     if (!soundChanged && isPaused){
+        CULog("soundToggle: %d", soundToggle);
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
         std::shared_ptr<Texture> texturePauseSettings;
@@ -1410,6 +1424,10 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         pauseMenuCanvas->addChild(pauseSettings);
         pauseSettings->activate(204); //ensure keys are unique
         pausebuttons.push_back(pauseSettings); // 3
+        
+        if (!soundToggle){
+            AudioChannels::get()->resumeMusic();
+        }
         
         soundChanged = true;
     }
@@ -1852,9 +1870,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 	for (int i = 0; i < playerGlobe->getHand().size(); i++) {
 		//Find which button is mapped to this hand chicken
 		int mappedButton;
-		CULog("Finding %d th card", i);
+//        CULog("Finding %d th card", i);
 		for (int j = 0; j < 6; j++) {
-			CULog("%d", handMap[j]);
+//            CULog("%d", handMap[j]);
 			if (handMap[j] == i) {
 				mappedButton = j;
 			}
@@ -2540,7 +2558,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					loseCanvas->setVisible(false);
-                    playButtonSound(1);
+                    if (!soundToggle){
+                        playButtonSound(1);
+                    }
 				}
 			});
 			loseCanvas->addChild(hButtL);
@@ -2560,7 +2580,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					loseCanvas->setVisible(false);
-                    playButtonSound(0);
+                    if (!soundToggle){
+                        playButtonSound(0);
+                    }
 				}
 			});
 			loseCanvas->addChild(rButtL);
@@ -2586,7 +2608,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					winCanvas->setVisible(false);
-                    playButtonSound(1);
+                    if (!soundToggle){
+                        playButtonSound(1);
+                    }
 				}
 			});
 			winCanvas->addChild(hButt);
@@ -2606,7 +2630,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					winCanvas->setVisible(false);
-                    playButtonSound(0);
+                    if (!soundToggle){
+                        playButtonSound(0);
+                    }
 				}
 			});
 			winCanvas->addChild(rButt);
@@ -2626,7 +2652,9 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					nextLevel = true;
 					winCanvas->setVisible(false);
-                    playButtonSound(0);
+                    if (!soundToggle){
+                        playButtonSound(0);
+                    }
 				}
 			});
 			winCanvas->addChild(lButt);
@@ -2683,8 +2711,9 @@ void SceneBuilder1::setHome(bool val) {
 
 void SceneBuilder1::setLevelNum(int levelNum) {
 	_levelNum = levelNum;
-	if (AudioChannels::get()->currentMusic() != NULL) { AudioChannels::get()->stopMusic(); }
-	auto game_music = _assets->get<Sound>("farmMusic");
+	if (!soundToggle && AudioChannels::get()->currentMusic() != NULL) { AudioChannels::get()->pauseMusic(); }
+//    auto game_music = _assets->get<Sound>("farmMusic");
+    game_music = _assets->get<Sound>("farmMusic");
 	if (levelNum < 4) {
 		game_music = _assets->get<Sound>("farmMusic");
 	}
@@ -2700,7 +2729,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 		
 	}
 	if (!soundToggle) {
-		AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+		AudioChannels::get()->queueMusic(game_music, true, 0.5, 0);
 	}
 
 	hasWon = false;
@@ -3089,7 +3118,7 @@ void SceneBuilder1::advanceTutorial() {
 
 		//Play chicken cluck sfx
 		auto source = _assets->get<Sound>(CHICKEN_SCREECH);
-		if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH)) {
+		if (!AudioChannels::get()->isActiveEffect(CHICKEN_SCREECH) && !soundToggle) {
 			AudioChannels::get()->playEffect(CHICKEN_SCREECH, source, false, source->getVolume());
 		}
 	}

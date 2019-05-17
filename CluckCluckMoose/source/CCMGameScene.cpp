@@ -324,7 +324,9 @@ void GameScene::initStacks(vector<Chicken> playerOrder, vector<Chicken> oppOrder
 void GameScene::update(float timestep) {
     isSound = !sb->getSoundToggle(); // false if sound SHOULD PLAY
     if (!isSound && AudioChannels::get()->currentMusic() != NULL){AudioChannels::get()->stopMusic();} // need to check it's not already stopped?
-    else if (isSound && AudioChannels::get()->currentMusic() == NULL){
+//    else if (isSound && AudioChannels::get()->currentMusic() == NULL){
+    else if (isSound && sb->getPaused()){
+        CULog("this should resume sound??");
 		auto game_music = _assets->get<Sound>(MUSIC_FARM);
 		int levelNum = sb->getLevelNum();
 		if (levelNum < 4) {
@@ -338,8 +340,9 @@ void GameScene::update(float timestep) {
 		}
 		else {
 			game_music = _assets->get<Sound>(MUSIC_THRONE);
-			AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+//            AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 		}
+        AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
     }
     
 	if (cooldown > 0 && !sb->getPaused()) {
