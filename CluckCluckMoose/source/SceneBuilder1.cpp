@@ -1379,7 +1379,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	for (int i = 0; i < playerGlobe->getHand().size(); i++) {
 		//Find which button is mapped to this hand chicken
-		int mappedButton;
+		int mappedButton = playerGlobe->getHand().size() - 1;
 		for (int j = 0; j < 6; j++) {
 			if (handMap[j] == i) {
 				mappedButton = j;
