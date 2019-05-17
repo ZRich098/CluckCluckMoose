@@ -1361,6 +1361,19 @@ void SceneBuilder1::chickDefeat(element playerType, element opponentType, int wi
 }
 
 void SceneBuilder1::mooseDefeat(int healthChange) {
+	//clear chicken stack now
+	int mappedButton = -1;
+	for (int j = 0; j < 6; j++) {
+		if (handMap[j] == 0) {
+			mappedButton = j;
+		}
+	}
+
+	if (mappedButton != -1) {
+		std::shared_ptr<Node> upchld = buttons[mappedButton]->getChild(0);
+		upchld->setVisible(false);
+	}
+
 	if (healthChange > 0) {
 		//opponent loses health
 		oLose = true;
@@ -1851,7 +1864,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 	for (int i = 0; i < playerGlobe->getHand().size(); i++) {
 		//Find which button is mapped to this hand chicken
-		int mappedButton;
+		int mappedButton = -1;
 		CULog("Finding %d th card", i);
 		for (int j = 0; j < 6; j++) {
 			CULog("%d", handMap[j]);
@@ -1908,32 +1921,34 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				break;
 			}
 		}
+		if (mappedButton != -1) {
+			std::shared_ptr<Node> upchld = buttons[mappedButton]->getChild(0); //ERROR HERE used mappedButton w/o initialized
 
-		std::shared_ptr<Node> upchld = buttons[mappedButton]->getChild(0);
+			std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text, 1, CHICKEN_FILMSTRIP_LENGTH, CHICKEN_FILMSTRIP_LENGTH);
+			//animates bottom chickens in coop
+			int curFrame = (flappingFrame[i]);
+			//        int curFrame = 0;
+			int nextFrame = curFrame + 1;
 
-		std::shared_ptr<AnimationNode> newUp = AnimationNode::alloc(text, 1, CHICKEN_FILMSTRIP_LENGTH, CHICKEN_FILMSTRIP_LENGTH);
-		//animates bottom chickens in coop
-		int curFrame = (flappingFrame[i]);
-		//        int curFrame = 0;
-		int nextFrame = curFrame + 1;
+			//decides if a flapping animation should start
+			if (isNextFrame && (curFrame != 0 || std::rand() % 50 == 0)) {
 
-		//decides if a flapping animation should start
-		if (isNextFrame && (curFrame != 0 || std::rand() % 50 == 0)) {
+				if (nextFrame >= CHICKEN_FILMSTRIP_LENGTH - 1) {
+					nextFrame = 0;
 
-			if (nextFrame >= CHICKEN_FILMSTRIP_LENGTH - 1) {
-				nextFrame = 0;
+				}
+				flappingFrame[i] = nextFrame;
+				newUp->setFrame(nextFrame);
+			}
+			else {
+				newUp->setFrame(nextFrame - 1);
 
 			}
-			flappingFrame[i] = nextFrame;
-			newUp->setFrame(nextFrame);
-		}
-		else {
-			newUp->setFrame(nextFrame - 1);
 
+			newUp->flipHorizontal(true);
+			buttons[mappedButton]->swapChild(upchld, newUp, false);
 		}
-
-		newUp->flipHorizontal(true);
-		buttons[mappedButton]->swapChild(upchld, newUp, false);
+		
 
 
 	}
