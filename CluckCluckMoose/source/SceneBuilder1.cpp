@@ -12,15 +12,19 @@ For touch and hold, uncomment lines 347-349, 788-790, and 812-826 and change the
 
 using namespace cugl;
 
+
 /* Private variables here have been moved to the h file */
 
 
 bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, const Size dimen, std::shared_ptr<cugl::Node> root, std::shared_ptr<Moose> player, std::shared_ptr<Moose> opp, string costume, int levelNum, bool tutor) {
+
 	root->removeAllChildren();
 
 	//Set screen size
 	screenHeight = dimen.height;
 	screenWidth = dimen.width;
+
+	middleScreen = screenWidth / 2;
 
 	playerGlobe = player;
 	oppGlobe = opp;
@@ -133,6 +137,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	fireTrans = _assets->get<Texture>("fireTrans");
 	grassTrans = _assets->get<Texture>("grassTrans");
 
+	waterShot = _assets->get<Texture>("projectiles");
+	fireShot = _assets->get<Texture>("projectiles");
+	grassShot = _assets->get<Texture>("projectiles");
+
 	layer = assets->get<Node>("game");
 	layer->setContentSize(dimen);
 	layer->doLayout(); // This rearranges the children to fit the screen
@@ -175,7 +183,6 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 		text = textureW;
 		//this is std library for c++
 		std::shared_ptr<AnimationNode> anim;
-		//get changed to animation nodes EMMMAAA
 		anim = buildChicken(text, layer, STACK_X_OFFSET, STACK_Y_OFFSET + (i*STACK_Y_SPACING), true);
 		anim->setVisible(false);
 		pstackNodes.push_back(anim);
@@ -742,6 +749,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	num2 = _assets->get<Texture>("num2");
 	num3 = _assets->get<Texture>("num3");
 	num4 = _assets->get<Texture>("num4");
+	numMinus = _assets->get<Texture>("minus");
 	std::shared_ptr<PolygonNode> fireNum = PolygonNode::allocWithTexture(num1);
 	std::shared_ptr<PolygonNode> waterNum = PolygonNode::allocWithTexture(num1);
 	std::shared_ptr<PolygonNode> grassNum = PolygonNode::allocWithTexture(num1);
@@ -872,6 +880,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	    if (down && !hasWon && !hasLost) {
 	        pauseMenuCanvas->setVisible(true);
             isPaused = true;
+            playButtonSound(0);
 	    }
 	});
 	pauseButtonCanvas->addChild(pausebutt);
@@ -898,7 +907,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseRestart->setScale(0.65, 0.65);
     pauseRestart->setAnchor(Vec2::ANCHOR_CENTER);
     pauseRestart->setPosition(screenWidth / 4, screenHeight/2 + 50);
-	pauseRestart->setListener([=](const std::string& name, bool down) { if (down) { retry = true; }});
+	pauseRestart->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            retry = true;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseRestart);
 	pauseRestart->activate(201); //ensure keys are unique
 	pausebuttons.push_back(pauseRestart); // 0
@@ -910,7 +923,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseHome->setScale(0.65, 0.65);
     pauseHome->setAnchor(Vec2::ANCHOR_CENTER);
     pauseHome->setPosition(screenWidth / 2 , screenHeight/2 + 50);
-	pauseHome->setListener([=](const std::string& name, bool down) { if (down) { goHome = true; }});
+	pauseHome->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            goHome = true;
+            playButtonSound(1);
+        }});
     pauseMenuCanvas->addChild(pauseHome);
 	pauseHome->activate(202); //ensure keys are unique
 	pausebuttons.push_back(pauseHome); // 1
@@ -922,7 +939,11 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseResume->setScale(0.65, 0.65);
     pauseResume->setAnchor(Vec2::ANCHOR_CENTER);
     pauseResume->setPosition(screenWidth/2, screenHeight/2 - INFO_Y_OFFSET);
-    pauseResume->setListener([=](const std::string& name, bool down) { if (down) { isPaused = false; }});
+    pauseResume->setListener([=](const std::string& name, bool down) {
+        if (down) {
+            isPaused = false;
+            playButtonSound(0);
+        }});
     pauseMenuCanvas->addChild(pauseResume);
     pauseResume->activate(203); //ensure keys are unique
     pausebuttons.push_back(pauseResume); // 2
@@ -937,12 +958,12 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
     pauseSettings->setListener([=](const std::string& name, bool down) { if (down) {
         soundToggle = soundToggle ? false : true;
         soundChanged = false;
+        playButtonSound(1);
     }});
     pauseMenuCanvas->addChild(pauseSettings);
     pauseSettings->activate(204); //ensure keys are unique
     pausebuttons.push_back(pauseSettings); // 3
 
-//    pauseMenuCanvas->setVisible(false);
 	deactivatePause();
 
 	//Initialize distribution
@@ -996,17 +1017,29 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 void SceneBuilder1::chickDefeat(element playerType, element opponentType, int winResult) {
 	//start animation for chicken fading
 	//make child of chicken the element animation
-	shotProgress = 0;
+	pShotProgress = 0;
+	eShotProgress = 0;
 	playerChickenWins = winResult;
 	eType = playerType;
 	pType = opponentType;
 	CULog("somedefeat");
-	dyingFrame[1] = 0;
-	dyingFrame[0] = 0;
+	dyingFrame[1] = -1;
+	dyingFrame[0] = -1;
 }
 
 void SceneBuilder1::mooseDefeat(int healthChange) {
-
+	if (healthChange > 0) {
+		//opponent loses health
+		oLose = true;
+		pLose = false;
+		damageTaken = healthChange;
+	}
+	else if (healthChange < 0) {
+		oLose = false;
+		pLose = true;
+		damageTaken = -healthChange;
+		
+	}
 }
 
 std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
@@ -1060,8 +1093,110 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				thisFrame = 0;
 			thisFrame++;
 		}
+
+		
+
+	}
+
+
+	//change mooses if taking damage;
+	std::shared_ptr<Node> eMoose = mooseCanvas->getChildByName("opp_moose");
+	std::shared_ptr<Node> pMoose = mooseCanvas->getChildByName("player_moose");
+
+	if ((oLose || pLose) ) {
+		std::shared_ptr<Texture> dText;
+
+		if (damageTaken == 1) {
+			dText = num1;
+		}
+		else if (damageTaken == 2) {
+			dText = num2;
+		}
+		else if (damageTaken == 3) {
+			dText = num3;
+		}
+		else if (damageTaken == 4) {
+			dText = num4;
+		}
+		std::shared_ptr<Node> minus = PolygonNode::allocWithTexture(numMinus);
+		std::shared_ptr<Node> damageNum = PolygonNode::allocWithTexture(dText);
+
+
+		if (isNextFrame) {
+			tintedTime += 1;
+			if (tintedTime >= MOOSE_DAMAGE_TIME) {
+				tintedTime = 0;
+				oLose = false;
+				pLose = false;
+			}
+		}
+		int vmove = 10 * tintedTime;
+		minus->setScale(1.5);
+		damageNum->setScale(1.5);
+
+		if (oLose) {
+			eMoose->setColor(Color4f::RED);
+			pMoose->setColor(Color4f::WHITE);
+			//start drawing subtraction text
+			if (eMoose->getChildCount() == 0) {
+				eMoose->addChildWithTag(damageNum, 1);
+				eMoose->addChildWithTag(minus, 2);
+			}
+			else {
+				damageNum = eMoose->getChildByTag(1);
+				minus = eMoose->getChildByTag(2);
+			}
+			//eMoose->removeChildByTag(1);
+			
+			
+			eMoose->setPosition(screenWidth + MOOSE_X_OFFSET , eMoose->getPositionY());
+
+			minus->setPosition( pMoose->getWidth() / 4, pMoose->getHeight() * 2 + 50 +vmove);
+			damageNum->setPosition( eMoose->getWidth() / 4 + minus->getWidth(), eMoose->getHeight()*2 + 50 +  vmove);
+			
+
+		}
+		else if (pLose) {
+			pMoose->setColor(Color4f::RED);
+			eMoose->setColor(Color4f::WHITE);
+			
+			if (pMoose->getChildCount() == 0) {
+				pMoose->addChildWithTag(damageNum, 1);
+				pMoose->addChildWithTag(minus, 2);
+			}
+			else {
+				damageNum = pMoose->getChildByTag(1);
+				minus = pMoose->getChildByTag(2);
+			};
+			
+			pMoose->setPosition(-MOOSE_X_OFFSET , pMoose->getPositionY());
+
+			minus->setPosition( pMoose->getWidth()*3 / 4, pMoose->getHeight()*2 + 50 +  vmove);
+			damageNum->setPosition( pMoose->getWidth() * 3 / 4 + minus->getWidth(), pMoose->getHeight() * 2 + 50 + vmove);
+		}
+		
+		
+		//add to timer
+		
+
+	}
+
+	
+	 if(!pLose && !oLose) {
+		eMoose->setColor(Color4f::WHITE);
+		pMoose->setColor(Color4f::WHITE);
+		eMoose->removeChildByTag(1);
+		eMoose->removeChildByTag(2);
+		pMoose->removeChildByTag(1);
+		pMoose->removeChildByTag(2);
+		
+
+		pMoose->setPosition(-MOOSE_X_OFFSET , pMoose->getPositionY());
+		eMoose->setPosition(screenWidth + MOOSE_X_OFFSET, eMoose->getPositionY());
+
 	}
 	
+
 	if (isTutor && playerGlobe->getStack().getSize() == 0 && step == 9) {
 		advanceTutorial();
 	}
@@ -1574,73 +1709,115 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 
 		//START DEATH ANIMATION HERE
-        if (signDone){
-            if (i == 0) {
+	
+		//shot starts here
+		if (pShotProgress != -1 && i == 0) {
 
-                if (isNextFrame) {
-                    if (shotProgress != -1) {
-                        //a shot has begun
+			int elemFrame = 0;
+			std::shared_ptr<Texture> shot;
+			switch (eType) {
+			case element::Fire:
+				shot = fireShot;
+				elemFrame = 2;
+				break;
+			case element::Water:
+				shot = waterShot;
+				elemFrame = 1;
+				break;
+			case element::Grass:
+				shot = grassShot;
+				elemFrame = 0;
+				break;
+			default:
+				shot = fireShot;
+				elemFrame = 2;
+				break;
+			}
 
-                        if (shotProgress < middleScreenFrame) {
-                            //change from text to the opponent element type texture
-                            /*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-                            ostackNodes[i]->addChild(shot);
-                            chick->setPosition(50*shotProgress, 0);*/
-                        }
-                        else if (shotProgress >= middleScreenFrame) {
-                            if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-                                //shot has reached the enemy chicken!
-                                //animation of defeat should begin
-                                //dyingFrame[1]=dyingFrame[1]+1;
-                            }
-                        }
-                        shotProgress += 1;
-                    }
-                }
+			std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
+			pstackNodes[i]->addChild(projec);
+			projec->setScale(0.6);
+			projec->setFrame(elemFrame);
 
-                std::shared_ptr<Texture> deathText;
-                switch (pType) {
-                case element::Fire:
-                    deathText = fireTrans;
-                    break;
-                case element::Water:
-                    deathText = waterTrans;
-                    break;
-                case element::Grass:
-                    deathText = grassTrans;
-                    break;
-                default:
-                    deathText = fireTrans;
-                    break;
-                }
+			middleScreen = pstackNodes[i]->getWorldPosition().x + (ostackNodes[i]->getWorldPosition().x - pstackNodes[i]->getWorldPosition().x)/2 ;
 
-                if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins < 1) {
-                    dyingFrame[0] += 1;
-                    /*std::string str = std::to_string(dyingFrame[0]);
-                    const char * c = str.c_str();
-                    CULog(c);*/
-                    if (dyingFrame[0] >= DEATH_ANIM_COLS) {
-                        dyingFrame[0] = -1;
-                        shotProgress = -1;
-                    }
-                }
+			//a shot has begun
+			int shotX = BULLET_SPEED * pShotProgress + pstackNodes[i]->getWidth() * 2;
+			projec->setPosition(shotX, pstackNodes[0]->getHeight());
+			
+			if (pShotProgress > 4) {
+				if(dyingFrame[0] == -1){
+					
+					dyingFrame[0] = 0;
+				}
 
-                if (dyingFrame[0] > -1 && playerChickenWins < 1) {
-                    std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-                    pstackNodes[i]->addChild(poof);
-                    poof->setFrame(dyingFrame[0]);
-                    //poof->flipHorizontal(false);
-                    if (dyingFrame[0] > 4) {
-                        poof->setScale(STACK_SCALE); // Magic number to rescale asset
-                        poof->setAnchor(Vec2::ANCHOR_CENTER);
-                        poof->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
-                        poof->flipHorizontal(true);
-                        layer->swapChild(pstackNodes[i], poof, false);
-                    }
-                }
+				if(dyingFrame[1] == -1)
+					dyingFrame[1] = 0;
+				
+				
+				pShotProgress = -1;
+				eShotProgress = -1;
+			}
 
-            }
-        }
+			if (isNextFrame && pShotProgress != -1) {
+
+				pShotProgress += 1;
+			}
+		}
+
+		if (i == 0) {
+
+			std::shared_ptr<Texture> deathText;
+			switch (pType) {
+			case element::Fire:
+				deathText = fireTrans;
+				break;
+			case element::Water:
+				deathText = waterTrans;
+				break;
+			case element::Grass:
+				deathText = grassTrans;
+				break;
+			default:
+				deathText = fireTrans;
+				break;
+			}
+
+			
+
+			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins <1) {
+				dyingFrame[0] += 1;
+
+				if (dyingFrame[0] >= DEATH_ANIM_COLS) {
+					dyingFrame[0] = -2;
+					
+					//set chicken to not visible!
+				}
+			}
+
+			if (dyingFrame[0] == -2) {
+				pstackNodes[i]->setVisible(false);
+			}
+
+			if (dyingFrame[0] > -1 && playerChickenWins <1)
+			{
+				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+				pstackNodes[i]->addChild(poof);
+				poof->setFrame(dyingFrame[0]);
+				//poof->flipHorizontal(false);
+
+				if (dyingFrame[0] > 4) {
+					poof->setScale(STACK_SCALE); // Magic number to rescale asset
+					poof->setAnchor(Vec2::ANCHOR_CENTER);
+					poof->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
+					
+					layer->swapChild(pstackNodes[i], poof, false);
+				}
+			}
+
+		}
+
+
 	}
 	Stack ostack = oppGlobe->getStack();
 
@@ -1745,82 +1922,97 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			smoke->setFrame(6 - 1 - eSmokeFrame[i]);
 		}
 
-        if (signDone) {
-            //ANIMATE DEATH OVERLAY HERE
-            if (i == 0) {
+		if (eShotProgress != -1 && i == 0) {
 
-                if (isNextFrame) {
-                    if (shotProgress != -1) {
-                        //a shot has begun
+			int elemFrame = 0;
+			std::shared_ptr<Texture> shot;
+			switch (pType) {
+			case element::Fire:
+				shot = fireShot;
+				elemFrame = 0;
+				break;
+			case element::Water:
+				shot = waterShot;
+				elemFrame = 1;
+				break;
+			case element::Grass:
+				shot = grassShot;
+				elemFrame = 2;
+				break;
+			default:
+				shot = fireShot;
+				elemFrame = 0;
+				break;
+			}
 
-                        if (shotProgress < middleScreenFrame) {
-                            //change from text to the opponent element type texture
-                            /*std::shared_ptr<AnimationNode> shot = AnimationNode::alloc(text, 1, CHICKEN_SHOT_COLS);
-                            ostackNodes[i]->addChild(shot);
-                            chick->setPosition(50*shotProgress, 0);*/
-                        }
-                        else if (shotProgress >= middleScreenFrame) {
-                            if (shotProgress == middleScreenFrame * 2 && playerChickenWins) {
-                                //shot has reached the enemy chicken!
-                                //animation of defeat should begin
-                                //dyingFrame[1]=dyingFrame[1]+1;
+			std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
+			ostackNodes[i]->addChild(projec);
+			projec->setScale(0.6);
+			projec->setFrame(elemFrame);
 
-                            }
+			middleScreen = pstackNodes[i]->getWorldPosition().x + (ostackNodes[i]->getWorldPosition().x - pstackNodes[i]->getWorldPosition().x) / 2;
 
-                        }
-                        shotProgress += 1;
+			//a shot has begun
+			int shotX = -BULLET_SPEED * eShotProgress ;
+			projec->setPosition(shotX, ostackNodes[0]->getHeight());
+			projec->flipHorizontal(true);
+			
+			if (isNextFrame && eShotProgress != -1) {
 
-                    }
-
-                }
+				eShotProgress += 1;
+			}
+		}
 
 
+		if (i == 0) {
 
-                std::shared_ptr<Texture> deathText;
-                switch (eType) {
-                case element::Fire:
-                    deathText = fireTrans;
-                    break;
-                case element::Water:
-                    deathText = waterTrans;
-                    break;
-                case element::Grass:
-                    deathText = grassTrans;
-                    break;
-                default:
-                    deathText = fireTrans;
-                    break;
-                }
+			std::shared_ptr<Texture> deathText;
+			switch (eType) {
+			case element::Fire:
+				deathText = fireTrans;
+				break;
+			case element::Water:
+				deathText = waterTrans;
+				break;
+			case element::Grass:
+				deathText = grassTrans;
+				break;
+			default:
+				deathText = fireTrans;
+				break;
+			}
 
-                if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1) {
-                    dyingFrame[1] += 1;
-                    std::string str = std::to_string(dyingFrame[1]);
-                    const char * c = str.c_str();
-    //				CULog(c);
-                    if (dyingFrame[1] >= DEATH_ANIM_COLS) {
-                        dyingFrame[1] = -1;
-                        shotProgress = -1;
-                    }
-                }
+			if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1) {
+				dyingFrame[1] += 1;
 
-                if (dyingFrame[1] > -1 && playerChickenWins > -1)
-                {
-                    std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
-                    ostackNodes[i]->addChild(poof);
-                    poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
-                    //poof->flipHorizontal(false);
+				if (dyingFrame[1] >= DEATH_ANIM_COLS) {
+					dyingFrame[1] = -2;
 
-                    if (dyingFrame[1] > 4) {
-                        poof->setScale(STACK_SCALE); // Magic number to rescale asset
-                        poof->setAnchor(Vec2::ANCHOR_CENTER);
-                        poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-                        poof->flipHorizontal(true);
-                        layer->swapChild(ostackNodes[i], poof, false);
-                    }
-                }
-            }
-        }
+					//set chicken to not visible!
+				}
+			}
 
+			if (dyingFrame[1] == -2) {
+				ostackNodes[i]->setVisible(false);
+			}
+
+			if (dyingFrame[1] > -1 && playerChickenWins > -1)
+			{
+				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
+				ostackNodes[i]->addChild(poof);
+				poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
+				//poof->flipHorizontal(false);
+
+				if (dyingFrame[1] > 4) {
+					poof->setScale(STACK_SCALE); // Magic number to rescale asset
+					poof->setAnchor(Vec2::ANCHOR_CENTER);
+					poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
+					poof->flipHorizontal(true);
+					layer->swapChild(ostackNodes[i], poof, false);
+				}
+			}
+
+		}
 	}
 
 	if (isTutor) {
@@ -1964,19 +2156,31 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
             signDone = true;
             clashSignCanvas->setVisible(false);
         }
-        signCount--;
-        if (signCount % 5 == 0){ signframe++; }
+        signCount-= timestep;
+        //if (STILL_SIGN_TIME - signCount < (signframe*2.0/(SIGN_FILMSTRIP_LENGTH)) ){ signframe++; }
+		if (isNextFrame) {
+			signframe++;
+		}
         sign->setFrame(signframe);
         return;
     }
     if (!isClashing && signDone){
         signDone = false;
-        signCount = 500;
+        signCount = STILL_SIGN_TIME;
         signframe = 1;
     }
 
+	if (signCount <= 0 ) {
+		signDone = true;
+	}
+
+	if (signDone) {
+		signCount = STILL_SIGN_TIME;
+		clashSignCanvas->setVisible(false);
+	}
+
 	//Update win and loss screens
-	if (playerGlobe->getHealth() < 1) {
+	if (playerGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("player_moose")->getColor() == Color4f::WHITE) {
 		loseCanvas->setVisible(true);
 		if (!hasLost) {
 			//Create the loss home button
@@ -1991,11 +2195,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					loseCanvas->setVisible(false);
+                    playButtonSound(1);
 				}
 			});
 			loseCanvas->addChild(hButtL);
 			//ensure keys are unique
 			hButtL->activate(53);
+            losebuttons.push_back(hButtL); // 0
 
 			//Create the loss redo button
 			std::shared_ptr<PolygonNode> redoPolyL = PolygonNode::allocWithTexture(redo);
@@ -2009,17 +2215,18 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					loseCanvas->setVisible(false);
-
+                    playButtonSound(0);
 				}
 			});
 			loseCanvas->addChild(rButtL);
 			//ensure keys are unique
 			rButtL->activate(54);
+            losebuttons.push_back(rButtL); // 1
 		}
 		hasLost = true;
 		deactivateHand();
 	}
-	else if (oppGlobe->getHealth() < 1) {
+	else if (oppGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("opp_moose")->getColor() == Color4f::WHITE) {
 		winCanvas->setVisible(true);
 		if (!hasWon) {
 			//Init the win home button
@@ -2034,12 +2241,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					goHome = true;
 					winCanvas->setVisible(false);
-
+                    playButtonSound(1);
 				}
 			});
 			winCanvas->addChild(hButt);
 			//ensure keys are unique
 			hButt->activate(50);
+            winbuttons.push_back(hButt); // 0
 
 			//Init the win redo button
 			std::shared_ptr<PolygonNode> redoPoly = PolygonNode::allocWithTexture(redo);
@@ -2053,11 +2261,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					retry = true;
 					winCanvas->setVisible(false);
+                    playButtonSound(0);
 				}
 			});
 			winCanvas->addChild(rButt);
 			//ensure keys are unique
 			rButt->activate(51);
+            winbuttons.push_back(rButt); // 1
 
 			//Init the win next level button
 			std::shared_ptr<PolygonNode> levelPoly = PolygonNode::allocWithTexture(nextlvl);
@@ -2071,11 +2281,13 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				if (down) {
 					nextLevel = true;
 					winCanvas->setVisible(false);
+                    playButtonSound(0);
 				}
 			});
 			winCanvas->addChild(lButt);
 			//ensure keys are unique
 			lButt->activate(52);
+            winbuttons.push_back(lButt); // 2
 		}
 		hasWon = true;
 		deactivateHand();
@@ -2292,11 +2504,22 @@ void SceneBuilder1::setOppCost(string costume) {
 	moose2->flipHorizontal(true);
 	mooseCanvas->addChildWithName(moose2, "opp_moose");
     
-	if (retry || goHome || nextLevel || !isPaused) { deactivatePause(); };
-    
-//    if (retry or goHome){
-//        isPaused = false;
-//    }
+	if (retry || goHome || nextLevel || !isPaused) {
+        deactivatePause();
+        deactivateWin();
+        deactivateLose();
+    };
+
+}
+
+void SceneBuilder1::playButtonSound(int sound) {
+    //Play the button sfx
+    // 0 is A, 1 is B
+    string sfx = sound ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+    auto source = _assets->get<Sound>(sfx);
+    if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+        AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+    }
 }
 
 void SceneBuilder1::deactivateHand() {
@@ -2333,6 +2556,36 @@ void SceneBuilder1::deactivatePause() {
 		pausebuttons[i]->deactivate();
 	}
     isPaused = false;
+}
+
+void SceneBuilder1::activateWin() {
+    winCanvas->setVisible(true);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->activate(50 + i);
+    }
+}
+
+void SceneBuilder1::deactivateWin() {
+    winCanvas->setVisible(false);
+    for (int i = 0; i < winbuttons.size(); i++) {
+        winbuttons[i]->deactivate();
+    }
+    hasWon = false;
+}
+
+void SceneBuilder1::activateLose() {
+    loseCanvas->setVisible(true);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->activate(53 + i);
+    }
+}
+
+void SceneBuilder1::deactivateLose() {
+    loseCanvas->setVisible(false);
+    for (int i = 0; i < losebuttons.size(); i++) {
+        losebuttons[i]->deactivate();
+    }
+    hasLost = false;
 }
 
 bool SceneBuilder1::getHome() {
@@ -2465,3 +2718,4 @@ void SceneBuilder1::exitTutorial() {
 	tutbutton6->deactivate();
 	tutbutton7->deactivate();
 }
+

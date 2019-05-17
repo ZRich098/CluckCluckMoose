@@ -7,6 +7,20 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "projectiles": {
+            "file": "textures/projectiles.PNG",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "minus": {
+            "file": "textures/num_-.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "fire": {
             "file": "textures/fire_chick.png",
             "minfilter": "linear",
@@ -784,8 +798,23 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "helpleft": {
+            "file": "textures/helpmenu/arrow_left.png",
+
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "tutor_2": {
             "file": "textures/tutorial/tutorial_2_static_elements.png",
+      "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "helpright": {
+            "file": "textures/helpmenu/arrow_right.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -798,8 +827,22 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "helpbg": {
+            "file": "textures/helpmenu/bg_neutral_v1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "tutor_4": {
             "file": "textures/tutorial/tutorial_4_static_cardInfo.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help1": {
+            "file": "textures/helpmenu/help_pg1_distribution.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -812,6 +855,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "help2": {
+            "file": "textures/helpmenu/help_pg2_drag_animation.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "tutor_6": {
             "file": "textures/tutorial/tutorial_6_animation_clash.png",
             "minfilter": "linear",
@@ -819,8 +869,22 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "help3": {
+            "file": "textures/helpmenu/help_pg3_preview_animation.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "tutor_7": {
             "file": "textures/tutorial/tutorial_7_static_finish.png",
+      "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help4": {
+            "file": "textures/helpmenu/help_pg4_clash_animation.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -835,6 +899,13 @@
         },
         "tutor_spy": {
             "file": "textures/tutorial/animation_spy_chicken_glowing_empty.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
+        "help5": {
+            "file": "textures/helpmenu/help_pg5_health.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
@@ -918,8 +989,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 1
@@ -935,8 +1006,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 1
@@ -952,8 +1023,8 @@
                 "y_alignment" : "bottom"
             },
             "children"  : {
-                
-                
+
+
             },
             "layout" : {
                 "priority" : 2

@@ -9,6 +9,10 @@
 #include <unordered_map>
 #include <sstream>
 
+// Sfx for the game
+#define SOUND_BUTTON_A        "button_a"
+#define SOUND_BUTTON_B        "button_b"
+
 /**
  * A scene for demoing a layout manager
  */
@@ -102,6 +106,7 @@ public:
 
     void drawNewBox(int cur);
     void drawLevelNodes(int cur);
+    void playButtonSound(int sound);
     cugl::Size computeActiveSize() const;
 };
 

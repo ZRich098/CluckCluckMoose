@@ -137,7 +137,9 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     backbutt->setListener([=](const std::string& name, bool down) {
         if (down) {
             backClicked = true;
-            level = 0; }});
+            level = 0;
+            playButtonSound(1);
+        }});
     levelbuttonCanvas->addChild(backbutt);
     backbutt->activate(104);
     levelbuttons.push_back(backbutt); // 0
@@ -151,7 +153,10 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     upbutt->setScale(0.5, 0.5);
     upbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/2 + 120);
     upbutt->setListener([=](const std::string& name, bool down) {
-        if (down) { upClicked = true; }});
+        if (down) {
+            upClicked = true;
+            playButtonSound(0);
+        }});
     levelbuttonCanvas->addChild(upbutt);
     upbutt->activate(105);
     levelbuttons.push_back(upbutt); // 1
@@ -165,7 +170,10 @@ bool LevelScene::init(const std::shared_ptr<AssetManager>& assets) {
     downbutt->setScale(0.5, 0.5);
     downbutt->setPosition(levelscreenWidth*5/16, levelscreenHeight/2 - 450);
     downbutt->setListener([=](const std::string& name, bool down) {
-        if (down) { downClicked = true; }});
+        if (down) {
+            downClicked = true;
+            playButtonSound(1);
+        }});
     levelbuttonCanvas->addChild(downbutt);
     downbutt->activate(106);
     levelbuttons.push_back(downbutt); // 2
@@ -199,6 +207,7 @@ void LevelScene::dispose() {
 void LevelScene::update(float timestep) {
     if (curmap == 0) { // farm
         levelbuttons[2]->setVisible(false);
+        levelbuttons[2]->deactivate();
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -208,6 +217,7 @@ void LevelScene::update(float timestep) {
     }
     else if (curmap == 1) { // forest
         levelbuttons[2]->setVisible(true);
+        levelbuttons[2]->activate(106);
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -221,6 +231,7 @@ void LevelScene::update(float timestep) {
     }
     else if (curmap == 2){ // plant
         levelbuttons[1]->setVisible(true);
+        levelbuttons[1]->activate(105);
         if (upClicked){
             curmap++;
             drawNew = true;
@@ -234,6 +245,7 @@ void LevelScene::update(float timestep) {
     }
     else if (curmap == 3){ //throne
         levelbuttons[1]->setVisible(false);
+        levelbuttons[1]->deactivate();
         if (upClicked){
             upClicked = false;
         }
@@ -282,9 +294,6 @@ void LevelScene::deactivateButtons() {
  * Activates buttons to allow for seamless scene changes
  */
 void LevelScene::activateButtons() {
-//    for (int i = 0; i <= 5; i++) {
-//        levelbuttons[i]->activate(104 + i);
-//    }
     levelbuttons[0]->activate(104);
     levelbuttons[1]->activate(105);
     levelbuttons[2]->activate(106);
@@ -320,7 +329,11 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
             butt->setAnchor(Vec2::ANCHOR_CENTER);
             butt->setScale(0.5, 0.5);
             butt->setPosition(posX + 15, posY + 15);
-            butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+            butt->setListener([=](const std::string& name, bool down) {
+                if (down) {
+                    level = lev;
+                    playButtonSound(0);
+                } });
             levelbuttonCanvas->addChild(butt);
             butt->activate(107 + (lev % 3));
             levelbuttons.push_back(butt);
@@ -333,7 +346,11 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
             butt->setAnchor(Vec2::ANCHOR_CENTER);
             butt->setScale(0.45, 0.45);
             butt->setPosition(posX, posY + 10);
-            butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+            butt->setListener([=](const std::string& name, bool down) {
+                if (down) {
+                    level = lev;
+                    playButtonSound(0);
+                } });
             levelbuttonCanvas->addChild(butt);
             butt->activate(107 + (lev % 3));
             levelbuttons.push_back(butt);
@@ -346,7 +363,10 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
             butt->setAnchor(Vec2::ANCHOR_CENTER);
             butt->setScale(0.45, 0.45);
             butt->setPosition(posX, posY);
-            butt->setListener([=](const std::string& name, bool down) { if (down) { level = lev; } });
+            butt->setListener([=](const std::string& name, bool down) { if (down) {
+                level = lev;
+                playButtonSound(0);
+            } });
             levelbuttonCanvas->addChild(butt);
             butt->activate(107 + (lev % 3));
             levelbuttons.push_back(butt);
@@ -398,14 +418,11 @@ void LevelScene::drawLevelNodes(int cur){
 	float posX2 = 15;
 	float posY2 = levelscreenHeight / 2 - 90;
     if (nodesMade && levelbuttons.size() == 6){
-        CULog("levelbuttons size: %d", levelbuttons.size());
         for (int i = 5; i >= 3; i--) {
-            CULog("for i %d, ilevelbuttons size: %d",i, levelbuttons.size());
             levelbuttons[i]->setVisible(false);
             levelbuttons[i]->deactivate();
             levelbuttons.pop_back();
         }
-        CULog("levelbuttons size after pop_back: %d", levelbuttons.size());
     }
     
     if (curmap == 0){
@@ -429,6 +446,16 @@ void LevelScene::drawLevelNodes(int cur){
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 10, true, false);
     }
     nodesMade = true;
+}
+
+void LevelScene::playButtonSound(int sound) {
+    //Play the button sfx
+    // 0 is A, 1 is B
+    string sfx = sound ? SOUND_BUTTON_A : SOUND_BUTTON_B;
+    auto source = _assets->get<Sound>(sfx);
+    if (!AudioChannels::get()->isActiveEffect(SOUND_BUTTON_A) && !AudioChannels::get()->isActiveEffect(SOUND_BUTTON_B)) {
+        AudioChannels::get()->playEffect(sfx, source, false, source->getVolume());
+    }
 }
 
 Size LevelScene::computeActiveSize() const {

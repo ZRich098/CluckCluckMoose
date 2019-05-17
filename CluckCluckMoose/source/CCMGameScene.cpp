@@ -22,7 +22,7 @@ using namespace cugl;
 #define SCENE_WIDTH 576
 #define SCENE_HEIGHT 1024
 /** length of time in animation frames for a clash between chickens */
-#define CLASHLENGTH 8
+#define CLASHLENGTH 14
 /** length of time in animation frames before a special chicken effect plays */
 #define SPECIALDELAY 8
 /** maximum size of chicken stack */
@@ -444,7 +444,7 @@ void GameScene::update(float timestep) {
 			//CULog(sb->getPaused() ? "true" : "false");
 			isClashing = true;
 			firstClash = true;
-			cooldown = CLASHLENGTH * 1.5;
+			cooldown = CLASHLENGTH * 3;
 
 			//Play the clashing sfx
 			auto source = _assets->get<Sound>(SOUND_BELL);
