@@ -110,11 +110,11 @@ bool newAwk;
 #define BLOCK_X_SCALE 0.3
 #define BLOCK_Y_SCALE 0.3
 #define HBAR_SCALE 0.25
-#define ELT_Y_OFFSET 75
+#define ELT_Y_OFFSET 55
 #define ELT_INFO_SCALE 0.7
-#define ELT_INFO_X_OFFSET 30
+#define ELT_INFO_X_OFFSET -3
 #define ELT_NUM_X_OFFSET 40
-#define ELT_NUM_Y_OFFSET 5
+#define ELT_NUM_Y_OFFSET 40
 #define ELT_NUM_SCALE 0.7
 #define ELT_NUM_SPACING 50
 #define SHADOW_SCALE 0.6
@@ -1395,8 +1395,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
         std::shared_ptr<Texture> texturePauseSettings;
-        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
-        else{ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
+        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
+        else{ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
         std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
         pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
