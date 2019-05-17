@@ -386,6 +386,7 @@ void LevelScene::buildLevelSelect(std::shared_ptr<cugl::Node> node, int posX, in
         numpoly->setAnchor(Vec2::ANCHOR_CENTER);
         if (num == 1) { numpoly->setPosition(posX - 80, posY); }
         else { numpoly->setPosition(posX + 80, posY); }
+        numpoly->setColor(Color4(Vec4(0, 0, 0, 0.4)));
         levelNumCanvas->addChild(numpoly);
     }
 }

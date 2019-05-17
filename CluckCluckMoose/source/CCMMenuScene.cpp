@@ -77,7 +77,7 @@ bool helpLeftClicked;
 bool helpBackClicked;
 bool creditsClicked;
 bool creditsBackClicked;
-int page; // help page #
+int page = 1; // help page #
 int helpframe = 0;
 int helpcount = 500;
 
@@ -316,7 +316,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     helpCanvas1->setVisible(false);
 
     texturehelp2 = _assets->get<Texture>("help2");
-    help2 = AnimationNode::alloc(texturehelp2,1,16);
+    help2 = AnimationNode::alloc(texturehelp2,1,14);
     help2->setAnchor(Vec2::ANCHOR_CENTER);
     help2->setScale(1.125f);
     help2->setPosition(menuscreenWidth/2, menuscreenHeight/2);
@@ -443,8 +443,14 @@ void MenuScene::update(float timestep) {
         helpClicked = false;
         deactivateButtons();
         activateHelp();
-        helpbuttons[1]->deactivate();
-        helpbuttons[1]->setVisible(false);
+        page = 1;
+        if (helpbuttons[1]->isActive()){
+            helpbuttons[1]->deactivate();
+            helpbuttons[1]->setVisible(false);
+        }
+		if (!helpbuttons[0]->isVisible()) {
+			helpbuttons[0]->setVisible(true);
+		}
     }
     if (helpBackClicked){
         helpBackClicked = false;
@@ -453,7 +459,7 @@ void MenuScene::update(float timestep) {
     }
     if (page == 2 || page == 3 || page == 4){ // animations
         int filmstrip_len = 8;
-        if (page == 2) { filmstrip_len = 16; }
+        if (page == 2) { filmstrip_len = 14; }
         else if (page == 3) { filmstrip_len = 8; }
         else if (page == 4) { filmstrip_len = 10; }
         if (helpframe >= filmstrip_len - 1){ helpframe = 0; }
@@ -474,6 +480,8 @@ void MenuScene::update(float timestep) {
             if (page == 1){
                 helpCanvas1->setVisible(false);
                 helpCanvas2->setVisible(true);
+                helpbuttons[1]->activate(121);
+                helpbuttons[1]->setVisible(true);
             }
             if (page == 2){
                 helpCanvas2->setVisible(false);
@@ -486,12 +494,16 @@ void MenuScene::update(float timestep) {
             if (page == 4){
                 helpCanvas4->setVisible(false);
                 helpCanvas5->setVisible(true);
+                helpbuttons[0]->deactivate();
+                helpbuttons[0]->setVisible(false);
             }
         }
         if (helpLeftClicked){
             if (page == 2){
                 helpCanvas2->setVisible(false);
                 helpCanvas1->setVisible(true);
+                helpbuttons[1]->deactivate();
+                helpbuttons[1]->setVisible(false);
             }
             if (page == 3){
                 helpCanvas3->setVisible(false);
@@ -504,6 +516,8 @@ void MenuScene::update(float timestep) {
             if (page == 5){
                 helpCanvas5->setVisible(false);
                 helpCanvas4->setVisible(true);
+                helpbuttons[0]->activate(120);
+                helpbuttons[0]->setVisible(true);
             }
         }
         if (page < 5 && helpRightClicked) { page++; }
@@ -511,23 +525,6 @@ void MenuScene::update(float timestep) {
         if (helpRightClicked) { helpRightClicked = false; }
         if (helpLeftClicked) { helpLeftClicked = false; }
     }
-    if (page == 1){
-        helpbuttons[1]->deactivate();
-        helpbuttons[1]->setVisible(false);
-    }
-    if (page == 2){
-        helpbuttons[1]->activate(121);
-        helpbuttons[1]->setVisible(true);
-    }
-    if (page == 5){
-        helpbuttons[0]->deactivate();
-        helpbuttons[0]->setVisible(false);
-    }
-    if (page == 4){
-        helpbuttons[0]->activate(120);
-        helpbuttons[0]->setVisible(true);
-    }
-    
 }
 
 /**
