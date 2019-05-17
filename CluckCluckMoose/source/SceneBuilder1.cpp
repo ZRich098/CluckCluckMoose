@@ -1395,8 +1395,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
         pausebuttons[3]->deactivate();
         pausebuttons.pop_back();
         std::shared_ptr<Texture> texturePauseSettings;
-        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
-        else{ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
+        if (!soundToggle){ texturePauseSettings = _assets->get<Texture>("pausesoundon"); }
+        else{ texturePauseSettings = _assets->get<Texture>("pausesoundoff"); }
         std::shared_ptr<PolygonNode> pausesettingsid = PolygonNode::allocWithTexture(texturePauseSettings);
         pausesettingsid->setAnchor(Vec2::ANCHOR_CENTER);
         std::shared_ptr<Button> pauseSettings = Button::alloc(pausesettingsid);
