@@ -428,7 +428,7 @@ void LevelScene::drawLevelNodes(int cur){
     if (curmap == 0){
         buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 3, false, false);
         buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 2, false, false);
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 1, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 1, false, true);
     }
     else if (curmap == 1){
         buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 6, false, false);
@@ -436,14 +436,14 @@ void LevelScene::drawLevelNodes(int cur){
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 4, false, false);
     }
     else if (curmap == 2){
-        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 9, true, false);
-        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 8, false, true);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 9, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 8, false, false);
         buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 7, false, false);
     }
     else { // curmap == 3
-        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 12, true, false);
-        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 11, true, false);
-        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 10, true, false);
+        buildLevelSelect(levelbuttonCanvas, posX1, posY1, levelNodes, 12, false, false);
+        buildLevelSelect(levelbuttonCanvas, posX2, posY2, levelNodes, 11, false, false);
+        buildLevelSelect(levelbuttonCanvas, -levelscreenWidth*4/32, levelscreenHeight/2 - 300, levelNodes, 10, false, false);
     }
     nodesMade = true;
 }
