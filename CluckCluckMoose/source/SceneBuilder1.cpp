@@ -1557,7 +1557,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 
 		//START DEATH ANIMATION HERE
 		if(i ==0)
-		CULog("%d", dyingFrame[0]);
+		//CULog("%d", dyingFrame[0]);
 		//shot starts here
 		if (pShotProgress != -1 && i == 0) {
 
@@ -2020,7 +2020,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 	}
 
 	//Update win and loss screens
-	if (playerGlobe->getHealth() < 1) {
+	if (playerGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("player_moose")->getColor() == Color4f::WHITE) {
 		loseCanvas->setVisible(true);
 		if (!hasLost) {
 			//Create the loss home button
@@ -2063,7 +2063,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		hasLost = true;
 		deactivateHand();
 	}
-	else if (oppGlobe->getHealth() < 1) {
+	else if (oppGlobe->getHealth() <= 0 && mooseCanvas->getChildByName("opp_moose")->getColor() == Color4f::WHITE) {
 		winCanvas->setVisible(true);
 		if (!hasWon) {
 			//Init the win home button
