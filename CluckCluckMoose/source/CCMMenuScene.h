@@ -7,6 +7,8 @@
 
 #include <cugl/cugl.h>
 #include <unordered_map>
+#include <sstream>
+
 
 /**
  * A scene for demoing a layout manager
@@ -78,7 +80,7 @@ public:
 
 
 	/** Helper function for playing a sound when a button is clicked*/
-	void playButtonSound();
+	void playButtonSound(int sound);
 
     /**
      * Getters for menu buttons
@@ -86,8 +88,11 @@ public:
      */
     bool getPlay();
     void setPlay(bool val);
+    void activateHelp();
+    void deactivateHelp();
     void activateButtons();
     void deactivateButtons();
+
     cugl::Size computeActiveSize() const;
 };
 

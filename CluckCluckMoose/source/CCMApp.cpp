@@ -227,6 +227,7 @@ void CCMApp::update(float timestep) {
                 _current = 0; // back to main menu
                 _gameplay[_current]->setActive(true);
                 _levelscene.setBack(false);
+                _menuscene.activateButtons();
             }
             else if (_levelscene.getLevel() != 0) { // level chosen
                 _levelscene.deactivateButtons();
