@@ -2163,6 +2163,7 @@ void SceneBuilder1::deactivateWin() {
     for (int i = 0; i < winbuttons.size(); i++) {
         winbuttons[i]->deactivate();
     }
+    hasWon = false;
 }
 
 void SceneBuilder1::activateLose() {
@@ -2177,6 +2178,7 @@ void SceneBuilder1::deactivateLose() {
     for (int i = 0; i < losebuttons.size(); i++) {
         losebuttons[i]->deactivate();
     }
+    hasLost = false;
 }
 
 bool SceneBuilder1::getHome() {
