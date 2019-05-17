@@ -126,6 +126,7 @@ bool hasLost;
 #define INFO_DELAY 15
 #define MOOSE_SCALE 0.5f
 #define BULLET_SPEED 100
+#define MOOSE_DAMAGE_TIME 4 //number of frames a moose shows its damage
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -166,6 +167,7 @@ std::shared_ptr<Texture> num1;
 std::shared_ptr<Texture> num2;
 std::shared_ptr<Texture> num3;
 std::shared_ptr<Texture> num4;
+std::shared_ptr<Texture> numMinus;
 
 //Shadow Texture
 std::shared_ptr<Texture> shadow;
@@ -253,6 +255,11 @@ float timeAmount = 0;
 float timeBtnFrames = 0.1;
 //keeps track of which frame chicken flapping is on in the hand
 std::vector<int> flappingFrame;
+
+bool oLose = false; //true if opponent moose takes damage
+bool pLose = false; //true if player moose takes damage
+int damageTaken = 0;
+int tintedTime = 0; //timer for how long a moose stays tinted
 
 
 //Frame tracking for attacking animations
@@ -883,6 +890,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	num2 = _assets->get<Texture>("num2");
 	num3 = _assets->get<Texture>("num3");
 	num4 = _assets->get<Texture>("num4");
+	numMinus = _assets->get<Texture>("minus");
 	std::shared_ptr<PolygonNode> fireNum = PolygonNode::allocWithTexture(num1);
 	std::shared_ptr<PolygonNode> waterNum = PolygonNode::allocWithTexture(num1);
 	std::shared_ptr<PolygonNode> grassNum = PolygonNode::allocWithTexture(num1);
@@ -1041,12 +1049,23 @@ void SceneBuilder1::chickDefeat(element playerType, element opponentType, int wi
 	eType = playerType;
 	pType = opponentType;
 	CULog("somedefeat");
-	/*dyingFrame[1] = 0;
-	dyingFrame[0] = 0;*/
+	dyingFrame[1] = -1;
+	dyingFrame[0] = -1;
 }
 
 void SceneBuilder1::mooseDefeat(int healthChange) {
-
+	if (healthChange > 0) {
+		//opponent loses health
+		oLose = true;
+		pLose = false;
+		damageTaken = healthChange;
+	}
+	else if (healthChange < 0) {
+		oLose = false;
+		pLose = true;
+		damageTaken = -healthChange;
+		
+	}
 }
 
 std::shared_ptr<AnimationNode> SceneBuilder1::buildChicken(std::shared_ptr<Texture> texture, std::shared_ptr<Node> node, int posX, int posY, bool flip) {
@@ -1100,7 +1119,89 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				thisFrame = 0;
 			thisFrame++;
 		}
+
+		
+
 	}
+
+
+	//change mooses if taking damage;
+	std::shared_ptr<Node> eMoose = mooseCanvas->getChildByName("opp_moose");
+	std::shared_ptr<Node> pMoose = mooseCanvas->getChildByName("player_moose");
+
+	if ((oLose || pLose) ) {
+		std::shared_ptr<Texture> dText;
+
+		if (damageTaken == 1) {
+			dText = num1;
+		}
+		else if (damageTaken == 2) {
+			dText = num2;
+		}
+		else if (damageTaken == 3) {
+			dText = num3;
+		}
+		else if (damageTaken == 4) {
+			dText = num4;
+		}
+		std::shared_ptr<PolygonNode> minus = PolygonNode::allocWithTexture(numMinus);
+		std::shared_ptr<PolygonNode> damageNum = PolygonNode::allocWithTexture(dText);
+
+
+		if (isNextFrame) {
+			tintedTime += 1;
+			if (tintedTime >= MOOSE_DAMAGE_TIME) {
+				tintedTime = 0;
+				oLose = false;
+				pLose = false;
+			}
+		}
+		int vmove = 10 * tintedTime;
+		minus->setScale(1.5);
+		damageNum->setScale(1.5);
+
+		if (oLose) {
+			eMoose->setColor(Color4f::RED);
+			pMoose->setColor(Color4f::WHITE);
+			//start drawing subtraction text
+			eMoose->removeChildByTag(1);
+			eMoose->addChildWithTag(damageNum,1);
+			eMoose->addChildWithTag(minus, 1);
+			
+			
+
+			minus->setPosition(pMoose->getWidth() / 4, pMoose->getHeight() * 2 + 50 +vmove);
+			damageNum->setPosition(eMoose->getWidth() / 4 + minus->getWidth(), eMoose->getHeight()*2 + 50 +  vmove);
+			
+
+		}
+		else if (pLose) {
+			pMoose->setColor(Color4f::RED);
+			eMoose->setColor(Color4f::WHITE);
+			
+			pMoose->removeChildByTag(1);
+
+			pMoose->addChildWithTag(minus, 1);
+			pMoose->addChildWithTag(damageNum,1);
+			minus->setPosition(pMoose->getWidth()*3 / 4, pMoose->getHeight()*2 + 50 +  vmove);
+			damageNum->setPosition(pMoose->getWidth() * 3 / 4 + minus->getWidth(), pMoose->getHeight() * 2 + 50 + vmove);
+		}
+		
+		
+		//add to timer
+		
+
+	}
+
+	
+	 if(!pLose && !oLose) {
+		eMoose->setColor(Color4f::WHITE);
+		pMoose->setColor(Color4f::WHITE);
+		eMoose->removeChildByTag(1);
+		pMoose->removeChildByTag(1);
+
+	}
+	
 	
 
 
@@ -1455,7 +1556,8 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 
 		//START DEATH ANIMATION HERE
-        
+		if(i ==0)
+		CULog("%d", dyingFrame[0]);
 		//shot starts here
 		if (pShotProgress != -1 && i == 0) {
 
@@ -1490,10 +1592,17 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			//a shot has begun
 			int shotX = BULLET_SPEED * pShotProgress + pstackNodes[i]->getWidth() * 2;
 			projec->setPosition(shotX, pstackNodes[0]->getHeight());
+			
+			if (pShotProgress > 4) {
+				if(dyingFrame[0] == -1){
+					
+					dyingFrame[0] = 0;
+				}
 
-			if (pShotProgress > 3) {
-				dyingFrame[1] = 0;
-				dyingFrame[0] = 0;
+				if(dyingFrame[1] == -1)
+					dyingFrame[1] = 0;
+				
+				
 				pShotProgress = -1;
 				eShotProgress = -1;
 			}
@@ -1516,6 +1625,7 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 
 		if (i == 0) {
+
 			std::shared_ptr<Texture> deathText;
 			switch (pType) {
 			case element::Fire:
@@ -1532,36 +1642,41 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				break;
 			}
 
-			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins < 1) {
-				dyingFrame[0] += 1;
-				/*std::string str = std::to_string(dyingFrame[0]);
-				const char * c = str.c_str();
-				CULog(c);*/
-				if (dyingFrame[0] >= DEATH_ANIM_COLS) {
-					dyingFrame[0] = -1;
+			
 
+			if (isNextFrame && dyingFrame[0] != -1 && playerChickenWins <1) {
+				dyingFrame[0] += 1;
+
+				if (dyingFrame[0] >= DEATH_ANIM_COLS) {
+					dyingFrame[0] = -2;
+					
+					//set chicken to not visible!
 				}
 			}
 
-			if (dyingFrame[0] > -1 && playerChickenWins < 1) {
+			if (dyingFrame[0] == -2) {
+				pstackNodes[i]->setVisible(false);
+			}
+
+			if (dyingFrame[0] > -1 && playerChickenWins <1)
+			{
 				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
 				pstackNodes[i]->addChild(poof);
 				poof->setFrame(dyingFrame[0]);
 				//poof->flipHorizontal(false);
+
 				if (dyingFrame[0] > 4) {
 					poof->setScale(STACK_SCALE); // Magic number to rescale asset
 					poof->setAnchor(Vec2::ANCHOR_CENTER);
 					poof->setPosition(pstackNodes[i]->getPositionX(), pstackNodes[i]->getPositionY());
-					poof->flipHorizontal(true);
+					
 					layer->swapChild(pstackNodes[i], poof, false);
 				}
 			}
+
 		}
 
-		
 
-		
-        
 	}
 	Stack ostack = oppGlobe->getStack();
 
@@ -1666,62 +1781,49 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 			smoke->setFrame(6 - 1 - eSmokeFrame[i]);
 		}
 
-		if (i == 0) {
+		if (eShotProgress != -1 && i == 0) {
 
-			if (pShotProgress != -1) {
-
-				int elemFrame = 0;
-				std::shared_ptr<Texture> shot;
-				switch (pType) {
-				case element::Fire:
-					shot = fireShot;
-					elemFrame = 2;
-					break;
-				case element::Water:
-					shot = waterShot;
-					elemFrame = 1;
-					break;
-				case element::Grass:
-					shot = grassShot;
-					elemFrame = 0;
-					break;
-				default:
-					shot = fireShot;
-					elemFrame = 2;
-					break;
-				}
-
-				std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
-				ostackNodes[i]->addChild(projec);
-				projec->setFrame(elemFrame);
-				projec->setScale(0.6);
-
-
-				//a shot has begun
-				int shotX = -BULLET_SPEED * eShotProgress;
-				projec->setPosition(shotX, ostackNodes[i]->getHeight());
-				projec->flipHorizontal(true);
-
-				//keep drawing past middle of the screen 
-				/*if (projec->getWorldPosition().x > middleScreen || ((playerChickenWins < 1) && projec->getWorldPosition().x > pstackNodes[i]->getWorldPosition().x)) {
-					
-
-				}
-				else {
-					if (playerChickenWins < 1)
-						dyingFrame[0] = 0;
-					eShotProgress = -1;
-				}*/
-
-				if (isNextFrame  && eShotProgress != -1) {
-
-
-					eShotProgress += 1;
-				}
-
+			int elemFrame = 0;
+			std::shared_ptr<Texture> shot;
+			switch (pType) {
+			case element::Fire:
+				shot = fireShot;
+				elemFrame = 0;
+				break;
+			case element::Water:
+				shot = waterShot;
+				elemFrame = 1;
+				break;
+			case element::Grass:
+				shot = grassShot;
+				elemFrame = 2;
+				break;
+			default:
+				shot = fireShot;
+				elemFrame = 0;
+				break;
 			}
 
+			std::shared_ptr<AnimationNode> projec = AnimationNode::alloc(shot, 1, 3);
+			ostackNodes[i]->addChild(projec);
+			projec->setScale(0.6);
+			projec->setFrame(elemFrame);
+
+			middleScreen = pstackNodes[i]->getWorldPosition().x + (ostackNodes[i]->getWorldPosition().x - pstackNodes[i]->getWorldPosition().x) / 2;
+
+			//a shot has begun
+			int shotX = -BULLET_SPEED * eShotProgress ;
+			projec->setPosition(shotX, ostackNodes[0]->getHeight());
+			projec->flipHorizontal(true);
 			
+			if (isNextFrame && eShotProgress != -1) {
+
+				eShotProgress += 1;
+			}
+		}
+
+
+		if (i == 0) {
 
 			std::shared_ptr<Texture> deathText;
 			switch (eType) {
@@ -1739,28 +1841,32 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 				break;
 			}
 
-			if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins < 1) {
+			if (isNextFrame && dyingFrame[1] != -1 && playerChickenWins > -1) {
 				dyingFrame[1] += 1;
-				/*std::string str = std::to_string(dyingFrame[0]);
-				const char * c = str.c_str();
-				CULog(c);*/
-				if (dyingFrame[1] >= DEATH_ANIM_COLS) {
-					dyingFrame[1] = -1;
 
+				if (dyingFrame[1] >= DEATH_ANIM_COLS) {
+					dyingFrame[1] = -2;
+
+					//set chicken to not visible!
 				}
 			}
 
-			if (dyingFrame[1] > -1 && playerChickenWins < 1) {
+			if (dyingFrame[1] == -2) {
+				ostackNodes[i]->setVisible(false);
+			}
+
+			if (dyingFrame[1] > -1 && playerChickenWins > -1)
+			{
 				std::shared_ptr<AnimationNode> poof = AnimationNode::alloc(deathText, 1, DEATH_ANIM_COLS);
 				ostackNodes[i]->addChild(poof);
-				poof->setFrame(dyingFrame[1]);
-				poof->flipHorizontal(true);
+				poof->setFrame(DEATH_ANIM_COLS - 1 - dyingFrame[1]);
 				//poof->flipHorizontal(false);
+
 				if (dyingFrame[1] > 4) {
 					poof->setScale(STACK_SCALE); // Magic number to rescale asset
 					poof->setAnchor(Vec2::ANCHOR_CENTER);
 					poof->setPosition(ostackNodes[i]->getPositionX(), ostackNodes[i]->getPositionY());
-					//poof->flipHorizontal(true);
+					poof->flipHorizontal(true);
 					layer->swapChild(ostackNodes[i], poof, false);
 				}
 			}
