@@ -323,7 +323,7 @@
             "wrapT": "clamp"
         },
         "groupedElts": {
-            "file": "textures/grouped_elements_v3.png",
+            "file": "textures/grouped_elements_v2.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS": "clamp",
