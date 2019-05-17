@@ -106,7 +106,7 @@ public:
 			if(pos < hand.size())
 				return hand.at(pos); 
 			else {
-				return Chicken::Chicken(special::PartridgePilferer);
+				return Chicken(special::PartridgePilferer);
 			}
 		};
 	/** Get the current play order of the Moose */
