@@ -339,7 +339,7 @@ void GameScene::update(float timestep) {
 				//CULog("OPP %s", opp->getStack().getTop()->toString().c_str());
 				//CULog("PLAY %s", test.toString().c_str());
 				skipState = NONE; // Gets the state machine out of the entry state
-
+				handEffect();
 				if (specialChanges(player->getStack(), opp->getStack())) {
 					cooldown = SPECIALDELAY;
 					CULog("Called");
@@ -357,7 +357,6 @@ void GameScene::update(float timestep) {
 			}
 			if (skipState == EXIT) {
 				// Resolves special chickens that affect the hands
-				handEffect();
 				prevHand--;
 				stackSize++;
 				skipState = ENTRY; // Returns the state machine to the entry state
