@@ -74,6 +74,8 @@ bool soundToggle;
 bool soundChanged;
 bool hasWon;
 bool hasLost;
+//Whether the player has seen the new chicken
+bool newAwk;
 
 
 /** The ID for the button listener */
@@ -134,6 +136,9 @@ bool hasLost;
 #define MOOSE_SCALE 0.5f
 #define BULLET_SPEED 100
 #define MOOSE_DAMAGE_TIME 8 //number of frames a moose shows its damage
+#define BADGE_SCALE 0.6
+#define BADGE_X_OFFSET -190
+#define BADGE_Y_OFFSET 225
 
 //Chicken Textures
 std::shared_ptr<Texture> textureF;
@@ -160,6 +165,8 @@ std::shared_ptr<Texture> infoParty;
 std::shared_ptr<Texture> infoSpy;
 std::shared_ptr<Texture> infoThick;
 std::shared_ptr<Texture> infoWitch;
+
+std::shared_ptr<Texture> newBadge;
 
 //Health textures
 std::shared_ptr<Texture> bar;
@@ -250,6 +257,10 @@ std::shared_ptr<Node> pauseMenuCanvas;
 
 std::shared_ptr<Node> clashSignCanvas;
 
+//Canvas for new chickens
+std::shared_ptr<Node> newChickCanvas;
+std::shared_ptr<Button> newChick;
+
 
 //Preview tracking
 bool previewSet;
@@ -332,6 +343,7 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	retry = false;
 	hasWon = false;
 	hasLost = false;
+	newAwk = true;
 
 	prevTint = false;
 
@@ -394,6 +406,9 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	infoSpy = _assets->get<Texture>("spyInfo");
 	infoThick = _assets->get<Texture>("thickInfo");
 	infoWitch = _assets->get<Texture>("witchInfo");
+
+	//Get "new" badge
+	newBadge = _assets->get<Texture>("newBadge");
 
 	smokeTrans = _assets->get<Texture>("smokeTrans");
 
@@ -608,6 +623,10 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	//Add health canvas
 	healthCanvas = Node::alloc();
 	layer->addChild(healthCanvas);
+
+	//Add new chicken canvas
+	newChickCanvas = Node::alloc();
+	layer->addChild(newChickCanvas);
 
 
 	//Add pause button canvas
@@ -1259,6 +1278,31 @@ bool SceneBuilder1::init(const std::shared_ptr<cugl::AssetManager>& assets, cons
 	prevDist.push_back(1);
 	prevDist.push_back(1);
 	prevDist.push_back(1);
+
+	//Initialize New Chicken Info
+	std::shared_ptr<PolygonNode> newChickImg = PolygonNode::allocWithTexture(infoF);
+	newChick = Button::alloc(newChickImg);
+	std::shared_ptr<PolygonNode> newBadgeImg = PolygonNode::allocWithTexture(newBadge);
+	std::shared_ptr<PolygonNode> darkOverlayNew = PolygonNode::allocWithTexture(wlOverlay);
+
+	darkOverlayNew->setScale(0.7f); // Magic number to rescale asset
+	darkOverlayNew->setAnchor(Vec2::ANCHOR_CENTER);
+	darkOverlayNew->setPosition(screenWidth / 2, screenHeight / 2);
+	newChickCanvas->addChild(darkOverlayNew);
+
+	newChick->setAnchor(Vec2::ANCHOR_CENTER);
+	newChick->setPosition(screenWidth / 2, screenHeight / 2);
+	newChick->setScale(INFO_SCALE);
+	newChick->setListener([=](const std::string& name, bool down) { if (down) {
+		newAwk = true;
+	}});
+	newChick->activate(75);
+
+	newChickCanvas->addChild(newChick);
+	newBadgeImg->setAnchor(Vec2::ANCHOR_CENTER);
+	newBadgeImg->setPosition(screenWidth / 2 + BADGE_X_OFFSET, screenHeight / 2 + BADGE_Y_OFFSET);
+	newBadgeImg->setScale(BADGE_SCALE);
+	newChickCanvas->addChild(newBadgeImg);
 
 	//Init win and loss screens
 	std::shared_ptr<PolygonNode> darkOverlay = PolygonNode::allocWithTexture(wlOverlay);
@@ -2357,6 +2401,16 @@ void SceneBuilder1::updateGameScene(float timestep, bool isClashing) {
 		}
 	}
 
+	//Update the new button status
+	if (newAwk) {
+		newChickCanvas->setVisible(false);
+		newChick->deactivate();
+	}
+	else {
+		newChickCanvas->setVisible(true);
+		newChick->activate(75);
+	}
+
 	//Update the opponent type distribution
 	for (int i = 0; i < 3; i++) {
 		int currDistI = (oppGlobe->getChickenElementDistribution())[i];
@@ -2628,6 +2682,25 @@ void SceneBuilder1::setHome(bool val) {
 }
 
 void SceneBuilder1::setLevelNum(int levelNum) {
+	_levelNum = levelNum;
+	AudioChannels::get()->stopMusic();
+	auto game_music = _assets->get<Sound>("farmMusic");
+	if (levelNum < 4) {
+		game_music = _assets->get<Sound>("farmMusic");
+	}
+	else if (levelNum < 7) {
+		game_music = _assets->get<Sound>("forestMusic");
+	}
+	else if (levelNum < 10) {
+		game_music = _assets->get<Sound>("nuclearMusic");
+	}
+	else {
+		game_music = _assets->get<Sound>("throneMusic");
+		//AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+		
+	}
+	AudioChannels::get()->playMusic(game_music, true, 0.5, 0);
+
 	hasWon = false;
 	hasLost = false;
 	isPaused = false;
@@ -2663,6 +2736,47 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	background->setPosition(screenWidth / 2, screenHeight / 2);
 	backCanvas->addChild(background);
 
+	newAwk = false;
+	std::shared_ptr<Texture> newChickText = infoF;
+	switch (levelNum) {
+	case 1:
+		newAwk = true;
+		break;
+	case 2:
+		newAwk = false;
+		newChickText = infoThick;
+		break;
+	case 4:
+		newAwk = false;
+		newChickText = infoReaper;
+		break;
+	case 5:
+		newAwk = false;
+		newChickText = infoMirror;
+		break;
+	case 7:
+		newAwk = false;
+		newChickText = infoNinja;
+		break;
+	case 8:
+		newAwk = false;
+		newChickText = infoParty;
+		break;
+	case 10:
+		newAwk = false;
+		newChickText = infoWitch;
+		break;
+	case 11:
+		newAwk = false;
+		newChickText = infoBomb;
+		break;
+	default:
+		newAwk = true;
+	}
+	std::shared_ptr<PolygonNode> newChickPoly = PolygonNode::allocWithTexture(newChickText);
+	std::shared_ptr<Node> oldChick = newChick->getChild(0);
+	newChick->swapChild(oldChick, newChickPoly);
+
 	//Draw foreground
 	std::shared_ptr<Texture> texturefg;
 	if (levelNum < 4) {
@@ -2682,6 +2796,7 @@ void SceneBuilder1::setLevelNum(int levelNum) {
 	foreground->setAnchor(Vec2::ANCHOR_BOTTOM_CENTER);
 	foreground->setPosition(screenWidth / 2, FORE_HEIGHT);
 	frontCanvas->addChild(foreground);
+
 
 	//rebind buttons
 	for (int i = 0; i < 6; i++) {

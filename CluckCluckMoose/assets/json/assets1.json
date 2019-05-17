@@ -217,6 +217,13 @@
             "wrapS": "clamp",
             "wrapT": "clamp"
         },
+        "newBadge": {
+            "file": "textures/lbl_new_chicken.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS": "clamp",
+            "wrapT": "clamp"
+        },
         "healthBar": {
             "file": "textures/base_no_pause.png",
             "minfilter": "linear",
@@ -911,60 +918,72 @@
             "wrapT": "clamp"
         }
     },
-	  "sounds": {
+    "sounds": {
         "bell": {
-            "type":     "sample",
-            "file":     "audio/boxing_bell.wav",
-            "volume":   0.5,
+            "type": "sample",
+            "file": "audio/boxing_bell.wav",
+            "volume": 0.5,
             "stream": false
         },
         "screech": {
-            "type":     "sample",
-            "file":     "audio/chicken_screech.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/chicken_screech.wav",
+            "volume": 0.8,
             "stream": false
         },
         "impact": {
-            "type":     "sample",
-            "file":     "audio/chicken_impact.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/chicken_impact.wav",
+            "volume": 0.8,
             "stream": false
         },
         "water": {
-            "type":     "sample",
-            "file":     "audio/water_impact.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/water_impact.wav",
+            "volume": 0.8,
             "stream": false
         },
         "witchen": {
-            "type":     "sample",
-            "file":     "audio/witchen_puff.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/witchen_puff.wav",
+            "volume": 0.8,
             "stream": false
         },
         "button_a": {
-            "type":     "sample",
-            "file":     "audio/button_a.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/button_a.wav",
+            "volume": 0.8,
             "stream": false
         },
         "button_b": {
-            "type":     "sample",
-            "file":     "audio/button_b.wav",
-            "volume":   0.8,
+            "type": "sample",
+            "file": "audio/button_b.wav",
+            "volume": 0.8,
             "stream": false
         },
-        "theme": {
-            "type":     "sample",
-            "file":     "audio/CCM_Theme.wav",
-            "volume":   0.5,
-            "stream":    true
+        "farmMusic": {
+            "type": "sample",
+            "file": "audio/CCM_Farm_Final_48k.wav",
+            "volume": 0.5,
+            "stream": true
         },
-        "trailer": {
-            "type":     "sample",
-            "file":     "audio/CCM_Trailer.wav",
-            "volume":   0.5,
-            "stream":    true
+        "forestMusic": {
+            "type": "sample",
+            "file": "audio/CCM_Forest_Final_48k.wav",
+            "volume": 0.5,
+            "stream": true
+        },
+        "nuclearMusic": {
+            "type": "sample",
+            "file": "audio/CCM_Nuclear_Final_48k.wav",
+            "volume": 0.5,
+            "stream": true
+        },
+        "throneMusic": {
+            "type": "sample",
+            "file": "audio/CCM_Throne_Room_Final_48k.wav",
+            "volume": 0.5,
+            "stream": true
         }
     },
     "fonts": {

@@ -29,8 +29,10 @@ using namespace cugl;
 #define MAXSTACKSIZE 5
 
 /** BGM for the game*/
-#define MUSIC_THEME			"theme"
-#define MUSIC_TRAILER		"trailer"
+#define MUSIC_FARM          "farmMusic"
+#define MUSIC_FOREST        "forestMusic"
+#define MUSIC_NUCLEAR       "nuclearMusic"
+#define MUSIC_THRONE        "throneMusic"
 
 /** Sfx for the game*/
 #define SOUND_BELL			"bell"
@@ -118,7 +120,7 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets) {
     }
 	_assets = assets;
 
-	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+	auto game_music = _assets->get<Sound>(MUSIC_FARM);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
@@ -175,7 +177,19 @@ bool GameScene::init(const std::shared_ptr<AssetManager>& assets, const std::sha
 	}
 	_assets = assets;
 
-	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+	auto game_music = _assets->get<Sound>(MUSIC_FARM);
+	if (levelNum < 4) {
+		game_music = _assets->get<Sound>(MUSIC_FARM);
+	}
+	else if (levelNum < 7) {
+		game_music = _assets->get<Sound>(MUSIC_FOREST);
+	}
+	else if (levelNum < 10) {
+		game_music = _assets->get<Sound>(MUSIC_NUCLEAR);
+	}
+	else {
+		game_music = _assets->get<Sound>(MUSIC_THRONE);
+	}
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
@@ -229,7 +243,7 @@ bool GameScene::tutorinit(const std::shared_ptr<AssetManager>& assets, const std
 	}
 	_assets = assets;
 
-	auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
+	auto game_music = _assets->get<Sound>(MUSIC_FARM);
 	AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
 
 	//Root node the drawer can build off of
@@ -311,8 +325,21 @@ void GameScene::update(float timestep) {
     isSound = !sb->getSoundToggle(); // false if sound SHOULD PLAY
     if (!isSound && AudioChannels::get()->currentMusic() != NULL){AudioChannels::get()->stopMusic();} // need to check it's not already stopped?
     else if (isSound && AudioChannels::get()->currentMusic() == NULL){
-        auto game_music = _assets->get<Sound>(MUSIC_TRAILER);
-        AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+		auto game_music = _assets->get<Sound>(MUSIC_FARM);
+		int levelNum = sb->getLevelNum();
+		if (levelNum < 4) {
+			game_music = _assets->get<Sound>(MUSIC_FARM);
+		}
+		else if (levelNum < 7) {
+			game_music = _assets->get<Sound>(MUSIC_FOREST);
+		}
+		else if (levelNum < 10) {
+			game_music = _assets->get<Sound>(MUSIC_NUCLEAR);
+		}
+		else {
+			game_music = _assets->get<Sound>(MUSIC_THRONE);
+			AudioChannels::get()->queueMusic(game_music, true, game_music->getVolume());
+		}
     }
     
 	if (cooldown > 0 && !sb->getPaused()) {
